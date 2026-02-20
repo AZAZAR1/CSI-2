@@ -1,0 +1,2 @@
+Replace assets/img/csi_logo_color.png with your latest CSI logo (the version that includes 'INTERNATIONAL').
+Keep the filename unchanged so all pages update automatically.
