@@ -14,7 +14,7 @@ export const COPY = {
     cta_partner: "Partner with CSI",
     programs_title: "Programs",
     programs_lead:
-      "Three pathways — professional certification and elite optimization.",
+      "Three pathways: professional certification and elite optimization.",
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
     amc_title: "Aficionado Master Class (AMC™)",
@@ -47,12 +47,12 @@ export const COPY = {
     kicker: "Institutionnel suisse • Autorité scientifique",
     h1: "Concevoir l’expérience de cigare parfaite.",
     lead:
-      "ICSI équipe les candidats, lounges et collectionneurs d’une méthode rigoureuse et discrète pour contrôler la combustion, humidité et dynamique aromatique. Cela afin d’obtenir une excellence reproductible.",
+      "ICSI forme prépare ses candidats, lounges de cigare et collectionneurs à l'excellence avec une méthode rigoureuse et discrète pour contrôler la combustion, humidité et dynamique aromatique. Cela afin d’obtenir une excellence reproductible.",
     cta_programs: "Découvrir les programmes",
     cta_partner: "Devenir partenaire",
     programs_title: "Programmes",
     programs_lead:
-      "Trois parcours — certification professionnelle et optimisation élite.",
+      "Trois parcours: certification professionnelle et optimisation élite.",
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
     amc_title: "Aficionado Master Class (AMC™)",
@@ -89,7 +89,7 @@ export const COPY = {
     cta_partner: "Partner werden",
     programs_title: "Programme",
     programs_lead:
-      "Drei Wege — professionelle Zertifizierung und Elite-Optimierung.",
+      "Drei Wege: professionelle Zertifizierung und Elite-Optimierung.",
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
     amc_title: "Aficionado Master Class (AMC™)",
