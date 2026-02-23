@@ -47,7 +47,7 @@ export const COPY = {
     kicker: "Institutionnel suisse • Autorité scientifique",
     h1: "Concevoir l’expérience de cigare parfaite.",
     lead:
-      "ICSI forme prépare ses candidats, lounges de cigare et collectionneurs à l'excellence avec une méthode rigoureuse et discrète pour contrôler la combustion, humidité et dynamique aromatique. Cela afin d’obtenir une excellence reproductible.",
+      "ICSI forme et prépare ses candidats, lounges de cigare et collectionneurs à l'excellence avec une méthode rigoureuse et discrète pour contrôler la combustion, humidité et dynamique aromatique. Cela afin d’obtenir une excellence reproductible.",
     cta_programs: "Découvrir les programmes",
     cta_partner: "Devenir partenaire",
     programs_title: "Programmes",
