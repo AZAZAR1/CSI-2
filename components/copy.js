@@ -6,10 +6,10 @@ export const COPY = {
     nav_system: "Peak-Flavor System™",
     nav_partners: "Partner Lounges",
     nav_contact: "Contact",
-    kicker: "Swiss institutional minimal • Scientific authority",
-    h1: "Engineering the perfect cigar experience.",
+    kicker: "Swiss institutional • Scientific authority",
+    h1: "Perfecting the cigar experience.",
     lead:
-      "CSI equips candidates, lounges, and collectors with a rigorous, discreet methodology to control combustion, moisture, and flavor dynamics — transforming smoking into repeatable excellence.",
+      "ICSI equips candidates, lounges, and collectors with a rigorous, discreet methodology to achieve the Blender's peak-flavor dynamics. Ensuring a perfect and repeatable smoking experience every time.",
     cta_programs: "Explore programs",
     cta_partner: "Partner with CSI",
     programs_title: "Programs",
@@ -28,7 +28,7 @@ export const COPY = {
     request_invite: "Request Invite",
     download: "Download brochure (PDF)",
     note:
-      "Use the contact form to apply or request an invite. CSI will reply with next steps and scheduling.",
+      "Use the contact form to apply or request an invite. ICSI will reply with next steps and scheduling.",
     contact_title: "Contact",
     contact_lead:
       "Lead capture and inquiries for candidates, lounges, and hotels.",
@@ -44,10 +44,10 @@ export const COPY = {
     nav_system: "Peak-Flavor System™",
     nav_partners: "Lounges partenaires",
     nav_contact: "Contact",
-    kicker: "Minimalisme institutionnel suisse • Autorité scientifique",
-    h1: "Concevoir l’expérience cigare parfaite.",
+    kicker: "Institutionnel suisse • Autorité scientifique",
+    h1: "Concevoir l’expérience de cigare parfaite.",
     lead:
-      "CSI équipe candidats, lounges et collectionneurs d’une méthode rigoureuse et discrète pour contrôler combustion, humidité et dynamique aromatique — afin d’obtenir une excellence reproductible.",
+      "ICSI équipe les candidats, lounges et collectionneurs d’une méthode rigoureuse et discrète pour contrôler la combustion, humidité et dynamique aromatique. Cela afin d’obtenir une excellence reproductible.",
     cta_programs: "Découvrir les programmes",
     cta_partner: "Devenir partenaire",
     programs_title: "Programmes",
@@ -77,11 +77,11 @@ export const COPY = {
   de: {
     brand: "International Cigar Sommelier Institute",
     nav_programs: "Programme",
-    nav_about: "Über CSI",
+    nav_about: "Über ICSI",
     nav_system: "Peak-Flavor System™",
     nav_partners: "Partner-Lounges",
     nav_contact: "Kontakt",
-    kicker: "Schweizer institutioneller Minimalismus • Wissenschaftliche Autorität",
+    kicker: "Schweizer institutioneller • Wissenschaftliche Autorität",
     h1: "Das perfekte Zigarrenerlebnis — präzise gestaltet.",
     lead:
       "CSI vermittelt Kandidaten, Lounges und Sammlern eine rigorose, diskrete Methodik zur Kontrolle von Verbrennung, Feuchte und Aromadynamik — für reproduzierbare Exzellenz.",
