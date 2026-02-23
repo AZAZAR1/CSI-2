@@ -12,7 +12,7 @@ export default function Footer() {
     <div className="footer">
       <div className="container footerGrid">
         <div>
-          <div className="badge">Swiss institutional minimal • Scientific authority</div>
+          <div className="badge">Swiss institutional • Scientific authority</div>
           <div className="small" style={{ marginTop: 10 }}>
             © {year} {c.brand}. All rights reserved.
           </div>
