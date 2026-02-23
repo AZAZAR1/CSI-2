@@ -72,7 +72,7 @@ export default function Home() {
 
           <div className="heroCard">
             <div className="heroFrame">
-              <img src="/img/hero.svg" alt="Hero" />
+              <img src="/img/hero.png" alt="Tobacco leaf macro" />
             </div>
             <div className="heroCardPad">
               <div className="heroTag"><i>Conditioning • Aging • Mastery</i></div>
