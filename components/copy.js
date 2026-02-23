@@ -82,7 +82,7 @@ export const COPY = {
     nav_partners: "Partner-Lounges",
     nav_contact: "Kontakt",
     kicker: "Schweizer institutioneller • Wissenschaftliche Autorität",
-    h1: "Das perfekte Zigarrenerlebnis — präzise gestaltet.",
+    h1: "Das perfekte Zigarrenerlebnis,präzise gestaltet.",
     lead:
       "CSI vermittelt Kandidaten, Lounges und Sammlern eine rigorose, diskrete Methodik zur Kontrolle von Verbrennung, Feuchte und Aromadynamik — für reproduzierbare Exzellenz.",
     cta_programs: "Programme ansehen",
