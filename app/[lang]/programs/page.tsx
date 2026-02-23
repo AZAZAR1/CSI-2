@@ -3,15 +3,20 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { Lang, t } from '@/lib/i18n';
 
-export default function ProgramsPage({ params }: { params: { lang: Lang } }) {
-  const { lang } = params;
+export default async function ProgramsPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang: langStr } = await params;
+  const lang = langStr as Lang;
+
   const programs = [
     {
       key: 'ccs',
       title: t(lang, 'programs.ccs.title'),
       desc: t(lang, 'home.ccs.desc'),
       brochure: '/assets/brochures/CCS_Certified_Cigar_Sommelier_Brochure.pdf',
-      applySubject: 'Application — CCS',
       cta: t(lang, 'btn.apply'),
     },
     {
@@ -19,7 +24,6 @@ export default function ProgramsPage({ params }: { params: { lang: Lang } }) {
       title: t(lang, 'programs.acs.title'),
       desc: t(lang, 'home.acs.desc'),
       brochure: '/assets/brochures/ACS_Advanced_Cigar_Sommelier_Brochure.pdf',
-      applySubject: 'Application — ACS',
       cta: t(lang, 'btn.apply'),
     },
     {
@@ -27,7 +31,6 @@ export default function ProgramsPage({ params }: { params: { lang: Lang } }) {
       title: t(lang, 'programs.amc.title'),
       desc: t(lang, 'home.amc.desc'),
       brochure: '/assets/brochures/AMC_Aficionado_Master_Class_Brochure_v2.pdf',
-      applySubject: 'Invite Request — AMC',
       cta: t(lang, 'btn.request_invite'),
     },
   ];
@@ -45,7 +48,9 @@ export default function ProgramsPage({ params }: { params: { lang: Lang } }) {
                 <h3>{p.title}</h3>
                 <p>{p.desc}</p>
                 <div className="cta-row">
-                  <Link className="btn primary" href={`/${lang}/${p.key}`}>{p.cta}</Link>
+                  <Link className="btn primary" href={`/${lang}/${p.key}`}>
+                    {p.cta}
+                  </Link>
                   <a className="btn" href={p.brochure} target="_blank" rel="noopener noreferrer">
                     {t(lang, 'btn.download_brochure')}
                   </a>

@@ -2,8 +2,14 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { Lang, t } from '@/lib/i18n';
 
-export default function AboutPage({ params }: { params: { lang: Lang } }) {
-  const { lang } = params;
+export default async function AboutPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang: langStr } = await params;
+  const lang = langStr as Lang;
+
   return (
     <>
       <Nav lang={lang} />
@@ -15,7 +21,9 @@ export default function AboutPage({ params }: { params: { lang: Lang } }) {
             <h3>{t(lang, 'about.why.title')}</h3>
             <p>{t(lang, 'about.why.body')}</p>
             <hr className="sep" />
-            <p className="small"><i>{t(lang, 'about.powered')}</i></p>
+            <p className="small">
+              <i>{t(lang, 'about.powered')}</i>
+            </p>
           </div>
         </div>
       </div>

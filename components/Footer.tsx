@@ -7,12 +7,18 @@ export default function Footer({ lang }: { lang: Lang }) {
       <div className="container footer-grid">
         <div>
           <div className="badge">{t(lang, 'footer.badge')}</div>
-          <div className="small" style={{ marginTop: 10 }}>{t(lang, 'footer.copy')}</div>
+          <div className="small" style={{ marginTop: 10 }}>
+            {t(lang, 'footer.copy')}
+          </div>
         </div>
         <div className="small">
-          <Link className="underline" href={`/${lang}/privacy`}>{t(lang, 'footer.privacy')}</Link>
+          <Link className="underline" href={`/${lang}/privacy`}>
+            {t(lang, 'footer.privacy')}
+          </Link>
           &nbsp;·&nbsp;
-          <Link className="underline" href={`/${lang}/terms`}>{t(lang, 'footer.terms')}</Link>
+          <Link className="underline" href={`/${lang}/terms`}>
+            {t(lang, 'footer.terms')}
+          </Link>
         </div>
       </div>
     </div>

@@ -12,7 +12,14 @@ interface ProgramPageProps {
   isInvite?: boolean;
 }
 
-export default function ProgramDetail({ lang, titleKey, subKey, brochure, applySubject, isInvite }: ProgramPageProps) {
+export default function ProgramDetail({
+  lang,
+  titleKey,
+  subKey,
+  brochure,
+  applySubject,
+  isInvite,
+}: ProgramPageProps) {
   return (
     <>
       <Nav lang={lang} />

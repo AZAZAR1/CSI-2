@@ -3,8 +3,14 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { Lang, t } from '@/lib/i18n';
 
-export default function PartnersPage({ params }: { params: { lang: Lang } }) {
-  const { lang } = params;
+export default async function PartnersPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang: langStr } = await params;
+  const lang = langStr as Lang;
+
   return (
     <>
       <Nav lang={lang} />
@@ -27,7 +33,10 @@ export default function PartnersPage({ params }: { params: { lang: Lang } }) {
             </div>
           </div>
           <div className="cta-row" style={{ marginTop: 14 }}>
-            <Link className="btn primary" href={`/${lang}/contact?subject=Partner%20with%20CSI`}>
+            <Link
+              className="btn primary"
+              href={`/${lang}/contact?subject=Partner%20with%20CSI`}
+            >
               {t(lang, 'partners.cta')}
             </Link>
           </div>
