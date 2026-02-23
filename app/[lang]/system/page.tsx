@@ -2,8 +2,14 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { Lang, t } from '@/lib/i18n';
 
-export default function SystemPage({ params }: { params: { lang: Lang } }) {
-  const { lang } = params;
+export default async function SystemPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang: langStr } = await params;
+  const lang = langStr as Lang;
+
   return (
     <>
       <Nav lang={lang} />

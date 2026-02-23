@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
@@ -18,7 +19,13 @@ export default function Nav({ lang }: { lang: Lang }) {
     <div className="nav">
       <div className="container nav-inner">
         <Link className="brand" href={`/${lang}`}>
-          <Image src="/assets/img/csi_logo_color.png" alt="CSI logo" width={34} height={34} style={{ borderRadius: 8 }} />
+          <Image
+            src="/assets/img/csi_logo_color.png"
+            alt="CSI logo"
+            width={34}
+            height={34}
+            style={{ borderRadius: 8 }}
+          />
           <div className="name">Cigar Sommelier Institute</div>
         </Link>
         <div className="menu">

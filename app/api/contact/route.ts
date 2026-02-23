@@ -7,11 +7,16 @@ const SMTP_HOST = process.env.CSI_SMTP_HOST ?? '';
 const SMTP_PORT = parseInt(process.env.CSI_SMTP_PORT ?? '587', 10);
 const SMTP_USER = process.env.CSI_SMTP_USER ?? '';
 const SMTP_PASS = process.env.CSI_SMTP_PASS ?? '';
-const SMTP_TLS = !['0', 'false', 'no', 'n'].includes((process.env.CSI_SMTP_TLS ?? 'true').toLowerCase());
+const SMTP_TLS = !['0', 'false', 'no', 'n'].includes(
+  (process.env.CSI_SMTP_TLS ?? 'true').toLowerCase()
+);
 
 function sanitize(s: unknown, maxLen = 2000): string {
   if (!s) return '';
-  return String(s).trim().replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, '').slice(0, maxLen);
+  return String(s)
+    .trim()
+    .replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, '')
+    .slice(0, maxLen);
 }
 
 async function sendEmail(to: string, subject: string, body: string, replyTo = '') {

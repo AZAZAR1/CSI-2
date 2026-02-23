@@ -14,7 +14,8 @@ export const translations: Record<Lang, Record<string, string>> = {
     // Home
     'home.kicker': 'Swiss institutional minimal • Scientific authority',
     'home.h1': 'Engineering the perfect cigar experience.',
-    'home.lead': 'CSI equips candidates, lounges, and collectors with a rigorous, discreet methodology to control combustion, moisture, and flavor dynamics — transforming smoking into repeatable excellence.',
+    'home.lead':
+      'CSI equips candidates, lounges, and collectors with a rigorous, discreet methodology to control combustion, moisture, and flavor dynamics — transforming smoking into repeatable excellence.',
     'home.cta.programs': 'Explore programs',
     'home.cta.contact': 'Contact',
     'home.cta.partner': 'Partner with CSI',
@@ -22,9 +23,12 @@ export const translations: Record<Lang, Record<string, string>> = {
     'home.hero.tag': 'Conditioning • Aging • Mastery',
     'home.programs.title': 'Programs',
     'home.programs.sub': 'Three pathways — professional certification and elite optimization.',
-    'home.ccs.desc': 'The professional standard for cigar mastery. Control combustion, moisture, and flavor dynamics with confidence and scientific accuracy.',
-    'home.acs.desc': 'Predictive modeling & advanced diagnostics. From mastery to calibrated expertise across blends, environments, and vintages.',
-    'home.amc.desc': 'Invite-only personal optimization for elite collectors. Precision staging and peak performance without guesswork.',
+    'home.ccs.desc':
+      'The professional standard for cigar mastery. Control combustion, moisture, and flavor dynamics with confidence and scientific accuracy.',
+    'home.acs.desc':
+      'Predictive modeling & advanced diagnostics. From mastery to calibrated expertise across blends, environments, and vintages.',
+    'home.amc.desc':
+      'Invite-only personal optimization for elite collectors. Precision staging and peak performance without guesswork.',
     'btn.apply': 'Apply',
     'btn.request_invite': 'Request Invite',
     // Programs
@@ -38,33 +42,42 @@ export const translations: Record<Lang, Record<string, string>> = {
     'about.title': 'About CSI',
     'about.sub': 'Swiss-rooted rigor for a global premium lounge market.',
     'about.why.title': 'Why CSI',
-    'about.why.body': 'CSI brings institutional rigor to the point-of-consumption cigar experience — using applied science and discreet luxury delivery. We focus on controlled conditioning, staging, and diagnostics that improve consistency across brands, vintages, and environments.',
+    'about.why.body':
+      'CSI brings institutional rigor to the point-of-consumption cigar experience — using applied science and discreet luxury delivery. We focus on controlled conditioning, staging, and diagnostics that improve consistency across brands, vintages, and environments.',
     'about.powered': 'Powered by the Scientific Peak-Flavor System™.',
     // System
     'system.title': 'Scientific Peak-Flavor System™',
     'system.sub': 'A public-safe overview of the CSI framework.',
     'system.combustion.title': 'Combustion Physics',
-    'system.combustion.body': 'Understanding burn mechanics, heat flow, and the pre-heat zone to reduce harshness and improve stability.',
+    'system.combustion.body':
+      'Understanding burn mechanics, heat flow, and the pre-heat zone to reduce harshness and improve stability.',
     'system.hygroscopic.title': 'Hygroscopic Dynamics',
-    'system.hygroscopic.body': 'Fermented leaf is a hygroscopic system with lag and hysteresis. CSI teaches controlled, reversible staging.',
+    'system.hygroscopic.body':
+      'Fermented leaf is a hygroscopic system with lag and hysteresis. CSI teaches controlled, reversible staging.',
     'system.capfoot.title': 'Cap–Foot Diagnostics',
-    'system.capfoot.body': 'Reading moisture gradients to time peak aromatic expression and avoid "perfect burn after peak flavor."',
+    'system.capfoot.body':
+      'Reading moisture gradients to time peak aromatic expression and avoid "perfect burn after peak flavor."',
     'system.public.title': 'Public-safe statement',
-    'system.public.body': 'CSI does not publish proprietary calibration formulas on the public site. The system overview communicates principles and outcomes while preserving institutional IP.',
+    'system.public.body':
+      'CSI does not publish proprietary calibration formulas on the public site. The system overview communicates principles and outcomes while preserving institutional IP.',
     // Partners
     'partners.title': 'Partner Lounges',
     'partners.sub': 'A discreet partnership model for premium cigar lounges and luxury hotel cigar rooms.',
     'partners.lounges.title': 'For Premium Lounges',
-    'partners.lounges.body': 'Operational staging standards, staff capability uplift, and improved consistency across new boutique blends.',
+    'partners.lounges.body':
+      'Operational staging standards, staff capability uplift, and improved consistency across new boutique blends.',
     'partners.hotels.title': 'For Luxury Hotels',
-    'partners.hotels.body': 'High-touch guest experience design, predictable performance across climates, and reputational lift.',
+    'partners.hotels.body':
+      'High-touch guest experience design, predictable performance across climates, and reputational lift.',
     'partners.path.title': 'Partner Path',
-    'partners.path.body': 'Invite-only pilots, discreet co-branding, and data feedback loops to refine systems in real venues.',
+    'partners.path.body':
+      'Invite-only pilots, discreet co-branding, and data feedback loops to refine systems in real venues.',
     'partners.cta': 'Partner with CSI',
     // Contact
     'contact.title': 'Contact',
     'contact.sub': 'Lead capture and inquiries for candidates, lounges, and hotels.',
-    'contact.notice': 'Submissions are routed to CSI Administration. You will receive an automatic confirmation email.',
+    'contact.notice':
+      'Submissions are routed to CSI Administration. You will receive an automatic confirmation email.',
     'contact.first': 'First name',
     'contact.last': 'Last name',
     'contact.city': 'City',
@@ -76,32 +89,43 @@ export const translations: Record<Lang, Record<string, string>> = {
     'contact.error': 'Something went wrong. Please try again.',
     // Program pages
     'ccs.title': 'Certified Cigar Sommelier (CCS®)',
-    'ccs.sub': 'The professional standard for cigar mastery. Control combustion, moisture, and flavor dynamics with confidence and scientific accuracy.',
+    'ccs.sub':
+      'The professional standard for cigar mastery. Control combustion, moisture, and flavor dynamics with confidence and scientific accuracy.',
     'acs.title': 'Advanced Cigar Sommelier (ACS®)',
-    'acs.sub': 'Predictive modeling & advanced diagnostics. From mastery to calibrated expertise across blends, environments, and vintages.',
+    'acs.sub':
+      'Predictive modeling & advanced diagnostics. From mastery to calibrated expertise across blends, environments, and vintages.',
     'amc.title': 'Aficionado Master Class (AMC™)',
-    'amc.sub': 'Invite-only personal optimization for elite collectors. Precision staging and peak performance without guesswork.',
-    'program.note': 'Use the contact form to apply or request an invite. CSI will reply with next steps and scheduling.',
+    'amc.sub':
+      'Invite-only personal optimization for elite collectors. Precision staging and peak performance without guesswork.',
+    'program.note':
+      'Use the contact form to apply or request an invite. CSI will reply with next steps and scheduling.',
     // Privacy
     'privacy.title': 'Privacy Policy',
     'privacy.summary.title': 'Summary.',
-    'privacy.summary.body': 'CSI collects personal information submitted via contact forms solely to respond to inquiries and manage applicant communications. We do not sell personal data.',
+    'privacy.summary.body':
+      'CSI collects personal information submitted via contact forms solely to respond to inquiries and manage applicant communications. We do not sell personal data.',
     'privacy.data.title': 'Data handling.',
-    'privacy.data.body': 'Submissions are emailed to CSI administration. Retention is limited to operational needs. You may request access, correction, or deletion by contacting CSI.',
+    'privacy.data.body':
+      'Submissions are emailed to CSI administration. Retention is limited to operational needs. You may request access, correction, or deletion by contacting CSI.',
     'privacy.intl.title': 'International.',
-    'privacy.intl.body': 'If you submit from outside Switzerland, your data may be processed where email infrastructure is located.',
+    'privacy.intl.body':
+      'If you submit from outside Switzerland, your data may be processed where email infrastructure is located.',
     'privacy.sec.title': 'Security.',
     'privacy.sec.body': 'We apply reasonable measures; email is not end-to-end encrypted by default.',
     // Terms
     'terms.title': 'Terms & Program Conditions',
     'terms.programs.title': 'Programs.',
-    'terms.programs.body': 'CCS® and ACS® are structured learning programs. AMC™ is invite-only. Dates, venues, and pricing may change.',
+    'terms.programs.body':
+      'CCS® and ACS® are structured learning programs. AMC™ is invite-only. Dates, venues, and pricing may change.',
     'terms.ip.title': 'Intellectual property.',
-    'terms.ip.body': 'CSI materials and methods (including the Scientific Peak-Flavor System™) may not be copied or redistributed without written permission.',
+    'terms.ip.body':
+      'CSI materials and methods (including the Scientific Peak-Flavor System™) may not be copied or redistributed without written permission.',
     'terms.conduct.title': 'Conduct.',
-    'terms.conduct.body': 'Participants must follow venue rules and local regulations. CSI may refuse service for disruptive behavior.',
+    'terms.conduct.body':
+      'Participants must follow venue rules and local regulations. CSI may refuse service for disruptive behavior.',
     'terms.disclaimer.title': 'Disclaimer.',
-    'terms.disclaimer.body': 'CSI provides educational guidance; participants remain responsible for personal choices and legal compliance.',
+    'terms.disclaimer.body':
+      'CSI provides educational guidance; participants remain responsible for personal choices and legal compliance.',
   },
   fr: {
     'nav.programs': 'Programmes',
@@ -114,22 +138,23 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.privacy': 'Confidentialité',
     'footer.terms': 'Conditions',
     'home.kicker': 'Minimalisme institutionnel suisse • Autorité scientifique',
-    'home.h1': 'Concevoir l\'expérience du cigare parfait.',
-    'home.lead': 'CSI équipe les candidats, les lounges et les collectionneurs d\'une méthodologie rigoureuse et discrète pour contrôler la combustion, l\'humidité et les dynamiques aromatiques.',
+    'home.h1': "Concevoir l'expérience du cigare parfait.",
+    'home.lead':
+      "CSI équipe les candidats, les lounges et les collectionneurs d'une méthodologie rigoureuse et discrète pour contrôler la combustion, l'humidité et les dynamiques aromatiques.",
     'home.cta.programs': 'Découvrir les programmes',
     'home.cta.contact': 'Contact',
     'home.cta.partner': 'Devenir partenaire',
     'home.powered': 'Propulsé par le Système Peak-Flavor™.',
     'home.hero.tag': 'Conditionnement • Vieillissement • Maîtrise',
     'home.programs.title': 'Programmes',
-    'home.programs.sub': 'Trois voies — certification professionnelle et optimisation d\'élite.',
+    'home.programs.sub': "Trois voies — certification professionnelle et optimisation d'élite.",
     'home.ccs.desc': 'La norme professionnelle pour la maîtrise du cigare.',
     'home.acs.desc': 'Modélisation prédictive et diagnostics avancés.',
-    'home.amc.desc': 'Optimisation personnelle sur invitation pour les collectionneurs d\'élite.',
+    'home.amc.desc': "Optimisation personnelle sur invitation pour les collectionneurs d'élite.",
     'btn.apply': 'Postuler',
     'btn.request_invite': 'Demander une invitation',
     'programs.title': 'Programmes',
-    'programs.sub': 'Trois voies — certification professionnelle et optimisation d\'élite.',
+    'programs.sub': "Trois voies — certification professionnelle et optimisation d'élite.",
     'programs.ccs.title': 'Sommelier de Cigares Certifié (CCS®)',
     'programs.acs.title': 'Sommelier Avancé de Cigares (ACS®)',
     'programs.amc.title': 'Classe Maître Aficionado (AMC™)',
@@ -137,30 +162,36 @@ export const translations: Record<Lang, Record<string, string>> = {
     'about.title': 'À propos de CSI',
     'about.sub': 'Rigueur suisse pour un marché mondial de lounges premium.',
     'about.why.title': 'Pourquoi CSI',
-    'about.why.body': 'CSI apporte une rigueur institutionnelle à l\'expérience du cigare au point de consommation.',
+    'about.why.body':
+      "CSI apporte une rigueur institutionnelle à l'expérience du cigare au point de consommation.",
     'about.powered': 'Propulsé par le Système Peak-Flavor™.',
     'system.title': 'Système Peak-Flavor™ scientifique',
     'system.sub': 'Un aperçu public du cadre CSI.',
     'system.combustion.title': 'Physique de combustion',
-    'system.combustion.body': 'Comprendre la mécanique de combustion, le flux thermique et la zone de préchauffage.',
+    'system.combustion.body':
+      'Comprendre la mécanique de combustion, le flux thermique et la zone de préchauffage.',
     'system.hygroscopic.title': 'Dynamiques hygroscopiques',
     'system.hygroscopic.body': 'La feuille fermentée est un système hygroscopique avec retard et hystérésis.',
     'system.capfoot.title': 'Diagnostics Cap-Pied',
-    'system.capfoot.body': 'Lire les gradients d\'humidité pour chronométrer l\'expression aromatique de pointe.',
+    'system.capfoot.body': "Lire les gradients d'humidité pour chronométrer l'expression aromatique de pointe.",
     'system.public.title': 'Déclaration publique',
-    'system.public.body': 'CSI ne publie pas de formules de calibrage propriétaires sur le site public.',
+    'system.public.body':
+      'CSI ne publie pas de formules de calibrage propriétaires sur le site public.',
     'partners.title': 'Lounges partenaires',
     'partners.sub': 'Un modèle de partenariat discret pour les lounges de cigares premium.',
     'partners.lounges.title': 'Pour les lounges premium',
-    'partners.lounges.body': 'Normes de mise en scène opérationnelle et amélioration des capacités du personnel.',
+    'partners.lounges.body':
+      'Normes de mise en scène opérationnelle et amélioration des capacités du personnel.',
     'partners.hotels.title': 'Pour les hôtels de luxe',
-    'partners.hotels.body': 'Conception d\'une expérience client haut de gamme et performance prévisible.',
+    'partners.hotels.body': "Conception d'une expérience client haut de gamme et performance prévisible.",
     'partners.path.title': 'Voie partenaire',
-    'partners.path.body': 'Pilotes sur invitation, co-branding discret et boucles de rétroaction de données.',
+    'partners.path.body':
+      "Pilotes sur invitation, co-branding discret et boucles de rétroaction de données.",
     'partners.cta': 'Devenir partenaire',
     'contact.title': 'Contact',
     'contact.sub': 'Capture de prospects pour les candidats, lounges et hôtels.',
-    'contact.notice': 'Les soumissions sont acheminées à l\'administration CSI. Vous recevrez un e-mail de confirmation automatique.',
+    'contact.notice':
+      "Les soumissions sont acheminées à l'administration CSI. Vous recevrez un e-mail de confirmation automatique.",
     'contact.first': 'Prénom',
     'contact.last': 'Nom',
     'contact.city': 'Ville',
@@ -169,32 +200,40 @@ export const translations: Record<Lang, Record<string, string>> = {
     'contact.comments': 'Commentaires',
     'contact.submit': 'Envoyer',
     'contact.success': 'Merci ! Votre message a été envoyé.',
-    'contact.error': 'Une erreur s\'est produite. Veuillez réessayer.',
+    'contact.error': "Une erreur s'est produite. Veuillez réessayer.",
     'ccs.title': 'Sommelier de Cigares Certifié (CCS®)',
     'ccs.sub': 'La norme professionnelle pour la maîtrise du cigare.',
     'acs.title': 'Sommelier Avancé de Cigares (ACS®)',
     'acs.sub': 'Modélisation prédictive et diagnostics avancés.',
     'amc.title': 'Classe Maître Aficionado (AMC™)',
-    'amc.sub': 'Optimisation personnelle sur invitation pour les collectionneurs d\'élite.',
-    'program.note': 'Utilisez le formulaire de contact pour postuler. CSI vous répondra avec les prochaines étapes.',
+    'amc.sub': "Optimisation personnelle sur invitation pour les collectionneurs d'élite.",
+    'program.note':
+      'Utilisez le formulaire de contact pour postuler. CSI vous répondra avec les prochaines étapes.',
     'privacy.title': 'Politique de confidentialité',
     'privacy.summary.title': 'Résumé.',
-    'privacy.summary.body': 'CSI collecte des informations personnelles soumises via des formulaires de contact uniquement pour répondre aux demandes.',
+    'privacy.summary.body':
+      'CSI collecte des informations personnelles soumises via des formulaires de contact uniquement pour répondre aux demandes.',
     'privacy.data.title': 'Traitement des données.',
-    'privacy.data.body': 'Les soumissions sont envoyées par e-mail à l\'administration CSI.',
+    'privacy.data.body': "Les soumissions sont envoyées par e-mail à l'administration CSI.",
     'privacy.intl.title': 'International.',
-    'privacy.intl.body': 'Si vous soumettez depuis l\'extérieur de la Suisse, vos données peuvent être traitées là où se trouve l\'infrastructure e-mail.',
+    'privacy.intl.body':
+      "Si vous soumettez depuis l'extérieur de la Suisse, vos données peuvent être traitées là où se trouve l'infrastructure e-mail.",
     'privacy.sec.title': 'Sécurité.',
-    'privacy.sec.body': 'Nous appliquons des mesures raisonnables ; l\'e-mail n\'est pas chiffré de bout en bout par défaut.',
+    'privacy.sec.body':
+      "Nous appliquons des mesures raisonnables ; l'e-mail n'est pas chiffré de bout en bout par défaut.",
     'terms.title': 'Conditions générales',
     'terms.programs.title': 'Programmes.',
-    'terms.programs.body': 'CCS® et ACS® sont des programmes d\'apprentissage structurés. AMC™ est sur invitation uniquement.',
+    'terms.programs.body':
+      "CCS® et ACS® sont des programmes d'apprentissage structurés. AMC™ est sur invitation uniquement.",
     'terms.ip.title': 'Propriété intellectuelle.',
-    'terms.ip.body': 'Les matériaux et méthodes de CSI ne peuvent pas être copiés sans autorisation écrite.',
+    'terms.ip.body':
+      'Les matériaux et méthodes de CSI ne peuvent pas être copiés sans autorisation écrite.',
     'terms.conduct.title': 'Conduite.',
-    'terms.conduct.body': 'Les participants doivent respecter les règles du lieu et les réglementations locales.',
+    'terms.conduct.body':
+      'Les participants doivent respecter les règles du lieu et les réglementations locales.',
     'terms.disclaimer.title': 'Avertissement.',
-    'terms.disclaimer.body': 'CSI fournit des conseils éducatifs ; les participants restent responsables de leurs choix personnels.',
+    'terms.disclaimer.body':
+      'CSI fournit des conseils éducatifs ; les participants restent responsables de leurs choix personnels.',
   },
   de: {
     'nav.programs': 'Programme',
@@ -208,7 +247,8 @@ export const translations: Record<Lang, Record<string, string>> = {
     'footer.terms': 'Bedingungen',
     'home.kicker': 'Schweizer institutionelles Minimal • Wissenschaftliche Autorität',
     'home.h1': 'Das perfekte Zigarrenerlebnis gestalten.',
-    'home.lead': 'CSI rüstet Kandidaten, Lounges und Sammler mit einer strengen, diskreten Methodik aus, um Verbrennung, Feuchtigkeit und Aromadynamik zu kontrollieren.',
+    'home.lead':
+      'CSI rüstet Kandidaten, Lounges und Sammler mit einer strengen, diskreten Methodik aus, um Verbrennung, Feuchtigkeit und Aromadynamik zu kontrollieren.',
     'home.cta.programs': 'Programme entdecken',
     'home.cta.contact': 'Kontakt',
     'home.cta.partner': 'Partner werden',
@@ -230,30 +270,37 @@ export const translations: Record<Lang, Record<string, string>> = {
     'about.title': 'Über CSI',
     'about.sub': 'Schweizer Strenge für einen globalen Premium-Lounge-Markt.',
     'about.why.title': 'Warum CSI',
-    'about.why.body': 'CSI bringt institutionelle Strenge an den Zigarren-Genussort — mit angewandter Wissenschaft und diskreter Luxuslieferung.',
+    'about.why.body':
+      'CSI bringt institutionelle Strenge an den Zigarren-Genussort — mit angewandter Wissenschaft und diskreter Luxuslieferung.',
     'about.powered': 'Angetrieben vom Peak-Flavor-System™.',
     'system.title': 'Wissenschaftliches Peak-Flavor-System™',
     'system.sub': 'Eine öffentlich sichere Übersicht des CSI-Rahmens.',
     'system.combustion.title': 'Verbrennungsphysik',
-    'system.combustion.body': 'Verständnis der Brennmechanik, des Wärmeflusses und der Vorwärmzone.',
+    'system.combustion.body':
+      'Verständnis der Brennmechanik, des Wärmeflusses und der Vorwärmzone.',
     'system.hygroscopic.title': 'Hygroskopische Dynamik',
-    'system.hygroscopic.body': 'Fermentiertes Blatt ist ein hygroskopisches System mit Verzögerung und Hysterese.',
+    'system.hygroscopic.body':
+      'Fermentiertes Blatt ist ein hygroskopisches System mit Verzögerung und Hysterese.',
     'system.capfoot.title': 'Kopf-Fuß-Diagnostik',
     'system.capfoot.body': 'Feuchtigkeitsgradienten lesen, um den aromatischen Höhepunkt zu timen.',
     'system.public.title': 'Öffentliche Erklärung',
-    'system.public.body': 'CSI veröffentlicht keine proprietären Kalibrierungsformeln auf der öffentlichen Website.',
+    'system.public.body':
+      'CSI veröffentlicht keine proprietären Kalibrierungsformeln auf der öffentlichen Website.',
     'partners.title': 'Partner-Lounges',
     'partners.sub': 'Ein diskretes Partnerschaftsmodell für Premium-Zigarren-Lounges.',
     'partners.lounges.title': 'Für Premium-Lounges',
-    'partners.lounges.body': 'Betriebliche Staging-Standards und Verbesserung der Mitarbeiterkompetenz.',
+    'partners.lounges.body':
+      'Betriebliche Staging-Standards und Verbesserung der Mitarbeiterkompetenz.',
     'partners.hotels.title': 'Für Luxushotels',
     'partners.hotels.body': 'Hochwertige Gästeerlebnis-Gestaltung und vorhersehbare Leistung.',
     'partners.path.title': 'Partnerweg',
-    'partners.path.body': 'Piloten auf Einladung, diskretes Co-Branding und Daten-Feedback-Schleifen.',
+    'partners.path.body':
+      'Piloten auf Einladung, diskretes Co-Branding und Daten-Feedback-Schleifen.',
     'partners.cta': 'Partner werden',
     'contact.title': 'Kontakt',
     'contact.sub': 'Lead-Erfassung für Kandidaten, Lounges und Hotels.',
-    'contact.notice': 'Einsendungen werden an die CSI-Verwaltung weitergeleitet. Sie erhalten eine automatische Bestätigungs-E-Mail.',
+    'contact.notice':
+      'Einsendungen werden an die CSI-Verwaltung weitergeleitet. Sie erhalten eine automatische Bestätigungs-E-Mail.',
     'contact.first': 'Vorname',
     'contact.last': 'Nachname',
     'contact.city': 'Stadt',
@@ -269,25 +316,32 @@ export const translations: Record<Lang, Record<string, string>> = {
     'acs.sub': 'Prädiktive Modellierung & erweiterte Diagnostik.',
     'amc.title': 'Aficionado Master Class (AMC™)',
     'amc.sub': 'Nur auf Einladung: persönliche Optimierung für Elite-Sammler.',
-    'program.note': 'Nutzen Sie das Kontaktformular zur Bewerbung. CSI wird mit nächsten Schritten antworten.',
+    'program.note':
+      'Nutzen Sie das Kontaktformular zur Bewerbung. CSI wird mit nächsten Schritten antworten.',
     'privacy.title': 'Datenschutzrichtlinie',
     'privacy.summary.title': 'Zusammenfassung.',
     'privacy.summary.body': 'CSI sammelt persönliche Daten nur zur Beantwortung von Anfragen.',
     'privacy.data.title': 'Datenverarbeitung.',
     'privacy.data.body': 'Einsendungen werden per E-Mail an die CSI-Verwaltung gesendet.',
     'privacy.intl.title': 'International.',
-    'privacy.intl.body': 'Bei Einsendungen außerhalb der Schweiz können Daten dort verarbeitet werden, wo sich die E-Mail-Infrastruktur befindet.',
+    'privacy.intl.body':
+      'Bei Einsendungen außerhalb der Schweiz können Daten dort verarbeitet werden, wo sich die E-Mail-Infrastruktur befindet.',
     'privacy.sec.title': 'Sicherheit.',
-    'privacy.sec.body': 'Wir wenden angemessene Maßnahmen an; E-Mail ist standardmäßig nicht Ende-zu-Ende verschlüsselt.',
+    'privacy.sec.body':
+      'Wir wenden angemessene Maßnahmen an; E-Mail ist standardmäßig nicht Ende-zu-Ende verschlüsselt.',
     'terms.title': 'Allgemeine Geschäftsbedingungen',
     'terms.programs.title': 'Programme.',
-    'terms.programs.body': 'CCS® und ACS® sind strukturierte Lernprogramme. AMC™ ist nur auf Einladung.',
+    'terms.programs.body':
+      'CCS® und ACS® sind strukturierte Lernprogramme. AMC™ ist nur auf Einladung.',
     'terms.ip.title': 'Geistiges Eigentum.',
-    'terms.ip.body': 'CSI-Materialien und -Methoden dürfen ohne schriftliche Genehmigung nicht kopiert werden.',
+    'terms.ip.body':
+      'CSI-Materialien und -Methoden dürfen ohne schriftliche Genehmigung nicht kopiert werden.',
     'terms.conduct.title': 'Verhalten.',
-    'terms.conduct.body': 'Teilnehmer müssen die Venue-Regeln und lokalen Vorschriften einhalten.',
+    'terms.conduct.body':
+      'Teilnehmer müssen die Venue-Regeln und lokalen Vorschriften einhalten.',
     'terms.disclaimer.title': 'Haftungsausschluss.',
-    'terms.disclaimer.body': 'CSI bietet Bildungsberatung; Teilnehmer bleiben für ihre persönlichen Entscheidungen verantwortlich.',
+    'terms.disclaimer.body':
+      'CSI bietet Bildungsberatung; Teilnehmer bleiben für ihre persönlichen Entscheidungen verantwortlich.',
   },
 };
 
