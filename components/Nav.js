@@ -16,7 +16,7 @@ export default function Nav() {
     <div className="nav">
       <div className="container navInner">
         <Link className="brand" href="/" locale={lang}>
-          <Image src="/img/csi_logo_color.png" alt="CSI logo" width={46} height={46} />
+          <img src="/img/csi_logo_color.png" alt="CSI logo" style={{height:38, width:"auto", borderRadius:10}} />
           <div className="name">{c.brand}</div>
         </Link>
 
