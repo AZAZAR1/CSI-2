@@ -157,3 +157,29 @@ label{font-size:12px;color:var(--muted)}
   .row2{grid-template-columns:1fr}
   .heroFrame{height:240px}
 }
+
+.peakFlavorText {
+  background: #ffffff;
+  padding: 100px 0;
+}
+
+.peakFlavorText h2 {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.peakFlavorText .lead {
+  font-size: 20px;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+}
+
+.peakFlavorText ul {
+  margin: 30px 0;
+  line-height: 1.8;
+}
+
+.peakFlavorText li {
+  margin-bottom: 8px;
+}
