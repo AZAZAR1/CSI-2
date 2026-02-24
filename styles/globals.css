@@ -158,28 +158,113 @@ label{font-size:12px;color:var(--muted)}
   .heroFrame{height:240px}
 }
 
-.peakFlavorText {
-  background: #ffffff;
-  padding: 100px 0;
+/* ===== Peak-Flavor System Page ===== */
+
+.systemHero{
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--shadow);
 }
 
-.peakFlavorText h2 {
-  font-size: 32px;
-  font-weight: 500;
-  margin-bottom: 20px;
+.systemHeroMedia{
+  height: 360px;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
 }
 
-.peakFlavorText .lead {
-  font-size: 20px;
-  letter-spacing: 1px;
-  margin-bottom: 30px;
+.systemHeroMedia img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.peakFlavorText ul {
-  margin: 30px 0;
-  line-height: 1.8;
+.systemHeroMeta{
+  padding: 18px 20px;
+  display: grid;
+  gap: 10px;
 }
 
-.peakFlavorText li {
-  margin-bottom: 8px;
+.systemKicker{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.systemPill{
+  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(184,138,42,.28);
+  background: rgba(184,138,42,.06);
+  color: rgba(18,18,20,.86);
+}
+
+.systemTagline{
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.systemText{
+  padding: 34px 0 10px;
+}
+
+.systemTitle{
+  margin: 0 0 12px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 34px;
+  letter-spacing: -0.01em;
+}
+
+.systemLead{
+  margin: 0;
+  max-width: 72ch;
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: rgba(18,18,20,.82);
+}
+
+.systemGrid{
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 16px;
+}
+
+.systemCard{
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 18px;
+}
+
+.systemCard h3{
+  margin: 0 0 10px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 16px;
+}
+
+.systemCard ul{
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.9;
+  color: rgba(18,18,20,.80);
+  font-size: 13.5px;
+}
+
+.systemCard p{
+  margin: 0;
+  line-height: 1.85;
+  color: rgba(18,18,20,.80);
+  font-size: 13.5px;
+}
+
+@media (max-width: 900px){
+  .systemHeroMedia{height: 240px;}
+  .systemGrid{grid-template-columns: 1fr;}
+  .systemTitle{font-size: 28px;}
 }
