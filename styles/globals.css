@@ -268,3 +268,29 @@ label{font-size:12px;color:var(--muted)}
   .systemGrid{grid-template-columns: 1fr;}
   .systemTitle{font-size: 28px;}
 }
+
+/* ===== Programs card alignment (Swiss clean) ===== */
+
+.programCard{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.programBody{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* pins the buttons to the bottom of each card */
+.programButtons{
+  margin-top: auto;
+}
+
+/* keep the two buttons aligned and consistent */
+.programButtons.ctaRow{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
