@@ -294,3 +294,54 @@ label{font-size:12px;color:var(--muted)}
   gap: 12px;
   flex-wrap: wrap;
 }
+
+/* ===== Contact Page (Luxury Minimal) ===== */
+
+.contactPage{
+  max-width: 720px;
+}
+
+.contactPage h1{
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 34px;
+  margin-bottom: 20px;
+}
+
+.contactLead{
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  color: rgba(18,18,20,.85);
+}
+
+.contactBlock{
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.contactBlock h3{
+  margin-bottom: 8px;
+  font-size: 14px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.contactLink{
+  font-size: 16px;
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contactLink:hover{
+  text-decoration: underline;
+}
+
+.contactClosing{
+  margin-top: 32px;
+  font-size: 13px;
+  color: var(--muted);
+}
