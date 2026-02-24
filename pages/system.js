@@ -7,13 +7,13 @@ export default function System() {
 
   const copy = {
     en: {
-      title: "Scientific Peak-Flavor System™",
+      title: "Peak-Flavor System™",
       lead: "Controlled. Measured. Predictable.",
-      p1: `Most cigars are evaluated emotionally. Very few are evaluated thermodynamically.
-           The Scientific Peak-Flavor System™ treats a cigar as a dynamic combustion system — not a static object.`,
+      p1: `Most cigars are evaluated emotionally or based on what we hear or see. Very few are evaluated on scientific insights, with the Blender's phylosophy and intent in mind.
+           The Peak-Flavor System™ treats a cigar as a dynamic system that combines various tobacco leaf seeds, tobacco origin and soil, and construction techniques.`,
       bullets: [
         "Leaf hygroscopic equilibrium",
-        "Temperature–humidity coupling",
+        "Temperature-humidity coupling",
         "Pre-heat zone behavior",
         "Volatile activation thresholds",
         "Blend architecture (wrapper / binder / filler)"
@@ -22,11 +22,9 @@ export default function System() {
       p3: `The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.`
     },
     fr: {
-      title: "Système Scientifique Peak-Flavor™",
+      title: "Système Peak-Flavor™",
       lead: "Contrôlé. Mesuré. Prévisible.",
-      p1: `La plupart des cigares sont évalués de manière émotionnelle.
-           Très peu sont évalués selon des principes thermodynamiques.
-           Le Scientific Peak-Flavor System™ considère le cigare comme un système de combustion dynamique — et non comme un objet statique.`,
+      p1: `La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du créateur (blender). Le système Peak-Flavor System™ traite un cigare comme un système dynamique combinant diverses semences de feuilles de tabac, l'origine du tabac et du sol, ainsi que des techniques de fabrication.`,
       bullets: [
         "Équilibre hygroscopique du tabac",
         "Interaction température–humidité",
@@ -40,8 +38,7 @@ export default function System() {
     de: {
       title: "Wissenschaftliches Peak-Flavor-System™",
       lead: "Kontrolliert. Messbar. Reproduzierbar.",
-      p1: `Die meisten Zigarren werden emotional beurteilt. Nur wenige werden thermodynamisch verstanden.
-           Das Scientific Peak-Flavor System™ behandelt die Zigarre als dynamisches Verbrennungssystem — nicht als statisches Produkt.`,
+      p1: `Die meisten Zigarren werden emotional oder basierend auf dem bewertet, was wir hören oder sehen. Nur wenige werden auf der Grundlage wissenschaftlicher Erkenntnisse bewertet, wobei die Philosophie und Absicht des Blenders im Vordergrund stehen. Das Peak-Flavor System™ betrachtet eine Zigarre als ein dynamisches System, das verschiedene Tabaksamensorten, Tabakherkunft und Bodenbeschaffenheit sowie Konstruktionstechniken miteinander verbindet.`,
       bullets: [
         "Hygroskopisches Gleichgewicht des Tabaks",
         "Temperatur–Feuchte-Kopplung",
