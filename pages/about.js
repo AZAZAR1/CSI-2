@@ -5,11 +5,11 @@ export default function About() {
     <Layout>
       <div className="section">
         <div className="container">
-          <h2>About CSI</h2>
+          <h2>About ICSI</h2>
           <div className="card" style={{ marginTop: 14 }}>
             <p className="small">
-              CSI brings institutional rigor to the point-of-consumption cigar experience — using applied science and discreet luxury delivery.
-              We focus on controlled conditioning, staging, and diagnostics that improve consistency across brands, vintages, and environments.
+              ICSI brings institutional rigor to the point-of-consumption cigar experience, using applied thermodynamics and discreet luxury delivery.
+              We focus on controlled conditioning, staging, and diagnostics to improve blend-fidelity and smoking experience consistency across all brands.
             </p>
           </div>
         </div>
