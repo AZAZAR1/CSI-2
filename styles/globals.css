@@ -375,3 +375,52 @@ label{font-size:12px;color:var(--muted)}
   color: var(--muted);
   line-height: 1.6;
 }
+
+/* ===== Upgraded Institutional Brand ===== */
+
+.navInner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.brandWrap{
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.brandLogo{
+  height: 130px !important;
+  width: auto !important;
+}
+
+.brandText{
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  letter-spacing: .06em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.menu{
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+/* Responsive refinement */
+@media (max-width: 900px){
+  .brandLogo{height: 80px !important;}
+  .brandText{font-size: 14px;}
+  .navInner{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
