@@ -15,11 +15,29 @@ export default function Nav() {
   return (
     <div className="nav">
       <div className="container navInner">
-        <Link className="brand" href="/" locale={lang}>
-          <Image src="/img/csi_logo_color.png" alt="CSI logo" width={46} height={46} />
-          <div className="name">{c.brand}</div>
+
+        {/* ===== BRAND ===== */}
+        <Link className="brandWrap" href="/" locale={lang}>
+          <div className="brandLogoWrap">
+            <Image
+              src="/img/csi_logo_color.png"
+              alt="International Cigar Sommelier Institute"
+              width={140}
+              height={140}
+              className="brandLogo"
+              priority
+            />
+          </div>
+
+          <div className="brandText">
+            <div>INTERNATIONAL</div>
+            <div>CIGAR</div>
+            <div>SOMMELIER</div>
+            <div>INSTITUTE</div>
+          </div>
         </Link>
 
+        {/* ===== MENU ===== */}
         <div className="menu">
           <Link href="/programs" locale={lang}>{c.nav_programs}</Link>
           <Link href="/about" locale={lang}>{c.nav_about}</Link>
@@ -33,6 +51,7 @@ export default function Nav() {
             <button className={lang === "de" ? "active" : ""} onClick={() => switchLocale("de")}>DE</button>
           </div>
         </div>
+
       </div>
     </div>
   );
