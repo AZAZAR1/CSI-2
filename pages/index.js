@@ -5,8 +5,8 @@ import { COPY } from "../components/copy";
 
 function HomeCopy() {
   const { locale } = useRouter();
-  const lang = locale || "en";
-  const c = COPY[lang];
+  const lang = (locale || "en").toLowerCase();
+  const c = COPY[lang] || COPY.en;
 
   return (
     <>
@@ -15,9 +15,15 @@ function HomeCopy() {
       <p className="lead">{c.lead}</p>
 
       <div className="ctaRow">
-        <Link className="btn primary" href="/programs" locale={lang}>{c.cta_programs}</Link>
-        <Link className="btn" href="/contact" locale={lang}>{c.nav_contact}</Link>
-        <Link className="btn" href="/partners" locale={lang}>{c.cta_partner}</Link>
+        <Link className="btn primary" href="/programs" locale={lang}>
+          {c.cta_programs}
+        </Link>
+        <Link className="btn" href="/contact" locale={lang}>
+          {c.nav_contact}
+        </Link>
+        <Link className="btn" href="/partners" locale={lang}>
+          {c.cta_partner}
+        </Link>
       </div>
 
       <div className="small" style={{ marginTop: 14 }}>
@@ -29,8 +35,8 @@ function HomeCopy() {
 
 function ProgramsPreview() {
   const { locale } = useRouter();
-  const lang = locale || "en";
-  const c = COPY[lang];
+  const lang = (locale || "en").toLowerCase();
+  const c = COPY[lang] || COPY.en;
 
   return (
     <>
@@ -42,21 +48,39 @@ function ProgramsPreview() {
           <h3>{c.ccs_title}</h3>
           <p>{c.ccs_blurb}</p>
           <hr className="sep" />
-          <Link className="btn primary" href="/ccs" locale={lang}>{c.apply}</Link>
+          <Link
+            className="btn primary"
+            href={{ pathname: "/contact", query: { program: "ccs" } }}
+            locale={lang}
+          >
+            {c.apply}
+          </Link>
         </div>
 
         <div className="card">
           <h3>{c.acs_title}</h3>
           <p>{c.acs_blurb}</p>
           <hr className="sep" />
-          <Link className="btn primary" href="/acs" locale={lang}>{c.apply}</Link>
+          <Link
+            className="btn primary"
+            href={{ pathname: "/contact", query: { program: "acs" } }}
+            locale={lang}
+          >
+            {c.apply}
+          </Link>
         </div>
 
         <div className="card">
           <h3>{c.amc_title}</h3>
           <p>{c.amc_blurb}</p>
           <hr className="sep" />
-          <Link className="btn primary" href="/amc" locale={lang}>{c.request_invite}</Link>
+          <Link
+            className="btn primary"
+            href={{ pathname: "/contact", query: { program: "amc" } }}
+            locale={lang}
+          >
+            {c.request_invite}
+          </Link>
         </div>
       </div>
     </>
@@ -68,14 +92,21 @@ export default function Home() {
     <Layout>
       <div className="hero">
         <div className="container heroGrid">
-          <div><HomeCopy /></div>
+          <div>
+            <HomeCopy />
+          </div>
 
-          <div className="heroCard">
-            <div className="heroFrame">
-              <img src="/img/hero.png" alt="Tobacco leaf macro" />
-            </div>
-            <div className="heroCardPad">
-              <div className="heroTag"><i>Conditioning • Aging • Mastery</i></div>
+          {/* HERO IMAGE: square, full-height, embedded motto */}
+          <div className="heroCard heroCardTight">
+            <div className="heroMediaSquare">
+              <img
+                src="/img/hero.png"
+                alt="Tobacco leaf macro"
+                className="heroMediaImg"
+              />
+              <div className="heroMediaOverlay">
+                Conditioning · Aging · Mastery
+              </div>
             </div>
           </div>
         </div>
