@@ -18,9 +18,20 @@ function HomeCopy() {
         <Link className="btn primary" href="/programs" locale={lang}>
           {c.cta_programs}
         </Link>
+
+        <a
+          className="btn"
+          href="/brochures/Cigar-Predictive-Mastery.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn more
+        </a>
+
         <Link className="btn" href="/contact" locale={lang}>
           {c.nav_contact}
         </Link>
+
         <Link className="btn" href="/partners" locale={lang}>
           {c.cta_partner}
         </Link>
@@ -96,7 +107,6 @@ export default function Home() {
             <HomeCopy />
           </div>
 
-          {/* HERO IMAGE: square, full-height, embedded motto */}
           <div className="heroCard heroCardTight">
             <div className="heroMediaSquare">
               <img
