@@ -36,6 +36,7 @@ export const COPY = {
       "Submissions are routed to CDCAdmin@cdc-advisory.com. You will receive an automatic confirmation email.",
     privacy: "Privacy",
     terms: "Terms"
+    learn_more: "Learn more",
   },
   fr: {
     brand: "International Cigar Sommelier Institute",
@@ -73,6 +74,7 @@ export const COPY = {
       "Les messages sont envoyés à CDCAdmin@cdc-advisory.com. Vous recevrez un email de confirmation automatique.",
     privacy: "Confidentialité",
     terms: "Conditions"
+    learn_more: "En savoir plus",
   },
   de: {
     brand: "International Cigar Sommelier Institute",
@@ -110,5 +112,6 @@ export const COPY = {
       "Nachrichten gehen an CDCAdmin@cdc-advisory.com. Sie erhalten eine automatische Bestätigung per E-Mail.",
     privacy: "Datenschutz",
     terms: "AGB"
+    learn_more: "Mehr erfahren",
   }
 };
