@@ -19,7 +19,8 @@ export default function System() {
         "Blend architecture (wrapper / binder / filler)"
       ],
       p2: `Peak flavor occurs within a narrow moisture activation window specific to each blend family.`,
-      p3: `The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.`
+      p3: `The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.`,
+      download: "Download system overview (PDF)"
     },
     fr: {
       title: "Système Peak-Flavor™",
@@ -33,7 +34,8 @@ export default function System() {
         "Architecture du mélange (cape / sous-cape / tripe)"
       ],
       p2: `Le pic aromatique se situe dans une fenêtre d’humidité précise, propre à chaque famille de mélanges.`,
-      p3: `Le système permet une mise en condition reproductible, un diagnostic avant allumage, et un passage contrôlé vers une expression aromatique maximale.`
+      p3: `Le système permet une mise en condition reproductible, un diagnostic avant allumage, et un passage contrôlé vers une expression aromatique maximale.`,
+      download: "Télécharger la présentation du système (PDF)"
     },
     de: {
       title: "Peak-Flavor-System™",
@@ -47,7 +49,8 @@ export default function System() {
         "Blend-Architektur (Deckblatt / Umblatt / Einlage)"
       ],
       p2: `Maximales Aroma liegt in einem engen, blend-spezifischen Feuchtefenster.`,
-      p3: `Das System ermöglicht reproduzierbares Staging, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur Peak-Aromatik.`
+      p3: `Das System ermöglicht reproduzierbares Staging, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur Peak-Aromatik.`,
+      download: "Systemübersicht herunterladen (PDF)"
     }
   };
 
@@ -58,7 +61,7 @@ export default function System() {
       <div className="section">
         <div className="container">
 
-          {/* HERO: non-cropping image container */}
+          {/* HERO IMAGE */}
           <div className="systemHero">
             <div className="systemImageWrap">
               <img
@@ -86,6 +89,8 @@ export default function System() {
             <p className="systemLead">{c.p1}</p>
 
             <div className="systemGrid">
+
+              {/* CORE DRIVERS */}
               <div className="systemCard">
                 <h3>Core drivers</h3>
                 <ul>
@@ -93,13 +98,27 @@ export default function System() {
                     <li key={b}>{b}</li>
                   ))}
                 </ul>
+
+                {/* PDF BUTTON */}
+                <div style={{ marginTop: 24 }}>
+                  <a
+                    className="btn"
+                    href="/brochures/Cigar-Peak-Flavor-System.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {c.download}
+                  </a>
+                </div>
               </div>
 
+              {/* PEAK WINDOW */}
               <div className="systemCard">
                 <h3>Peak window</h3>
                 <p>{c.p2}</p>
                 <p style={{ marginTop: 10 }}>{c.p3}</p>
               </div>
+
             </div>
           </section>
 
