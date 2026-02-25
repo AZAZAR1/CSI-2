@@ -25,7 +25,7 @@ function HomeCopy() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn more
+          {c.learn_more}
         </a>
 
         <Link className="btn" href="/contact" locale={lang}>
@@ -38,7 +38,7 @@ function HomeCopy() {
       </div>
 
       <div className="small" style={{ marginTop: 14 }}>
-        <i>Powered by the CDC's Cigar Peak-Flavor System™.</i>
+        <i>Powered by the Scientific Peak-Flavor System™.</i>
       </div>
     </>
   );
