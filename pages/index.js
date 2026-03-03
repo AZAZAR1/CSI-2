@@ -16,7 +16,7 @@ function HomeCopy() {
       <p className="lead">{c.lead}</p>
 
       <div className="ctaRow">
-        <Link className="btn primary" href="/programs" locale={lang}>
+        <Link className="btn primary" href="/courses" locale={lang}>
           {c.cta_programs}
         </Link>
 
@@ -52,8 +52,8 @@ function ProgramsPreview() {
 
   return (
     <>
-      <h2>{c.programs_title}</h2>
-      <p className="small">{c.programs_lead}</p>
+      <h2>{c.courses_title}</h2>
+      <p className="small">{c.courses_lead}</p>
 
       <div className="grid3" style={{ marginTop: 14 }}>
         <div className="card">
@@ -62,7 +62,7 @@ function ProgramsPreview() {
           <hr className="sep" />
           <Link
             className="btn primary"
-            href={{ pathname: "/contact", query: { program: "ccs" } }}
+            href={{ pathname: "/contact", query: { course: "ccs" } }}
             locale={lang}
           >
             {c.apply}
@@ -75,7 +75,7 @@ function ProgramsPreview() {
           <hr className="sep" />
           <Link
             className="btn primary"
-            href={{ pathname: "/contact", query: { program: "acs" } }}
+            href={{ pathname: "/contact", query: { course: "acs" } }}
             locale={lang}
           >
             {c.apply}
@@ -88,7 +88,7 @@ function ProgramsPreview() {
           <hr className="sep" />
           <Link
             className="btn primary"
-            href={{ pathname: "/contact", query: { program: "amc" } }}
+            href={{ pathname: "/contact", query: { course: "amc" } }}
             locale={lang}
           >
             {c.request_invite}
