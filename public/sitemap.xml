@@ -16,10 +16,10 @@
 
   <!-- PROGRAMS -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/en/programs</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/programs" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/programs" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/programs" />
+    <loc>https://cigarsommelierinstitute.com/en/courses</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/courses" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/courses" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/courses" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
