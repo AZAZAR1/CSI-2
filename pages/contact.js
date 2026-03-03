@@ -1,12 +1,17 @@
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 export default function Contact() {
-  const { locale, query } = useRouter();
-  const lang = (locale || "en").toLowerCase();
-  const program =
-    typeof query?.program === "string" ? query.program.toLowerCase() : "";
+  const router = useRouter();
+  const lang = (router.locale || "en").toLowerCase();
+
+  const program = useMemo(() => {
+    if (!router.isReady) return "";
+    const p = router.query?.program;
+    return typeof p === "string" ? p.toLowerCase() : "";
+  }, [router.isReady, router.query]);
 
   const copy = {
     en: {
@@ -25,9 +30,10 @@ export default function Contact() {
         amc: "AMC — Aficionado Master Class",
       },
       subjectPrefix: "Application",
-      seoTitle: "Application & Contact | International Cigar Sommelier Institute",
+      seoTitle:
+        "Application & Contact | International Cigar Sommelier Institute",
       seoDescription:
-        "Apply to CCS® or ACS®, request an invite to AMC™, or contact CSI for lounge partnerships. Discreet admissions via email or Swiss WhatsApp.",
+        "Apply to CCS®, ACS®, request an invite to AMC™, or contact CSI for lounge partnerships.",
     },
     fr: {
       title: "Candidature & Contact",
@@ -46,9 +52,10 @@ export default function Contact() {
         amc: "AMC — Aficionado Master Class",
       },
       subjectPrefix: "Candidature",
-      seoTitle: "Candidature & Contact | International Cigar Sommelier Institute",
+      seoTitle:
+        "Candidature & Contact | International Cigar Sommelier Institute",
       seoDescription:
-        "Candidater au CCS® ou à l’ACS®, demander une invitation à l’AMC™, ou contacter CSI pour des partenariats lounge. Admissions discrètes par email ou WhatsApp Suisse.",
+        "Candidater au CCS®, à l’ACS®, ou demander une invitation à l’AMC™.",
     },
     de: {
       title: "Bewerbung & Kontakt",
@@ -66,9 +73,10 @@ export default function Contact() {
         amc: "AMC — Aficionado Master Class",
       },
       subjectPrefix: "Bewerbung",
-      seoTitle: "Bewerbung & Kontakt | International Cigar Sommelier Institute",
+      seoTitle:
+        "Bewerbung & Kontakt | International Cigar Sommelier Institute",
       seoDescription:
-        "Bewerben Sie sich für CCS® oder ACS®, oder fragen Sie eine Einladung zur AMC™ an. Diskrete Kontaktaufnahme per E-Mail oder Schweizer WhatsApp.",
+        "Bewerben Sie sich für CCS®, ACS®, oder fragen Sie eine AMC™ Einladung an.",
     },
   };
 
@@ -79,6 +87,7 @@ export default function Contact() {
   const waLabel = "+41 76 230 57 91";
 
   const programNice = c.programNames?.[program] || "";
+
   const emailSubject = programNice
     ? `${c.subjectPrefix} — ${programNice}`
     : `${c.subjectPrefix} — CSI`;
@@ -99,11 +108,14 @@ export default function Contact() {
         <div className="container contactPage">
           <h1>{c.title}</h1>
 
-          {/* Program Notice */}
           {programNice && (
             <div className="contactProgramNotice">
-              <span className="contactProgramKicker">{c.programLabel}</span>
-              <div className="contactProgramValue">{programNice}</div>
+              <span className="contactProgramKicker">
+                {c.programLabel}
+              </span>
+              <div className="contactProgramValue">
+                {programNice}
+              </div>
             </div>
           )}
 
@@ -115,11 +127,6 @@ export default function Contact() {
             <a className="contactLink" href={mailtoHref}>
               {adminEmail}
             </a>
-            <div className="contactHint">
-              {lang === "en" && "Attach your CV (PDF preferred)."}
-              {lang === "fr" && "Joindre votre CV (PDF de préférence)."}
-              {lang === "de" && "Bitte Lebenslauf beifügen (PDF bevorzugt)."}
-            </div>
           </div>
 
           <div className="contactBlock">
@@ -132,11 +139,6 @@ export default function Contact() {
             >
               {waLabel}
             </a>
-            <div className="contactHint">
-              {lang === "en" && "For short questions or scheduling."}
-              {lang === "fr" && "Pour questions rapides ou prise de rendez-vous."}
-              {lang === "de" && "Für kurze Fragen oder Terminabstimmung."}
-            </div>
           </div>
 
           <p className="contactClosing">{c.closing}</p>
