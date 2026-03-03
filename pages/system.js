@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import { useRouter } from "next/router";
+import Link from "next/link";   // ✅ ADDED
 
 export default function System() {
   const { locale } = useRouter();
@@ -22,6 +23,9 @@ export default function System() {
       p2: `Peak flavor occurs within a narrow moisture activation window specific to each blend family.`,
       p3: `The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.`,
       download: "Download system overview (PDF)",
+      applicationsTitle: "Program Applications",
+      applicationsText:
+        "The Peak-Flavor System™ is deployed across ICSI’s professional and elite pathways:",
       seoTitle:
         "Peak-Flavor System™ | International Cigar Sommelier Institute",
       seoDescription:
@@ -41,6 +45,9 @@ export default function System() {
       p2: `Le pic aromatique se situe dans une fenêtre d’humidité précise, propre à chaque famille de mélanges.`,
       p3: `Le système permet une mise en condition reproductible, un diagnostic avant allumage, et un passage contrôlé vers une expression aromatique maximale.`,
       download: "Télécharger la présentation du système (PDF)",
+      applicationsTitle: "Applications du système",
+      applicationsText:
+        "Le système Peak-Flavor™ est appliqué dans les parcours professionnels et élite d’ICSI :",
       seoTitle:
         "Système Peak-Flavor™ | International Cigar Sommelier Institute",
       seoDescription:
@@ -60,6 +67,9 @@ export default function System() {
       p2: `Maximales Aroma liegt in einem engen, blend-spezifischen Feuchtefenster.`,
       p3: `Das System ermöglicht reproduzierbares Staging, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur Peak-Aromatik.`,
       download: "Systemübersicht herunterladen (PDF)",
+      applicationsTitle: "Programmanwendungen",
+      applicationsText:
+        "Das Peak-Flavor-System™ wird in den professionellen und Elite-Programmen von ICSI eingesetzt:",
       seoTitle:
         "Peak-Flavor-System™ | International Cigar Sommelier Institute",
       seoDescription:
@@ -89,7 +99,6 @@ export default function System() {
                 className="systemImage"
               />
             </div>
-
             <div className="systemHeroMeta">
               <div className="systemKicker">
                 <span className="systemPill">Framework</span>
@@ -109,7 +118,6 @@ export default function System() {
 
             <div className="systemGrid">
 
-              {/* CORE DRIVERS */}
               <div className="systemCard">
                 <h3>Core drivers</h3>
                 <ul>
@@ -130,7 +138,6 @@ export default function System() {
                 </div>
               </div>
 
-              {/* PEAK WINDOW */}
               <div className="systemCard">
                 <h3>Peak window</h3>
                 <p>{c.p2}</p>
@@ -138,6 +145,19 @@ export default function System() {
               </div>
 
             </div>
+
+            {/* 🔽 NEW INTERNAL LINKING SECTION */}
+            <div style={{ marginTop: 50 }}>
+              <h3>{c.applicationsTitle}</h3>
+              <p>{c.applicationsText}</p>
+              <ul style={{ marginTop: 12 }}>
+                <li><Link href="/ccs">Certified Cigar Sommelier (CCS®)</Link></li>
+                <li><Link href="/acs">Advanced Cigar Sommelier (ACS®)</Link></li>
+                <li><Link href="/amc">Aficionado Master Class (AMC™)</Link></li>
+              </ul>
+            </div>
+            {/* 🔼 END INTERNAL LINKING */}
+
           </section>
 
         </div>
