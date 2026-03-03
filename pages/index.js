@@ -17,7 +17,7 @@ function HomeCopy() {
 
       <div className="ctaRow">
         <Link className="btn primary" href="/courses" locale={lang}>
-          {c.cta_programs}
+          {c.cta_courses}
         </Link>
 
         <a
@@ -62,7 +62,7 @@ function CoursesPreview() {
           <hr className="sep" />
           <Link
             className="btn primary"
-            href={{ pathname: "/contact", query: { course: "ccs" } }}
+            href={{ pathname: "/contact", query: { program: "ccs" } }}
             locale={lang}
           >
             {c.apply}
@@ -75,7 +75,7 @@ function CoursesPreview() {
           <hr className="sep" />
           <Link
             className="btn primary"
-            href={{ pathname: "/contact", query: { course: "acs" } }}
+            href={{ pathname: "/contact", query: { program: "acs" } }}
             locale={lang}
           >
             {c.apply}
@@ -88,7 +88,7 @@ function CoursesPreview() {
           <hr className="sep" />
           <Link
             className="btn primary"
-            href={{ pathname: "/contact", query: { course: "amc" } }}
+            href={{ pathname: "/contact", query: { program: "amc" } }}
             locale={lang}
           >
             {c.request_invite}
@@ -102,9 +102,7 @@ function CoursesPreview() {
 export default function Home() {
   const { locale } = useRouter();
   const lang = (locale || "en").toLowerCase();
-  const c = COPY[lang] || COPY.en;
 
-  // Localized SEO for Home
   const seo = {
     en: {
       title: "International Cigar Sommelier Institute",
@@ -145,7 +143,9 @@ export default function Home() {
                 alt="Tobacco leaf macro"
                 className="heroMediaImg"
               />
-              <div className="heroMediaOverlay">Conditioning · Aging · Mastery</div>
+              <div className="heroMediaOverlay">
+                Conditioning · Aging · Mastery
+              </div>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function Home() {
 
       <div className="section">
         <div className="container">
-          <ProgramsPreview />
+          <CoursesPreview />
         </div>
       </div>
     </Layout>
