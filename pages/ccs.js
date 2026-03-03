@@ -79,7 +79,7 @@ export default function CCS() {
             <h3>Methodology</h3>
             <p>
               The CCS® curriculum is grounded in the 
-              <Link href="/peak-flavor-system">Peak-Flavor System™</Link>,
+              <Link href="/system">Peak-Flavor System™</Link>,
               our applied thermodynamic model for combustion and moisture control.
             </p>
           </div>
