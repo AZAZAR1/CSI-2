@@ -11,12 +11,12 @@ export default function Seo({ title, description, path = "/" }) {
   // Ensure path starts with "/"
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
 
-  // Next.js i18n: default locale typically has NO prefix in URL.
+  // Default locale should NOT be prefixed (per your config)
   const localePrefix = locale === defaultLocale ? "" : `/${locale}`;
   const canonical = `${baseUrl}${localePrefix}${cleanPath}`;
 
   // Hreflang URLs
-  const hrefEn = `${baseUrl}${cleanPath}`;        // default locale (en) no prefix
+  const hrefEn = `${baseUrl}${cleanPath}`;
   const hrefFr = `${baseUrl}/fr${cleanPath}`;
   const hrefDe = `${baseUrl}/de${cleanPath}`;
 
@@ -38,7 +38,10 @@ export default function Seo({ title, description, path = "/" }) {
       <link rel="alternate" hrefLang="x-default" href={hrefEn} />
 
       {/* Open Graph */}
-      <meta property="og:site_name" content="International Cigar Sommelier Institute" />
+      <meta
+        property="og:site_name"
+        content="International Cigar Sommelier Institute"
+      />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
