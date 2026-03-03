@@ -1,7 +1,7 @@
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import { useRouter } from "next/router";
-import Link from "next/link";   // ✅ ADDED
+import Link from "next/link";
 
 export default function System() {
   const { locale } = useRouter();
@@ -18,7 +18,7 @@ export default function System() {
         "Temperature-humidity coupling",
         "Pre-heat zone behavior",
         "Volatile activation thresholds",
-        "Blend architecture (wrapper / binder / filler)"
+        "Blend architecture (wrapper / binder / filler)",
       ],
       p2: `Peak flavor occurs within a narrow moisture activation window specific to each blend family.`,
       p3: `The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.`,
@@ -26,8 +26,9 @@ export default function System() {
       applicationsTitle: "Program Applications",
       applicationsText:
         "The Peak-Flavor System™ is deployed across ICSI’s professional and elite pathways:",
-      seoTitle:
-        "Peak-Flavor System™ | International Cigar Sommelier Institute",
+      furtherReadingLabel: "Further reading:",
+      furtherReadingTitle: "Ideal Cigar Humidity & Peak Flavor Timing",
+      seoTitle: "Peak-Flavor System™ | International Cigar Sommelier Institute",
       seoDescription:
         "The proprietary Peak-Flavor System™ applies thermodynamics, combustion science, and blend architecture modeling to achieve repeatable cigar excellence.",
     },
@@ -40,7 +41,7 @@ export default function System() {
         "Interaction température–humidité",
         "Comportement de la zone de pré-chauffe",
         "Seuils d’activation des composés volatils",
-        "Architecture du mélange (cape / sous-cape / tripe)"
+        "Architecture du mélange (cape / sous-cape / tripe)",
       ],
       p2: `Le pic aromatique se situe dans une fenêtre d’humidité précise, propre à chaque famille de mélanges.`,
       p3: `Le système permet une mise en condition reproductible, un diagnostic avant allumage, et un passage contrôlé vers une expression aromatique maximale.`,
@@ -48,8 +49,9 @@ export default function System() {
       applicationsTitle: "Applications du système",
       applicationsText:
         "Le système Peak-Flavor™ est appliqué dans les parcours professionnels et élite d’ICSI :",
-      seoTitle:
-        "Système Peak-Flavor™ | International Cigar Sommelier Institute",
+      furtherReadingLabel: "À lire aussi :",
+      furtherReadingTitle: "Humidité idéale & timing du pic aromatique",
+      seoTitle: "Système Peak-Flavor™ | International Cigar Sommelier Institute",
       seoDescription:
         "Le système propriétaire Peak-Flavor™ applique thermodynamique et science de combustion pour une excellence aromatique reproductible.",
     },
@@ -62,7 +64,7 @@ export default function System() {
         "Temperatur–Feuchte-Kopplung",
         "Verhalten der Vorwärmzone",
         "Aktivierungsschwellen flüchtiger Aromastoffe",
-        "Blend-Architektur (Deckblatt / Umblatt / Einlage)"
+        "Blend-Architektur (Deckblatt / Umblatt / Einlage)",
       ],
       p2: `Maximales Aroma liegt in einem engen, blend-spezifischen Feuchtefenster.`,
       p3: `Das System ermöglicht reproduzierbares Staging, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur Peak-Aromatik.`,
@@ -70,26 +72,22 @@ export default function System() {
       applicationsTitle: "Programmanwendungen",
       applicationsText:
         "Das Peak-Flavor-System™ wird in den professionellen und Elite-Programmen von ICSI eingesetzt:",
-      seoTitle:
-        "Peak-Flavor-System™ | International Cigar Sommelier Institute",
+      furtherReadingLabel: "Weiterführend:",
+      furtherReadingTitle: "Ideale Zigarrenfeuchte & Peak-Flavor Timing",
+      seoTitle: "Peak-Flavor-System™ | International Cigar Sommelier Institute",
       seoDescription:
         "Das proprietäre Peak-Flavor-System™ verbindet Thermodynamik und Verbrennungsphysik für reproduzierbare Zigarren-Exzellenz.",
-    }
+    },
   };
 
   const c = copy[lang] || copy.en;
 
   return (
     <Layout>
-      <Seo
-        title={c.seoTitle}
-        description={c.seoDescription}
-        path="/system"
-      />
+      <Seo title={c.seoTitle} description={c.seoDescription} path="/system" />
 
       <div className="section">
         <div className="container">
-
           {/* HERO IMAGE */}
           <div className="systemHero">
             <div className="systemImageWrap">
@@ -99,6 +97,7 @@ export default function System() {
                 className="systemImage"
               />
             </div>
+
             <div className="systemHeroMeta">
               <div className="systemKicker">
                 <span className="systemPill">Framework</span>
@@ -117,7 +116,7 @@ export default function System() {
             <p className="systemLead">{c.p1}</p>
 
             <div className="systemGrid">
-
+              {/* CORE DRIVERS */}
               <div className="systemCard">
                 <h3>Core drivers</h3>
                 <ul>
@@ -138,28 +137,42 @@ export default function System() {
                 </div>
               </div>
 
+              {/* PEAK WINDOW */}
               <div className="systemCard">
                 <h3>Peak window</h3>
                 <p>{c.p2}</p>
                 <p style={{ marginTop: 10 }}>{c.p3}</p>
-              </div>
 
+                {/* Refined internal link (discreet) */}
+                <div style={{ marginTop: 18 }}>
+                  <small>
+                    {c.furtherReadingLabel}{" "}
+                    <Link href="/ideal-cigar-humidity">
+                      {c.furtherReadingTitle}
+                    </Link>
+                  </small>
+                </div>
+              </div>
             </div>
 
-            {/* 🔽 NEW INTERNAL LINKING SECTION */}
+            {/* INTERNAL LINKING SECTION */}
             <div style={{ marginTop: 50 }}>
               <h3>{c.applicationsTitle}</h3>
               <p>{c.applicationsText}</p>
+
               <ul style={{ marginTop: 12 }}>
-                <li><Link href="/ccs">Certified Cigar Sommelier (CCS®)</Link></li>
-                <li><Link href="/acs">Advanced Cigar Sommelier (ACS®)</Link></li>
-                <li><Link href="/amc">Aficionado Master Class (AMC™)</Link></li>
+                <li>
+                  <Link href="/ccs">Certified Cigar Sommelier (CCS®)</Link>
+                </li>
+                <li>
+                  <Link href="/acs">Advanced Cigar Sommelier (ACS®)</Link>
+                </li>
+                <li>
+                  <Link href="/amc">Aficionado Master Class (AMC™)</Link>
+                </li>
               </ul>
             </div>
-            {/* 🔼 END INTERNAL LINKING */}
-
           </section>
-
         </div>
       </div>
     </Layout>
