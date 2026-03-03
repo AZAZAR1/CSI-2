@@ -9,17 +9,17 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/programs",
+        source: "/courses",
         destination: "/courses",
         permanent: true
       },
       {
-        source: "/fr/programs",
+        source: "/fr/courses",
         destination: "/fr/courses",
         permanent: true
       },
       {
-        source: "/de/programs",
+        source: "/de/courses",
         destination: "/de/courses",
         permanent: true
       }
