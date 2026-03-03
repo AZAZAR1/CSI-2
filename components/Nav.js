@@ -39,7 +39,7 @@ export default function Nav() {
 
         {/* ===== MENU ===== */}
         <div className="menu">
-          <Link href="/programs" locale={lang}>{c.nav_programs}</Link>
+          <Link href="/courses" locale={lang}>{c.nav_programs}</Link>
           <Link href="/about" locale={lang}>{c.nav_about}</Link>
           <Link href="/system" locale={lang}>{c.nav_system}</Link>
           <Link href="/partners" locale={lang}>{c.nav_partners}</Link>
