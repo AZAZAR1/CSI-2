@@ -1,68 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+  <!-- HOME -->
   <url>
     <loc>https://cigarsommelierinstitute.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cigarsommelierinstitute.com/" />
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
+  <!-- PROGRAMS -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/programs</loc>
+    <loc>https://cigarsommelierinstitute.com/en/programs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/programs" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/programs" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/programs" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- CCS -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/ccs</loc>
+    <loc>https://cigarsommelierinstitute.com/en/ccs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/ccs" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/ccs" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/ccs" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- ACS -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/acs</loc>
+    <loc>https://cigarsommelierinstitute.com/en/acs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/acs" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/acs" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/acs" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- AMC -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/amc</loc>
+    <loc>https://cigarsommelierinstitute.com/en/amc</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/amc" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/amc" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/amc" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- PEAK-FLAVOR SYSTEM -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/peak-flavor-system</loc>
+    <loc>https://cigarsommelierinstitute.com/en/peak-flavor-system</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/peak-flavor-system" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/peak-flavor-system" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/peak-flavor-system" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- ABOUT -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/about</loc>
+    <loc>https://cigarsommelierinstitute.com/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/about" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- PARTNERS -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/partners</loc>
+    <loc>https://cigarsommelierinstitute.com/en/partners</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/partners" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/partners" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/partners" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- CONTACT -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/contact</loc>
+    <loc>https://cigarsommelierinstitute.com/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/contact" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- PRIVACY -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/privacy</loc>
+    <loc>https://cigarsommelierinstitute.com/en/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/privacy" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/privacy" />
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
+  <!-- TERMS -->
   <url>
-    <loc>https://cigarsommelierinstitute.com/terms</loc>
+    <loc>https://cigarsommelierinstitute.com/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cigarsommelierinstitute.com/en/terms" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cigarsommelierinstitute.com/fr/terms" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://cigarsommelierinstitute.com/de/terms" />
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
