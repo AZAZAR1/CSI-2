@@ -1,10 +1,12 @@
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import { useRouter } from "next/router";
 
 export default function Contact() {
   const { locale, query } = useRouter();
   const lang = (locale || "en").toLowerCase();
-  const program = typeof query?.program === "string" ? query.program.toLowerCase() : "";
+  const program =
+    typeof query?.program === "string" ? query.program.toLowerCase() : "";
 
   const copy = {
     en: {
@@ -14,34 +16,44 @@ export default function Contact() {
         "Please send your CV or professional resume along with a short statement of intent.",
       emailLabel: "Email your application:",
       whatsappLabel: "Or contact us directly via Swiss WhatsApp:",
-      closing: "All submissions are treated with discretion and confidentiality.",
+      closing:
+        "All submissions are treated with discretion and confidentiality.",
       programLabel: "Selected program",
       programNames: {
         ccs: "CCS — Certified Cigar Sommelier",
         acs: "ACS — Advanced Cigar Sommelier",
-        amc: "AMC — Aficionado Master Class"
+        amc: "AMC — Aficionado Master Class",
       },
-      subjectPrefix: "Application"
+      subjectPrefix: "Application",
+      seoTitle: "Application & Contact | International Cigar Sommelier Institute",
+      seoDescription:
+        "Apply to CCS® or ACS®, request an invite to AMC™, or contact CSI for lounge partnerships. Discreet admissions via email or Swiss WhatsApp.",
     },
     fr: {
       title: "Candidature & Contact",
-      intro: "Les candidatures sont examinées individuellement. L’admission est sélective.",
+      intro:
+        "Les candidatures sont examinées individuellement. L’admission est sélective.",
       instructions:
         "Veuillez transmettre votre CV accompagné d’une courte lettre d’intention.",
       emailLabel: "Envoyer votre candidature par email :",
       whatsappLabel: "Ou nous contacter via WhatsApp (Suisse) :",
-      closing: "Toutes les candidatures sont traitées avec discrétion et confidentialité.",
+      closing:
+        "Toutes les candidatures sont traitées avec discrétion et confidentialité.",
       programLabel: "Programme sélectionné",
       programNames: {
         ccs: "CCS — Certified Cigar Sommelier",
         acs: "ACS — Advanced Cigar Sommelier",
-        amc: "AMC — Aficionado Master Class"
+        amc: "AMC — Aficionado Master Class",
       },
-      subjectPrefix: "Candidature"
+      subjectPrefix: "Candidature",
+      seoTitle: "Candidature & Contact | International Cigar Sommelier Institute",
+      seoDescription:
+        "Candidater au CCS® ou à l’ACS®, demander une invitation à l’AMC™, ou contacter CSI pour des partenariats lounge. Admissions discrètes par email ou WhatsApp Suisse.",
     },
     de: {
       title: "Bewerbung & Kontakt",
-      intro: "Bewerbungen werden individuell geprüft. Die Zulassung ist selektiv.",
+      intro:
+        "Bewerbungen werden individuell geprüft. Die Zulassung ist selektiv.",
       instructions:
         "Bitte senden Sie Ihren Lebenslauf sowie ein kurzes Motivationsschreiben.",
       emailLabel: "Bewerbung per E-Mail:",
@@ -51,10 +63,13 @@ export default function Contact() {
       programNames: {
         ccs: "CCS — Certified Cigar Sommelier",
         acs: "ACS — Advanced Cigar Sommelier",
-        amc: "AMC — Aficionado Master Class"
+        amc: "AMC — Aficionado Master Class",
       },
-      subjectPrefix: "Bewerbung"
-    }
+      subjectPrefix: "Bewerbung",
+      seoTitle: "Bewerbung & Kontakt | International Cigar Sommelier Institute",
+      seoDescription:
+        "Bewerben Sie sich für CCS® oder ACS®, oder fragen Sie eine Einladung zur AMC™ an. Diskrete Kontaktaufnahme per E-Mail oder Schweizer WhatsApp.",
+    },
   };
 
   const c = copy[lang] || copy.en;
@@ -68,10 +83,18 @@ export default function Contact() {
     ? `${c.subjectPrefix} — ${programNice}`
     : `${c.subjectPrefix} — CSI`;
 
-  const mailtoHref = `mailto:${adminEmail}?subject=${encodeURIComponent(emailSubject)}`;
+  const mailtoHref = `mailto:${adminEmail}?subject=${encodeURIComponent(
+    emailSubject
+  )}`;
 
   return (
     <Layout>
+      <Seo
+        title={c.seoTitle}
+        description={c.seoDescription}
+        path="/contact"
+      />
+
       <div className="section">
         <div className="container contactPage">
           <h1>{c.title}</h1>
