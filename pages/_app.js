@@ -7,6 +7,65 @@ export default function App({ Component, pageProps }) {
   const description =
     "Swiss luxury. Scientific authority. Discreet mastery of the cigar experience through the Peak-Flavor System™.";
 
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: siteName,
+    url: siteUrl,
+    logo: `${siteUrl}/img/csi_logo_color.png`,
+    description: description,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Geneva",
+      addressCountry: "Switzerland",
+    },
+    founder: {
+      "@type": "Person",
+      name: "Anthony Azar",
+      jobTitle: "Founder",
+    },
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteName,
+    url: siteUrl,
+  };
+
+  const courseSchemas = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      name: "Certified Cigar Sommelier (CCS®)",
+      provider: {
+        "@type": "Organization",
+        name: siteName,
+        sameAs: siteUrl,
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      name: "Advanced Cigar Sommelier (ACS®)",
+      provider: {
+        "@type": "Organization",
+        name: siteName,
+        sameAs: siteUrl,
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      name: "Aficionado Master Class (AMC™)",
+      provider: {
+        "@type": "Organization",
+        name: siteName,
+        sameAs: siteUrl,
+      },
+    },
+  ];
+
   return (
     <>
       <Head>
@@ -16,7 +75,7 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/img/csi_logo_emboss.png" />
 
-        {/* Canonical Base */}
+        {/* OpenGraph */}
         <meta property="og:site_name" content={siteName} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={siteName} />
@@ -36,29 +95,32 @@ export default function App({ Component, pageProps }) {
         {/* Theme */}
         <meta name="theme-color" content="#ffffff" />
 
-        {/* Structured Data */}
+        {/* Structured Data: Organization */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "EducationalOrganization",
-              name: siteName,
-              url: siteUrl,
-              logo: `${siteUrl}/img/csi_logo_color.png`,
-              description: description,
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "Geneva",
-                addressCountry: "Switzerland",
-              },
-              founder: {
-                "@type": "Person",
-                name: "Anthony Azar",
-              },
-            }),
+            __html: JSON.stringify(orgSchema),
           }}
         />
+
+        {/* Structured Data: Website */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
+
+        {/* Structured Data: Courses */}
+        {courseSchemas.map((schema, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(schema),
+            }}
+          />
+        ))}
       </Head>
 
       <Component {...pageProps} />
