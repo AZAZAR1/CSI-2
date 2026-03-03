@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { COPY } from "../components/copy";
@@ -99,8 +100,38 @@ function ProgramsPreview() {
 }
 
 export default function Home() {
+  const { locale } = useRouter();
+  const lang = (locale || "en").toLowerCase();
+  const c = COPY[lang] || COPY.en;
+
+  // Localized SEO for Home
+  const seo = {
+    en: {
+      title: "International Cigar Sommelier Institute",
+      description:
+        "Swiss luxury. Scientific authority. ICSI equips candidates, lounges, and collectors to achieve repeatable peak-flavor cigar performance.",
+      path: "/",
+    },
+    fr: {
+      title: "International Cigar Sommelier Institute",
+      description:
+        "Luxe suisse. Autorité scientifique. ICSI prépare candidats, lounges et collectionneurs à une performance aromatique reproductible.",
+      path: "/",
+    },
+    de: {
+      title: "International Cigar Sommelier Institute",
+      description:
+        "Schweizer Luxus. Wissenschaftliche Autorität. ICSI befähigt Kandidaten, Lounges und Sammler zu reproduzierbarer Peak-Flavor-Performance.",
+      path: "/",
+    },
+  };
+
+  const s = seo[lang] || seo.en;
+
   return (
     <Layout>
+      <Seo title={s.title} description={s.description} path={s.path} />
+
       <div className="hero">
         <div className="container heroGrid">
           <div>
@@ -114,9 +145,7 @@ export default function Home() {
                 alt="Tobacco leaf macro"
                 className="heroMediaImg"
               />
-              <div className="heroMediaOverlay">
-                Conditioning · Aging · Mastery
-              </div>
+              <div className="heroMediaOverlay">Conditioning · Aging · Mastery</div>
             </div>
           </div>
         </div>
