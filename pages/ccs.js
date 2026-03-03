@@ -9,23 +9,24 @@ export default function CCS() {
   const lang = (locale || "en").toLowerCase();
   const c = COPY[lang] || COPY.en;
 
+  // Localized SEO metadata
   const seo = {
     en: {
-      title: "Certified Cigar Sommelier (CCS®) | ICSI",
+      title: "Certified Cigar Sommelier (CCS®) | International Cigar Sommelier Institute",
       description:
-        "CCS® is the professional standard in cigar mastery—control combustion, moisture, and flavor dynamics with scientific precision.",
+        "CCS® is the professional standard in cigar mastery. Control combustion, moisture equilibrium, and flavor dynamics with scientific precision.",
       path: "/ccs",
     },
     fr: {
-      title: "Certified Cigar Sommelier (CCS®) | ICSI",
+      title: "Certified Cigar Sommelier (CCS®) | International Cigar Sommelier Institute",
       description:
-        "CCS® est la norme professionnelle du sommelier cigare—maîtrisez combustion, humidité et dynamique aromatique avec précision scientifique.",
+        "CCS® est la norme professionnelle du sommelier cigare. Maîtrisez combustion, humidité et dynamique aromatique avec précision scientifique.",
       path: "/ccs",
     },
     de: {
-      title: "Certified Cigar Sommelier (CCS®) | ICSI",
+      title: "Certified Cigar Sommelier (CCS®) | International Cigar Sommelier Institute",
       description:
-        "CCS® ist der professionelle Standard für Zigarrenkompetenz—Verbrennung, Feuchte und Aromadynamik wissenschaftlich beherrschen.",
+        "CCS® ist der professionelle Standard für Zigarrenkompetenz. Verbrennung, Feuchte und Aromadynamik wissenschaftlich beherrschen.",
       path: "/ccs",
     },
   };
@@ -34,7 +35,11 @@ export default function CCS() {
 
   return (
     <Layout>
-      <Seo title={s.title} description={s.description} path={s.path} />
+      <Seo
+        title={s.title}
+        description={s.description}
+        path={s.path}
+      />
 
       <div className="section">
         <div className="container">
@@ -55,7 +60,10 @@ export default function CCS() {
               className="btn primary"
               href={{
                 pathname: "/contact",
-                query: { subject: "Application — CCS", program: "ccs" },
+                query: {
+                  subject: "Application — CCS",
+                  program: "ccs",
+                },
               }}
               locale={lang}
             >
