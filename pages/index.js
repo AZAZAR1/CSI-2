@@ -45,7 +45,7 @@ function HomeCopy() {
   );
 }
 
-function ProgramsPreview() {
+function CoursesPreview() {
   const { locale } = useRouter();
   const lang = (locale || "en").toLowerCase();
   const c = COPY[lang] || COPY.en;
