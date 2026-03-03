@@ -22,4 +22,12 @@ export default function About() {
       </div>
     </Layout>
   );
+
+import Seo from "../components/Seo";
+...
+<Seo
+  title="Programs"
+  description="Three pathways: CCS®, ACS®, and AMC™—Swiss institutional training and elite optimization."
+  path="/programs"
+/>
 }
