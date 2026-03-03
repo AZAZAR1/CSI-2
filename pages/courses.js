@@ -12,24 +12,24 @@ export default function Programs() {
   const seo = {
     en: {
       title:
-        "Programs | International Cigar Sommelier Institute",
+        "Cigar Courses | International Cigar Sommelier Institute",
       description:
         "Explore ICSI’s three pathways: CCS®, ACS®, and AMC™. Swiss institutional training and elite optimization grounded in the Peak-Flavor System™.",
-      path: "/programs",
+      path: "/courses",
     },
     fr: {
       title:
-        "Programmes | International Cigar Sommelier Institute",
+        "Cours de Cigare | International Cigar Sommelier Institute",
       description:
         "Découvrez les trois parcours d’ICSI : CCS®, ACS® et AMC™. Formation institutionnelle suisse et optimisation élite fondées sur le Peak-Flavor System™.",
-      path: "/programs",
+      path: "/courses",
     },
     de: {
       title:
         "Programme | International Cigar Sommelier Institute",
       description:
         "Entdecken Sie die drei Wege von ICSI: CCS®, ACS® und AMC™. Schweizer institutionelle Ausbildung und Elite-Optimierung auf Basis des Peak-Flavor-Systems™.",
-      path: "/programs",
+      path: "/courses",
     },
   };
 
