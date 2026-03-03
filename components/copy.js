@@ -1,7 +1,7 @@
 export const COPY = {
   en: {
     brand: "International Cigar Sommelier Institute",
-    nav_programs: "Programs",
+    nav_courses: "Courses",
     nav_about: "About",
     nav_system: "Peak-Flavor System™",
     nav_partners: "Partner Lounges",
@@ -10,10 +10,10 @@ export const COPY = {
     h1: "Perfecting the cigar experience.",
     lead:
       "ICSI equips candidates, lounges, and collectors with a rigorous, discreet methodology to achieve the Blender's peak-flavor dynamics. Ensuring a perfect and repeatable smoking experience every time.",
-    cta_programs: "Explore programs",
+    cta_courses: "Explore courses",
     cta_partner: "Partner with CSI",
-    programs_title: "Programs",
-    programs_lead:
+    courses_title: "Courses",
+    courses_lead:
       "Three pathways: professional certification and elite optimization.",
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
@@ -40,7 +40,7 @@ export const COPY = {
   },
   fr: {
     brand: "International Cigar Sommelier Institute",
-    nav_programs: "Programmes",
+    nav_courses: "Cours",
     nav_about: "À propos",
     nav_system: "Peak-Flavor System™",
     nav_partners: "Lounges partenaires",
@@ -49,10 +49,10 @@ export const COPY = {
     h1: "Concevoir l’expérience de cigare parfaite.",
     lead:
       "ICSI forme et prépare ses candidats, lounges de cigare et collectionneurs à l'excellence avec une méthode rigoureuse et discrète pour contrôler la combustion, humidité et dynamique aromatique. Cela afin d’obtenir une excellence reproductible.",
-    cta_programs: "Découvrir les programmes",
+    cta_courses: "Découvrir les cours",
     cta_partner: "Devenir partenaire",
-    programs_title: "Programmes",
-    programs_lead:
+    courses_title: "Cours",
+    courses_lead:
       "Trois parcours: certification professionnelle et optimisation élite.",
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
@@ -78,7 +78,7 @@ export const COPY = {
   },
   de: {
     brand: "International Cigar Sommelier Institute",
-    nav_programs: "Programme",
+    nav_courses: "Kurse",
     nav_about: "Über ICSI",
     nav_system: "Peak-Flavor System™",
     nav_partners: "Partner-Lounges",
@@ -87,10 +87,10 @@ export const COPY = {
     h1: "Das perfekte Zigarrenerlebnis,präzise gestaltet.",
     lead:
       "CSI vermittelt Kandidaten, Lounges und Sammlern eine rigorose, diskrete Methodik zur Kontrolle von Verbrennung, Feuchte und Aromadynamik — für reproduzierbare Exzellenz.",
-    cta_programs: "Programme ansehen",
+    cta_courses: "Kurs ansehen",
     cta_partner: "Partner werden",
-    programs_title: "Programme",
-    programs_lead:
+    courses_title: "Kurs",
+    courses_lead:
       "Drei Wege: professionelle Zertifizierung und Elite-Optimierung.",
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
