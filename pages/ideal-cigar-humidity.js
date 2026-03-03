@@ -15,7 +15,7 @@ export default function IdealCigarHumidity() {
         "The science behind ideal cigar humidity, combustion stability, ammonia release, and peak flavor timing—an authority article by the International Cigar Sommelier Institute.",
       title: "Ideal Cigar Humidity, Combustion Stability & Peak Flavor Timing",
       lead:
-        "Most cigars are stored within a generic humidity range. Very few are conditioned according to combustion science, volatile activation, and blend architecture. The difference determines whether a cigar expresses its intended flavor—or suppresses it.",
+        "Most cigars are stored within a generic humidity range. Very few are conditioned according to combustion science, volatile activation, and blend architecture. The difference determines whether a cigar expresses its intended flavor, or suppresses it.",
       s1Title: "Ideal Cigar Humidity Is Not a Fixed Number",
       s1P1:
         "The industry often promotes a universal relative humidity (RH) target. In practice, no single value is ideal for all cigars. Tobacco leaf is hygroscopic, meaning it continuously exchanges moisture with its environment.",
@@ -48,7 +48,7 @@ export default function IdealCigarHumidity() {
       s3P2Intro: "This is often perceived as:",
       s3Bullets: ["Throat irritation", "Nasal sharpness", "Unpleasant chemical notes"],
       s3P3:
-        "Ammonia during smoking is frequently not a failure of aging—but a failure of environmental calibration.",
+        "Ammonia during smoking is frequently not a failure of aging, but a failure of environmental calibration.",
       s4Title: "Peak Flavor Timing",
       s4P1: "Peak flavor does not occur randomly. It occurs when:",
       s4Bullets: [
@@ -74,7 +74,7 @@ export default function IdealCigarHumidity() {
       closingStrong:
         "Proper humidity is not about preservation. It is about activation.",
       closingP:
-        "When moisture, combustion, and chemistry align, a cigar does not merely burn correctly—it expresses its intended identity.",
+        "When moisture, combustion, and chemistry align, a cigar does not merely burn correctly, it expresses its intended identity.",
       relatedTitle: "Related",
       relatedLink: "Peak-Flavor System™ overview",
     },
@@ -86,7 +86,7 @@ export default function IdealCigarHumidity() {
         "La science derrière l’humidité idéale du cigare, la stabilité de combustion, l’ammoniac et le timing du pic aromatique — un article d’autorité ICSI.",
       title: "Humidité idéale, combustion et timing du pic aromatique",
       lead:
-        "La plupart des cigares sont conservés dans une plage d’humidité générique. Très peu sont conditionnés selon la science de la combustion, l’activation des volatils et l’architecture du blend. La différence détermine si le cigare exprime son intention aromatique — ou la supprime.",
+        "La plupart des cigares sont conservés dans une plage d’humidité générique. Très peu sont conditionnés selon la science de la combustion, l’activation des volatils et l’architecture du blend. La différence détermine si le cigare exprime son intention aromatique, ou la supprime.",
       s1Title: "L’humidité idéale n’est pas un chiffre unique",
       s1P1:
         "L’industrie promeut souvent une cible universelle de RH. En pratique, aucune valeur n’est idéale pour tous les cigares. Le tabac est hygroscopique : il échange en continu de l’humidité avec son environnement.",
@@ -119,7 +119,7 @@ export default function IdealCigarHumidity() {
       s3P2Intro: "Ceci est souvent perçu comme :",
       s3Bullets: ["Irritation de la gorge", "Agressivité nasale", "Notes chimiques désagréables"],
       s3P3:
-        "L’ammoniac à la dégustation n’est souvent pas un échec du vieillissement — mais un échec de calibration environnementale.",
+        "L’ammoniac à la dégustation n’est souvent pas un échec du vieillissement, mais un échec de calibration environnementale.",
       s4Title: "Timing du pic aromatique",
       s4P1: "Le pic aromatique n’est pas aléatoire. Il se produit lorsque :",
       s4Bullets: [
@@ -145,7 +145,7 @@ export default function IdealCigarHumidity() {
       closingStrong:
         "Une bonne humidité n’est pas une question de conservation. C’est une question d’activation.",
       closingP:
-        "Quand humidité, combustion et chimie s’alignent, le cigare ne brûle pas seulement correctement — il exprime son identité.",
+        "Quand humidité, combustion et chimie s’alignent, le cigare ne brûle pas seulement correctement, il exprime son identité.",
       relatedTitle: "À lire aussi",
       relatedLink: "Présentation du Peak-Flavor System™",
     },
@@ -154,10 +154,10 @@ export default function IdealCigarHumidity() {
       seoTitle:
         "Ideale Zigarrenfeuchte, Verbrennungsstabilität & Peak-Flavor Timing | ICSI",
       seoDescription:
-        "Die Wissenschaft hinter idealer Zigarrenfeuchte, Verbrennungsstabilität, Ammoniak-Freisetzung und Peak-Flavor Timing — ein ICSI Authority-Artikel.",
+        "Die Wissenschaft hinter idealer Zigarrenfeuchte, Verbrennungsstabilität, Ammoniak-Freisetzung und Peak-Flavor Timing, ein ICSI Authority-Artikel.",
       title: "Ideale Zigarrenfeuchte, Verbrennungsstabilität & Peak-Flavor Timing",
       lead:
-        "Viele Zigarren werden in einer generischen Feuchte-Spanne gelagert. Nur wenige werden nach Verbrennungswissenschaft, Volatil-Aktivierung und Blend-Architektur konditioniert. Genau das entscheidet, ob eine Zigarre ihre beabsichtigte Aromatik zeigt — oder nicht.",
+        "Viele Zigarren werden in einer generischen Feuchte-Spanne gelagert. Nur wenige werden nach Verbrennungswissenschaft, Volatil-Aktivierung und Blend-Architektur konditioniert. Genau das entscheidet, ob eine Zigarre ihre beabsichtigte Aromatik zeigt, oder nicht.",
       s1Title: "Ideale Feuchte ist keine feste Zahl",
       s1P1:
         "Oft wird ein universeller RH-Wert propagiert. In der Praxis ist kein einzelner Wert für alle Zigarren ideal. Tabak ist hygroskopisch und tauscht kontinuierlich Feuchte mit seiner Umgebung aus.",
@@ -183,7 +183,7 @@ export default function IdealCigarHumidity() {
         "Bei zu niedriger Feuchte beschleunigt die Verbrennung über das optimale thermische Profil hinaus. Das kann erzeugen:",
       s2BulletsB: ["Scharfer Rauch", "Überhitzen", "Komprimierte Aromatik", "Risse"],
       s2P4:
-        "In beiden Fällen ist die Ursache thermodynamische Fehlkalibrierung — nicht Tabakqualität.",
+        "In beiden Fällen ist die Ursache thermodynamische Fehlkalibrierung, nicht Tabakqualität.",
       s3Title: "Ammoniak: Verbrennungs- und Konditionierungsproblem",
       s3P1:
         "Ammoniak ist ein natürlicher Nebenprodukt der Fermentation. In korrekt gereiften Zigarren nimmt er mit der Zeit ab. Bei Fehlalignment von Temperatur und Feuchte-Aktivierung kann Ammoniak beim Rauchen jedoch stärker freigesetzt werden.",
@@ -216,7 +216,7 @@ export default function IdealCigarHumidity() {
       closingStrong:
         "Feuchte ist nicht nur Konservierung. Sie ist Aktivierung.",
       closingP:
-        "Wenn Feuchte, Verbrennung und Chemie übereinstimmen, brennt eine Zigarre nicht nur korrekt — sie zeigt ihre Identität.",
+        "Wenn Feuchte, Verbrennung und Chemie übereinstimmen, brennt eine Zigarre nicht nur korrekt, sie zeigt ihre Identität.",
       relatedTitle: "Weiterführend",
       relatedLink: "Peak-Flavor System™ Übersicht",
     },
