@@ -541,3 +541,26 @@ label{font-size:12px;color:var(--muted)}
   font-size: 14px;
   opacity: .85;
 }
+
+/* Add to styles/globals.css (append at bottom) */
+
+.articleProse h2 {
+  margin-top: 18px;
+}
+
+.articleProse h3 {
+  margin-top: 14px;
+}
+
+.articleProse .small {
+  line-height: 1.7;
+}
+
+/* Optional: nicer in-article anchor links */
+a.contactLink {
+  text-decoration: none;
+}
+
+a.contactLink:hover {
+  text-decoration: underline;
+}
