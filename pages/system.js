@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import Seo from "../components/Seo";
 import { useRouter } from "next/router";
 
 export default function System() {
@@ -20,7 +21,11 @@ export default function System() {
       ],
       p2: `Peak flavor occurs within a narrow moisture activation window specific to each blend family.`,
       p3: `The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.`,
-      download: "Download system overview (PDF)"
+      download: "Download system overview (PDF)",
+      seoTitle:
+        "Peak-Flavor System™ | International Cigar Sommelier Institute",
+      seoDescription:
+        "The proprietary Peak-Flavor System™ applies thermodynamics, combustion science, and blend architecture modeling to achieve repeatable cigar excellence.",
     },
     fr: {
       title: "Système Peak-Flavor™",
@@ -35,7 +40,11 @@ export default function System() {
       ],
       p2: `Le pic aromatique se situe dans une fenêtre d’humidité précise, propre à chaque famille de mélanges.`,
       p3: `Le système permet une mise en condition reproductible, un diagnostic avant allumage, et un passage contrôlé vers une expression aromatique maximale.`,
-      download: "Télécharger la présentation du système (PDF)"
+      download: "Télécharger la présentation du système (PDF)",
+      seoTitle:
+        "Système Peak-Flavor™ | International Cigar Sommelier Institute",
+      seoDescription:
+        "Le système propriétaire Peak-Flavor™ applique thermodynamique et science de combustion pour une excellence aromatique reproductible.",
     },
     de: {
       title: "Peak-Flavor-System™",
@@ -50,7 +59,11 @@ export default function System() {
       ],
       p2: `Maximales Aroma liegt in einem engen, blend-spezifischen Feuchtefenster.`,
       p3: `Das System ermöglicht reproduzierbares Staging, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur Peak-Aromatik.`,
-      download: "Systemübersicht herunterladen (PDF)"
+      download: "Systemübersicht herunterladen (PDF)",
+      seoTitle:
+        "Peak-Flavor-System™ | International Cigar Sommelier Institute",
+      seoDescription:
+        "Das proprietäre Peak-Flavor-System™ verbindet Thermodynamik und Verbrennungsphysik für reproduzierbare Zigarren-Exzellenz.",
     }
   };
 
@@ -58,6 +71,12 @@ export default function System() {
 
   return (
     <Layout>
+      <Seo
+        title={c.seoTitle}
+        description={c.seoDescription}
+        path="/system"
+      />
+
       <div className="section">
         <div className="container">
 
@@ -99,7 +118,6 @@ export default function System() {
                   ))}
                 </ul>
 
-                {/* PDF BUTTON */}
                 <div style={{ marginTop: 24 }}>
                   <a
                     className="btn"
