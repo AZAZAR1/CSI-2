@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { COPY } from "../components/copy";
 
@@ -137,12 +138,17 @@ export default function Home() {
           </div>
 
           <div className="heroCard heroCardTight">
-            <div className="heroMediaSquare">
-              <img
+            <div className="heroMediaSquare" style={{ position: "relative" }}>
+              {/* Next.js Image: responsive, optimized, prevents CLS */}
+              <Image
                 src="/img/hero.png"
                 alt="Tobacco leaf macro"
+                fill
+                priority
+                sizes="(max-width: 900px) 100vw, 520px"
                 className="heroMediaImg"
               />
+
               <div className="heroMediaOverlay">
                 Conditioning · Aging · Mastery
               </div>
