@@ -91,8 +91,8 @@ export default function System() {
         <div className="container">
           {/* HERO IMAGE */}
           <div className="systemHero">
-            {/* IMPORTANT: systemImageWrap must be position:relative and have a height */}
-            <div className="systemImageWrap" style={{ position: "relative" }}>
+            {/* systemImageWrap MUST be position:relative and have a fixed height in CSS */}
+            <div className="systemImageWrap">
               <Image
                 src="/img/peak-flavor-system.png"
                 alt="Peak-Flavor System"
@@ -136,6 +136,7 @@ export default function System() {
                     href="/brochures/Cigar-Peak-Flavor-System.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Download Peak-Flavor System PDF"
                   >
                     {c.download}
                   </a>
@@ -154,6 +155,7 @@ export default function System() {
                     {c.furtherReadingLabel}{" "}
                     <Link
                       href="/ideal-cigar-humidity"
+                      locale={lang}
                       style={{
                         fontWeight: 600,
                         borderBottom: "1px solid currentColor",
@@ -175,13 +177,19 @@ export default function System() {
 
               <ul style={{ marginTop: 12 }}>
                 <li>
-                  <Link href="/ccs">Certified Cigar Sommelier (CCS®)</Link>
+                  <Link href="/ccs" locale={lang}>
+                    Certified Cigar Sommelier (CCS®)
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/acs">Advanced Cigar Sommelier (ACS®)</Link>
+                  <Link href="/acs" locale={lang}>
+                    Advanced Cigar Sommelier (ACS®)
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/amc">Aficionado Master Class (AMC™)</Link>
+                  <Link href="/amc" locale={lang}>
+                    Aficionado Master Class (AMC™)
+                  </Link>
                 </li>
               </ul>
             </div>
