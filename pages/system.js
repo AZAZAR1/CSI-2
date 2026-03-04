@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function System() {
   const { locale } = useRouter();
@@ -61,7 +62,7 @@ export default function System() {
       p1: `Die meisten Zigarren werden emotional oder basierend auf dem bewertet, was wir hören oder sehen. Nur wenige werden auf der Grundlage wissenschaftlicher Erkenntnisse bewertet, wobei die Philosophie und Absicht des Blenders im Vordergrund stehen. Das Peak-Flavor System™ betrachtet eine Zigarre als ein dynamisches System, das verschiedene Tabaksamensorten, Tabakherkunft und Bodenbeschaffenheit sowie Konstruktionstechniken miteinander verbindet.`,
       bullets: [
         "Hygroskopisches Gleichgewicht des Tabaks",
-        "Temperatur–Feuchte-Koppl",
+        "Temperatur–Feuchte-Kopplung",
         "Verhalten der Vorwärmzone",
         "Aktivierungsschwellen flüchtiger Aromastoffe",
         "Blend-Architektur (Deckblatt / Umblatt / Einlage)",
@@ -90,11 +91,15 @@ export default function System() {
         <div className="container">
           {/* HERO IMAGE */}
           <div className="systemHero">
-            <div className="systemImageWrap">
-              <img
+            {/* IMPORTANT: systemImageWrap must be position:relative and have a height */}
+            <div className="systemImageWrap" style={{ position: "relative" }}>
+              <Image
                 src="/img/peak-flavor-system.png"
                 alt="Peak-Flavor System"
-                className="systemImage"
+                fill
+                priority
+                sizes="(max-width: 900px) 100vw, 980px"
+                style={{ objectFit: "contain" }}
               />
             </div>
 
