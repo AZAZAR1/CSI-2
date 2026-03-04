@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap");
 
 :root{
   --bg:#ffffff;
@@ -11,19 +11,40 @@
   --shadow:0 16px 40px rgba(0,0,0,.08);
   --max:1120px;
   --radius:18px;
+
+  /* mobile refinement */
+  --container-pad: 18px;
 }
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
 body{
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-a{color:inherit;text-decoration:none}
-a.underline{text-decoration:underline;text-decoration-color:rgba(184,138,42,.45);text-underline-offset:4px}
+*{-webkit-tap-highlight-color: transparent;}
 
-.container{max-width:var(--max);margin:0 auto;padding:0 26px}
+a{color:inherit;text-decoration:none}
+a.underline{
+  text-decoration:underline;
+  text-decoration-color:rgba(184,138,42,.45);
+  text-underline-offset:4px
+}
+
+.container{
+  width:100%;
+  max-width:var(--max);
+  margin:0 auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+/* =========================
+   NAV
+========================= */
 
 .nav{
   position:sticky;top:0;z-index:50;
@@ -31,7 +52,16 @@ a.underline{text-decoration:underline;text-decoration-color:rgba(184,138,42,.45)
   backdrop-filter:saturate(140%) blur(10px);
   border-bottom:1px solid var(--line);
 }
-.navInner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0}
+
+.navInner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+  padding:14px 0;
+}
+
+/* Legacy brand (if you still use .brand) */
 .brand{display:flex;align-items:center;gap:12px}
 .brand img{height:38px;width:auto;border-radius:10px}
 .brand .name{
@@ -39,15 +69,102 @@ a.underline{text-decoration:underline;text-decoration-color:rgba(184,138,42,.45)
   font-size:11px;color:var(--muted)
 }
 
-.menu{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
-.menu a{font-size:13px;color:var(--muted);padding:9px 10px;border-radius:12px}
+/* Upgraded institutional brand (if you use .brandWrap) */
+.brandWrap{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  text-decoration:none;
+  color:var(--text);
+}
+.brandLogo{
+  height:130px !important;
+  width:auto !important;
+}
+.brandText{
+  display:flex;
+  flex-direction:column;
+  line-height:1.05;
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:22px;
+  letter-spacing:.06em;
+  font-weight:500;
+  text-transform:uppercase;
+}
+
+.menu{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:22px;
+  flex-wrap:wrap;
+}
+.menu a{
+  font-size:13px;
+  color:var(--muted);
+  padding:9px 10px;
+  border-radius:12px;
+}
 .menu a:hover{background:rgba(17,17,20,.03);color:var(--text)}
-.lang{display:flex;align-items:center;gap:6px}
+
+.lang{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .lang button{
   background:transparent;border:1px solid rgba(17,17,20,.14);
   color:var(--muted);padding:8px 10px;border-radius:12px;cursor:pointer;font-size:12px
 }
 .lang button.active{border-color:rgba(184,138,42,.55);color:var(--text)}
+
+/* Responsive nav */
+@media (max-width: 900px){
+  .brandLogo{height:80px !important;}
+  .brandText{font-size:14px;}
+  .navInner{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+  }
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+.kicker{
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+
+h1{
+  margin:14px 0 12px;
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:clamp(28px, 5vw, 52px);
+  line-height:1.08;
+  letter-spacing:-.02em
+}
+h2{
+  margin:0 0 14px;
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:clamp(22px, 3.2vw, 26px);
+  line-height:1.2;
+}
+.lead{
+  margin:0;
+  color:rgba(18,18,20,.82);
+  font-size:clamp(15.5px, 2.2vw, 16.5px);
+  line-height:1.75;
+  max-width:62ch
+}
+
+.small{font-size:12.5px;color:var(--muted);line-height:1.7}
+
+/* Prevent long words/URLs from breaking layout */
+p, li, a { overflow-wrap:anywhere; }
+
+/* =========================
+   HERO + SECTIONS
+========================= */
 
 .hero{
   padding:64px 0 42px;
@@ -56,26 +173,30 @@ a.underline{text-decoration:underline;text-decoration-color:rgba(184,138,42,.45)
     radial-gradient(circle at 18% 14%, rgba(184,138,42,.12), rgba(184,138,42,0) 52%),
     radial-gradient(circle at 86% 28%, rgba(208,176,106,.10), rgba(208,176,106,0) 55%);
 }
-.heroGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
 
-.kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-h1{
-  margin:14px 0 12px;
-  font-family:"Playfair Display", Georgia, serif;
-  font-size:52px;line-height:1.05;letter-spacing:-.02em
-}
-.lead{
-  margin:0;color:rgba(18,18,20,.82);
-  font-size:16px;line-height:1.75;max-width:62ch
+.heroGrid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:28px;
+  align-items:stretch; /* important for hero media */
 }
 
 .section{padding:46px 0}
-.section h2{
-  margin:0 0 14px;
-  font-family:"Playfair Display", Georgia, serif;
-  font-size:26px
+
+@media (max-width: 900px){
+  .heroGrid{grid-template-columns:1fr}
+  .section{padding:28px 0}
 }
+
+/* =========================
+   CARDS / GRID
+========================= */
+
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+@media (max-width: 900px){
+  .grid3{grid-template-columns:1fr}
+}
 
 .card{
   background:var(--surface);
@@ -89,28 +210,31 @@ h1{
   font-family:"Playfair Display", Georgia, serif;
   font-size:18px
 }
-.card p{margin:0;color:rgba(18,18,20,.80);line-height:1.7;font-size:13.5px}
-
-.heroCard{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  overflow:hidden
+.card p{
+  margin:0;
+  color:rgba(18,18,20,.80);
+  line-height:1.7;
+  font-size:13.5px
 }
-.heroFrame{height:320px;border-bottom:1px solid var(--line);background:#fff}
-.heroFrame img{width:100%;height:100%;object-fit:cover;display:block}
-.heroCardPad{padding:18px}
-.heroTag{font-size:12px;color:var(--muted)}
-.heroTag i{color:rgba(184,138,42,.92)}
+
+.sep{border:0;border-top:1px solid var(--line);margin:18px 0}
+
+/* =========================
+   BUTTONS
+========================= */
 
 .ctaRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:12px 14px;border-radius:14px;
+  min-height:44px;                /* mobile tap target */
+  padding:12px 16px;
+  border-radius:14px;
   border:1px solid rgba(17,17,20,.14);
   background:rgba(255,255,255,.92);
-  color:var(--text);font-size:13px;cursor:pointer
+  color:var(--text);
+  font-size:13px;
+  cursor:pointer
 }
 .btn.primary{
   background:rgba(184,138,42,.12);
@@ -119,8 +243,9 @@ h1{
 .btn.primary:hover{background:rgba(184,138,42,.18)}
 .btn:hover{background:rgba(17,17,20,.02)}
 
-.small{font-size:12.5px;color:var(--muted);line-height:1.7}
-.sep{border:0;border-top:1px solid var(--line);margin:18px 0}
+/* =========================
+   FOOTER
+========================= */
 
 .footer{padding:30px 0 44px;border-top:1px solid var(--line);color:var(--muted)}
 .footerGrid{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
@@ -133,15 +258,25 @@ h1{
   font-size:12px
 }
 
+/* =========================
+   FORMS
+========================= */
+
 .form{display:grid;gap:12px;max-width:740px;margin-top:18px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width: 900px){ .row2{grid-template-columns:1fr} }
+
 input,textarea{
-  width:100%;padding:12px 12px;border-radius:14px;
+  width:100%;
+  padding:12px 12px;
+  border-radius:14px;
   border:1px solid rgba(17,17,20,.14);
-  background:#fff;color:var(--text);outline:none
+  background:#fff;color:var(--text);
+  outline:none
 }
 textarea{min-height:150px;resize:vertical}
 label{font-size:12px;color:var(--muted)}
+
 .notice{
   padding:12px 14px;border-radius:14px;
   border:1px solid rgba(184,138,42,.30);
@@ -150,536 +285,284 @@ label{font-size:12px;color:var(--muted)}
   font-size:13px;line-height:1.65
 }
 
-@media (max-width: 900px){
-  .heroGrid{grid-template-columns:1fr}
-  h1{font-size:40px}
-  .grid3{grid-template-columns:1fr}
-  .row2{grid-template-columns:1fr}
-  .heroFrame{height:240px}
+/* =========================
+   LANDING HERO MEDIA (square + overlay)
+========================= */
+
+.heroCardTight{
+  padding:0;
+  background:transparent;
+  border:none;
 }
 
-/* ===== Peak-Flavor System Page (single source of truth) ===== */
+.heroMediaSquare{
+  position:relative;
+  width:100%;
+  aspect-ratio:1 / 1;
+  border-radius:18px;
+  overflow:hidden;
+  background:#111;
+}
+
+.heroMediaImg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.heroMediaSquare::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:38%;
+  background:linear-gradient(to top, rgba(0,0,0,.50), rgba(0,0,0,0));
+  pointer-events:none;
+}
+
+.heroMediaOverlay{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  color:#fff;
+  font-size:16px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-weight:600;
+  text-align:center;
+  text-shadow:0 4px 18px rgba(0,0,0,.65);
+  z-index:2;
+}
+
+/* =========================
+   PROGRAM CARDS (button pinned)
+========================= */
+
+.programCard{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+.programBody{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.programButtons{margin-top:auto;}
+.programButtons.ctaRow{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+/* =========================
+   CONTACT PAGE
+========================= */
+
+.contactPage{max-width:720px}
+
+.contactPage h1{
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:34px;
+  margin-bottom:20px;
+}
+
+.contactLead{
+  font-size:16px;
+  line-height:1.8;
+  margin-bottom:16px;
+  color:rgba(18,18,20,.85);
+}
+
+.contactBlock{
+  margin-top:28px;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:#fff;
+}
+
+.contactBlock h3{
+  margin-bottom:8px;
+  font-size:14px;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
+
+.contactLink{
+  font-size:16px;
+  color:var(--gold);
+  text-decoration:none;
+  font-weight:500;
+}
+.contactLink:hover{text-decoration:underline}
+
+.contactClosing{
+  margin-top:32px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.contactProgramNotice{
+  margin:14px 0 22px;
+  padding:14px 18px;
+  border:1px solid rgba(184,138,42,.35);
+  background:rgba(184,138,42,.05);
+  border-radius:var(--radius);
+}
+.contactProgramKicker{
+  display:block;
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(18,18,20,.72);
+  margin-bottom:6px;
+}
+.contactProgramValue{
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.02em;
+}
+.contactHint{
+  margin-top:10px;
+  font-size:12.5px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+/* =========================
+   ARTICLE STYLES
+========================= */
+
+.articleProse h2{margin-top:18px}
+.articleProse h3{margin-top:14px}
+.articleProse .small{line-height:1.7}
+
+.articleLink{
+  font-weight:600;
+  border-bottom:1px solid currentColor;
+  padding-bottom:1px;
+  text-decoration:none;
+}
+
+/* =========================
+   PEAK-FLAVOR SYSTEM PAGE (single source of truth)
+   - optimized for Next <Image fill />
+========================= */
 
 .systemHero{
-  margin-top: 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: #fff;
-  box-shadow: var(--shadow);
+  display:block;
+  margin-top:14px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#fff;
+  box-shadow:var(--shadow);
 }
 
 /* Wrapper used by Next <Image fill /> */
 .systemImageWrap{
-  position: relative;              /* REQUIRED for Image fill */
-  width: 100%;
-  height: 520px;                   /* desktop height */
-  background: #fff;
-  border-bottom: 1px solid var(--line);
+  position:relative;              /* REQUIRED for Image fill */
+  width:100%;
+  height:520px;                   /* desktop height */
+  background:#fff;
+  border-bottom:1px solid var(--line);
 }
 
-/* Mobile height */
 @media (max-width: 900px){
-  .systemImageWrap{
-    height: 320px;
-  }
+  .systemImageWrap{height:320px;}
 }
 
 .systemHeroMeta{
-  padding: 18px 20px;
-  display: grid;
-  gap: 10px;
+  padding:18px 20px;
+  display:grid;
+  gap:10px;
 }
 
 .systemKicker{
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .systemPill{
-  font-size: 12px;
-  padding: 7px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(184,138,42,.28);
-  background: rgba(184,138,42,.06);
-  color: rgba(18,18,20,.86);
+  font-size:12px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(184,138,42,.28);
+  background:rgba(184,138,42,.06);
+  color:rgba(18,18,20,.86);
 }
 
 .systemTagline{
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
 }
 
-.systemText{
-  padding: 34px 0 10px;
-}
+.systemText{padding:34px 0 10px}
 
 .systemTitle{
-  margin: 0 0 12px;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 34px;
-  letter-spacing: -0.01em;
+  margin:0 0 12px;
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:34px;
+  letter-spacing:-0.01em;
 }
 
 .systemLead{
-  margin: 0;
-  max-width: 72ch;
-  font-size: 15.5px;
-  line-height: 1.9;
-  color: rgba(18,18,20,.82);
+  margin:0;
+  max-width:72ch;
+  font-size:15.5px;
+  line-height:1.9;
+  color:rgba(18,18,20,.82);
 }
 
 .systemGrid{
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 16px;
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:16px;
 }
 
 .systemCard{
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 18px 18px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px 18px;
 }
 
 .systemCard h3{
-  margin: 0 0 10px;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 16px;
+  margin:0 0 10px;
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:16px;
 }
 
 .systemCard ul{
-  margin: 0;
-  padding-left: 18px;
-  line-height: 1.9;
-  color: rgba(18,18,20,.80);
-  font-size: 13.5px;
+  margin:0;
+  padding-left:18px;
+  line-height:1.9;
+  color:rgba(18,18,20,.80);
+  font-size:13.5px;
 }
-
 .systemCard p{
-  margin: 0;
-  line-height: 1.85;
-  color: rgba(18,18,20,.80);
-  font-size: 13.5px;
+  margin:0;
+  line-height:1.85;
+  color:rgba(18,18,20,.80);
+  font-size:13.5px;
 }
 
 @media (max-width: 900px){
-  .systemGrid{grid-template-columns: 1fr;}
-  .systemTitle{font-size: 28px;}
+  .systemGrid{grid-template-columns:1fr;}
+  .systemTitle{font-size:28px;}
 }
 
-/* ===== Programs card alignment (Swiss clean) ===== */
+/* =========================
+   GLOBAL IMAGE SAFETY
+========================= */
 
-.programCard{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.programBody{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* pins the buttons to the bottom of each card */
-.programButtons{
-  margin-top: auto;
-}
-
-/* keep the two buttons aligned and consistent */
-.programButtons.ctaRow{
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* ===== Contact Page (Luxury Minimal) ===== */
-
-.contactPage{
-  max-width: 720px;
-}
-
-.contactPage h1{
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 34px;
-  margin-bottom: 20px;
-}
-
-.contactLead{
-  font-size: 16px;
-  line-height: 1.8;
-  margin-bottom: 16px;
-  color: rgba(18,18,20,.85);
-}
-
-.contactBlock{
-  margin-top: 28px;
-  padding: 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: #fff;
-}
-
-.contactBlock h3{
-  margin-bottom: 8px;
-  font-size: 14px;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-}
-
-.contactLink{
-  font-size: 16px;
-  color: var(--gold);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.contactLink:hover{
-  text-decoration: underline;
-}
-
-.contactClosing{
-  margin-top: 32px;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.contactProgramNotice{
-  margin: 14px 0 22px;
-  padding: 14px 18px;
-  border: 1px solid rgba(184,138,42,.35);
-  background: rgba(184,138,42,.05);
-  border-radius: var(--radius);
-}
-
-.contactProgramKicker{
-  display: block;
-  font-size: 12px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: rgba(18,18,20,.72);
-  margin-bottom: 6px;
-}
-
-.contactProgramValue{
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: .02em;
-}
-
-.contactHint{
-  margin-top: 10px;
-  font-size: 12.5px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-/* ===== Upgraded Institutional Brand ===== */
-
-.navInner{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-}
-
-.brandWrap{
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  text-decoration: none;
-  color: var(--ink);
-}
-
-.brandLogo{
-  height: 130px !important;
-  width: auto !important;
-}
-
-.brandText{
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 22px;
-  letter-spacing: .06em;
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
-.menu{
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-/* Responsive refinement */
-@media (max-width: 900px){
-  .brandLogo{height: 80px !important;}
-  .brandText{font-size: 14px;}
-  .navInner{
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-/* ===== Landing Hero: Square media + embedded motto ===== */
-
-.heroCardTight{
-  padding: 0;                 /* remove card padding so image owns the space */
-  background: transparent;    /* keeps it clean */
-  border: none;
-}
-
-.heroMediaSquare{
-  position: relative;
-  height: 100%;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #111;
-}
-
-/* ensure image fills the square */
-.heroMediaImg{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* readability gradient */
-.heroMediaSquare::after{
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 38%;
-  background: linear-gradient(to top, rgba(0,0,0,.50), rgba(0,0,0,0));
-  pointer-events: none;
-}
-
-/* embedded motto */
-.heroMediaOverlay{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
-  color: #fff;
-  font-size: 16px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  font-weight: 600;
-  text-align: center;
-
-  text-shadow: 0 4px 18px rgba(0,0,0,.65);
-  z-index: 2;
-}
-  .heroGrid{
-  align-items: stretch;
-}
-
-/* Meta under image */
-.systemHeroMeta{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.systemKicker{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.systemPill{
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  border: 1px solid rgba(20,20,24,.14);
-  background: rgba(255,255,255,.75);
-}
-
-.systemTagline{
-  font-size: 14px;
-  opacity: .85;
-}
-
-/* Add to styles/globals.css (append at bottom) */
-
-.articleProse h2 {
-  margin-top: 18px;
-}
-
-.articleProse h3 {
-  margin-top: 14px;
-}
-
-.articleProse .small {
-  line-height: 1.7;
-}
-
-/* Optional: nicer in-article anchor links */
-a.contactLink {
-  text-decoration: none;
-}
-
-a.contactLink:hover {
-  text-decoration: underline;
-}
-
-.articleLink {
-  font-weight: 600;
-  border-bottom: 1px solid #000;
-  padding-bottom: 1px;
-}
-
-/* ------------------------------
-   Mobile optimization (SEO + UX)
-   Add at END of globals.css
--------------------------------- */
-
-/* Better tap targets + smoother text */
-:root {
-  --container-pad: 18px;
-}
-
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-.container {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding-left: var(--container-pad);
-  padding-right: var(--container-pad);
-}
-
-/* Responsive type scale */
-h1 {
-  font-size: clamp(28px, 5vw, 44px);
-  line-height: 1.15;
-}
-h2 {
-  font-size: clamp(22px, 4vw, 32px);
-  line-height: 1.2;
-}
-.lead {
-  font-size: clamp(16px, 2.2vw, 18px);
-  line-height: 1.55;
-}
-
-/* Buttons: bigger tap area on mobile */
-.btn {
-  min-height: 44px;         /* Apple/Google recommended tap target */
-  padding: 12px 16px;
-  border-radius: 12px;
-}
-
-/* CTA rows: wrap nicely on narrow screens */
-.ctaRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-/* Grids: collapse to single column */
-.heroGrid,
-.grid3,
-.systemGrid {
-  display: grid;
-  gap: 14px;
-}
-
-@media (min-width: 900px) {
-  .heroGrid {
-    grid-template-columns: 1.05fr 0.95fr;
-    align-items: center;
-  }
-  .grid3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .systemGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 899px) {
-  .heroGrid,
-  .grid3,
-  .systemGrid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Hero image card spacing */
-  .heroCardTight {
-    margin-top: 14px;
-  }
-}
-
-/* Images should never overflow */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Hero media square: prevent cropping issues */
-.heroMediaSquare {
-  width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.heroMediaImg {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-/* Cards: make them breathe on mobile */
-.card,
-.systemCard {
-  border-radius: 16px;
-}
-
-.section {
-  padding-top: 28px;
-  padding-bottom: 28px;
-}
-
-/* Nav: allow wrapping without breaking layout */
-header nav,
-.navRow {
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-/* Language pills: keep tidy */
-.langSwitcher {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-/* Prevent long words/URLs from breaking layout */
-p, li, a {
-  overflow-wrap: anywhere;
+img{
+  max-width:100%;
+  height:auto;
+  display:block;
 }
