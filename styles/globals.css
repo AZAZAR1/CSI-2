@@ -564,3 +564,9 @@ a.contactLink {
 a.contactLink:hover {
   text-decoration: underline;
 }
+
+.articleLink {
+  font-weight: 600;
+  border-bottom: 1px solid #000;
+  padding-bottom: 1px;
+}
