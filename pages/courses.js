@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { COPY } from "../components/copy";
@@ -17,21 +18,21 @@ export default function Courses() {
 
   const seo = {
     en: {
-      title: "Cigar Courses | International Cigar Sommelier Institute",
+      title: "Cigar Certification Courses (CCS®, ACS®, AMC™) | ICSI",
       description:
-        "Explore ICSI’s three pathways: CCS®, ACS®, and AMC™. Swiss institutional training and elite optimization grounded in the Peak-Flavor System™.",
+        "ICSI’s cigar certification courses help professionals, lounges, and retailers increase customer loyalty and cigar sales through scientific post-factory conditioning and peak-flavor performance.",
       path: "/courses",
     },
     fr: {
-      title: "Cours de Cigare | International Cigar Sommelier Institute",
+      title: "Cours & Certifications Cigare (CCS®, ACS®, AMC™) | ICSI",
       description:
-        "Découvrez les trois parcours d’ICSI : CCS®, ACS® et AMC™. Formation institutionnelle suisse et optimisation élite fondées sur le Peak-Flavor System™.",
+        "Les cours et certifications ICSI aident professionnels, lounges et détaillants à renforcer la fidélité et augmenter les ventes grâce au conditionnement post-fabrication et à la performance aromatique.",
       path: "/courses",
     },
     de: {
-      title: "Zigarren-Kurse | International Cigar Sommelier Institute",
+      title: "Zigarren-Zertifizierungskurse (CCS®, ACS®, AMC™) | ICSI",
       description:
-        "Entdecken Sie die drei Wege von ICSI: CCS®, ACS® und AMC™. Schweizer institutionelle Ausbildung und Elite-Optimierung auf Basis des Peak-Flavor-Systems™.",
+        "ICSI-Zertifizierungskurse unterstützen Professionals, Lounges und Händler dabei, Kundenbindung und Zigarrenverkauf zu steigern—durch Post-Factory-Conditioning und reproduzierbare Peak-Flavor-Performance.",
       path: "/courses",
     },
   };
@@ -43,11 +44,34 @@ export default function Courses() {
     <Layout>
       <Seo title={s.title} description={s.description} path={s.path} />
 
+      {/* Structured data for Google */}
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              name: "International Cigar Sommelier Institute",
+              url: "https://cigarsommelierinstitute.com",
+              description:
+                "Professional cigar sommelier training and certification based on the scientific Peak-Flavor System.",
+              hasCourse: [
+                { "@type": "Course", name: "Certified Cigar Sommelier (CCS®)" },
+                { "@type": "Course", name: "Advanced Cigar Sommelier (ACS®)" },
+                { "@type": "Course", name: "Aficionado Master Class (AMC™)" },
+              ],
+            }),
+          }}
+        />
+      </Head>
+
       <div className="section">
         <div className="container">
+          {/* Keep page H1 consistent (great for SEO) */}
           <h1>{c.courses_title || c.programs_title}</h1>
 
-          {/* NEW SEO INTRO PARAGRAPH */}
+          {/* SEO intro paragraph */}
           <p className="lead" style={{ maxWidth: "78ch", marginTop: 12 }}>
             {introText}
           </p>
