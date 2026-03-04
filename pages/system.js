@@ -61,7 +61,7 @@ export default function System() {
       p1: `Die meisten Zigarren werden emotional oder basierend auf dem bewertet, was wir hören oder sehen. Nur wenige werden auf der Grundlage wissenschaftlicher Erkenntnisse bewertet, wobei die Philosophie und Absicht des Blenders im Vordergrund stehen. Das Peak-Flavor System™ betrachtet eine Zigarre als ein dynamisches System, das verschiedene Tabaksamensorten, Tabakherkunft und Bodenbeschaffenheit sowie Konstruktionstechniken miteinander verbindet.`,
       bullets: [
         "Hygroskopisches Gleichgewicht des Tabaks",
-        "Temperatur–Feuchte-Kopplung",
+        "Temperatur–Feuchte-Koppl",
         "Verhalten der Vorwärmzone",
         "Aktivierungsschwellen flüchtiger Aromastoffe",
         "Blend-Architektur (Deckblatt / Umblatt / Einlage)",
@@ -143,11 +143,19 @@ export default function System() {
                 <p>{c.p2}</p>
                 <p style={{ marginTop: 10 }}>{c.p3}</p>
 
-                {/* Refined internal link (discreet) */}
+                {/* Refined internal link (Option 2: editorial underline) */}
                 <div style={{ marginTop: 18 }}>
                   <small>
                     {c.furtherReadingLabel}{" "}
-                    <Link href="/ideal-cigar-humidity">
+                    <Link
+                      href="/ideal-cigar-humidity"
+                      style={{
+                        fontWeight: 600,
+                        borderBottom: "1px solid currentColor",
+                        paddingBottom: 1,
+                        textDecoration: "none",
+                      }}
+                    >
                       {c.furtherReadingTitle}
                     </Link>
                   </small>
