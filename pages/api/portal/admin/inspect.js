@@ -12,12 +12,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const data = await getAllCandidates(); // returns { [token]: candidate }
-    const tokens = Object.keys(data || {}).sort();
+    const map = await getAllCandidates(); // { token: candidate }
+    const tokens = Object.keys(map || {}).sort();
 
-    // optional: "summary" view for Admin UI
     const candidates = tokens.map((token) => {
-      const c = data[token] || {};
+      const c = map[token] || {};
       return {
         token,
         candidateId: c.candidateId || "",
@@ -26,6 +25,7 @@ export default async function handler(req, res) {
         course: c.course || "",
         expiresAt: c.expiresAt || "",
         modulesCount: Array.isArray(c.modules) ? c.modules.length : 0,
+        expired: !!c.expiresAt ? (Date.now() > new Date(c.expiresAt).getTime()) : true,
       };
     });
 
