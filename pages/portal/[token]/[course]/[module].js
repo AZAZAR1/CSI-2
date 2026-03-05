@@ -29,9 +29,10 @@ export default function PortalModule() {
 
       try {
         // 1) validate token + get modules list
-        const vRes = await fetch(`/api/portal/validate?token=${encodeURIComponent(token)}`, {
-          cache: "no-store",
-        });
+        const vRes = await fetch(
+          `/api/portal/validate?token=${encodeURIComponent(token)}`,
+          { cache: "no-store" }
+        );
         const vData = await vRes.json();
 
         if (!vRes.ok || !vData?.ok) {
@@ -63,11 +64,13 @@ export default function PortalModule() {
           return;
         }
 
-        // 3) fetch module HTML (you will add this API route next)
+        // 3) fetch module HTML
         const mRes = await fetch(
-          `/api/portal/module?token=${encodeURIComponent(token)}&course=${encodeURIComponent(
-            normalizedCourse
-          )}&module=${encodeURIComponent(modSlug)}`,
+          `/api/portal/module?token=${encodeURIComponent(
+            token
+          )}&course=${encodeURIComponent(normalizedCourse)}&module=${encodeURIComponent(
+            modSlug
+          )}`,
           { cache: "no-store" }
         );
 
@@ -120,11 +123,22 @@ export default function PortalModule() {
 
   return (
     <Layout>
-      <Seo title={title} description="Secure module." path={`/portal/${token || ""}/${course || ""}/${module || ""}`} />
+      <Seo
+        title={title}
+        description="Secure module."
+        path={`/portal/${token || ""}/${course || ""}/${module || ""}`}
+      />
 
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: 12,
+              flexWrap: "wrap",
+            }}
+          >
             <Link className="btn" href={portalBasePath}>
               ← Back to portal
             </Link>
@@ -136,7 +150,11 @@ export default function PortalModule() {
             )}
           </div>
 
-          {loading && <p className="small" style={{ marginTop: 14 }}>Loading module…</p>}
+          {loading && (
+            <p className="small" style={{ marginTop: 14 }}>
+              Loading module…
+            </p>
+          )}
 
           {!loading && err && (
             <div className="notice" style={{ marginTop: 14 }}>
@@ -146,25 +164,15 @@ export default function PortalModule() {
 
           {!loading && !err && (
             <div style={{ position: "relative", marginTop: 18 }}>
-              {/* Watermark overlay */}
+              {/* Watermark overlay (repeating, refined) */}
               {candidate?.candidateId && (
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    pointerEvents: "none",
-                    opacity: 0.08,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transform: "rotate(-18deg)",
-                    fontSize: 44,
-                    fontWeight: 700,
-                    letterSpacing: 2,
-                    textAlign: "center",
-                  }}
-                >
-                  {candidate.candidateId}
+                <div className="watermarkLayer">
+                  {Array.from({ length: 40 }).map((_, i) => (
+                    <div key={i} className="watermarkItem">
+                      {candidate.candidateId}
+                      {candidate?.name ? ` • ${candidate.name}` : ""} • Licensed Access
+                    </div>
+                  ))}
                 </div>
               )}
 
