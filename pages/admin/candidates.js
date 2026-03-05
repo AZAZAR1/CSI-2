@@ -1,364 +1,299 @@
+// pages/admin/candidates.js
 import { useEffect, useMemo, useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 
-function isoFromTodayPlusMonths(months) {
-  const d = new Date();
-  d.setMonth(d.getMonth() + Number(months || 0));
-  return d.toISOString();
-}
+export default function AdminCandidates() {
+  const [adminKey, setAdminKey] = useState("");
+  const [loaded, setLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+  const [err, setErr] = useState("");
 
-function secureTokenHex(bytes = 16) {
-  // 16 bytes = 32 hex chars
-  const arr = new Uint8Array(bytes);
-  if (typeof window !== "undefined" && window.crypto?.getRandomValues) {
-    window.crypto.getRandomValues(arr);
-  } else {
-    // fallback (should not happen in browser)
-    for (let i = 0; i < arr.length; i++) arr[i] = Math.floor(Math.random() * 256);
-  }
-  return Array.from(arr)
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
+  const [form, setForm] = useState({
+    token: "",
+    candidateId: "",
+    name: "",
+    email: "",
+    course: "ccs",
+    expiresAt: "2028-12-31T00:00:00.000Z",
+    modulesText: "module-1|Module 1 — Tobacco Science\nmodule-2|Module 2 — Water & RH",
+  });
 
-export default function CandidateAdmin() {
-  const [authed, setAuthed] = useState(false);
-  const [checking, setChecking] = useState(true);
-  const [pw, setPw] = useState("");
-  const [authErr, setAuthErr] = useState("");
-
-  // Candidate fields
-  const [course, setCourse] = useState("ccs");
-  const [candidateId, setCandidateId] = useState("CCS-2026-016");
-  const [name, setName] = useState("First Last");
-  const [email, setEmail] = useState("candidate@email.com");
-  const [months, setMonths] = useState(24);
-
-  // Modules (edit as needed)
-  const defaultModules = useMemo(
-    () => ({
-      ccs: [
-        { slug: "module-1", title: "Module 1 — Tobacco Science" },
-        { slug: "module-2", title: "Module 2 — Water & RH" },
-        { slug: "module-3", title: "Module 3 — RH Dynamics" },
-        { slug: "module-4", title: "Module 4 — Diagnostics" },
-      ],
-      acs: [
-        { slug: "module-1", title: "Module 1 — Advanced Diagnostics" },
-        { slug: "module-2", title: "Module 2 — Predictive Modeling" },
-      ],
-      amc: [
-        { slug: "module-1", title: "Module 1 — Collector Optimization" },
-      ],
-    }),
-    []
-  );
-
-  const [modules, setModules] = useState(defaultModules.ccs);
-
-  // Generated outputs
-  const [token, setToken] = useState("");
-  const expiresAt = useMemo(() => isoFromTodayPlusMonths(months), [months]);
-
-  const siteBaseUrl = "https://cigarsommelierinstitute.com";
-
-  // Your portal login page (session-cookie architecture)
-  const loginUrl = useMemo(() => {
-    if (!token) return "";
-    // Candidate enters token here, logs in, gets session cookie
-    return `${siteBaseUrl}/portal/login`;
-  }, [token]);
-
-  // Prefilled email body to send candidate
-  const mailtoHref = useMemo(() => {
-    const subj = `ICSI Portal Access — ${candidateId}`;
-    const body = [
-      `Hello ${name},`,
-      ``,
-      `Your secure portal access is ready.`,
-      ``,
-      `1) Open: ${siteBaseUrl}/portal/login`,
-      `2) Enter this access token: ${token || "(generate token first)"}`,
-      ``,
-      `Access expires: ${expiresAt}`,
-      ``,
-      `— ICSI Administration`,
-    ].join("\n");
-
-    return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(
-      subj
-    )}&body=${encodeURIComponent(body)}`;
-  }, [candidateId, email, expiresAt, name, token]);
-
-  const candidateJsonObject = useMemo(() => {
-    if (!token) return "";
-    const obj = {
-      [token]: {
-        candidateId,
-        name,
-        email,
-        course,
-        expiresAt,
-        modules,
-      },
-    };
-    return JSON.stringify(obj, null, 2);
-  }, [candidateId, course, email, expiresAt, modules, name, token]);
-
-  const mergeHint = useMemo(() => {
-    if (!token) return "";
-    return `Paste the object into lib/candidates.json at the top level, separated by commas.`;
-  }, [token]);
-
-  // Load auth state from sessionStorage
+  // Persist admin key locally (browser only)
   useEffect(() => {
-    const ok = typeof window !== "undefined" && sessionStorage.getItem("icsi_admin_ok") === "1";
-    setAuthed(ok);
-    setChecking(false);
+    const k = window.sessionStorage.getItem("ICSI_ADMIN_KEY") || "";
+    if (k) setAdminKey(k);
+  }, []);
+  useEffect(() => {
+    if (adminKey) window.sessionStorage.setItem("ICSI_ADMIN_KEY", adminKey);
+  }, [adminKey]);
+
+  const portalBase = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    return window.location.origin;
   }, []);
 
-  // Update modules when course changes
-  useEffect(() => {
-    setModules(defaultModules[course] || []);
-  }, [course, defaultModules]);
-
-  const doAuth = async () => {
-    setAuthErr("");
+  const fetchList = async () => {
+    setErr("");
+    setLoaded(false);
     try {
-      const r = await fetch("/api/admin/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: pw }),
+      const r = await fetch("/api/portal/admin/listCandidates", {
+        headers: { "x-admin-key": adminKey },
+        cache: "no-store",
       });
-      const data = await r.json();
-      if (!r.ok || !data?.ok) {
-        setAuthErr(data?.error || "Access denied");
-        return;
-      }
-      sessionStorage.setItem("icsi_admin_ok", "1");
-      setAuthed(true);
-    } catch {
-      setAuthErr("Network error");
+      const d = await r.json();
+      if (!r.ok || !d?.ok) throw new Error(d?.error || "Failed");
+      setItems(d.candidates || []);
+    } catch (e) {
+      setErr(e.message || "Error");
+    } finally {
+      setLoaded(true);
     }
   };
 
-  const logout = () => {
-    sessionStorage.removeItem("icsi_admin_ok");
-    setAuthed(false);
-    setPw("");
-    setToken("");
+  useEffect(() => {
+    if (adminKey) fetchList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adminKey]);
+
+  const parseModules = () => {
+    // lines: slug|Title
+    const lines = String(form.modulesText || "")
+      .split("\n")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    return lines
+      .map((line) => {
+        const [slug, ...rest] = line.split("|");
+        return { slug: (slug || "").trim(), title: rest.join("|").trim() };
+      })
+      .filter((m) => m.slug && m.title);
   };
 
-  const generate = () => {
-    setToken(secureTokenHex(16)); // 32-char token
-  };
-
-  const copyToClipboard = async (text) => {
+  const onSave = async () => {
+    setErr("");
     try {
-      await navigator.clipboard.writeText(text);
-      alert("Copied.");
-    } catch {
-      alert("Copy failed. Select text and copy manually.");
+      const payload = {
+        token: form.token.trim() || undefined,
+        candidate: {
+          candidateId: form.candidateId.trim(),
+          name: form.name.trim(),
+          email: form.email.trim(),
+          course: form.course.trim().toLowerCase(),
+          expiresAt: form.expiresAt.trim(),
+          modules: parseModules(),
+        },
+      };
+
+      const r = await fetch("/api/portal/admin/upsertCandidate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-key": adminKey,
+        },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json();
+      if (!r.ok || !d?.ok) throw new Error(d?.error || "Save failed");
+
+      // refresh list + auto-fill token if new
+      setForm((f) => ({ ...f, token: d.token }));
+      await fetchList();
+      alert(`Saved. Portal URL:\n${portalBase}/portal/${d.token}`);
+    } catch (e) {
+      setErr(e.message || "Error");
+    }
+  };
+
+  const onDelete = async (token) => {
+    if (!confirm(`Delete candidate token?\n${token}`)) return;
+    setErr("");
+    try {
+      const r = await fetch("/api/portal/admin/deleteCandidate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-key": adminKey,
+        },
+        body: JSON.stringify({ token }),
+      });
+      const d = await r.json();
+      if (!r.ok || !d?.ok) throw new Error(d?.error || "Delete failed");
+      await fetchList();
+    } catch (e) {
+      setErr(e.message || "Error");
     }
   };
 
   return (
     <Layout>
-      <Seo
-        title="ICSI Admin — Candidates"
-        description="Candidate provisioning panel."
-        path="/admin/candidates"
-      />
+      <Seo title="ICSI Admin — Candidates" description="Candidate admin panel." path="/admin/candidates" />
 
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
           <h1>ICSI Candidate Admin</h1>
-          <p className="small" style={{ marginTop: 10 }}>
-            Generate a candidate token + JSON entry for <code>lib/candidates.json</code>.
+          <p className="small">
+            Manage candidates stored in Vercel Blob. Create/edit candidates, generate portal links, and revoke access.
           </p>
 
-          {checking ? (
-            <p className="small" style={{ marginTop: 14 }}>
-              Loading…
-            </p>
-          ) : !authed ? (
-            <div className="card" style={{ marginTop: 14, maxWidth: 520 }}>
-              <h3>Admin login</h3>
-              <p className="small" style={{ marginTop: 6 }}>
-                Enter the admin password (server-verified).
-              </p>
+          <div className="card" style={{ marginTop: 16 }}>
+            <label>Admin Key</label>
+            <input
+              value={adminKey}
+              onChange={(e) => setAdminKey(e.target.value)}
+              placeholder="Paste PORTAL_ADMIN_KEY"
+              style={{ marginTop: 6 }}
+            />
+            <div className="small" style={{ marginTop: 8 }}>
+              This is stored only in your browser session (sessionStorage).
+            </div>
 
-              <div className="form" style={{ marginTop: 12 }}>
-                <label>Password</label>
-                <input
-                  type="password"
-                  value={pw}
-                  onChange={(e) => setPw(e.target.value)}
-                  placeholder="ADMIN_PANEL_PASSWORD"
-                />
+            <div className="ctaRow" style={{ marginTop: 12 }}>
+              <button className="btn primary" onClick={fetchList} disabled={!adminKey}>
+                Refresh list
+              </button>
+            </div>
 
-                {authErr && (
-                  <div className="notice">
-                    <b>Error:</b> {authErr}
-                  </div>
-                )}
+            {err && (
+              <div className="notice" style={{ marginTop: 12 }}>
+                <b>Error:</b> {err}
+              </div>
+            )}
+          </div>
 
-                <button className="btn primary" type="button" onClick={doAuth}>
-                  Unlock Admin
-                </button>
+          {/* Create / edit */}
+          <div className="card" style={{ marginTop: 16 }}>
+            <h3>Create / Update Candidate</h3>
+
+            <div className="row2" style={{ marginTop: 10 }}>
+              <div>
+                <label>Token (leave blank to auto-generate)</label>
+                <input value={form.token} onChange={(e) => setForm({ ...form, token: e.target.value })} />
+              </div>
+
+              <div>
+                <label>Candidate ID</label>
+                <input value={form.candidateId} onChange={(e) => setForm({ ...form, candidateId: e.target.value })} />
               </div>
             </div>
-          ) : (
-            <>
-              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
-                <button className="btn" type="button" onClick={logout}>
-                  Logout
-                </button>
+
+            <div className="row2" style={{ marginTop: 10 }}>
+              <div>
+                <label>Name</label>
+                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
               </div>
 
-              <div className="card" style={{ marginTop: 14 }}>
-                <h3>Candidate details</h3>
+              <div>
+                <label>Email</label>
+                <input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+              </div>
+            </div>
 
-                <div className="form" style={{ marginTop: 10 }}>
-                  <div className="row2">
-                    <div>
-                      <label>Course</label>
-                      <input
-                        value={course}
-                        onChange={(e) => setCourse(e.target.value.toLowerCase())}
-                        placeholder="ccs / acs / amc"
-                      />
-                    </div>
-                    <div>
-                      <label>Candidate ID</label>
-                      <input
-                        value={candidateId}
-                        onChange={(e) => setCandidateId(e.target.value)}
-                        placeholder="CCS-2026-016"
-                      />
-                    </div>
-                  </div>
+            <div className="row2" style={{ marginTop: 10 }}>
+              <div>
+                <label>Course</label>
+                <input value={form.course} onChange={(e) => setForm({ ...form, course: e.target.value })} />
+                <div className="small">Use: ccs / acs / amc (must match your portal routing)</div>
+              </div>
 
-                  <div className="row2">
-                    <div>
-                      <label>Name</label>
-                      <input value={name} onChange={(e) => setName(e.target.value)} />
-                    </div>
-                    <div>
-                      <label>Email</label>
-                      <input value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </div>
-                  </div>
+              <div>
+                <label>Expires At (ISO)</label>
+                <input value={form.expiresAt} onChange={(e) => setForm({ ...form, expiresAt: e.target.value })} />
+              </div>
+            </div>
 
-                  <div className="row2">
-                    <div>
-                      <label>Access duration (months)</label>
-                      <input
-                        type="number"
-                        min="1"
-                        max="60"
-                        value={months}
-                        onChange={(e) => setMonths(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label>Expires at (auto)</label>
-                      <input value={expiresAt} readOnly />
-                    </div>
-                  </div>
+            <div style={{ marginTop: 10 }}>
+              <label>Modules (one per line): slug|Title</label>
+              <textarea
+                value={form.modulesText}
+                onChange={(e) => setForm({ ...form, modulesText: e.target.value })}
+                style={{ marginTop: 6 }}
+              />
+            </div>
 
-                  <div>
-                    <label>Modules (auto from course — edit JSON later if needed)</label>
-                    <textarea
-                      value={JSON.stringify(modules, null, 2)}
-                      onChange={(e) => {
-                        try {
-                          const parsed = JSON.parse(e.target.value);
-                          if (Array.isArray(parsed)) setModules(parsed);
-                        } catch {
-                          // ignore partial edits
-                        }
-                      }}
-                    />
-                    <div className="small" style={{ marginTop: 8 }}>
-                      Ensure slugs match your HTML files in <code>content/{course}/</code> (e.g. <code>module-1.html</code>).
-                    </div>
-                  </div>
+            <div className="ctaRow" style={{ marginTop: 12 }}>
+              <button className="btn primary" onClick={onSave} disabled={!adminKey}>
+                Save candidate
+              </button>
+            </div>
 
-                  <div className="ctaRow">
-                    <button className="btn primary" type="button" onClick={generate}>
-                      Generate token
-                    </button>
-                    {token && (
-                      <button
-                        className="btn"
-                        type="button"
-                        onClick={() => copyToClipboard(token)}
-                      >
-                        Copy token
-                      </button>
-                    )}
-                  </div>
+            {form.token && (
+              <div className="small" style={{ marginTop: 10 }}>
+                Portal URL:{" "}
+                <b>
+                  {portalBase}/portal/{form.token}
+                </b>
+              </div>
+            )}
+          </div>
 
-                  {token && (
-                    <>
-                      <hr className="sep" />
+          {/* List */}
+          <div className="card" style={{ marginTop: 16 }}>
+            <h3>Candidate List</h3>
+            {!loaded && <p className="small">Loading…</p>}
 
-                      <h3>Send candidate access</h3>
+            {loaded && items.length === 0 && <p className="small">No candidates yet.</p>}
 
-                      <div className="small" style={{ marginTop: 8 }}>
-                        Candidate logs in at: <b>{siteBaseUrl}/portal/login</b>
-                        <br />
-                        Token: <b>{token}</b>
+            {loaded && items.length > 0 && (
+              <div style={{ display: "grid", gap: 10, marginTop: 10 }}>
+                {items.map((x) => (
+                  <div
+                    key={x.token}
+                    style={{
+                      border: "1px solid rgba(17,17,20,.10)",
+                      borderRadius: 14,
+                      padding: 12,
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+                      <div className="small">
+                        <b>{x.candidateId}</b> — {x.name} ({x.course})
+                        <div>
+                          Token: <b>{x.token}</b>
+                        </div>
+                        <div>
+                          Expires: <b>{x.expiresAt}</b> {x.expired ? "— ❗expired" : ""}
+                        </div>
+                        <div>
+                          Link:{" "}
+                          <b>
+                            {portalBase}/portal/{x.token}
+                          </b>
+                        </div>
                       </div>
 
-                      <div className="ctaRow" style={{ marginTop: 12 }}>
-                        <a className="btn primary" href={mailtoHref}>
-                          Email candidate (mailto)
-                        </a>
+                      <div className="ctaRow" style={{ marginTop: 0 }}>
                         <button
                           className="btn"
-                          type="button"
-                          onClick={() => copyToClipboard(`${siteBaseUrl}/portal/login`)}
+                          onClick={() => {
+                            setForm({
+                              token: x.token,
+                              candidateId: x.candidateId || "",
+                              name: x.name || "",
+                              email: x.email || "",
+                              course: x.course || "ccs",
+                              expiresAt: x.expiresAt || "",
+                              modulesText: (x.modules || [])
+                                .map((m) => `${m.slug}|${m.title}`)
+                                .join("\n"),
+                            });
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
                         >
-                          Copy login URL
+                          Edit
+                        </button>
+
+                        <button className="btn" onClick={() => onDelete(x.token)}>
+                          Revoke
                         </button>
                       </div>
-
-                      <hr className="sep" />
-
-                      <h3>JSON to paste into lib/candidates.json</h3>
-                      <p className="small" style={{ marginTop: 6 }}>
-                        {mergeHint}
-                      </p>
-
-                      <textarea
-                        value={candidateJsonObject}
-                        readOnly
-                        style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" }}
-                      />
-
-                      <div className="ctaRow" style={{ marginTop: 12 }}>
-                        <button
-                          className="btn primary"
-                          type="button"
-                          onClick={() => copyToClipboard(candidateJsonObject)}
-                        >
-                          Copy JSON
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-
-              <div className="notice" style={{ marginTop: 14 }}>
-                <b>Important:</b> This Phase-1 panel generates entries but does not persist them automatically (no DB).
-                You still paste into <code>lib/candidates.json</code>, commit, push.
-              </div>
-            </>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </Layout>
