@@ -1,22 +1,12 @@
 // pages/api/portal/validate.js
-import { getCandidateFromBlob } from "../../../lib/portalBlobCandidates";
-
-function isExpired(expiresAt) {
-  if (!expiresAt) return true;
-  const t = new Date(expiresAt).getTime();
-  if (Number.isNaN(t)) return true;
-  return Date.now() > t;
-}
+import { getCandidateByToken, isExpired } from "../../../lib/portalCandidatesBlob";
 
 export default async function handler(req, res) {
   const token = String(req.query.token || "").trim();
-
   res.setHeader("Cache-Control", "no-store, max-age=0");
 
-  const candidate = await getCandidateFromBlob(token);
-  if (!candidate) {
-    return res.status(401).json({ ok: false, error: "Invalid token" });
-  }
+  const candidate = await getCandidateByToken(token);
+  if (!candidate) return res.status(401).json({ ok: false, error: "Invalid token" });
 
   if (isExpired(candidate.expiresAt)) {
     return res.status(403).json({ ok: false, error: "Token expired" });
