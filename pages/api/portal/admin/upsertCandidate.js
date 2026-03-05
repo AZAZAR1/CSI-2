@@ -1,5 +1,9 @@
 // pages/api/portal/admin/upsertCandidate.js
-import { adminGuard, generateTokenHex, upsertCandidate } from "../../../../lib/portalCandidatesBlob";
+import {
+  adminGuard,
+  generateTokenHex,
+  upsertCandidate,
+} from "../../../../lib/portalCandidatesBlob";
 
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store, max-age=0");
@@ -7,7 +11,9 @@ export default async function handler(req, res) {
   const g = adminGuard(req);
   if (!g.ok) return res.status(g.status).json({ ok: false, error: g.error });
 
-  if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Method not allowed" });
+  if (req.method !== "POST") {
+    return res.status(405).json({ ok: false, error: "Method not allowed" });
+  }
 
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
@@ -28,7 +34,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, error: "Missing required fields" });
     }
 
-    // Basic module validation
     cleaned.modules = cleaned.modules
       .map((m) => ({
         slug: String(m?.slug || "").trim(),
@@ -45,6 +50,10 @@ export default async function handler(req, res) {
       portalUrl: `/portal/${saved.token}`,
     });
   } catch (e) {
-    return res.status(500).json({ ok: false, error: "Failed to save candidate" });
+    console.error("upsertCandidate failed:", e);
+    return res.status(500).json({
+      ok: false,
+      error: e?.message || "Failed to save candidate",
+    });
   }
 }
