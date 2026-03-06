@@ -17,13 +17,8 @@ function parseCookie(req, name) {
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store, max-age=0");
 
-  const cookieName =
-    typeof getSessionCookieName === "function"
-      ? getSessionCookieName()
-      : "portal_session";
-
-  const sessionCookie = parseCookie(req, cookieName);
-  const sess = verifySession(sessionCookie);
+  const token = parseCookie(req, getSessionCookieName());
+  const sess = verifySession(token);
 
   if (!sess) {
     return res.status(401).json({ ok: false, error: "Not signed in" });
@@ -34,7 +29,6 @@ export default async function handler(req, res) {
     return res.status(403).json({ ok: false, error: "Access expired" });
   }
 
-  // ✅ Read candidate from Blob using token stored in session
   const candidate = await getCandidateByToken(sess.token);
 
   if (!candidate) {
