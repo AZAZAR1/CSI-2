@@ -611,3 +611,67 @@ img{
   white-space:nowrap;
   user-select:none;
 }
+
+/* ===== Portal protection ===== */
+
+.portalModuleWrap{
+  position: relative;
+}
+
+.portalArticle{
+  position: relative;
+  z-index: 1;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.watermarkLayer{
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  padding: 24px;
+  opacity: 0.10;
+  transform: rotate(-18deg);
+  overflow: hidden;
+}
+
+.watermarkItem{
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #000;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (max-width: 900px){
+  .watermarkLayer{
+    grid-template-columns: 1fr;
+    gap: 26px;
+    opacity: 0.12;
+  }
+}
+
+@media print {
+  .portalArticle,
+  .portalModuleWrap {
+    display: none !important;
+  }
+
+  body::before {
+    content: "Printing is disabled for licensed course materials.";
+    display: block;
+    padding: 40px;
+    font-size: 20px;
+  }
+}
+
+.portalPrintBlocked .portalArticle,
+.portalPrintBlocked .portalModuleWrap{
+  display: none !important;
+}
