@@ -92,50 +92,10 @@ export default function PortalModule() {
   useEffect(() => {
     const onContextMenu = (e) => e.preventDefault();
 
-    const onKeyDown = (e) => {
-      const k = (e.key || "").toLowerCase();
-      const isMac = /mac/i.test(navigator.platform);
-
-      if ((isMac && e.metaKey && k === "p") || (!isMac && e.ctrlKey && k === "p")) {
-        e.preventDefault();
-      }
-
-      if ((isMac && e.metaKey && k === "s") || (!isMac && e.ctrlKey && k === "s")) {
-        e.preventDefault();
-      }
-
-      if ((isMac && e.metaKey && k === "a") || (!isMac && e.ctrlKey && k === "a")) {
-        e.preventDefault();
-      }
-
-      if ((isMac && e.metaKey && k === "c") || (!isMac && e.ctrlKey && k === "c")) {
-        e.preventDefault();
-      }
-    };
-
     document.addEventListener("contextmenu", onContextMenu);
-    document.addEventListener("keydown", onKeyDown);
 
     return () => {
       document.removeEventListener("contextmenu", onContextMenu);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, []);
-
-  useEffect(() => {
-    const beforePrint = () => {
-      document.body.classList.add("portalPrintBlocked");
-    };
-    const afterPrint = () => {
-      document.body.classList.remove("portalPrintBlocked");
-    };
-
-    window.addEventListener("beforeprint", beforePrint);
-    window.addEventListener("afterprint", afterPrint);
-
-    return () => {
-      window.removeEventListener("beforeprint", beforePrint);
-      window.removeEventListener("afterprint", afterPrint);
     };
   }, []);
 
@@ -144,7 +104,7 @@ export default function PortalModule() {
     : "Module | ICSI";
 
   const watermarkText = candidate
-    ? `${candidate.candidateId} • ${candidate.name} • ${candidate.email || "Licensed Access"}`
+    ? `${candidate.candidateId} • ${candidate.name} • LICENSED ACCESS`
     : "";
 
   return (
@@ -191,12 +151,8 @@ export default function PortalModule() {
           {!loading && !err && (
             <div className="portalModuleWrap" style={{ marginTop: 18 }}>
               {candidate?.candidateId && (
-                <div className="watermarkLayer">
-                  {Array.from({ length: 36 }).map((_, i) => (
-                    <div key={i} className="watermarkItem">
-                      {watermarkText}
-                    </div>
-                  ))}
+                <div className="portalDiagonalWatermark" aria-hidden="true">
+                  {watermarkText}
                 </div>
               )}
 
