@@ -675,3 +675,42 @@ img{
 .portalPrintBlocked .portalModuleWrap{
   display: none !important;
 }
+
+/* ===== Portal module watermark ===== */
+
+.portalModuleWrap{
+  position: relative;
+}
+
+.portalArticle{
+  position: relative;
+  z-index: 1;
+}
+
+.portalDiagonalWatermark{
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-28deg);
+  transform-origin: center;
+  z-index: 5;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+
+  font-size: clamp(42px, 7vw, 96px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+
+  color: rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 900px){
+  .portalDiagonalWatermark{
+    font-size: clamp(28px, 8vw, 56px);
+    letter-spacing: 0.06em;
+  }
+}
