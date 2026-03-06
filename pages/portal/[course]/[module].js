@@ -91,9 +91,7 @@ export default function PortalModule() {
 
   useEffect(() => {
     const onContextMenu = (e) => e.preventDefault();
-
     document.addEventListener("contextmenu", onContextMenu);
-
     return () => {
       document.removeEventListener("contextmenu", onContextMenu);
     };
@@ -149,17 +147,19 @@ export default function PortalModule() {
           )}
 
           {!loading && !err && (
-            <div className="portalModuleWrap" style={{ marginTop: 18 }}>
-              {candidate?.candidateId && (
-                <div className="portalDiagonalWatermark" aria-hidden="true">
-                  {watermarkText}
-                </div>
-              )}
+            <div className="portalModuleOuter" style={{ marginTop: 18 }}>
+              <div className="card articleProse portalArticleCard">
+                {candidate?.candidateId && (
+                  <div className="portalDiagonalWatermark" aria-hidden="true">
+                    {watermarkText}
+                  </div>
+                )}
 
-              <article
-                className="card articleProse portalArticle"
-                dangerouslySetInnerHTML={{ __html: html }}
-              />
+                <div
+                  className="portalArticleContent"
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+              </div>
             </div>
           )}
         </div>
