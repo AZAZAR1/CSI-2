@@ -678,25 +678,31 @@ img{
 
 /* ===== Portal module watermark ===== */
 
-.portalModuleWrap{
+.portalModuleOuter{
   position: relative;
 }
 
-.portalArticle{
+.portalArticleCard{
+  position: relative;
+  overflow: hidden;
+}
+
+.portalArticleContent{
   position: relative;
   z-index: 1;
 }
 
 .portalDiagonalWatermark{
   position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-28deg);
-  transform-origin: center;
-  z-index: 5;
+  inset: 0;
+  z-index: 2;
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   font-size: clamp(42px, 7vw, 96px);
   font-weight: 700;
@@ -705,12 +711,15 @@ img{
   white-space: nowrap;
   text-align: center;
 
-  color: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.07);
+  transform: rotate(-28deg);
+  transform-origin: center;
 }
 
 @media (max-width: 900px){
   .portalDiagonalWatermark{
-    font-size: clamp(28px, 8vw, 56px);
-    letter-spacing: 0.06em;
+    font-size: clamp(28px, 8vw, 58px);
+    letter-spacing: 0.05em;
+    color: rgba(0, 0, 0, 0.08);
   }
 }
