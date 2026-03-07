@@ -306,6 +306,33 @@ export default function PredictorPage() {
     }
   };
 
+  const checkboxGridStyle = {
+    marginTop: 8,
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+    gap: 12,
+    maxWidth: 920,
+    marginLeft: "auto",
+    marginRight: "auto",
+  };
+
+  const checkboxLabelStyle = {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 10,
+    fontSize: 14,
+    color: "rgba(18,18,20,.86)",
+    lineHeight: 1.35,
+    minHeight: 40,
+  };
+
+  const checkboxTextStyle = {
+    display: "block",
+    whiteSpace: "normal",
+    overflowWrap: "anywhere",
+    wordBreak: "break-word",
+  };
+
   return (
     <Layout>
       <Seo
@@ -433,9 +460,11 @@ export default function PredictorPage() {
                   ))}
                 </select>
 
-                {(form.wrapper === "Hybrid / Other") && (
+                {form.wrapper === "Hybrid / Other" && (
                   <>
-                    <label style={{ marginTop: 10, display: "block" }}>Custom Wrapper</label>
+                    <label style={{ marginTop: 10, display: "block" }}>
+                      Custom Wrapper
+                    </label>
                     <input
                       value={form.wrapper_custom}
                       onChange={(e) => update("wrapper_custom", e.target.value)}
@@ -504,9 +533,11 @@ export default function PredictorPage() {
                   ))}
                 </select>
 
-                {(form.binder === "Hybrid / Other") && (
+                {form.binder === "Hybrid / Other" && (
                   <>
-                    <label style={{ marginTop: 10, display: "block" }}>Custom Binder</label>
+                    <label style={{ marginTop: 10, display: "block" }}>
+                      Custom Binder
+                    </label>
                     <input
                       value={form.binder_custom}
                       onChange={(e) => update("binder_custom", e.target.value)}
@@ -533,31 +564,16 @@ export default function PredictorPage() {
 
             <div style={{ marginTop: 10 }}>
               <label>Filler Components</label>
-              <div
-                style={{
-                  marginTop: 8,
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                  gap: 8,
-                }}
-              >
+              <div style={checkboxGridStyle}>
                 {FILLER_OPTIONS.map((item) => (
-                  <label
-                    key={item}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                      fontSize: 13,
-                      color: "rgba(18,18,20,.86)",
-                    }}
-                  >
+                  <label key={item} style={checkboxLabelStyle}>
                     <input
                       type="checkbox"
                       checked={form.filler.includes(item)}
                       onChange={() => toggleMulti("filler", item)}
+                      style={{ marginTop: 2, flexShrink: 0 }}
                     />
-                    <span>{item}</span>
+                    <span style={checkboxTextStyle}>{item}</span>
                   </label>
                 ))}
               </div>
@@ -565,31 +581,16 @@ export default function PredictorPage() {
 
             <div style={{ marginTop: 14 }}>
               <label>Special Tobacco Flags</label>
-              <div
-                style={{
-                  marginTop: 8,
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                  gap: 8,
-                }}
-              >
+              <div style={checkboxGridStyle}>
                 {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((item) => (
-                  <label
-                    key={item}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                      fontSize: 13,
-                      color: "rgba(18,18,20,.86)",
-                    }}
-                  >
+                  <label key={item} style={checkboxLabelStyle}>
                     <input
                       type="checkbox"
                       checked={form.special_tobacco_flags.includes(item)}
                       onChange={() => toggleMulti("special_tobacco_flags", item)}
+                      style={{ marginTop: 2, flexShrink: 0 }}
                     />
-                    <span>{item}</span>
+                    <span style={checkboxTextStyle}>{item}</span>
                   </label>
                 ))}
               </div>
@@ -615,7 +616,9 @@ export default function PredictorPage() {
 
                 {form.vitola === "Custom / Other" && (
                   <>
-                    <label style={{ marginTop: 10, display: "block" }}>Custom Vitola</label>
+                    <label style={{ marginTop: 10, display: "block" }}>
+                      Custom Vitola
+                    </label>
                     <input
                       value={form.vitola_custom}
                       onChange={(e) => update("vitola_custom", e.target.value)}
