@@ -110,6 +110,7 @@ const BINDERS = [
 ];
 
 const FILLER_OPTIONS = [
+  "",
   "Cuba",
   "Dominican Republic",
   "Nicaragua",
@@ -134,6 +135,7 @@ const FILLER_OPTIONS = [
 const LIGERO_OPTIONS = ["", "none", "low", "moderate", "high"];
 
 const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
+  "",
   "Medio Tiempo",
   "Piloto Cubano",
   "Olor Dominicano",
@@ -178,6 +180,13 @@ const VITOLA_OPTIONS = [
 const BUNCH_DENSITY_OPTIONS = ["low", "medium", "high"];
 const SMOKER_STYLE_OPTIONS = ["both", "slow", "fast"];
 
+const row3Style = {
+  display: "grid",
+  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+  gap: 12,
+  marginTop: 8,
+};
+
 export default function PredictorPage() {
   const [form, setForm] = useState({
     user_email: "light@example.com",
@@ -192,9 +201,13 @@ export default function PredictorPage() {
     wrapper_oiliness: "medium",
     binder: "",
     binder_custom: "",
-    filler: [],
+    filler_1: "",
+    filler_2: "",
+    filler_3: "",
     ligero: "moderate",
-    special_tobacco_flags: [],
+    flag_1: "",
+    flag_2: "",
+    flag_3: "",
     vitola: "",
     vitola_custom: "",
     bunch_density: "medium",
@@ -212,21 +225,15 @@ export default function PredictorPage() {
     setForm((f) => ({ ...f, [key]: value }));
   };
 
-  const toggleMulti = (key, value) => {
-    setForm((f) => {
-      const current = Array.isArray(f[key]) ? f[key] : [];
-      const next = current.includes(value)
-        ? current.filter((x) => x !== value)
-        : [...current, value];
-      return { ...f, [key]: next };
-    });
-  };
-
   const buildCustomValue = (choice, customValue) => {
     if (choice === "Custom / Other" || choice === "Hybrid / Other") {
       return String(customValue || "").trim();
     }
     return choice;
+  };
+
+  const buildUniqueList = (values) => {
+    return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
   };
 
   const buildPayload = () => ({
@@ -240,11 +247,9 @@ export default function PredictorPage() {
     wrapper_thickness: form.wrapper_thickness,
     wrapper_oiliness: form.wrapper_oiliness,
     binder: buildCustomValue(form.binder, form.binder_custom),
-    filler: Array.isArray(form.filler) ? form.filler : [],
+    filler: buildUniqueList([form.filler_1, form.filler_2, form.filler_3]),
     ligero: form.ligero,
-    special_tobacco_flags: Array.isArray(form.special_tobacco_flags)
-      ? form.special_tobacco_flags
-      : [],
+    special_tobacco_flags: buildUniqueList([form.flag_1, form.flag_2, form.flag_3]),
     vitola: buildCustomValue(form.vitola, form.vitola_custom),
     bunch_density: form.bunch_density,
     age_years: form.age_years === "" ? null : Number(form.age_years),
@@ -304,33 +309,6 @@ export default function PredictorPage() {
     } finally {
       setLoadingPredict(false);
     }
-  };
-
-  const checkboxGridStyle = {
-    marginTop: 8,
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: 12,
-    maxWidth: 920,
-    marginLeft: "auto",
-    marginRight: "auto",
-  };
-
-  const checkboxLabelStyle = {
-    display: "flex",
-    alignItems: "flex-start",
-    gap: 10,
-    fontSize: 14,
-    color: "rgba(18,18,20,.86)",
-    lineHeight: 1.35,
-    minHeight: 40,
-  };
-
-  const checkboxTextStyle = {
-    display: "block",
-    whiteSpace: "normal",
-    overflowWrap: "anywhere",
-    wordBreak: "break-word",
   };
 
   return (
@@ -562,37 +540,109 @@ export default function PredictorPage() {
               </div>
             </div>
 
-            <div style={{ marginTop: 10 }}>
+            <div style={{ marginTop: 14 }}>
               <label>Filler Components</label>
-              <div style={checkboxGridStyle}>
-                {FILLER_OPTIONS.map((item) => (
-                  <label key={item} style={checkboxLabelStyle}>
-                    <input
-                      type="checkbox"
-                      checked={form.filler.includes(item)}
-                      onChange={() => toggleMulti("filler", item)}
-                      style={{ marginTop: 2, flexShrink: 0 }}
-                    />
-                    <span style={checkboxTextStyle}>{item}</span>
+              <div style={row3Style}>
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Filler 1
                   </label>
-                ))}
+                  <select
+                    value={form.filler_1}
+                    onChange={(e) => update("filler_1", e.target.value)}
+                  >
+                    {FILLER_OPTIONS.map((x) => (
+                      <option key={`f1-${x || "blank"}`} value={x}>
+                        {x || "Select filler"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Filler 2
+                  </label>
+                  <select
+                    value={form.filler_2}
+                    onChange={(e) => update("filler_2", e.target.value)}
+                  >
+                    {FILLER_OPTIONS.map((x) => (
+                      <option key={`f2-${x || "blank"}`} value={x}>
+                        {x || "Select filler"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Filler 3
+                  </label>
+                  <select
+                    value={form.filler_3}
+                    onChange={(e) => update("filler_3", e.target.value)}
+                  >
+                    {FILLER_OPTIONS.map((x) => (
+                      <option key={`f3-${x || "blank"}`} value={x}>
+                        {x || "Select filler"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
             <div style={{ marginTop: 14 }}>
               <label>Special Tobacco Flags</label>
-              <div style={checkboxGridStyle}>
-                {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((item) => (
-                  <label key={item} style={checkboxLabelStyle}>
-                    <input
-                      type="checkbox"
-                      checked={form.special_tobacco_flags.includes(item)}
-                      onChange={() => toggleMulti("special_tobacco_flags", item)}
-                      style={{ marginTop: 2, flexShrink: 0 }}
-                    />
-                    <span style={checkboxTextStyle}>{item}</span>
+              <div style={row3Style}>
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Flag 1
                   </label>
-                ))}
+                  <select
+                    value={form.flag_1}
+                    onChange={(e) => update("flag_1", e.target.value)}
+                  >
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
+                      <option key={`flag1-${x || "blank"}`} value={x}>
+                        {x || "Select flag"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Flag 2
+                  </label>
+                  <select
+                    value={form.flag_2}
+                    onChange={(e) => update("flag_2", e.target.value)}
+                  >
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
+                      <option key={`flag2-${x || "blank"}`} value={x}>
+                        {x || "Select flag"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Flag 3
+                  </label>
+                  <select
+                    value={form.flag_3}
+                    onChange={(e) => update("flag_3", e.target.value)}
+                  >
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
+                      <option key={`flag3-${x || "blank"}`} value={x}>
+                        {x || "Select flag"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
