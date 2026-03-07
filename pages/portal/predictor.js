@@ -2,9 +2,6 @@ import { useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 
-const API_BASE = "http://127.0.0.1:8000";
-const API_KEY = "change-this-to-a-long-random-secret";
-
 export default function PredictorPage() {
   const [form, setForm] = useState({
     user_email: "light@example.com",
