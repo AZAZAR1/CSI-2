@@ -19,6 +19,21 @@ export default async function handler(req, res) {
       });
     }
 
+    const body =
+      typeof req.body === "string"
+        ? JSON.parse(req.body || "{}")
+        : (req.body || {});
+
+    const brand = String(body.brand || "").trim();
+    const line = String(body.line || "").trim();
+
+    if (!brand || !line) {
+      return res.status(400).json({
+        ok: false,
+        error: "Missing brand or line",
+      });
+    }
+
     const upstream = await fetch(`${backendUrl}/lookup-blend`, {
       method: "POST",
       headers: {
@@ -26,7 +41,7 @@ export default async function handler(req, res) {
         "x-api-key": apiKey,
         Accept: "application/json",
       },
-      body: JSON.stringify(req.body || {}),
+      body: JSON.stringify({ brand, line }),
     });
 
     const raw = await upstream.text();
