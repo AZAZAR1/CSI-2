@@ -220,6 +220,9 @@ export default function PredictorPage() {
   const [err, setErr] = useState("");
   const [loadingUsage, setLoadingUsage] = useState(false);
   const [loadingPredict, setLoadingPredict] = useState(false);
+  const [loadingLookup, setLoadingLookup] = useState(false);
+  const [lookupStatus, setLookupStatus] = useState("");
+  const [lookupSource, setLookupSource] = useState("");
 
   const update = (key, value) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -234,6 +237,80 @@ export default function PredictorPage() {
 
   const buildUniqueList = (values) => {
     return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
+  };
+
+  const mapLookupValue = (value, options) => {
+    const v = String(value || "").trim();
+    if (!v) return "";
+    return options.includes(v) ? v : "";
+  };
+
+  const applyLookupMatch = (match) => {
+    const filler = Array.isArray(match?.filler) ? match.filler : [];
+    const flags = Array.isArray(match?.special_tobacco_flags)
+      ? match.special_tobacco_flags
+      : [];
+
+    setForm((f) => ({
+      ...f,
+      brand: match?.brand || f.brand,
+      line: match?.line || f.line,
+      origin: mapLookupValue(match?.origin, ORIGINS) || f.origin,
+      factory: mapLookupValue(match?.factory, FACTORIES) || f.factory,
+
+      wrapper:
+        mapLookupValue(match?.wrapper, WRAPPERS) ||
+        (match?.wrapper ? "Hybrid / Other" : f.wrapper),
+      wrapper_custom:
+        match?.wrapper && !WRAPPERS.includes(match.wrapper)
+          ? match.wrapper
+          : f.wrapper_custom,
+
+      wrapper_process:
+        mapLookupValue(match?.wrapper_process, WRAPPER_PROCESSES) ||
+        f.wrapper_process,
+
+      wrapper_thickness:
+        mapLookupValue(match?.wrapper_thickness, WRAPPER_THICKNESS_OPTIONS) ||
+        f.wrapper_thickness,
+
+      wrapper_oiliness:
+        mapLookupValue(match?.wrapper_oiliness, WRAPPER_OILINESS_OPTIONS) ||
+        f.wrapper_oiliness,
+
+      binder:
+        mapLookupValue(match?.binder, BINDERS) ||
+        (match?.binder ? "Hybrid / Other" : f.binder),
+      binder_custom:
+        match?.binder && !BINDERS.includes(match.binder)
+          ? match.binder
+          : f.binder_custom,
+
+      filler_1: filler[0] && FILLER_OPTIONS.includes(filler[0]) ? filler[0] : f.filler_1,
+      filler_2: filler[1] && FILLER_OPTIONS.includes(filler[1]) ? filler[1] : f.filler_2,
+      filler_3: filler[2] && FILLER_OPTIONS.includes(filler[2]) ? filler[2] : f.filler_3,
+
+      ligero: mapLookupValue(match?.ligero, LIGERO_OPTIONS) || f.ligero,
+
+      flag_1:
+        flags[0] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[0]) ? flags[0] : f.flag_1,
+      flag_2:
+        flags[1] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[1]) ? flags[1] : f.flag_2,
+      flag_3:
+        flags[2] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[2]) ? flags[2] : f.flag_3,
+
+      vitola:
+        mapLookupValue(match?.vitola, VITOLA_OPTIONS) ||
+        (match?.vitola ? "Custom / Other" : f.vitola),
+      vitola_custom:
+        match?.vitola && !VITOLA_OPTIONS.includes(match.vitola)
+          ? match.vitola
+          : f.vitola_custom,
+
+      bunch_density:
+        mapLookupValue(match?.bunch_density, BUNCH_DENSITY_OPTIONS) ||
+        f.bunch_density,
+    }));
   };
 
   const buildPayload = () => ({
@@ -277,6 +354,47 @@ export default function PredictorPage() {
       setErr(e.message || "Usage request failed");
     } finally {
       setLoadingUsage(false);
+    }
+  };
+
+  const lookupBlend = async () => {
+    setErr("");
+    setLookupSource("");
+
+    if (!String(form.brand || "").trim() || !String(form.line || "").trim()) {
+      setLookupStatus("Enter brand and line first.");
+      return;
+    }
+
+    setLoadingLookup(true);
+    setLookupStatus("Searching trusted cigar sources...");
+
+    try {
+      const res = await fetch("/api/predictor/lookup-blend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          brand: String(form.brand || "").trim(),
+          line: String(form.line || "").trim(),
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok || !data.match) {
+        setLookupStatus(data.error || "No reliable blend match found.");
+        return;
+      }
+
+      applyLookupMatch(data.match);
+      setLookupSource(data.source?.label || "");
+      setLookupStatus("Blend found and applied to the form.");
+    } catch (e) {
+      setLookupStatus("Lookup failed.");
+    } finally {
+      setLoadingLookup(false);
     }
   };
 
@@ -330,6 +448,7 @@ export default function PredictorPage() {
             <label>Email</label>
             <input
               value={form.user_email}
+              placeholder="Enter your subscription email"
               onChange={(e) => update("user_email", e.target.value)}
             />
 
@@ -380,6 +499,7 @@ export default function PredictorPage() {
                   placeholder="e.g. Montecristo"
                 />
               </div>
+
               <div>
                 <label>Line</label>
                 <input
@@ -389,6 +509,37 @@ export default function PredictorPage() {
                 />
               </div>
             </div>
+
+            <div
+              style={{
+                marginTop: 14,
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
+            >
+              <button
+                className="btn"
+                type="button"
+                onClick={lookupBlend}
+                disabled={loadingLookup}
+              >
+                {loadingLookup ? "Searching..." : "Lookup Blend"}
+              </button>
+
+              {lookupStatus && (
+                <span className="small" style={{ lineHeight: 1.4 }}>
+                  {lookupStatus}
+                </span>
+              )}
+            </div>
+
+            {lookupSource && (
+              <p className="small" style={{ marginTop: 8 }}>
+                Source: <b>{lookupSource}</b>
+              </p>
+            )}
 
             <div className="row2" style={{ marginTop: 10 }}>
               <div>
