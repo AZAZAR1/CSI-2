@@ -189,7 +189,7 @@ const row3Style = {
 
 export default function PredictorPage() {
   const [form, setForm] = useState({
-    user_email: "light@example.com",
+    user_email: "",
     brand: "",
     line: "",
     origin: "",
