@@ -15,13 +15,13 @@ const autocompleteBox = {
   zIndex: 50,
   maxHeight: 220,
   overflowY: "auto",
-  marginTop: 6
+  marginTop: 6,
 };
 
 const autocompleteItem = {
   padding: "10px 12px",
   cursor: "pointer",
-  borderBottom: "1px solid rgba(0,0,0,.06)"
+  borderBottom: "1px solid rgba(0,0,0,.06)",
 };
 
 /* --------------------------
@@ -182,7 +182,7 @@ const row3Style = {
   display: "grid",
   gridTemplateColumns: "repeat(3, minmax(0,1fr))",
   gap: 12,
-  marginTop: 8
+  marginTop: 8,
 };
 
 /* --------------------------
@@ -190,93 +190,92 @@ COMPONENT
 -------------------------- */
 
 export default function PredictorPage() {
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const [suggestions,setSuggestions] = useState([]);
-  const [showSuggestions,setShowSuggestions] = useState(false);
+  const [form, setForm] = useState({
+    user_email: "",
+    brand: "",
+    line: "",
 
-  const [form,setForm] = useState({
+    origin: "",
+    factory: "",
 
-    user_email:"",
-    brand:"",
-    line:"",
+    wrapper: "",
+    wrapper_custom: "",
+    wrapper_process: "",
+    wrapper_thickness: "medium",
+    wrapper_oiliness: "medium",
 
-    origin:"",
-    factory:"",
+    binder: "",
+    binder_custom: "",
 
-    wrapper:"",
-    wrapper_custom:"",
-    wrapper_process:"",
-    wrapper_thickness:"medium",
-    wrapper_oiliness:"medium",
+    filler_1: "",
+    filler_2: "",
+    filler_3: "",
 
-    binder:"",
-    binder_custom:"",
+    ligero: "moderate",
 
-    filler_1:"",
-    filler_2:"",
-    filler_3:"",
+    flag_1: "",
+    flag_2: "",
+    flag_3: "",
 
-    ligero:"moderate",
-
-    flag_1:"",
-    flag_2:"",
-    flag_3:"",
-
-    age_years:"",
-    smoker_style:"both",
+    age_years: "",
+    smoker_style: "both",
 
     /* hidden fields for backend compatibility */
-
-    vitola:"",
-    bunch_density:"medium"
+    vitola: "",
+    bunch_density: "medium",
   });
 
-  const [usage,setUsage] = useState(null);
-  const [result,setResult] = useState(null);
-  const [err,setErr] = useState("");
+  const [usage, setUsage] = useState(null);
+  const [result, setResult] = useState(null);
+  const [err, setErr] = useState("");
 
-  const [loadingUsage,setLoadingUsage] = useState(false);
-  const [loadingPredict,setLoadingPredict] = useState(false);
-  const [loadingLookup,setLoadingLookup] = useState(false);
+  const [loadingUsage, setLoadingUsage] = useState(false);
+  const [loadingPredict, setLoadingPredict] = useState(false);
+  const [loadingLookup, setLoadingLookup] = useState(false);
 
-  const [lookupStatus,setLookupStatus] = useState("");
-  const [lookupSource,setLookupSource] = useState("");
+  const [lookupStatus, setLookupStatus] = useState("");
+  const [lookupSource, setLookupSource] = useState("");
 
-  const update = (key,value) => {
-    setForm(f => ({...f,[key]:value}));
+  const update = (key, value) => {
+    setForm((f) => ({ ...f, [key]: value }));
   };
 
   /* --------------------------
 AUTOCOMPLETE
 -------------------------- */
 
-  const loadSuggestions = async(q)=>{
-
-    if(!q || q.length < 2){
+  const loadSuggestions = async (q) => {
+    if (!q || q.length < 2) {
       setSuggestions([]);
       setShowSuggestions(false);
       return;
     }
 
-    try{
+    try {
+      const res = await fetch(
+        `/api/predictor/autocomplete?q=${encodeURIComponent(q)}`
+      );
+      const data = await res.json().catch(() => ({}));
 
-      const res = await fetch(`/api/predictor/autocomplete?q=${encodeURIComponent(q)}`);
-      const data = await res.json();
-
-      if(data?.results){
-
+      if (Array.isArray(data?.results)) {
         setSuggestions(data.results);
         setShowSuggestions(true);
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
       }
-
-    }catch{}
+    } catch {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
   };
 
-  const selectSuggestion = (item)=>{
-
-    update("brand",item.brand);
-    update("line",item.line);
-
+  const selectSuggestion = (item) => {
+    update("brand", item.brand || "");
+    update("line", item.line || "");
     setShowSuggestions(false);
   };
 
@@ -284,263 +283,679 @@ AUTOCOMPLETE
 HELPERS
 -------------------------- */
 
-  const buildCustomValue = (choice,custom)=>{
-
-    if(choice === "Custom / Other" || choice === "Hybrid / Other"){
-
-      return String(custom||"").trim();
+  const buildCustomValue = (choice, custom) => {
+    if (choice === "Custom / Other" || choice === "Hybrid / Other") {
+      return String(custom || "").trim();
     }
-
     return choice;
   };
 
-  const buildUniqueList = (values)=>{
-
-    return [...new Set(values.map(v=>String(v||"").trim()).filter(Boolean))];
+  const buildUniqueList = (values) => {
+    return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
   };
 
-  const buildPayload = ()=>({
+  const mapLookupValue = (value, options) => {
+    const v = String(value || "").trim();
+    if (!v) return "";
+    return options.includes(v) ? v : "";
+  };
 
-    user_email:String(form.user_email||"").trim(),
+  const applyLookupMatch = (match) => {
+    const filler = Array.isArray(match?.filler) ? match.filler : [];
+    const flags = Array.isArray(match?.special_tobacco_flags)
+      ? match.special_tobacco_flags
+      : [];
 
-    brand:String(form.brand||"").trim(),
-    line:String(form.line||"").trim(),
+    setForm((f) => ({
+      ...f,
+      brand: match?.brand || f.brand,
+      line: match?.line || f.line,
+      origin: mapLookupValue(match?.origin, ORIGINS) || f.origin,
+      factory: mapLookupValue(match?.factory, FACTORIES) || f.factory,
 
-    origin:form.origin,
-    factory:form.factory,
+      wrapper:
+        mapLookupValue(match?.wrapper, WRAPPERS) ||
+        (match?.wrapper ? "Hybrid / Other" : f.wrapper),
+      wrapper_custom:
+        match?.wrapper && !WRAPPERS.includes(match.wrapper)
+          ? match.wrapper
+          : f.wrapper_custom,
 
-    wrapper:buildCustomValue(form.wrapper,form.wrapper_custom),
-    wrapper_process:form.wrapper_process,
-    wrapper_thickness:form.wrapper_thickness,
-    wrapper_oiliness:form.wrapper_oiliness,
+      wrapper_process:
+        mapLookupValue(match?.wrapper_process, WRAPPER_PROCESSES) ||
+        f.wrapper_process,
 
-    binder:buildCustomValue(form.binder,form.binder_custom),
+      wrapper_thickness:
+        mapLookupValue(match?.wrapper_thickness, WRAPPER_THICKNESS_OPTIONS) ||
+        f.wrapper_thickness,
 
-    filler:buildUniqueList([
-      form.filler_1,
-      form.filler_2,
-      form.filler_3
-    ]),
+      wrapper_oiliness:
+        mapLookupValue(match?.wrapper_oiliness, WRAPPER_OILINESS_OPTIONS) ||
+        f.wrapper_oiliness,
 
-    ligero:form.ligero,
+      binder:
+        mapLookupValue(match?.binder, BINDERS) ||
+        (match?.binder ? "Hybrid / Other" : f.binder),
+      binder_custom:
+        match?.binder && !BINDERS.includes(match.binder)
+          ? match.binder
+          : f.binder_custom,
 
-    special_tobacco_flags:buildUniqueList([
+      filler_1:
+        filler[0] && FILLER_OPTIONS.includes(filler[0]) ? filler[0] : f.filler_1,
+      filler_2:
+        filler[1] && FILLER_OPTIONS.includes(filler[1]) ? filler[1] : f.filler_2,
+      filler_3:
+        filler[2] && FILLER_OPTIONS.includes(filler[2]) ? filler[2] : f.filler_3,
+
+      ligero: mapLookupValue(match?.ligero, LIGERO_OPTIONS) || f.ligero,
+
+      flag_1:
+        flags[0] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[0])
+          ? flags[0]
+          : f.flag_1,
+      flag_2:
+        flags[1] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[1])
+          ? flags[1]
+          : f.flag_2,
+      flag_3:
+        flags[2] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[2])
+          ? flags[2]
+          : f.flag_3,
+    }));
+  };
+
+  const buildPayload = () => ({
+    user_email: String(form.user_email || "").trim(),
+
+    brand: String(form.brand || "").trim(),
+    line: String(form.line || "").trim(),
+
+    origin: form.origin,
+    factory: form.factory,
+
+    wrapper: buildCustomValue(form.wrapper, form.wrapper_custom),
+    wrapper_process: form.wrapper_process,
+    wrapper_thickness: form.wrapper_thickness,
+    wrapper_oiliness: form.wrapper_oiliness,
+
+    binder: buildCustomValue(form.binder, form.binder_custom),
+
+    filler: buildUniqueList([form.filler_1, form.filler_2, form.filler_3]),
+
+    ligero: form.ligero,
+
+    special_tobacco_flags: buildUniqueList([
       form.flag_1,
       form.flag_2,
-      form.flag_3
+      form.flag_3,
     ]),
 
-    age_years:form.age_years === "" ? null : Number(form.age_years),
-    smoker_style:form.smoker_style,
+    age_years: form.age_years === "" ? null : Number(form.age_years),
+    smoker_style: form.smoker_style,
 
-    vitola:"",
-    bunch_density:"medium"
+    vitola: "",
+    bunch_density: "medium",
   });
 
-/* --------------------------
+  /* --------------------------
 API CALLS
 -------------------------- */
 
-const loadUsage = async()=>{
+  const loadUsage = async () => {
+    setErr("");
+    setLoadingUsage(true);
+    setUsage(null);
 
-setErr("");
-setLoadingUsage(true);
-setUsage(null);
+    try {
+      const res = await fetch(
+        `/api/predictor/usage?email=${encodeURIComponent(form.user_email)}`
+      );
 
-try{
+      const data = await res.json().catch(() => ({}));
 
-const res = await fetch(`/api/predictor/usage?email=${encodeURIComponent(form.user_email)}`);
+      if (!res.ok) throw new Error(data.error || data.detail || "Failed to load usage");
 
-const data = await res.json();
+      setUsage(data);
+    } catch (e) {
+      setErr(e.message || "Usage request failed");
+    } finally {
+      setLoadingUsage(false);
+    }
+  };
 
-if(!res.ok) throw new Error(data.error || data.detail);
+  const lookupBlend = async () => {
+    setErr("");
+    setLookupSource("");
 
-setUsage(data);
+    if (!String(form.brand || "").trim() || !String(form.line || "").trim()) {
+      setLookupStatus("Enter brand and line first.");
+      return;
+    }
 
-}catch(e){
+    setLoadingLookup(true);
+    setLookupStatus("Searching ICSI blend database...");
 
-setErr(e.message);
+    try {
+      const res = await fetch(`/api/predictor/lookup-blend`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          brand: String(form.brand || "").trim(),
+          line: String(form.line || "").trim(),
+        }),
+      });
 
-}
+      const data = await res.json().catch(() => ({}));
 
-finally{
+      if (!res.ok || !data.ok || !data.match) {
+        setLookupStatus(data.error || "No reliable blend match found.");
+        return;
+      }
 
-setLoadingUsage(false);
-}
-};
+      applyLookupMatch(data.match);
+      setLookupSource(data.source?.label || "");
+      setLookupStatus("Blend found and applied to the form.");
+    } catch {
+      setLookupStatus("Lookup failed.");
+    } finally {
+      setLoadingLookup(false);
+    }
+  };
 
-const runPrediction = async()=>{
+  const runPrediction = async () => {
+    setErr("");
+    setLoadingPredict(true);
+    setResult(null);
 
-setErr("");
-setLoadingPredict(true);
-setResult(null);
+    try {
+      const res = await fetch(`/api/predictor/predict`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(buildPayload()),
+      });
 
-try{
+      const data = await res.json().catch(() => ({}));
 
-const res = await fetch(`/api/predictor/predict`,{
+      if (!res.ok) throw new Error(data.error || data.detail || "Prediction failed");
 
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify(buildPayload())
-});
+      setResult(data);
+      await loadUsage();
+    } catch (e) {
+      setErr(e.message || "Prediction request failed");
+    } finally {
+      setLoadingPredict(false);
+    }
+  };
 
-const data = await res.json();
-
-if(!res.ok) throw new Error(data.error || data.detail);
-
-setResult(data);
-
-await loadUsage();
-
-}catch(e){
-
-setErr(e.message);
-
-}
-
-finally{
-
-setLoadingPredict(false);
-}
-};
-
-/* --------------------------
+  /* --------------------------
 UI
 -------------------------- */
 
-return(
+  return (
+    <Layout>
+      <Seo title="Predictor | ICSI" path="/portal/predictor" />
 
-<Layout>
+      <div className="section">
+        <div className="container" style={{ maxWidth: 980 }}>
+          <h1>Predictor Prototype</h1>
 
-<Seo title="Predictor | ICSI" path="/portal/predictor"/>
+          {/* USER */}
+          <div className="card" style={{ marginTop: 16 }}>
+            <h3>User</h3>
 
-<div className="section">
-<div className="container" style={{maxWidth:980}}>
+            <label>Email</label>
+            <input
+              value={form.user_email}
+              placeholder="Enter your subscription email"
+              onChange={(e) => update("user_email", e.target.value)}
+            />
 
-<h1>Predictor Prototype</h1>
+            <div className="ctaRow" style={{ marginTop: 12 }}>
+              <button className="btn" onClick={loadUsage} disabled={loadingUsage}>
+                {loadingUsage ? "Loading..." : "Check usage"}
+              </button>
+            </div>
 
-{/* USER */}
+            {usage && (
+              <div className="small" style={{ marginTop: 12, lineHeight: 1.8 }}>
+                <div>
+                  Tier: <b>{usage.tier}</b>
+                </div>
+                <div>
+                  Annual: <b>{usage.runs_used}</b> used / <b>{usage.annual_limit}</b>
+                </div>
+                <div>
+                  Remaining: <b>{usage.runs_remaining}</b>
+                </div>
+                <div>
+                  Today: <b>{usage.daily_used}</b> used / <b>{usage.daily_limit}</b>
+                </div>
+                <div>
+                  Daily remaining: <b>{usage.daily_remaining}</b>
+                </div>
+                <div>
+                  Period: <b>{usage.period_start}</b> → <b>{usage.period_end}</b>
+                </div>
+              </div>
+            )}
+          </div>
 
-<div className="card" style={{marginTop:16}}>
+          {/* CIGAR IDENTITY */}
+          <div className="card" style={{ marginTop: 16 }}>
+            <h3>Cigar Identity</h3>
 
-<h3>User</h3>
+            <div className="row2">
+              <div style={{ position: "relative" }}>
+                <label>Brand</label>
+                <input
+                  value={form.brand}
+                  placeholder="Start typing brand..."
+                  onChange={(e) => {
+                    update("brand", e.target.value);
+                    loadSuggestions(e.target.value);
+                  }}
+                />
 
-<label>Email</label>
+                {showSuggestions && suggestions.length > 0 && (
+                  <div style={autocompleteBox}>
+                    {suggestions.map((s, i) => (
+                      <div
+                        key={i}
+                        style={autocompleteItem}
+                        onClick={() => selectSuggestion(s)}
+                      >
+                        {s.label}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-<input
-value={form.user_email}
-placeholder="Enter your subscription email"
-onChange={(e)=>update("user_email",e.target.value)}
-/>
+              <div>
+                <label>Line</label>
+                <input
+                  value={form.line}
+                  onChange={(e) => update("line", e.target.value)}
+                  placeholder="e.g. No. 2"
+                />
+              </div>
+            </div>
 
-<div className="ctaRow" style={{marginTop:12}}>
+            <div
+              style={{
+                marginTop: 14,
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
+            >
+              <button
+                className="btn"
+                type="button"
+                onClick={lookupBlend}
+                disabled={loadingLookup}
+              >
+                {loadingLookup ? "Searching..." : "Lookup Blend"}
+              </button>
 
-<button className="btn" onClick={loadUsage} disabled={loadingUsage}>
-{loadingUsage ? "Loading..." : "Check usage"}
-</button>
+              {lookupStatus && (
+                <span className="small" style={{ lineHeight: 1.4 }}>
+                  {lookupStatus}
+                </span>
+              )}
+            </div>
 
-</div>
+            {lookupSource && (
+              <p className="small" style={{ marginTop: 8 }}>
+                Source: <b>{lookupSource}</b>
+              </p>
+            )}
 
-</div>
+            <div className="row2" style={{ marginTop: 10 }}>
+              <div>
+                <label>Origin</label>
+                <select
+                  value={form.origin}
+                  onChange={(e) => update("origin", e.target.value)}
+                >
+                  {ORIGINS.map((x) => (
+                    <option key={x || "blank-origin"} value={x}>
+                      {x || "Select origin"}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-{/* CIGAR IDENTITY */}
+              <div>
+                <label>Factory</label>
+                <select
+                  value={form.factory}
+                  onChange={(e) => update("factory", e.target.value)}
+                >
+                  {FACTORIES.map((x) => (
+                    <option key={x || "blank-factory"} value={x}>
+                      {x || "Select factory"}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
 
-<div className="card" style={{marginTop:16}}>
+          {/* BLEND CONSTRUCTION */}
+          <div className="card" style={{ marginTop: 16 }}>
+            <h3>Blend Construction</h3>
 
-<h3>Cigar Identity</h3>
+            <div className="row2">
+              <div>
+                <label>Wrapper</label>
+                <select
+                  value={form.wrapper}
+                  onChange={(e) => update("wrapper", e.target.value)}
+                >
+                  {WRAPPERS.map((x) => (
+                    <option key={x || "blank-wrapper"} value={x}>
+                      {x || "Select wrapper"}
+                    </option>
+                  ))}
+                </select>
 
-<div className="row2">
+                {form.wrapper === "Hybrid / Other" && (
+                  <>
+                    <label style={{ marginTop: 10, display: "block" }}>
+                      Custom Wrapper
+                    </label>
+                    <input
+                      value={form.wrapper_custom}
+                      onChange={(e) => update("wrapper_custom", e.target.value)}
+                      placeholder="e.g. Ecuador Hybrid"
+                    />
+                  </>
+                )}
+              </div>
 
-<div style={{position:"relative"}}>
+              <div>
+                <label>Wrapper Process</label>
+                <select
+                  value={form.wrapper_process}
+                  onChange={(e) => update("wrapper_process", e.target.value)}
+                >
+                  {WRAPPER_PROCESSES.map((x) => (
+                    <option key={x || "blank-wrapper-process"} value={x}>
+                      {x || "Select wrapper process"}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-<label>Brand</label>
+            <div className="row2" style={{ marginTop: 10 }}>
+              <div>
+                <label>Wrapper Thickness</label>
+                <select
+                  value={form.wrapper_thickness}
+                  onChange={(e) => update("wrapper_thickness", e.target.value)}
+                >
+                  {WRAPPER_THICKNESS_OPTIONS.map((x) => (
+                    <option key={x} value={x}>
+                      {x}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-<input
-value={form.brand}
-placeholder="Start typing brand..."
-onChange={(e)=>{
+              <div>
+                <label>Wrapper Oiliness</label>
+                <select
+                  value={form.wrapper_oiliness}
+                  onChange={(e) => update("wrapper_oiliness", e.target.value)}
+                >
+                  {WRAPPER_OILINESS_OPTIONS.map((x) => (
+                    <option key={x} value={x}>
+                      {x}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-update("brand",e.target.value);
-loadSuggestions(e.target.value);
+            <div className="row2" style={{ marginTop: 10 }}>
+              <div>
+                <label>Binder</label>
+                <select
+                  value={form.binder}
+                  onChange={(e) => update("binder", e.target.value)}
+                >
+                  {BINDERS.map((x) => (
+                    <option key={x || "blank-binder"} value={x}>
+                      {x || "Select binder"}
+                    </option>
+                  ))}
+                </select>
 
-}}
-/>
+                {form.binder === "Hybrid / Other" && (
+                  <>
+                    <label style={{ marginTop: 10, display: "block" }}>
+                      Custom Binder
+                    </label>
+                    <input
+                      value={form.binder_custom}
+                      onChange={(e) => update("binder_custom", e.target.value)}
+                      placeholder="e.g. Ecuador Hybrid"
+                    />
+                  </>
+                )}
+              </div>
 
-{showSuggestions && suggestions.length>0 &&(
+              <div>
+                <label>Ligero</label>
+                <select
+                  value={form.ligero}
+                  onChange={(e) => update("ligero", e.target.value)}
+                >
+                  {LIGERO_OPTIONS.map((x) => (
+                    <option key={x || "blank-ligero"} value={x}>
+                      {x || "Select ligero level"}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-<div style={autocompleteBox}>
+            <div style={{ marginTop: 14 }}>
+              <label>Filler Components</label>
+              <div style={row3Style}>
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Filler 1
+                  </label>
+                  <select
+                    value={form.filler_1}
+                    onChange={(e) => update("filler_1", e.target.value)}
+                  >
+                    {FILLER_OPTIONS.map((x) => (
+                      <option key={`f1-${x || "blank"}`} value={x}>
+                        {x || "Select filler"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-{suggestions.map((s,i)=>(
-<div key={i}
-style={autocompleteItem}
-onClick={()=>selectSuggestion(s)}
->
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Filler 2
+                  </label>
+                  <select
+                    value={form.filler_2}
+                    onChange={(e) => update("filler_2", e.target.value)}
+                  >
+                    {FILLER_OPTIONS.map((x) => (
+                      <option key={`f2-${x || "blank"}`} value={x}>
+                        {x || "Select filler"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-{s.label}
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Filler 3
+                  </label>
+                  <select
+                    value={form.filler_3}
+                    onChange={(e) => update("filler_3", e.target.value)}
+                  >
+                    {FILLER_OPTIONS.map((x) => (
+                      <option key={`f3-${x || "blank"}`} value={x}>
+                        {x || "Select filler"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
 
-</div>
-))}
+            <div style={{ marginTop: 14 }}>
+              <label>Special Tobacco Flags</label>
+              <div style={row3Style}>
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Flag 1
+                  </label>
+                  <select
+                    value={form.flag_1}
+                    onChange={(e) => update("flag_1", e.target.value)}
+                  >
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
+                      <option key={`flag1-${x || "blank"}`} value={x}>
+                        {x || "Select flag"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-</div>
-)}
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Flag 2
+                  </label>
+                  <select
+                    value={form.flag_2}
+                    onChange={(e) => update("flag_2", e.target.value)}
+                  >
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
+                      <option key={`flag2-${x || "blank"}`} value={x}>
+                        {x || "Select flag"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-</div>
+                <div>
+                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
+                    Flag 3
+                  </label>
+                  <select
+                    value={form.flag_3}
+                    onChange={(e) => update("flag_3", e.target.value)}
+                  >
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
+                      <option key={`flag3-${x || "blank"}`} value={x}>
+                        {x || "Select flag"}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
 
-<div>
+          {/* SMOKING PROFILE */}
+          <div className="card" style={{ marginTop: 16 }}>
+            <h3>Smoking Profile</h3>
 
-<label>Line</label>
+            <div className="row2">
+              <div>
+                <label>Age (years)</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.5"
+                  value={form.age_years}
+                  onChange={(e) => update("age_years", e.target.value)}
+                />
+              </div>
 
-<input
-value={form.line}
-onChange={(e)=>update("line",e.target.value)}
-placeholder="e.g. No. 2"
-/>
+              <div>
+                <label>Smoker Style</label>
+                <select
+                  value={form.smoker_style}
+                  onChange={(e) => update("smoker_style", e.target.value)}
+                >
+                  {SMOKER_STYLE_OPTIONS.map((x) => (
+                    <option key={x} value={x}>
+                      {x}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-</div>
+            <div className="ctaRow" style={{ marginTop: 16 }}>
+              <button
+                className="btn primary"
+                onClick={runPrediction}
+                disabled={loadingPredict}
+                type="button"
+              >
+                {loadingPredict ? "Running..." : "Run Predictor"}
+              </button>
+            </div>
+          </div>
 
-</div>
+          {err && (
+            <div className="notice" style={{ marginTop: 16 }}>
+              <b>Error:</b> {err}
+            </div>
+          )}
 
-</div>
+          {result && (
+            <div className="card" style={{ marginTop: 16 }}>
+              <h3>Prediction Result</h3>
 
-{/* RUN */}
+              <div className="small" style={{ lineHeight: 1.8 }}>
+                <div>
+                  Family: <b>{result.family}</b>
+                </div>
+                <div>
+                  Target RH: <b>{result.target_rh}</b>
+                </div>
+                <div>
+                  Window: <b>{result.window_low}</b> to <b>{result.window_high}</b>
+                </div>
+                <div>
+                  Runs used: <b>{result.runs_used}</b>
+                </div>
+                <div>
+                  Runs remaining: <b>{result.runs_remaining}</b>
+                </div>
+                <div>
+                  Daily used: <b>{result.daily_used}</b>
+                </div>
+                <div>
+                  Daily remaining: <b>{result.daily_remaining}</b>
+                </div>
+              </div>
 
-<div className="card" style={{marginTop:16}}>
+              <hr className="sep" />
 
-<button
-className="btn primary"
-onClick={runPrediction}
-disabled={loadingPredict}
->
-
-{loadingPredict ? "Running..." : "Run Predictor"}
-
-</button>
-
-</div>
-
-{err && (
-
-<div className="notice" style={{marginTop:16}}>
-<b>Error:</b> {err}
-</div>
-
-)}
-
-{result && (
-
-<div className="card" style={{marginTop:16}}>
-
-<h3>Prediction Result</h3>
-
-<p>{result.report_summary}</p>
-
-</div>
-
-)}
-
-</div>
-</div>
-
-</Layout>
-);
+              <h3>Controlled Report Summary</h3>
+              <p>{result.report_summary}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </Layout>
+  );
 }
