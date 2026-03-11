@@ -2,28 +2,31 @@ import { useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 
-/* -------------------------
-AUTOCOMPLETE UI STYLES
-------------------------- */
+/* --------------------------
+AUTOCOMPLETE UI STYLE
+-------------------------- */
 
 const autocompleteBox = {
   position: "absolute",
-  background: "white",
-  border: "1px solid #ddd",
+  background: "#fff",
+  border: "1px solid rgba(0,0,0,.1)",
+  borderRadius: 8,
   width: "100%",
-  zIndex: 20,
-  maxHeight: 200,
+  zIndex: 50,
+  maxHeight: 220,
   overflowY: "auto",
+  marginTop: 6
 };
 
 const autocompleteItem = {
-  padding: "8px 10px",
+  padding: "10px 12px",
   cursor: "pointer",
+  borderBottom: "1px solid rgba(0,0,0,.06)"
 };
 
-/* -------------------------
+/* --------------------------
 DATA CONSTANTS
-------------------------- */
+-------------------------- */
 
 const ORIGINS = [
   "",
@@ -42,243 +45,502 @@ const ORIGINS = [
   "Philippines",
 ];
 
-/* (all your other constant arrays remain unchanged) */
+const FACTORIES = [
+  "",
+  "El Laguito",
+  "H. Upmann",
+  "Partagas",
+  "La Corona",
+  "TABACUBA",
+  "My Father Cigars",
+  "Tabacalera Garcia",
+  "General Cigar Dominicana",
+  "La Aurora",
+  "La Flor Dominicana",
+  "Quesada Cigars",
+  "Tabacalera AJ Fernandez",
+  "Plasencia Cigars",
+  "Joya de Nicaragua",
+  "Oliva Cigar Co.",
+  "PDR Cigars",
+  "Davidoff",
+  "Tabadom",
+  "Tabacos de Costa Rica",
+  "Unknown / Mixed",
+];
+
+const WRAPPERS = [
+  "",
+  "Cuban",
+  "Habano",
+  "Nicaraguan Habano",
+  "Habano 2000",
+  "Corojo",
+  "Corojo 99",
+  "Criollo",
+  "Criollo 98",
+  "Connecticut Shade",
+  "Connecticut Broadleaf",
+  "Broadleaf",
+  "San Andrés",
+  "Cameroon",
+  "Sumatra",
+  "Ecuadorian Sumatra",
+  "Ecuadorian Habano",
+  "Ecuadorian Connecticut",
+  "Maduro",
+  "Oscuro",
+  "Rosado",
+  "Colorado",
+  "Mexican",
+  "Pennsylvania Broadleaf",
+  "Hybrid / Other",
+];
+
+const WRAPPER_PROCESSES = [
+  "",
+  "Natural",
+  "Claro",
+  "Colorado",
+  "Colorado Claro",
+  "Colorado Maduro",
+  "Rosado",
+  "Maduro",
+  "Oscuro",
+  "Corojo-processed",
+  "Sun Grown",
+  "Shade Grown",
+  "Double Fermented",
+  "Barrel Aged",
+  "Other",
+];
+
+const WRAPPER_THICKNESS_OPTIONS = ["thin", "medium", "thick"];
+const WRAPPER_OILINESS_OPTIONS = ["low", "medium", "high"];
+
+const BINDERS = [
+  "",
+  "Cuban",
+  "Dominican",
+  "Nicaraguan",
+  "Honduran",
+  "Mexican",
+  "San Andrés",
+  "Connecticut",
+  "Sumatra",
+  "Ecuadorian",
+  "Broadleaf",
+  "Criollo",
+  "Corojo",
+  "Hybrid / Other",
+];
+
+const FILLER_OPTIONS = [
+  "",
+  "Cuba",
+  "Dominican Republic",
+  "Nicaragua",
+  "Honduras",
+  "Mexico",
+  "Costa Rica",
+  "Panama",
+  "Ecuador",
+  "Brazil",
+  "Peru",
+  "United States",
+  "Piloto Cubano",
+  "Olor Dominicano",
+  "Corojo",
+  "Criollo",
+  "Ligero",
+  "Seco",
+  "Volado",
+  "Medio Tiempo",
+];
+
+const LIGERO_OPTIONS = ["", "none", "low", "moderate", "high"];
+
+const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
+  "",
+  "Medio Tiempo",
+  "Piloto Cubano",
+  "Olor Dominicano",
+  "Corojo",
+  "Criollo",
+  "Andullo",
+  "Broadleaf-heavy",
+  "San Andrés-heavy",
+  "Aged filler",
+  "Extra fermented",
+  "Culebra style bunching",
+  "Small-batch / experimental",
+];
+
+const SMOKER_STYLE_OPTIONS = ["both", "slow", "fast"];
+
+const row3Style = {
+  display: "grid",
+  gridTemplateColumns: "repeat(3, minmax(0,1fr))",
+  gap: 12,
+  marginTop: 8
+};
+
+/* --------------------------
+COMPONENT
+-------------------------- */
 
 export default function PredictorPage() {
 
-  /* -------------------------
-  AUTOCOMPLETE STATE
-  ------------------------- */
+  const [suggestions,setSuggestions] = useState([]);
+  const [showSuggestions,setShowSuggestions] = useState(false);
 
-  const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [form,setForm] = useState({
 
-  /* -------------------------
-  FORM STATE
-  ------------------------- */
+    user_email:"",
+    brand:"",
+    line:"",
 
-  const [form, setForm] = useState({
-    user_email: "",
-    brand: "",
-    line: "",
-    origin: "",
-    factory: "",
-    wrapper: "",
-    wrapper_custom: "",
-    wrapper_process: "",
-    wrapper_thickness: "medium",
-    wrapper_oiliness: "medium",
-    binder: "",
-    binder_custom: "",
-    filler_1: "",
-    filler_2: "",
-    filler_3: "",
-    ligero: "moderate",
-    flag_1: "",
-    flag_2: "",
-    flag_3: "",
-    vitola: "",
-    vitola_custom: "",
-    bunch_density: "medium",
-    age_years: "",
-    smoker_style: "both",
+    origin:"",
+    factory:"",
+
+    wrapper:"",
+    wrapper_custom:"",
+    wrapper_process:"",
+    wrapper_thickness:"medium",
+    wrapper_oiliness:"medium",
+
+    binder:"",
+    binder_custom:"",
+
+    filler_1:"",
+    filler_2:"",
+    filler_3:"",
+
+    ligero:"moderate",
+
+    flag_1:"",
+    flag_2:"",
+    flag_3:"",
+
+    age_years:"",
+    smoker_style:"both",
+
+    /* hidden fields for backend compatibility */
+
+    vitola:"",
+    bunch_density:"medium"
   });
 
-  const [usage, setUsage] = useState(null);
-  const [result, setResult] = useState(null);
-  const [err, setErr] = useState("");
+  const [usage,setUsage] = useState(null);
+  const [result,setResult] = useState(null);
+  const [err,setErr] = useState("");
 
-  const [loadingUsage, setLoadingUsage] = useState(false);
-  const [loadingPredict, setLoadingPredict] = useState(false);
-  const [loadingLookup, setLoadingLookup] = useState(false);
+  const [loadingUsage,setLoadingUsage] = useState(false);
+  const [loadingPredict,setLoadingPredict] = useState(false);
+  const [loadingLookup,setLoadingLookup] = useState(false);
 
-  const [lookupStatus, setLookupStatus] = useState("");
-  const [lookupSource, setLookupSource] = useState("");
+  const [lookupStatus,setLookupStatus] = useState("");
+  const [lookupSource,setLookupSource] = useState("");
 
-  const update = (key, value) => {
-    setForm((f) => ({ ...f, [key]: value }));
+  const update = (key,value) => {
+    setForm(f => ({...f,[key]:value}));
   };
 
-  /* -------------------------
-  AUTOCOMPLETE LOADER
-  ------------------------- */
+  /* --------------------------
+AUTOCOMPLETE
+-------------------------- */
 
-  const loadSuggestions = async (query) => {
+  const loadSuggestions = async(q)=>{
 
-    if (!query || query.length < 2) {
+    if(!q || q.length < 2){
       setSuggestions([]);
+      setShowSuggestions(false);
       return;
     }
 
-    try {
+    try{
 
-      const res = await fetch(
-        `/api/predictor/autocomplete?q=${encodeURIComponent(query)}`
-      );
-
+      const res = await fetch(`/api/predictor/autocomplete?q=${encodeURIComponent(q)}`);
       const data = await res.json();
 
-      if (data?.results) {
+      if(data?.results){
+
         setSuggestions(data.results);
         setShowSuggestions(true);
       }
 
-    } catch (e) {
-      console.error(e);
-    }
+    }catch{}
   };
 
-  const selectSuggestion = (s) => {
+  const selectSuggestion = (item)=>{
 
-    update("brand", s.brand);
-    update("line", s.line);
+    update("brand",item.brand);
+    update("line",item.line);
 
     setShowSuggestions(false);
   };
 
-  /* -------------------------
-  REMAINDER OF YOUR ORIGINAL FUNCTIONS
-  (unchanged)
-  ------------------------- */
+  /* --------------------------
+HELPERS
+-------------------------- */
 
-  const buildCustomValue = (choice, customValue) => {
-    if (choice === "Custom / Other" || choice === "Hybrid / Other") {
-      return String(customValue || "").trim();
+  const buildCustomValue = (choice,custom)=>{
+
+    if(choice === "Custom / Other" || choice === "Hybrid / Other"){
+
+      return String(custom||"").trim();
     }
+
     return choice;
   };
 
-  const buildUniqueList = (values) => {
-    return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
+  const buildUniqueList = (values)=>{
+
+    return [...new Set(values.map(v=>String(v||"").trim()).filter(Boolean))];
   };
 
-  const buildPayload = () => ({
-    user_email: String(form.user_email || "").trim(),
-    brand: String(form.brand || "").trim(),
-    line: String(form.line || "").trim(),
-    origin: form.origin,
-    factory: form.factory,
-    wrapper: buildCustomValue(form.wrapper, form.wrapper_custom),
-    wrapper_process: form.wrapper_process,
-    wrapper_thickness: form.wrapper_thickness,
-    wrapper_oiliness: form.wrapper_oiliness,
-    binder: buildCustomValue(form.binder, form.binder_custom),
-    filler: buildUniqueList([form.filler_1, form.filler_2, form.filler_3]),
-    ligero: form.ligero,
-    special_tobacco_flags: buildUniqueList([form.flag_1, form.flag_2, form.flag_3]),
-    vitola: buildCustomValue(form.vitola, form.vitola_custom),
-    bunch_density: form.bunch_density,
-    age_years: form.age_years === "" ? null : Number(form.age_years),
-    smoker_style: form.smoker_style,
+  const buildPayload = ()=>({
+
+    user_email:String(form.user_email||"").trim(),
+
+    brand:String(form.brand||"").trim(),
+    line:String(form.line||"").trim(),
+
+    origin:form.origin,
+    factory:form.factory,
+
+    wrapper:buildCustomValue(form.wrapper,form.wrapper_custom),
+    wrapper_process:form.wrapper_process,
+    wrapper_thickness:form.wrapper_thickness,
+    wrapper_oiliness:form.wrapper_oiliness,
+
+    binder:buildCustomValue(form.binder,form.binder_custom),
+
+    filler:buildUniqueList([
+      form.filler_1,
+      form.filler_2,
+      form.filler_3
+    ]),
+
+    ligero:form.ligero,
+
+    special_tobacco_flags:buildUniqueList([
+      form.flag_1,
+      form.flag_2,
+      form.flag_3
+    ]),
+
+    age_years:form.age_years === "" ? null : Number(form.age_years),
+    smoker_style:form.smoker_style,
+
+    vitola:"",
+    bunch_density:"medium"
   });
 
-  /* -------------------------
-  UI
-  ------------------------- */
+/* --------------------------
+API CALLS
+-------------------------- */
 
-  return (
-    <Layout>
-      <Seo
-        title="Predictor | ICSI"
-        description="Private predictor prototype."
-        path="/portal/predictor"
-      />
+const loadUsage = async()=>{
 
-      <div className="section">
-        <div className="container" style={{ maxWidth: 980 }}>
+setErr("");
+setLoadingUsage(true);
+setUsage(null);
 
-          <h1>Predictor Prototype</h1>
+try{
 
-          {/* -------------------------
-          USER
-          ------------------------- */}
+const res = await fetch(`/api/predictor/usage?email=${encodeURIComponent(form.user_email)}`);
 
-          <div className="card" style={{ marginTop: 16 }}>
-            <h3>User</h3>
+const data = await res.json();
 
-            <label>Email</label>
+if(!res.ok) throw new Error(data.error || data.detail);
 
-            <input
-              value={form.user_email}
-              placeholder="Enter your subscription email"
-              onChange={(e) => update("user_email", e.target.value)}
-            />
+setUsage(data);
 
-          </div>
+}catch(e){
 
-          {/* -------------------------
-          CIGAR IDENTITY
-          ------------------------- */}
+setErr(e.message);
 
-          <div className="card" style={{ marginTop: 16 }}>
+}
 
-            <h3>Cigar Identity</h3>
+finally{
 
-            <div className="row2">
+setLoadingUsage(false);
+}
+};
 
-              {/* BRAND WITH AUTOCOMPLETE */}
+const runPrediction = async()=>{
 
-              <div style={{ position: "relative" }}>
+setErr("");
+setLoadingPredict(true);
+setResult(null);
 
-                <label>Brand</label>
+try{
 
-                <input
-                  value={form.brand}
-                  placeholder="Start typing brand..."
-                  onChange={(e) => {
+const res = await fetch(`/api/predictor/predict`,{
 
-                    const value = e.target.value;
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(buildPayload())
+});
 
-                    update("brand", value);
+const data = await res.json();
 
-                    loadSuggestions(value);
-                  }}
-                />
+if(!res.ok) throw new Error(data.error || data.detail);
 
-                {showSuggestions && suggestions.length > 0 && (
+setResult(data);
 
-                  <div style={autocompleteBox}>
+await loadUsage();
 
-                    {suggestions.map((s, i) => (
+}catch(e){
 
-                      <div
-                        key={i}
-                        style={autocompleteItem}
-                        onClick={() => selectSuggestion(s)}
-                      >
-                        {s.label}
-                      </div>
+setErr(e.message);
 
-                    ))}
+}
 
-                  </div>
+finally{
 
-                )}
+setLoadingPredict(false);
+}
+};
 
-              </div>
+/* --------------------------
+UI
+-------------------------- */
 
-              {/* LINE */}
+return(
 
-              <div>
+<Layout>
 
-                <label>Line</label>
+<Seo title="Predictor | ICSI" path="/portal/predictor"/>
 
-                <input
-                  value={form.line}
-                  onChange={(e) => update("line", e.target.value)}
-                  placeholder="e.g. No. 2"
-                />
+<div className="section">
+<div className="container" style={{maxWidth:980}}>
 
-              </div>
+<h1>Predictor Prototype</h1>
 
-            </div>
+{/* USER */}
 
-          </div>
+<div className="card" style={{marginTop:16}}>
 
-          {/* the remainder of your original UI remains unchanged */}
+<h3>User</h3>
 
-        </div>
-      </div>
-    </Layout>
-  );
+<label>Email</label>
+
+<input
+value={form.user_email}
+placeholder="Enter your subscription email"
+onChange={(e)=>update("user_email",e.target.value)}
+/>
+
+<div className="ctaRow" style={{marginTop:12}}>
+
+<button className="btn" onClick={loadUsage} disabled={loadingUsage}>
+{loadingUsage ? "Loading..." : "Check usage"}
+</button>
+
+</div>
+
+</div>
+
+{/* CIGAR IDENTITY */}
+
+<div className="card" style={{marginTop:16}}>
+
+<h3>Cigar Identity</h3>
+
+<div className="row2">
+
+<div style={{position:"relative"}}>
+
+<label>Brand</label>
+
+<input
+value={form.brand}
+placeholder="Start typing brand..."
+onChange={(e)=>{
+
+update("brand",e.target.value);
+loadSuggestions(e.target.value);
+
+}}
+/>
+
+{showSuggestions && suggestions.length>0 &&(
+
+<div style={autocompleteBox}>
+
+{suggestions.map((s,i)=>(
+<div key={i}
+style={autocompleteItem}
+onClick={()=>selectSuggestion(s)}
+>
+
+{s.label}
+
+</div>
+))}
+
+</div>
+)}
+
+</div>
+
+<div>
+
+<label>Line</label>
+
+<input
+value={form.line}
+onChange={(e)=>update("line",e.target.value)}
+placeholder="e.g. No. 2"
+/>
+
+</div>
+
+</div>
+
+</div>
+
+{/* RUN */}
+
+<div className="card" style={{marginTop:16}}>
+
+<button
+className="btn primary"
+onClick={runPrediction}
+disabled={loadingPredict}
+>
+
+{loadingPredict ? "Running..." : "Run Predictor"}
+
+</button>
+
+</div>
+
+{err && (
+
+<div className="notice" style={{marginTop:16}}>
+<b>Error:</b> {err}
+</div>
+
+)}
+
+{result && (
+
+<div className="card" style={{marginTop:16}}>
+
+<h3>Prediction Result</h3>
+
+<p>{result.report_summary}</p>
+
+</div>
+
+)}
+
+</div>
+</div>
+
+</Layout>
+);
 }
