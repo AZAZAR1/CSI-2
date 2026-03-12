@@ -230,6 +230,7 @@ export default function PredictorPage() {
 
   const [usage, setUsage] = useState(null);
   const [result, setResult] = useState(null);
+  const [tastingCard, setTastingCard] = useState(null);
   const [err, setErr] = useState("");
 
   const [loadingUsage, setLoadingUsage] = useState(false);
@@ -463,10 +464,37 @@ API CALLS
     }
   };
 
+  const loadTastingCard = async (brand, line) => {
+    try {
+      const res = await fetch(`/api/predictor/tasting-card`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          brand: String(brand || "").trim(),
+          line: String(line || "").trim(),
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok || !data.tasting_card) {
+        setTastingCard(null);
+        return;
+      }
+
+      setTastingCard(data.tasting_card);
+    } catch {
+      setTastingCard(null);
+    }
+  };
+
   const runPrediction = async () => {
     setErr("");
     setLoadingPredict(true);
     setResult(null);
+    setTastingCard(null);
 
     try {
       const res = await fetch(`/api/predictor/predict`, {
@@ -481,6 +509,7 @@ API CALLS
 
       setResult(data);
       await loadUsage();
+      await loadTastingCard(form.brand, form.line);
     } catch (e) {
       setErr(e.message || "Prediction request failed");
     } finally {
@@ -952,6 +981,58 @@ UI
 
               <h3>Controlled Report Summary</h3>
               <p>{result.report_summary}</p>
+
+              {tastingCard && (
+                <>
+                  <hr className="sep" />
+
+                  <h3>Tasting Card</h3>
+
+                  <div className="row2" style={{ marginTop: 12 }}>
+                    <div className="card" style={{ marginTop: 0 }}>
+                      <h4 style={{ marginTop: 0 }}>Palate</h4>
+
+                      <div className="small" style={{ lineHeight: 1.8 }}>
+                        <div>
+                          <b>Primary:</b>{" "}
+                          {(tastingCard?.palate?.primary || []).join(", ") || "—"}
+                        </div>
+                        <div>
+                          <b>Secondary:</b>{" "}
+                          {(tastingCard?.palate?.secondary || []).join(", ") || "—"}
+                        </div>
+                        <div>
+                          <b>Texture:</b>{" "}
+                          {(tastingCard?.palate?.texture || []).join(", ") || "—"}
+                        </div>
+                        <div>
+                          <b>Finish:</b>{" "}
+                          {(tastingCard?.palate?.finish || []).join(", ") || "—"}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="card" style={{ marginTop: 0 }}>
+                      <h4 style={{ marginTop: 0 }}>Retrohale</h4>
+
+                      <div className="small" style={{ lineHeight: 1.8 }}>
+                        <div>
+                          <b>Primary:</b>{" "}
+                          {(tastingCard?.retrohale?.primary || []).join(", ") || "—"}
+                        </div>
+                        <div>
+                          <b>Secondary:</b>{" "}
+                          {(tastingCard?.retrohale?.secondary || []).join(", ") || "—"}
+                        </div>
+                        <div>
+                          <b>Finish:</b>{" "}
+                          {(tastingCard?.retrohale?.finish || []).join(", ") || "—"}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>
