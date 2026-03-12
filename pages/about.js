@@ -16,8 +16,11 @@ export default function About() {
 
           <div className="card" style={{ marginTop: 14 }}>
             <p className="small">
-              ICSI brings institutional rigor to the point-of-consumption cigar experience, using applied thermodynamics and discreet luxury delivery.
-              We focus on controlled conditioning, staging, and diagnostics to improve blend-fidelity and smoking experience consistency across all brands.
+              International Cigar Sommelier Institute (ICSI), a Switzerland-based educational organization dedicated to advancing professional knowledge and structured training in the field of premium cigars.
+              ICSI has developed a scientific and structured educational framework around cigar diagnostics, sensory evaluation, and optimal storage and staging. 
+              Our programs are designed to bring academic rigor and standardized methodology to an industry that has traditionally relied on informal expertise.
+              We ensure that our courses meet the highest standards of educational quality, transparency, and pedagogical structure.
+              ICSI is currently headquartered in Geneva and our objective is to establish the institute as the global reference for professional cigar education through structured, research-based training programs.
             </p>
 
             <p className="small">
