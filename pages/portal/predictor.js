@@ -278,6 +278,7 @@ AUTOCOMPLETE
     update("brand", item.brand || "");
     update("line", item.line || "");
     setShowSuggestions(false);
+    setSuggestions([]);
   };
 
   /* --------------------------
@@ -672,8 +673,7 @@ UI
               </div>
             </div>
           </div>
-
-          {/* BLEND CONSTRUCTION */}
+                    {/* BLEND CONSTRUCTION */}
           <div className="card" style={{ marginTop: 16 }}>
             <h3>Blend Construction</h3>
 
