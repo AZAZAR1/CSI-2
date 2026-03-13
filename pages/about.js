@@ -22,10 +22,7 @@ export default function About() {
               We ensure that our courses meet the highest standards of educational quality, transparency, and pedagogical structure.
             </p>
             <p className="small">
-            </p>
               ICSI is currently headquartered in Geneva and our objective is to establish the institute as the global reference for professional cigar education through structured, research-based training programs.
-            </p>
-            <p className="small">
             </p>
             <p className="small">
               The institute is founded by Anthony Azar, a thermodynamics engineer with a long relationship with cigars and the cigar world.
