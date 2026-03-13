@@ -20,12 +20,16 @@ export default function About() {
               ICSI has developed a scientific and structured educational framework around cigar diagnostics, sensory evaluation, and optimal storage and staging. 
               Our programs are designed to bring academic rigor and standardized methodology to an industry that has traditionally relied on informal expertise.
               We ensure that our courses meet the highest standards of educational quality, transparency, and pedagogical structure.
+            </p>
+            <p className="small">
+            </p>
               ICSI is currently headquartered in Geneva and our objective is to establish the institute as the global reference for professional cigar education through structured, research-based training programs.
             </p>
-
+            <p className="small">
+            </p>
             <p className="small">
               The institute is founded by Anthony Azar, a thermodynamics engineer with a long relationship with cigars and the cigar world.
-              The founder developed the Peak-Flavor System as a result of years of research and testing, employing machine-learning algorithms to
+              The founder developed the Cigar Peak-Flavor System as a result of years of research and testing, employing machine-learning algorithms to
               diagnose and predict optimum smoking conditions for cigar blends (old or new). The model also supports aging and proper conditioning.
             </p>
 
