@@ -10,7 +10,7 @@ export default function System() {
 
   const copy = {
     en: {
-      title: "Peak-Flavor System™",
+      title: "Cigar Peak-Flavor System™",
       lead: "Controlled. Measured. Predictable.",
       p1: `Most cigars are evaluated emotionally or based on what we hear or see. Very few are evaluated on scientific insights, with the Blender's philosophy and intent in mind.
            The Peak-Flavor System™ treats a cigar as a dynamic system that combines various tobacco leaf seeds, tobacco origin and soil, and construction techniques.`,
@@ -34,7 +34,7 @@ export default function System() {
         "The proprietary Peak-Flavor System™ applies thermodynamics, combustion science, and blend architecture modeling to achieve repeatable cigar excellence.",
     },
     fr: {
-      title: "Système Peak-Flavor™",
+      title: "Cigar Peak-Flavor System™",
       lead: "Contrôlé. Mesuré. Prévisible.",
       p1: `La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du créateur (blender). Le système Peak-Flavor™ traite un cigare comme un système dynamique combinant diverses semences de feuilles de tabac, l'origine du tabac et du sol, ainsi que des techniques de fabrication.`,
       bullets: [
@@ -57,7 +57,7 @@ export default function System() {
         "Le système propriétaire Peak-Flavor™ applique thermodynamique et science de combustion pour une excellence aromatique reproductible.",
     },
     de: {
-      title: "Peak-Flavor-System™",
+      title: "Cigar Peak-Flavor-System™",
       lead: "Kontrolliert. Messbar. Reproduzierbar.",
       p1: `Die meisten Zigarren werden emotional oder basierend auf dem bewertet, was wir hören oder sehen. Nur wenige werden auf der Grundlage wissenschaftlicher Erkenntnisse bewertet, wobei die Philosophie und Absicht des Blenders im Vordergrund stehen. Das Peak-Flavor System™ betrachtet eine Zigarre als ein dynamisches System, das verschiedene Tabaksamensorten, Tabakherkunft und Bodenbeschaffenheit sowie Konstruktionstechniken miteinander verbindet.`,
       bullets: [
