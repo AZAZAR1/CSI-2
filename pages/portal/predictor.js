@@ -249,36 +249,38 @@ AUTOCOMPLETE
 -------------------------- */
 
   const loadSuggestions = async (q) => {
-    if (!q || q.length < 2) {
-      setSuggestions([]);
-      setShowSuggestions(false);
-      return;
-    }
+  const cleaned = cleanText(q);
 
-    try {
-      const res = await fetch(
-        `/api/predictor/autocomplete?q=${encodeURIComponent(q)}`
-      );
-      const data = await res.json().catch(() => ({}));
+  if (!cleaned || cleaned.length < 2) {
+    setSuggestions([]);
+    setShowSuggestions(false);
+    return;
+  }
 
-      if (Array.isArray(data?.results)) {
-        setSuggestions(data.results);
-        setShowSuggestions(true);
-      } else {
-        setSuggestions([]);
-        setShowSuggestions(false);
-      }
-    } catch {
+  try {
+    const res = await fetch(
+      `/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}`
+    );
+    const data = await res.json().catch(() => ({}));
+
+    if (Array.isArray(data?.results)) {
+      setSuggestions(data.results);
+      setShowSuggestions(true);
+    } else {
       setSuggestions([]);
       setShowSuggestions(false);
     }
+  } catch {
+    setSuggestions([]);
+    setShowSuggestions(false);
+  }
   };
 
   const selectSuggestion = (item) => {
-    update("brand", item.brand || "");
-    update("line", item.line || "");
-    setShowSuggestions(false);
-    setSuggestions([]);
+  update("brand", cleanText(item.brand || ""));
+  update("line", cleanText(item.line || ""));
+  setShowSuggestions(false);
+  setSuggestions([]);
   };
 
   /* --------------------------
@@ -290,6 +292,17 @@ HELPERS
       return String(custom || "").trim();
     }
     return choice;
+  };
+
+const cleanText = (value) => {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’‘]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/[–—]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim();
   };
 
   const buildUniqueList = (values) => {
@@ -368,36 +381,40 @@ HELPERS
   };
 
   const buildPayload = () => ({
-    user_email: String(form.user_email || "").trim(),
+  user_email: cleanText(form.user_email),
 
-    brand: String(form.brand || "").trim(),
-    line: String(form.line || "").trim(),
+  brand: cleanText(form.brand),
+  line: cleanText(form.line),
 
-    origin: form.origin,
-    factory: form.factory,
+  origin: cleanText(form.origin),
+  factory: cleanText(form.factory),
 
-    wrapper: buildCustomValue(form.wrapper, form.wrapper_custom),
-    wrapper_process: form.wrapper_process,
-    wrapper_thickness: form.wrapper_thickness,
-    wrapper_oiliness: form.wrapper_oiliness,
+  wrapper: cleanText(buildCustomValue(form.wrapper, form.wrapper_custom)),
+  wrapper_process: cleanText(form.wrapper_process),
+  wrapper_thickness: cleanText(form.wrapper_thickness),
+  wrapper_oiliness: cleanText(form.wrapper_oiliness),
 
-    binder: buildCustomValue(form.binder, form.binder_custom),
+  binder: cleanText(buildCustomValue(form.binder, form.binder_custom)),
 
-    filler: buildUniqueList([form.filler_1, form.filler_2, form.filler_3]),
+  filler: buildUniqueList([
+    cleanText(form.filler_1),
+    cleanText(form.filler_2),
+    cleanText(form.filler_3),
+  ]),
 
-    ligero: form.ligero,
+  ligero: cleanText(form.ligero),
 
-    special_tobacco_flags: buildUniqueList([
-      form.flag_1,
-      form.flag_2,
-      form.flag_3,
-    ]),
+  special_tobacco_flags: buildUniqueList([
+    cleanText(form.flag_1),
+    cleanText(form.flag_2),
+    cleanText(form.flag_3),
+  ]),
 
-    age_years: form.age_years === "" ? null : Number(form.age_years),
-    smoker_style: form.smoker_style,
+  age_years: form.age_years === "" ? null : Number(form.age_years),
+  smoker_style: cleanText(form.smoker_style),
 
-    vitola: "",
-    bunch_density: "medium",
+  vitola: "",
+  bunch_density: "medium",
   });
 
   /* --------------------------
