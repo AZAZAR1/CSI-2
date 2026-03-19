@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const backendUrl = String(process.env.PREDICTOR_BACKEND_URL || "").trim();
+    const backendUrl = String(process.env.PREDICTOR_BACKEND_URL || "").trim().replace(/\/+$/, "");
     const apiKey = String(process.env.PREDICTOR_API_KEY || "").trim();
 
     if (!backendUrl || !apiKey) {
@@ -34,18 +34,15 @@ export default async function handler(req, res) {
       });
     }
 
-    const upstream = await fetch(
-      `${backendUrl}/api/predictor/tasting-card`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`,
-          "Accept": "application/json",
-        },
-        body: JSON.stringify({ brand, line }),
-      }
-    );
+    const upstream = await fetch(`${backendUrl}/api/predictor/tasting-card`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({ brand, line }),
+    });
 
     const raw = await upstream.text();
     let data = {};
