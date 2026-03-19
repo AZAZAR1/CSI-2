@@ -34,15 +34,18 @@ export default async function handler(req, res) {
       });
     }
 
-    const upstream = await fetch(`${backendUrl}/tasting-card`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ brand, line }),
-    });
+    const upstream = await fetch(
+      `${backendUrl}/api/predictor/tasting-card`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`,
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({ brand, line }),
+      }
+    );
 
     const raw = await upstream.text();
     let data = {};
