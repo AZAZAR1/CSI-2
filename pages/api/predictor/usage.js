@@ -9,15 +9,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    const email = String(req.query.email || "").trim();
-
-    if (!email) {
-      return res.status(400).json({
-        ok: false,
-        error: "Missing email",
-      });
-    }
-
     const backendUrl = String(process.env.PREDICTOR_BACKEND_URL || "").trim();
     const apiKey = String(process.env.PREDICTOR_API_KEY || "").trim();
 
@@ -25,6 +16,15 @@ export default async function handler(req, res) {
       return res.status(500).json({
         ok: false,
         error: "Missing predictor env vars",
+      });
+    }
+
+    const email = String(req.query.email || "").trim();
+
+    if (!email) {
+      return res.status(400).json({
+        ok: false,
+        error: "Missing email",
       });
     }
 
@@ -40,15 +40,12 @@ export default async function handler(req, res) {
     );
 
     const raw = await upstream.text();
-    let data = {};
 
+    let data = {};
     try {
       data = raw ? JSON.parse(raw) : {};
     } catch {
-      data = {
-        ok: false,
-        error: raw || "Invalid upstream response",
-      };
+      data = { ok: false, error: raw || "Invalid upstream response" };
     }
 
     return res.status(upstream.status).json(data);
