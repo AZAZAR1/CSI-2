@@ -19,14 +19,17 @@ export default async function handler(req, res) {
       });
     }
 
-    const payload = req.body || {};
+    const payload =
+      typeof req.body === "string"
+        ? JSON.parse(req.body || "{}")
+        : (req.body || {});
 
-    const upstream = await fetch(`${backendUrl}/predict`, {
+    const upstream = await fetch(`${backendUrl}/api/predictor/predict`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "x-api-key": apiKey,
-        Accept: "application/json",
+        "Accept": "application/json",
       },
       body: JSON.stringify(payload),
     });
