@@ -34,12 +34,12 @@ export default async function handler(req, res) {
       });
     }
 
-    const upstream = await fetch(`${backendUrl}/lookup-blend`, {
+    const upstream = await fetch(`${backendUrl}/api/predictor/lookup-blend`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "x-api-key": apiKey,
-        Accept: "application/json",
+        "Accept": "application/json",
       },
       body: JSON.stringify({ brand, line }),
     });
