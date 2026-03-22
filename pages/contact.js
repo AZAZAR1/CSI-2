@@ -82,7 +82,7 @@ export default function Contact() {
 
   const c = copy[lang] || copy.en;
 
-  const adminEmail = "CDCAdmin@cdc-advisory.com";
+  const adminEmail = "Admin@cigarsommelierinstitute.com";
   const waNumber = "41762305791";
   const waLabel = "+41 76 230 57 91";
 
