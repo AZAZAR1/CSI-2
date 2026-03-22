@@ -51,7 +51,7 @@ export default function AdminCandidates() {
     setLoaded(false);
 
     try {
-      const r = await fetch("/api/portal/admin/inspect", {
+      const r = await fetch(`/api/portal/admin/inspect?_ts=${Date.now()}`, {
         headers: {
           "x-admin-key": adminKey,
         },
