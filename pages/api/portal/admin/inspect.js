@@ -24,8 +24,11 @@ export default async function handler(req, res) {
         email: c.email || "",
         course: c.course || "",
         expiresAt: c.expiresAt || "",
+        modules: Array.isArray(c.modules) ? c.modules : [],
         modulesCount: Array.isArray(c.modules) ? c.modules.length : 0,
-        expired: !!c.expiresAt ? (Date.now() > new Date(c.expiresAt).getTime()) : true,
+        expired: !!c.expiresAt
+        ? Date.now() > new Date(c.expiresAt).getTime()
+        : true,
       };
     });
 
