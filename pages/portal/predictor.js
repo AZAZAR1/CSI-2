@@ -545,7 +545,7 @@ UI
 
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
-          <h1>Predictor Prototype</h1>
+          <h1>Predictor (beta)</h1>
 
           {/* USER */}
           <div className="card" style={{ marginTop: 16 }}>
