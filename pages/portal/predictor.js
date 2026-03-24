@@ -186,6 +186,30 @@ const row3Style = {
   marginTop: 8,
 };
 
+const EMPTY_LOOKUP_FIELDS = {
+  origin: "",
+  factory: "",
+
+  wrapper: "",
+  wrapper_custom: "",
+  wrapper_process: "",
+  wrapper_thickness: "medium",
+  wrapper_oiliness: "medium",
+
+  binder: "",
+  binder_custom: "",
+
+  filler_1: "",
+  filler_2: "",
+  filler_3: "",
+
+  ligero: "moderate",
+
+  flag_1: "",
+  flag_2: "",
+  flag_3: "",
+};
+
 /* --------------------------
 COMPONENT
 -------------------------- */
@@ -250,38 +274,38 @@ AUTOCOMPLETE
 -------------------------- */
 
   const loadSuggestions = async (q) => {
-  const cleaned = cleanText(q);
+    const cleaned = cleanText(q);
 
-  if (!cleaned || cleaned.length < 2) {
-    setSuggestions([]);
-    setShowSuggestions(false);
-    return;
-  }
+    if (!cleaned || cleaned.length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
 
-  try {
-    const res = await fetch(
-      `/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}`
-    );
-    const data = await res.json().catch(() => ({}));
+    try {
+      const res = await fetch(
+        `/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}`
+      );
+      const data = await res.json().catch(() => ({}));
 
-    if (Array.isArray(data?.results)) {
-      setSuggestions(data.results);
-      setShowSuggestions(true);
-    } else {
+      if (Array.isArray(data?.results)) {
+        setSuggestions(data.results);
+        setShowSuggestions(true);
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    } catch {
       setSuggestions([]);
       setShowSuggestions(false);
     }
-  } catch {
-    setSuggestions([]);
-    setShowSuggestions(false);
-  }
   };
 
   const selectSuggestion = (item) => {
-  update("brand", cleanText(item.brand || ""));
-  update("line", cleanText(item.line || ""));
-  setShowSuggestions(false);
-  setSuggestions([]);
+    update("brand", cleanText(item.brand || ""));
+    update("line", cleanText(item.line || ""));
+    setShowSuggestions(false);
+    setSuggestions([]);
   };
 
   /* --------------------------
@@ -295,15 +319,15 @@ HELPERS
     return choice;
   };
 
-const cleanText = (value) => {
-  return String(value || "")
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[’‘]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/[–—]/g, "-")
-    .replace(/\s+/g, " ")
-    .trim();
+  const cleanText = (value) => {
+    return String(value || "")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘]/g, "'")
+      .replace(/[“”]/g, '"')
+      .replace(/[–—]/g, "-")
+      .replace(/\s+/g, " ")
+      .trim();
   };
 
   const buildUniqueList = (values) => {
@@ -311,111 +335,123 @@ const cleanText = (value) => {
   };
 
   const mapLookupValue = (value, options) => {
-    const v = String(value || "").trim();
+    const v = cleanText(value);
     if (!v) return "";
     return options.includes(v) ? v : "";
   };
 
   const applyLookupMatch = (match) => {
-    const filler = Array.isArray(match?.filler) ? match.filler : [];
-    const flags = Array.isArray(match?.special_tobacco_flags)
-      ? match.special_tobacco_flags
+    const cleanedBrand = cleanText(match?.brand);
+    const cleanedLine = cleanText(match?.line);
+
+    const cleanedOrigin = mapLookupValue(match?.origin, ORIGINS);
+    const cleanedFactory = mapLookupValue(match?.factory, FACTORIES);
+
+    const rawWrapper = cleanText(match?.wrapper);
+    const wrapperInList = rawWrapper && WRAPPERS.includes(rawWrapper);
+
+    const rawBinder = cleanText(match?.binder);
+    const binderInList = rawBinder && BINDERS.includes(rawBinder);
+
+    const filler = Array.isArray(match?.filler)
+      ? match.filler.map(cleanText).filter(Boolean)
       : [];
+
+    const validFillers = filler.filter((x) => FILLER_OPTIONS.includes(x));
+
+    const flags = Array.isArray(match?.special_tobacco_flags)
+      ? match.special_tobacco_flags.map(cleanText).filter(Boolean)
+      : [];
+
+    const validFlags = flags.filter((x) =>
+      SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(x)
+    );
+
+    const cleanedLigero = mapLookupValue(match?.ligero, LIGERO_OPTIONS);
+    const cleanedWrapperProcess = mapLookupValue(
+      match?.wrapper_process,
+      WRAPPER_PROCESSES
+    );
+    const cleanedWrapperThickness = mapLookupValue(
+      match?.wrapper_thickness,
+      WRAPPER_THICKNESS_OPTIONS
+    );
+    const cleanedWrapperOiliness = mapLookupValue(
+      match?.wrapper_oiliness,
+      WRAPPER_OILINESS_OPTIONS
+    );
 
     setForm((f) => ({
       ...f,
-      brand: match?.brand || f.brand,
-      line: match?.line || f.line,
-      origin: mapLookupValue(match?.origin, ORIGINS) || f.origin,
-      factory: mapLookupValue(match?.factory, FACTORIES) || f.factory,
 
-      wrapper:
-        mapLookupValue(match?.wrapper, WRAPPERS) ||
-        (match?.wrapper ? "Hybrid / Other" : f.wrapper),
-      wrapper_custom:
-        match?.wrapper && !WRAPPERS.includes(match.wrapper)
-          ? match.wrapper
-          : f.wrapper_custom,
+      brand: cleanedBrand || f.brand,
+      line: cleanedLine || f.line,
 
-      wrapper_process:
-        mapLookupValue(match?.wrapper_process, WRAPPER_PROCESSES) ||
-        f.wrapper_process,
+      ...EMPTY_LOOKUP_FIELDS,
 
-      wrapper_thickness:
-        mapLookupValue(match?.wrapper_thickness, WRAPPER_THICKNESS_OPTIONS) ||
-        f.wrapper_thickness,
+      origin: cleanedOrigin,
+      factory: cleanedFactory,
 
-      wrapper_oiliness:
-        mapLookupValue(match?.wrapper_oiliness, WRAPPER_OILINESS_OPTIONS) ||
-        f.wrapper_oiliness,
+      wrapper: rawWrapper
+        ? (wrapperInList ? rawWrapper : "Hybrid / Other")
+        : "",
+      wrapper_custom: rawWrapper && !wrapperInList ? rawWrapper : "",
+      wrapper_process: cleanedWrapperProcess,
+      wrapper_thickness: cleanedWrapperThickness || "medium",
+      wrapper_oiliness: cleanedWrapperOiliness || "medium",
 
-      binder:
-        mapLookupValue(match?.binder, BINDERS) ||
-        (match?.binder ? "Hybrid / Other" : f.binder),
-      binder_custom:
-        match?.binder && !BINDERS.includes(match.binder)
-          ? match.binder
-          : f.binder_custom,
+      binder: rawBinder
+        ? (binderInList ? rawBinder : "Hybrid / Other")
+        : "",
+      binder_custom: rawBinder && !binderInList ? rawBinder : "",
 
-      filler_1:
-        filler[0] && FILLER_OPTIONS.includes(filler[0]) ? filler[0] : f.filler_1,
-      filler_2:
-        filler[1] && FILLER_OPTIONS.includes(filler[1]) ? filler[1] : f.filler_2,
-      filler_3:
-        filler[2] && FILLER_OPTIONS.includes(filler[2]) ? filler[2] : f.filler_3,
+      filler_1: validFillers[0] || "",
+      filler_2: validFillers[1] || "",
+      filler_3: validFillers[2] || "",
 
-      ligero: mapLookupValue(match?.ligero, LIGERO_OPTIONS) || f.ligero,
+      ligero: cleanedLigero || "moderate",
 
-      flag_1:
-        flags[0] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[0])
-          ? flags[0]
-          : f.flag_1,
-      flag_2:
-        flags[1] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[1])
-          ? flags[1]
-          : f.flag_2,
-      flag_3:
-        flags[2] && SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(flags[2])
-          ? flags[2]
-          : f.flag_3,
+      flag_1: validFlags[0] || "",
+      flag_2: validFlags[1] || "",
+      flag_3: validFlags[2] || "",
     }));
   };
 
   const buildPayload = () => ({
-  user_email: cleanText(form.user_email),
+    user_email: cleanText(form.user_email),
 
-  brand: cleanText(form.brand),
-  line: cleanText(form.line),
+    brand: cleanText(form.brand),
+    line: cleanText(form.line),
 
-  origin: cleanText(form.origin),
-  factory: cleanText(form.factory),
+    origin: cleanText(form.origin),
+    factory: cleanText(form.factory),
 
-  wrapper: cleanText(buildCustomValue(form.wrapper, form.wrapper_custom)),
-  wrapper_process: cleanText(form.wrapper_process),
-  wrapper_thickness: cleanText(form.wrapper_thickness),
-  wrapper_oiliness: cleanText(form.wrapper_oiliness),
+    wrapper: cleanText(buildCustomValue(form.wrapper, form.wrapper_custom)),
+    wrapper_process: cleanText(form.wrapper_process),
+    wrapper_thickness: cleanText(form.wrapper_thickness),
+    wrapper_oiliness: cleanText(form.wrapper_oiliness),
 
-  binder: cleanText(buildCustomValue(form.binder, form.binder_custom)),
+    binder: cleanText(buildCustomValue(form.binder, form.binder_custom)),
 
-  filler: buildUniqueList([
-    cleanText(form.filler_1),
-    cleanText(form.filler_2),
-    cleanText(form.filler_3),
-  ]),
+    filler: buildUniqueList([
+      cleanText(form.filler_1),
+      cleanText(form.filler_2),
+      cleanText(form.filler_3),
+    ]),
 
-  ligero: cleanText(form.ligero),
+    ligero: cleanText(form.ligero),
 
-  special_tobacco_flags: buildUniqueList([
-    cleanText(form.flag_1),
-    cleanText(form.flag_2),
-    cleanText(form.flag_3),
-  ]),
+    special_tobacco_flags: buildUniqueList([
+      cleanText(form.flag_1),
+      cleanText(form.flag_2),
+      cleanText(form.flag_3),
+    ]),
 
-  age_years: form.age_years === "" ? null : Number(form.age_years),
-  smoker_style: cleanText(form.smoker_style),
+    age_years: form.age_years === "" ? null : Number(form.age_years),
+    smoker_style: cleanText(form.smoker_style),
 
-  vitola: "",
-  bunch_density: "medium",
+    vitola: "",
+    bunch_density: "medium",
   });
 
   /* --------------------------
@@ -434,7 +470,9 @@ API CALLS
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) throw new Error(data.error || data.detail || "Failed to load usage");
+      if (!res.ok) {
+        throw new Error(data.error || data.detail || "Failed to load usage");
+      }
 
       setUsage(data);
     } catch (e) {
@@ -448,7 +486,10 @@ API CALLS
     setErr("");
     setLookupSource("");
 
-    if (!String(form.brand || "").trim() || !String(form.line || "").trim()) {
+    const brand = cleanText(form.brand);
+    const line = cleanText(form.line);
+
+    if (!brand || !line) {
       setLookupStatus("Enter brand and line first.");
       return;
     }
@@ -460,10 +501,7 @@ API CALLS
       const res = await fetch(`/api/predictor/lookup-blend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          brand: String(form.brand || "").trim(),
-          line: String(form.line || "").trim(),
-        }),
+        body: JSON.stringify({ brand, line }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -491,8 +529,8 @@ API CALLS
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          brand: String(brand || "").trim(),
-          line: String(line || "").trim(),
+          brand: cleanText(brand),
+          line: cleanText(line),
         }),
       });
 
@@ -515,6 +553,9 @@ API CALLS
     setResult(null);
     setTastingCard(null);
 
+    const cleanedBrand = cleanText(form.brand);
+    const cleanedLine = cleanText(form.line);
+
     try {
       const res = await fetch(`/api/predictor/predict`, {
         method: "POST",
@@ -524,11 +565,13 @@ API CALLS
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) throw new Error(data.error || data.detail || "Prediction failed");
+      if (!res.ok) {
+        throw new Error(data.error || data.detail || "Prediction failed");
+      }
 
       setResult(data);
       await loadUsage();
-      await loadTastingCard(form.brand, form.line);
+      await loadTastingCard(cleanedBrand, cleanedLine);
     } catch (e) {
       setErr(e.message || "Prediction request failed");
     } finally {
@@ -691,7 +734,8 @@ UI
               </div>
             </div>
           </div>
-                    {/* BLEND CONSTRUCTION */}
+
+          {/* BLEND CONSTRUCTION */}
           <div className="card" style={{ marginTop: 16 }}>
             <h3>Blend Construction</h3>
 
