@@ -75,6 +75,7 @@ const WRAPPERS = [
   "Habano",
   "Nicaraguan Habano",
   "Habano 2000",
+  "Dominican",
   "Corojo",
   "Corojo 99",
   "Criollo",
