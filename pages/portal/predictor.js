@@ -127,6 +127,7 @@ const BINDERS = [
   "Honduran",
   "Mexican",
   "Brazilian",
+  "Peruvian",
   "Cameroon",
   "San Andrés",
   "Connecticut",
