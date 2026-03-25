@@ -84,6 +84,7 @@ const WRAPPERS = [
   "Connecticut Shade",
   "Connecticut Broadleaf",
   "Broadleaf",
+  "Honduran",
   "San Andrés",
   "Cameroon",
   "Sumatra",
