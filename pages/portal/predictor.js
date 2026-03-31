@@ -1028,13 +1028,13 @@ UI
 
               <div className="small" style={{ lineHeight: 1.8 }}>
                 <div>
-                  Peak-Flavor Family: <b>{result.family}</b>
+                  Cigar Peak-Flavor System Family: <b>{result.family}</b>
                 </div>
                 <div>
-                  Target Cigar Core Relative Humidity % (measured with Cigar Humidity Meter): <b>{result.target_rh}</b>
+                  Target Smoking Core Relative Humidity % (measured with Cigar Humidity Meter): <b>{result.target_rh}</b>
                 </div>
                 <div>
-                  Window: <b>{result.window_low}</b> to <b>{result.window_high}</b>
+                  Smoking Core Relative Humidity % Window: <b>{result.window_low}</b> to <b>{result.window_high}</b>
                 </div>
                 <div>
                   Runs used: <b>{result.runs_used}</b>
