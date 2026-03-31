@@ -601,7 +601,7 @@ UI
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
           <h1>Cigar Peak-Flavor Predictor (beta)</h1>
-          <label>Instructions: The Predictor tool is available exclusively to approved subscribers. Enter your User email address and press the Check User button to launch. In the Cigar Blend Lookup section, enter the blend Brand and Line then press Blend Lookup button. The blend specific details will automatically appear below. Blend details can also be entered or adjusted manually, in case the blend is still in small batch/experimental stage. By pressing the Run Predictor button, you will see the blend's Peak-Flavor smoking core humidity % level, and the associated tasting card.<label>
+          <label>Instructions: The Predictor tool is available exclusively to approved subscribers. Enter your User email address and press the Check User button to launch. In the Cigar Blend Lookup section, enter the blend Brand and Line then press Blend Lookup button. The blend specific details will automatically appear below. Blend details can also be entered or adjusted manually, in case the blend is still in small batch/experimental stage. By pressing the Run Predictor button, you will see the blend's Peak-Flavor smoking core humidity % level, and the associated tasting card.</label>
 
           {/* USER */}
           <div className="card" style={{ marginTop: 16 }}>
