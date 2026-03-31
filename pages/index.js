@@ -40,7 +40,7 @@ function HomeCopy() {
       </div>
 
       <div className="small" style={{ marginTop: 14 }}>
-        <i>Powered by the scientific Cigar Peak-Flavor System™.</i>
+        <i>Powered by the scientific Cigar Peak-Flavor System®.</i>
       </div>
     </>
   );
