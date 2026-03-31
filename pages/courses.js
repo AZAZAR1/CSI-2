@@ -11,26 +11,26 @@ export default function Courses() {
   const c = COPY[lang] || COPY.en;
 
   const intro = {
-    en: "The International Cigar Sommelier Institute offers structured pathways for individuals, lounges, and cigar retailers seeking to master the science and commercial value of the cigar experience. Each course is built upon the proprietary Peak-Flavor System™, combining tobacco knowledge, combustion dynamics, and post-factory conditioning to achieve consistent aromatic performance. Certified professionals develop the analytical skills required to understand cigar construction, humidity behavior, and flavor evolution; enabling lounges and shops to deliver superior cigar experiences that strengthen customer loyalty and increase cigar sales.",
-    fr: "L’International Cigar Sommelier Institute propose des parcours structurés destinés aux particuliers, lounges et détaillants souhaitant maîtriser à la fois la science et la valeur commerciale de l’expérience cigare. Chaque programme repose sur le système propriétaire Peak-Flavor™, combinant connaissance du tabac, dynamique de combustion et conditionnement post-fabrication afin d’obtenir une performance aromatique constante. Les professionnels certifiés développent une compréhension analytique de la construction du cigare, du comportement de l’humidité et de l’évolution des arômes, permettant aux lounges et boutiques d’offrir une expérience supérieure qui renforce la fidélité des clients et stimule les ventes.",
-    de: "Das International Cigar Sommelier Institute bietet strukturierte Ausbildungswege für Einzelpersonen, Lounges und Zigarrenfachhändler, die sowohl die wissenschaftlichen als auch die kommerziellen Aspekte des Zigarrenerlebnisses beherrschen möchten. Jeder Kurs basiert auf dem proprietären Peak-Flavor-System™, das Tabakwissen, Verbrennungsdynamik und Post-Factory-Conditioning kombiniert, um eine konsistente Aromaperformance zu erreichen. Zertifizierte Fachkräfte entwickeln ein analytisches Verständnis für Zigarrenkonstruktion, Feuchteverhalten und Aromadynamik, wodurch Lounges und Geschäfte ein überlegenes Zigarrenerlebnis bieten können, das Kundenbindung stärkt und den Zigarrenverkauf steigert.",
+    en: "The International Cigar Sommelier Institute offers structured pathways for individuals, lounges, and cigar retailers seeking to master the science and commercial value of the cigar experience. Each course is built upon the proprietary Peak-Flavor System®, combining tobacco knowledge, combustion dynamics, and post-factory conditioning to achieve consistent aromatic performance. Certified professionals develop the analytical skills required to understand cigar construction, humidity behavior, and flavor evolution; enabling lounges and shops to deliver superior cigar experiences that strengthen customer loyalty and increase cigar sales.",
+    fr: "L’International Cigar Sommelier Institute propose des parcours structurés destinés aux particuliers, lounges et détaillants souhaitant maîtriser à la fois la science et la valeur commerciale de l’expérience cigare. Chaque programme repose sur le système propriétaire Peak-Flavor®, combinant connaissance du tabac, dynamique de combustion et conditionnement post-fabrication afin d’obtenir une performance aromatique constante. Les professionnels certifiés développent une compréhension analytique de la construction du cigare, du comportement de l’humidité et de l’évolution des arômes, permettant aux lounges et boutiques d’offrir une expérience supérieure qui renforce la fidélité des clients et stimule les ventes.",
+    de: "Das International Cigar Sommelier Institute bietet strukturierte Ausbildungswege für Einzelpersonen, Lounges und Zigarrenfachhändler, die sowohl die wissenschaftlichen als auch die kommerziellen Aspekte des Zigarrenerlebnisses beherrschen möchten. Jeder Kurs basiert auf dem proprietären Peak-Flavor-System®, das Tabakwissen, Verbrennungsdynamik und Post-Factory-Conditioning kombiniert, um eine konsistente Aromaperformance zu erreichen. Zertifizierte Fachkräfte entwickeln ein analytisches Verständnis für Zigarrenkonstruktion, Feuchteverhalten und Aromadynamik, wodurch Lounges und Geschäfte ein überlegenes Zigarrenerlebnis bieten können, das Kundenbindung stärkt und den Zigarrenverkauf steigert.",
   };
 
   const seo = {
     en: {
-      title: "Cigar Certification Courses (CCS®, ACS®, AMC™) | ICSI",
+      title: "Cigar Certification Courses (CCS®, ACS®, AMC®) | ICSI",
       description:
         "ICSI’s cigar certification courses help professionals, lounges, and retailers increase customer loyalty and cigar sales through scientific post-factory conditioning and peak-flavor performance.",
       path: "/courses",
     },
     fr: {
-      title: "Cours & Certifications Cigare (CCS®, ACS®, AMC™) | ICSI",
+      title: "Cours & Certifications Cigare (CCS®, ACS®, AMC®) | ICSI",
       description:
         "Les cours et certifications ICSI aident professionnels, lounges et détaillants à renforcer la fidélité et augmenter les ventes grâce au conditionnement post-fabrication et à la performance aromatique.",
       path: "/courses",
     },
     de: {
-      title: "Zigarren-Zertifizierungskurse (CCS®, ACS®, AMC™) | ICSI",
+      title: "Zigarren-Zertifizierungskurse (CCS®, ACS®, AMC®) | ICSI",
       description:
         "ICSI-Zertifizierungskurse unterstützen Professionals, Lounges und Händler dabei, Kundenbindung und Zigarrenverkauf zu steigern—durch Post-Factory-Conditioning und reproduzierbare Peak-Flavor-Performance.",
       path: "/courses",
@@ -59,7 +59,7 @@ export default function Courses() {
               hasCourse: [
                 { "@type": "Course", name: "Certified Cigar Sommelier (CCS®)" },
                 { "@type": "Course", name: "Advanced Cigar Sommelier (ACS®)" },
-                { "@type": "Course", name: "Aficionado Master Class (AMC™)" },
+                { "@type": "Course", name: "Aficionado Master Class (AMC®)" },
               ],
             }),
           }}
