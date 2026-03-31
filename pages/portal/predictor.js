@@ -600,11 +600,11 @@ UI
 
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
-          <h1>Predictor (beta)</h1>
+          <h1>Cigar Peak-Flavor Predictor (beta)</h1>
 
           {/* USER */}
           <div className="card" style={{ marginTop: 16 }}>
-            <h3>User</h3>
+            <h3>User Login</h3>
 
             <label>Email</label>
             <input
@@ -645,7 +645,7 @@ UI
 
           {/* CIGAR IDENTITY */}
           <div className="card" style={{ marginTop: 16 }}>
-            <h3>Cigar Identity</h3>
+            <h3>Cigar Blend Lookup</h3>
 
             <div className="row2">
               <div style={{ position: "relative" }}>
@@ -748,7 +748,7 @@ UI
 
           {/* BLEND CONSTRUCTION */}
           <div className="card" style={{ marginTop: 16 }}>
-            <h3>Blend Construction</h3>
+            <h3>Blend Details: Autofilled & Adjustable</h3>
 
             <div className="row2">
               <div>
@@ -975,7 +975,7 @@ UI
 
           {/* SMOKING PROFILE */}
           <div className="card" style={{ marginTop: 16 }}>
-            <h3>Smoking Profile</h3>
+            <h3>Optional Input: Blend Age & Smoking Style</h3>
 
             <div className="row2">
               <div>
@@ -1024,14 +1024,14 @@ UI
 
           {result && (
             <div className="card" style={{ marginTop: 16 }}>
-              <h3>Prediction Result</h3>
+              <h3>Blend Peak-Flavor Prediction Result</h3>
 
               <div className="small" style={{ lineHeight: 1.8 }}>
                 <div>
-                  Family: <b>{result.family}</b>
+                  Peak-Flavor Family: <b>{result.family}</b>
                 </div>
                 <div>
-                  Target RH: <b>{result.target_rh}</b>
+                  Target Cigar Core Relative Humidity % (measured with Cigar Humidity Meter): <b>{result.target_rh}</b>
                 </div>
                 <div>
                   Window: <b>{result.window_low}</b> to <b>{result.window_high}</b>
@@ -1051,9 +1051,6 @@ UI
               </div>
 
               <hr className="sep" />
-
-              <h3>Controlled Report Summary</h3>
-              <p>{result.report_summary}</p>
 
               {tastingCard && (
                 <>
