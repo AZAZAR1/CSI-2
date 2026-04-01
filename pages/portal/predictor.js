@@ -663,9 +663,8 @@ UI
             blend Brand and Line then press Blend Lookup button. The blend
             specific details will automatically appear below. Blend details can
             also be entered or adjusted manually, in case the blend is still in
-            small batch/experimental stage. By pressing the Run Predictor button,
-            you will see the blend's target smoking Peak-Flavor core leaf-level
-            relative humidity %, and its tasting card.
+            small batch/experimental stage. Pressing the Run Predictor button
+            provides the blend's target smoking Peak-Flavor relative humidity % measured at core leaf-level, and its associated tasting card. Pressing the Find Similar Blends suggests Blends that most closely fit that profile.
             <br />
             Important note: Leaf-level relative humidity % is measured using a
             commercially available Cigar Humidity Meter.
