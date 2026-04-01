@@ -1,5 +1,6 @@
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store, max-age=0");
+  res.setHeader("Allow", "POST");
 
   if (req.method !== "POST") {
     return res.status(405).json({
@@ -8,40 +9,48 @@ export default async function handler(req, res) {
     });
   }
 
+  const backendUrl = String(process.env.PREDICTOR_BACKEND_URL || "").trim();
+  const apiKey = String(process.env.PREDICTOR_API_KEY || "").trim();
+
+  if (!backendUrl || !apiKey) {
+    return res.status(500).json({
+      ok: false,
+      error: "Missing predictor environment variables",
+    });
+  }
+
+  let payload = {};
+
   try {
-    const backendUrl = String(process.env.PREDICTOR_BACKEND_URL || "").trim().replace(/\/+$/, "");
-    const apiKey = String(process.env.PREDICTOR_API_KEY || "").trim();
-
-    if (!backendUrl || !apiKey) {
-      return res.status(500).json({
-        ok: false,
-        error: "Missing predictor env vars",
-      });
-    }
-
-    const body =
+    payload =
       typeof req.body === "string"
         ? JSON.parse(req.body || "{}")
-        : (req.body || {});
+        : req.body && typeof req.body === "object"
+        ? req.body
+        : {};
+  } catch {
+    return res.status(400).json({
+      ok: false,
+      error: "Invalid JSON request body",
+    });
+  }
 
-    const brand = String(body.brand || "").trim();
-    const line = String(body.line || "").trim();
+  const normalizedBackendUrl = backendUrl.replace(/\/+$/, "");
+  const targetUrl = `${normalizedBackendUrl}/tasting-card`;
 
-    if (!brand || !line) {
-      return res.status(400).json({
-        ok: false,
-        error: "Missing brand or line",
-      });
-    }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
 
-    const upstream = await fetch(`${backendUrl}/api/predictor/tasting-card`, {
+  try {
+    const upstream = await fetch(targetUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
         "x-api-key": apiKey,
-        "Accept": "application/json",
       },
-      body: JSON.stringify({ brand, line }),
+      body: JSON.stringify(payload),
+      signal: controller.signal,
     });
 
     const raw = await upstream.text();
@@ -58,9 +67,18 @@ export default async function handler(req, res) {
 
     return res.status(upstream.status).json(data);
   } catch (e) {
+    if (e?.name === "AbortError") {
+      return res.status(504).json({
+        ok: false,
+        error: "Tasting card request timed out",
+      });
+    }
+
     return res.status(500).json({
       ok: false,
       error: e?.message || "Tasting card proxy failed",
     });
+  } finally {
+    clearTimeout(timeout);
   }
 }
