@@ -36,7 +36,7 @@ export default async function handler(req, res) {
   }
 
   const normalizedBackendUrl = backendUrl.replace(/\/+$/, "");
-  const targetUrl = `${normalizedBackendUrl}/lookup-blend`;
+  const targetUrl = `${normalizedBackendUrl}/api/predictor/lookup-blend`;
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 30000);
