@@ -282,6 +282,23 @@ export default function PredictorPage() {
     setForm((f) => ({ ...f, [key]: value }));
   };
 
+  const cleanText = (value) => {
+    return String(value || "")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘]/g, "'")
+      .replace(/[“”]/g, '"')
+      .replace(/[–—]/g, "-")
+      .replace(/\s+/g, " ")
+      .trim();
+  };
+
+  const isAuthorizedUser = Boolean(
+    usage &&
+      form.user_email &&
+      cleanText(usage.email || "") === cleanText(form.user_email)
+  );
+
   /* --------------------------
 AUTOCOMPLETE
 -------------------------- */
@@ -330,17 +347,6 @@ HELPERS
       return String(custom || "").trim();
     }
     return choice;
-  };
-
-  const cleanText = (value) => {
-    return String(value || "")
-      .normalize("NFKD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[’‘]/g, "'")
-      .replace(/[“”]/g, '"')
-      .replace(/[–—]/g, "-")
-      .replace(/\s+/g, " ")
-      .trim();
   };
 
   const buildUniqueList = (values) => {
@@ -475,6 +481,8 @@ API CALLS
     setErr("");
     setLoadingUsage(true);
     setUsage(null);
+    setLookupStatus("");
+    setLookupSource("");
 
     try {
       const res = await fetch(
@@ -499,6 +507,11 @@ API CALLS
     setErr("");
     setLookupSource("");
 
+    if (!isAuthorizedUser) {
+      setLookupStatus("Please enter your registered email and press Check User first.");
+      return;
+    }
+
     const brand = cleanText(form.brand);
     const line = cleanText(form.line);
 
@@ -514,7 +527,11 @@ API CALLS
       const res = await fetch(`/api/predictor/lookup-blend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ brand, line }),
+        body: JSON.stringify({
+          user_email: cleanText(form.user_email),
+          brand,
+          line,
+        }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -595,6 +612,12 @@ API CALLS
 
   const findSimilarBlends = async () => {
     setErr("");
+
+    if (!isAuthorizedUser) {
+      setErr("Please enter your registered email and press Check User first.");
+      return;
+    }
+
     setLoadingSimilar(true);
     setSimilarBlends(null);
     setResult(null);
@@ -655,7 +678,12 @@ UI
             <input
               value={form.user_email}
               placeholder="Enter your subscription email"
-              onChange={(e) => update("user_email", e.target.value)}
+              onChange={(e) => {
+                update("user_email", e.target.value);
+                setUsage(null);
+                setLookupStatus("");
+                setLookupSource("");
+              }}
             />
 
             <div className="ctaRow" style={{ marginTop: 12 }}>
@@ -663,6 +691,13 @@ UI
                 {loadingUsage ? "Loading..." : "Check User"}
               </button>
             </div>
+
+            {!isAuthorizedUser && (
+              <div className="small" style={{ marginTop: 10 }}>
+                Please check your registered email first to enable Blend Lookup and
+                Similar Blends.
+              </div>
+            )}
 
             {usage && (
               <div className="small" style={{ marginTop: 12, lineHeight: 1.8 }}>
@@ -742,7 +777,7 @@ UI
                 className="btn"
                 type="button"
                 onClick={lookupBlend}
-                disabled={loadingLookup}
+                disabled={loadingLookup || !isAuthorizedUser}
               >
                 {loadingLookup ? "Searching..." : "Lookup Blend"}
               </button>
@@ -1070,7 +1105,7 @@ UI
               <button
                 className="btn"
                 onClick={findSimilarBlends}
-                disabled={loadingSimilar}
+                disabled={loadingSimilar || !isAuthorizedUser}
                 type="button"
               >
                 {loadingSimilar ? "Searching..." : "Find Similar Blends"}
