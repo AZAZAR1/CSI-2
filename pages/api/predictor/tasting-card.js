@@ -36,7 +36,7 @@ export default async function handler(req, res) {
   }
 
   const normalizedBackendUrl = backendUrl.replace(/\/+$/, "");
-  const targetUrl = `${normalizedBackendUrl}/tasting-card`;
+  const targetUrl = `${normalizedBackendUrl}/api/predictor/tasting-card`;
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 30000);
