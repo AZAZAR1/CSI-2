@@ -563,7 +563,7 @@ API CALLS
           brand: cleanText(brand),
           line: cleanText(line),
         }),
-      }),
+      });
 
       const data = await res.json().catch(() => ({}));
 
