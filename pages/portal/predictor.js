@@ -267,11 +267,13 @@ export default function PredictorPage() {
   const [usage, setUsage] = useState(null);
   const [result, setResult] = useState(null);
   const [tastingCard, setTastingCard] = useState(null);
+  const [similarBlends, setSimilarBlends] = useState(null);
   const [err, setErr] = useState("");
 
   const [loadingUsage, setLoadingUsage] = useState(false);
   const [loadingPredict, setLoadingPredict] = useState(false);
   const [loadingLookup, setLoadingLookup] = useState(false);
+  const [loadingSimilar, setLoadingSimilar] = useState(false);
 
   const [lookupStatus, setLookupStatus] = useState("");
   const [lookupSource, setLookupSource] = useState("");
@@ -563,6 +565,7 @@ API CALLS
     setLoadingPredict(true);
     setResult(null);
     setTastingCard(null);
+    setSimilarBlends(null);
 
     const cleanedBrand = cleanText(form.brand);
     const cleanedLine = cleanText(form.line);
@@ -590,6 +593,34 @@ API CALLS
     }
   };
 
+  const findSimilarBlends = async () => {
+    setErr("");
+    setLoadingSimilar(true);
+    setSimilarBlends(null);
+    setResult(null);
+    setTastingCard(null);
+
+    try {
+      const res = await fetch(`/api/predictor/similar-blends`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(buildPayload()),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || data.detail || "Similar blends lookup failed");
+      }
+
+      setSimilarBlends(data);
+    } catch (e) {
+      setErr(e.message || "Similar blends request failed");
+    } finally {
+      setLoadingSimilar(false);
+    }
+  };
+
   /* --------------------------
 UI
 -------------------------- */
@@ -601,9 +632,21 @@ UI
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
           <h1>Cigar Peak-Flavor Predictor (beta)</h1>
-          <label>Instructions: The Predictor tool is available exclusively to approved subscribers. Enter your registered email address and press the Check User button to launch. In the Cigar Blend Lookup section, enter the blend Brand and Line then press Blend Lookup button. The blend specific details will automatically appear below. Blend details can also be entered or adjusted manually, in case the blend is still in small batch/experimental stage. By pressing the Run Predictor button, you will see the blend's target smoking Peak-Flavor core leaf-level relative humidity %, and its tasting card. 
-               <br />Important note: Leaf-level relative humidity % is measured using a commercially available Cigar Humidity Meter.</label>
-          
+          <label>
+            Instructions: The Predictor tool is available exclusively to approved
+            subscribers. Enter your registered email address and press the Check
+            User button to launch. In the Cigar Blend Lookup section, enter the
+            blend Brand and Line then press Blend Lookup button. The blend
+            specific details will automatically appear below. Blend details can
+            also be entered or adjusted manually, in case the blend is still in
+            small batch/experimental stage. By pressing the Run Predictor button,
+            you will see the blend's target smoking Peak-Flavor core leaf-level
+            relative humidity %, and its tasting card.
+            <br />
+            Important note: Leaf-level relative humidity % is measured using a
+            commercially available Cigar Humidity Meter.
+          </label>
+
           {/* USER */}
           <div className="card" style={{ marginTop: 16 }}>
             <h3>User Login</h3>
@@ -1006,7 +1049,15 @@ UI
               </div>
             </div>
 
-            <div className="ctaRow" style={{ marginTop: 16 }}>
+            <div
+              className="ctaRow"
+              style={{
+                marginTop: 16,
+                display: "flex",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
+            >
               <button
                 className="btn primary"
                 onClick={runPrediction}
@@ -1014,6 +1065,15 @@ UI
                 type="button"
               >
                 {loadingPredict ? "Running..." : "Run Predictor"}
+              </button>
+
+              <button
+                className="btn"
+                onClick={findSimilarBlends}
+                disabled={loadingSimilar}
+                type="button"
+              >
+                {loadingSimilar ? "Searching..." : "Find Similar Blends"}
               </button>
             </div>
           </div>
@@ -1033,10 +1093,12 @@ UI
                   Cigar Peak-Flavor System Family: <b>{result.family}</b>
                 </div>
                 <div>
-                  Target Smoking Core Relative Humidity % (measured with Cigar Humidity Meter): <b>{result.target_rh}</b>
+                  Target Smoking Core Relative Humidity % (measured with Cigar Humidity Meter):{" "}
+                  <b>{result.target_rh}</b>
                 </div>
                 <div>
-                  Smoking Core Relative Humidity % Window: <b>{result.window_low}</b> to <b>{result.window_high}</b>
+                  Smoking Core Relative Humidity % Window: <b>{result.window_low}</b> to{" "}
+                  <b>{result.window_high}</b>
                 </div>
                 <div>
                   Runs used: <b>{result.runs_used}</b>
@@ -1104,6 +1166,72 @@ UI
                     </div>
                   </div>
                 </>
+              )}
+            </div>
+          )}
+
+          {similarBlends && (
+            <div className="card" style={{ marginTop: 16 }}>
+              <h3>Similar Blends</h3>
+
+              {Array.isArray(similarBlends.results) && similarBlends.results.length > 0 ? (
+                <div className="small" style={{ lineHeight: 1.8 }}>
+                  {similarBlends.results.map((blend, idx) => (
+                    <div
+                      key={`${blend.brand || "brand"}-${blend.line || "line"}-${idx}`}
+                      style={{
+                        padding: "12px 0",
+                        borderBottom:
+                          idx === similarBlends.results.length - 1
+                            ? "none"
+                            : "1px solid rgba(0,0,0,.08)",
+                      }}
+                    >
+                      <div>
+                        <b>{blend.brand || "Unknown Brand"}</b>
+                        {blend.line ? ` — ${blend.line}` : ""}
+                      </div>
+
+                      {blend.similarity_score != null && (
+                        <div>
+                          Similarity score: <b>{blend.similarity_score}%</b>
+                        </div>
+                      )}
+
+                      {Array.isArray(blend.why_similar) &&
+                        blend.why_similar.length > 0 && (
+                          <div>
+                            Why similar: {blend.why_similar.join(", ")}
+                          </div>
+                        )}
+
+                      {blend.origin && <div>Origin: {blend.origin}</div>}
+                      {blend.factory && <div>Factory: {blend.factory}</div>}
+                      {blend.wrapper && <div>Wrapper: {blend.wrapper}</div>}
+                      {blend.wrapper_process && (
+                        <div>Wrapper process: {blend.wrapper_process}</div>
+                      )}
+                      {blend.binder && <div>Binder: {blend.binder}</div>}
+
+                      {Array.isArray(blend.filler) && blend.filler.length > 0 && (
+                        <div>Filler: {blend.filler.join(", ")}</div>
+                      )}
+
+                      {blend.ligero && <div>Ligero: {blend.ligero}</div>}
+
+                      {Array.isArray(blend.special_tobacco_flags) &&
+                        blend.special_tobacco_flags.length > 0 && (
+                          <div>
+                            Flags: {blend.special_tobacco_flags.join(", ")}
+                          </div>
+                        )}
+
+                      {blend.source_label && <div>Source: {blend.source_label}</div>}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="small">No similar blends found.</div>
               )}
             </div>
           )}
