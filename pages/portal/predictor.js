@@ -559,10 +559,10 @@ API CALLS
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          user_email: cleanText(form.user_email),
           brand: cleanText(brand),
           line: cleanText(line),
         }),
-      });
 
       const data = await res.json().catch(() => ({}));
 
