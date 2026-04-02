@@ -13,7 +13,7 @@ export default function System() {
       title: "Cigar Peak-Flavor System®",
       lead: "Controlled. Measured. Predictable.",
       p1: `Most cigars are evaluated emotionally or based on what we hear or see. Very few are evaluated on scientific insights, with the Blender's philosophy and intent in mind.
-           The Peak-Flavor System™ treats a cigar as a dynamic system that combines various tobacco leaf seeds, tobacco origin and soil, and construction techniques.`,
+           We treat a cigar as a dynamic system that combines various tobacco leaf seeds, tobacco origin and soil, and construction techniques.`,
       bullets: [
         "Leaf hygroscopic equilibrium",
         "Temperature-humidity coupling",
@@ -26,17 +26,17 @@ export default function System() {
       download: "Download system overview (PDF)",
       applicationsTitle: "Program Applications",
       applicationsText:
-        "The Peak-Flavor System® is deployed across ICSI’s professional and elite pathways:",
+        "The Cigar Peak-Flavor System® is deployed across ICSI’s professional and elite pathways:",
       furtherReadingLabel: "Further reading:",
       furtherReadingTitle: "Ideal Cigar Humidity & Peak Flavor Timing",
-      seoTitle: "Peak-Flavor System® | International Cigar Sommelier Institute",
+      seoTitle: "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
       seoDescription:
-        "The proprietary Peak-Flavor System® applies thermodynamics, combustion science, and blend architecture modeling to achieve repeatable cigar excellence.",
+        "The proprietary Cigar Peak-Flavor System® applies thermodynamics, combustion science, and blend architecture modeling to achieve repeatable cigar excellence.",
     },
     fr: {
       title: "Cigar Peak-Flavor System®",
       lead: "Contrôlé. Mesuré. Prévisible.",
-      p1: `La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du créateur (blender). Le système Peak-Flavor® traite un cigare comme un système dynamique combinant diverses semences de feuilles de tabac, l'origine du tabac et du sol, ainsi que des techniques de fabrication.`,
+      p1: `La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du créateur (blender). Nous traitons un cigare comme un système dynamique combinant diverses semences de feuilles de tabac, l'origine du tabac et du sol, ainsi que des techniques de fabrication.`,
       bullets: [
         "Équilibre hygroscopique du tabac",
         "Interaction température–humidité",
@@ -49,10 +49,10 @@ export default function System() {
       download: "Télécharger la présentation du système (PDF)",
       applicationsTitle: "Applications du système",
       applicationsText:
-        "Le système Peak-Flavor® est appliqué dans les parcours professionnels et élite d’ICSI :",
+        "Le système Cigar Peak-Flavor® est appliqué dans les parcours professionnels et élite d’ICSI :",
       furtherReadingLabel: "À lire aussi :",
       furtherReadingTitle: "Humidité idéale & timing du pic aromatique",
-      seoTitle: "Système Peak-Flavor® | International Cigar Sommelier Institute",
+      seoTitle: "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
       seoDescription:
         "Le système propriétaire Peak-Flavor® applique thermodynamique et science de combustion pour une excellence aromatique reproductible.",
     },
@@ -72,12 +72,12 @@ export default function System() {
       download: "Systemübersicht herunterladen (PDF)",
       applicationsTitle: "Programmanwendungen",
       applicationsText:
-        "Das Peak-Flavor-System™ wird in den professionellen und Elite-Programmen von ICSI eingesetzt:",
+        "Das Cigar Peak-Flavor System® wird in den professionellen und Elite-Programmen von ICSI eingesetzt:",
       furtherReadingLabel: "Weiterführend:",
       furtherReadingTitle: "Ideale Zigarrenfeuchte & Peak-Flavor Timing",
-      seoTitle: "Peak-Flavor-System® | International Cigar Sommelier Institute",
+      seoTitle: "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
       seoDescription:
-        "Das proprietäre Peak-Flavor-System® verbindet Thermodynamik und Verbrennungsphysik für reproduzierbare Zigarren-Exzellenz.",
+        "Das proprietäre Cigar Peak-Flavor System® verbindet Thermodynamik und Verbrennungsphysik für reproduzierbare Zigarren-Exzellenz.",
     },
   };
 
