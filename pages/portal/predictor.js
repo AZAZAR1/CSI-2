@@ -265,6 +265,9 @@ export default function PredictorPage() {
   });
 
   const [usage, setUsage] = useState(null);
+  const [validatedEmail, setValidatedEmail] = useState("");
+  const [isUserValidated, setIsUserValidated] = useState(false);
+
   const [result, setResult] = useState(null);
   const [tastingCard, setTastingCard] = useState(null);
   const [similarBlends, setSimilarBlends] = useState(null);
@@ -293,11 +296,10 @@ export default function PredictorPage() {
       .trim();
   };
 
-  const isAuthorizedUser = Boolean(
-    usage &&
-      form.user_email &&
-      cleanText(usage.email || "") === cleanText(form.user_email)
-  );
+  const isAuthorizedUser =
+    isUserValidated &&
+    cleanText(validatedEmail).toLowerCase() ===
+      cleanText(form.user_email).toLowerCase();
 
   /* --------------------------
 AUTOCOMPLETE
@@ -357,6 +359,14 @@ HELPERS
     const v = cleanText(value);
     if (!v) return "";
     return options.includes(v) ? v : "";
+  };
+
+  const resetUserValidation = () => {
+    setUsage(null);
+    setValidatedEmail("");
+    setIsUserValidated(false);
+    setLookupStatus("");
+    setLookupSource("");
   };
 
   const applyLookupMatch = (match) => {
@@ -485,18 +495,26 @@ API CALLS
     setLookupSource("");
 
     try {
+      const cleanedEmail = cleanText(form.user_email);
+
       const res = await fetch(
-        `/api/predictor/usage?email=${encodeURIComponent(form.user_email)}`
+        `/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}`
       );
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
+        setIsUserValidated(false);
+        setValidatedEmail("");
         throw new Error(data.error || data.detail || "Failed to load usage");
       }
 
       setUsage(data);
+      setValidatedEmail(cleanedEmail);
+      setIsUserValidated(true);
     } catch (e) {
+      setIsUserValidated(false);
+      setValidatedEmail("");
       setErr(e.message || "Usage request failed");
     } finally {
       setLoadingUsage(false);
@@ -537,7 +555,7 @@ API CALLS
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.ok || !data.match) {
-        setLookupStatus(data.error || "No reliable blend match found.");
+        setLookupStatus(data.error || data.detail || "No reliable blend match found.");
         return;
       }
 
@@ -663,8 +681,9 @@ UI
             blend Brand and Line then press Blend Lookup button. The blend
             specific details will automatically appear below. Blend details can
             also be entered or adjusted manually, in case the blend is still in
-            small batch/experimental stage. Pressing the Run Predictor button
-            provides the blend's target smoking Peak-Flavor relative humidity % measured at core leaf-level, and its associated tasting card. Pressing the Find Similar Blends suggests Blends that most closely fit that profile.
+            small batch/experimental stage. By pressing the Run Predictor button,
+            you will see the blend&apos;s target smoking Peak-Flavor core leaf-level
+            relative humidity %, and its tasting card.
             <br />
             Important note: Leaf-level relative humidity % is measured using a
             commercially available Cigar Humidity Meter.
@@ -680,9 +699,7 @@ UI
               placeholder="Enter your subscription email"
               onChange={(e) => {
                 update("user_email", e.target.value);
-                setUsage(null);
-                setLookupStatus("");
-                setLookupSource("");
+                resetUserValidation();
               }}
             />
 
@@ -828,7 +845,7 @@ UI
 
           {/* BLEND CONSTRUCTION */}
           <div className="card" style={{ marginTop: 16 }}>
-            <h3>Blend Details: Autofilled & Adjustable</h3>
+            <h3>Blend Details: Autofilled &amp; Adjustable</h3>
 
             <div className="row2">
               <div>
@@ -1055,7 +1072,7 @@ UI
 
           {/* SMOKING PROFILE */}
           <div className="card" style={{ marginTop: 16 }}>
-            <h3>Optional Input: Blend Age & Smoking Style</h3>
+            <h3>Optional Input: Blend Age &amp; Smoking Style</h3>
 
             <div className="row2">
               <div>
@@ -1235,9 +1252,7 @@ UI
 
                       {Array.isArray(blend.why_similar) &&
                         blend.why_similar.length > 0 && (
-                          <div>
-                            Why similar: {blend.why_similar.join(", ")}
-                          </div>
+                          <div>Why similar: {blend.why_similar.join(", ")}</div>
                         )}
 
                       {blend.origin && <div>Origin: {blend.origin}</div>}
@@ -1256,9 +1271,7 @@ UI
 
                       {Array.isArray(blend.special_tobacco_flags) &&
                         blend.special_tobacco_flags.length > 0 && (
-                          <div>
-                            Flags: {blend.special_tobacco_flags.join(", ")}
-                          </div>
+                          <div>Flags: {blend.special_tobacco_flags.join(", ")}</div>
                         )}
 
                       {blend.source_label && <div>Source: {blend.source_label}</div>}
