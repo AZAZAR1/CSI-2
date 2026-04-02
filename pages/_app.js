@@ -5,7 +5,7 @@ export default function App({ Component, pageProps }) {
   const siteName = "International Cigar Sommelier Institute";
   const siteUrl = "https://cigarsommelierinstitute.com";
   const description =
-    "Swiss luxury. Scientific authority. Discreet mastery of the cigar experience through the Peak-Flavor System™.";
+    "Swiss luxury. Scientific authority. Discreet mastery of the cigar experience through the Cigar Peak-Flavor System®.";
 
   const orgSchema = {
     "@context": "https://schema.org",
