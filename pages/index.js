@@ -108,13 +108,13 @@ export default function Home() {
     en: {
       title: "International Cigar Sommelier Institute",
       description:
-        "Swiss luxury. Scientific authority. ICSI equips candidates, lounges, and collectors to achieve repeatable peak-flavor cigar performance.",
+        "Swiss luxury. Scientific authority. ICSI equips candidates, lounges, and aficionados to achieve repeatable peak-flavor cigar performance.",
       path: "/",
     },
     fr: {
       title: "International Cigar Sommelier Institute",
       description:
-        "Luxe suisse. Autorité scientifique. ICSI prépare candidats, lounges et collectionneurs à une performance aromatique reproductible.",
+        "Luxe suisse. Autorité scientifique. ICSI prépare les candidats, lounges et aficionados à une performance aromatique reproductible.",
       path: "/",
     },
     de: {
