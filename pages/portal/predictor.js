@@ -174,6 +174,7 @@ const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "Medio Tiempo",
   "Piloto Cubano",
   "Olor Dominicano",
+  "Pelo de Oro",
   "Corojo",
   "Criollo",
   "Andullo",
