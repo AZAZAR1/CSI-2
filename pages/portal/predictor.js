@@ -634,8 +634,8 @@ API CALLS
     setErr("");
 
     if (!isAuthorizedUser) {
-      setErr("Please enter your registered email and press Check User first.");
-      return;
+    setErr("Please enter your registered email and press Check User first.");
+    return;
     }
 
     setLoadingSimilar(true);
@@ -653,10 +653,11 @@ API CALLS
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.ok) {
-        throw new Error(data.error || data.detail || "Similar blends lookup failed");
+      throw new Error(data.error || data.detail || "Similar blends lookup failed");
       }
 
       setSimilarBlends(data);
+      await loadUsage();
     } catch (e) {
       setErr(e.message || "Similar blends request failed");
     } finally {
