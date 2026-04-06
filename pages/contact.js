@@ -16,7 +16,7 @@ export default function Contact() {
   const copy = {
     en: {
       title: "Application & Contact",
-      intro: "Contact us to apply for our courses, classes or access to our digital applications. All applications are reviewed individually, and admission is selective.",
+      intro: "Contact us to apply to our courses, classes or access to our digital applications. All applications are reviewed individually, and admission is selective.",
       instructions:
         "If you are applying to our courses, please include your CV or resume along with a short statement of intent.",
       emailLabel: "Email your application:",
