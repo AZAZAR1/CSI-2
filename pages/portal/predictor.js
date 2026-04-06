@@ -84,6 +84,7 @@ const WRAPPERS = [
   "Criollo 98",
   "Connecticut Shade",
   "Connecticut Broadleaf",
+  "Connecticut Habano",
   "Costarican",
   "Broadleaf",
   "Honduran",
