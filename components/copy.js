@@ -67,7 +67,7 @@ export const COPY = {
     nav_courses: "Cours",
     nav_programs: "Cours", // ✅ backward compatibility
     nav_about: "À propos",
-    nav_system: "Peak-Flavor System™",
+    nav_system: "Cigar Peak-Flavor System®",
     nav_partners: "Lounges partenaires",
     nav_contact: "Contact",
 
@@ -80,7 +80,7 @@ export const COPY = {
     // CTAs
     cta_courses: "Découvrir les cours",
     cta_programs: "Découvrir les cours", // ✅ backward compatibility
-    cta_partner: "Devenir partenaire",
+    cta_partner: "Ressources",
     learn_more: "En savoir plus",
 
     // Courses page
@@ -96,7 +96,7 @@ export const COPY = {
     // Course cards
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
-    amc_title: "Aficionado Master Class (AMC™)",
+    amc_title: "Aficionado Master Class (AMC®)",
 
     ccs_blurb:
       "La norme professionnelle du sommelier cigare. Maîtrisez combustion, humidité et arômes avec confiance et précision scientifique.",
@@ -128,8 +128,8 @@ export const COPY = {
     nav_courses: "Kurse",
     nav_programs: "Kurse", // ✅ backward compatibility
     nav_about: "Über ICSI",
-    nav_system: "Peak-Flavor System™",
-    nav_partners: "Partner-Lounges",
+    nav_system: "Cigar Peak-Flavor System®",
+    nav_partners: "Ressourcen",
     nav_contact: "Kontakt",
 
     // Home
@@ -157,7 +157,7 @@ export const COPY = {
     // Course cards
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
-    amc_title: "Aficionado Master Class (AMC™)",
+    amc_title: "Aficionado Master Class (AMC®)",
 
     ccs_blurb:
       "Der professionelle Standard für Zigarrenkompetenz. Verbrennung, Feuchte und Aromatik wissenschaftlich beherrschen.",
