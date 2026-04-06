@@ -8,9 +8,9 @@ export default function Partners() {
 
   const copy = {
     en: {
-      title: "Partner Lounges",
+      title: "Digital Applications",
       body:
-        "A discreet partnership model for premium cigar lounges and luxury hotel cigar rooms. Invite-only pilots, discreet co-branding, and data feedback loops to refine systems in real venues.",
+        "Discover the ideal smoking conditions for any cigar. Powered by the Cigar Peak-Flavor System™, this tool evaluates key blend parameters to calculate optimal humidity targets and recommend structurally similar cigars—helping smokers refine their experience and confidently explore beyond their usual selections.",
       seoTitle:
         "Partner Lounges | International Cigar Sommelier Institute",
       seoDescription:
