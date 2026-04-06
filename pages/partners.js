@@ -10,7 +10,7 @@ export default function Partners() {
     en: {
       title: "Digital Applications",
       body:
-        "Discover ICSI’s digital applications, including the igar Peak-Flavor System®: advanced tools for cigar analysis, humidity optimization, and identifying structurally similar blends to enhance the smoking experience.",
+        "Discover ICSI’s digital applications, including the cigar Peak-Flavor System®: advanced tools for cigar analysis, humidity optimization, and identifying structurally similar blends to enhance the smoking experience.",
       seoTitle:
         "Digital Applications | International Cigar Sommelier Institute",
       seoDescription:
