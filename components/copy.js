@@ -6,8 +6,8 @@ export const COPY = {
     nav_courses: "Courses",
     nav_programs: "Courses", // ✅ backward compatibility
     nav_about: "About",
-    nav_system: "Peak-Flavor System™",
-    nav_partners: "Partner Lounges",
+    nav_system: "Cigar Peak-Flavor System®",
+    nav_partners: "Resources",
     nav_contact: "Contact",
 
     // Home
@@ -19,7 +19,7 @@ export const COPY = {
     // CTAs
     cta_courses: "Explore courses",
     cta_programs: "Explore courses", // ✅ backward compatibility
-    cta_partner: "Partner with CSI",
+    cta_partner: "ICSI Apps",
     learn_more: "Learn more",
 
     // Courses page
@@ -35,7 +35,7 @@ export const COPY = {
     // Course cards
     ccs_title: "Certified Cigar Sommelier (CCS®)",
     acs_title: "Advanced Cigar Sommelier (ACS®)",
-    amc_title: "Aficionado Master Class (AMC™)",
+    amc_title: "Aficionado Master Class (AMC®)",
 
     ccs_blurb:
       "The professional standard for cigar mastery. Control combustion, moisture, and flavor dynamics with confidence and scientific accuracy.",
