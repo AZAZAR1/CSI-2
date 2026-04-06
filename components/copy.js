@@ -33,9 +33,9 @@ export const COPY = {
       "ICSI courses are designed for premium cigar lounges, retailers, and serious aficionados who want repeatable peak-flavor performance. Certification elevates staff credibility, improves customer guidance, and helps increase conversion and repeat purchases by delivering consistently better smoking outcomes. The curriculum focuses on post-factory conditioning, blend-specific staging, and diagnostics grounded in the proprietary Peak-Flavor System™.",
 
     // Course cards
-    ccs_title: "Certified Cigar Sommelier (CCS®)",
-    acs_title: "Advanced Cigar Sommelier (ACS®)",
-    amc_title: "Aficionado Master Class (AMC®)",
+    ccs_title: "Certified Cigar Sommelier (CCS)",
+    acs_title: "Advanced Cigar Sommelier (ACS)",
+    amc_title: "Aficionado Master Class (AMC)",
 
     ccs_blurb:
       "The professional standard for cigar mastery. Control combustion, moisture, and flavor dynamics with confidence and scientific accuracy.",
@@ -51,11 +51,11 @@ export const COPY = {
 
     // Contact / footer
     note:
-      "Use the contact form to apply or request an invite. ICSI will reply with next steps and scheduling.",
+      "Use the contact form to apply or request an invite.",
     contact_title: "Contact",
     contact_lead: "Lead capture and inquiries for candidates, lounges, and hotels.",
     notice:
-      "Submissions are routed to CDCAdmin@cdc-advisory.com. You will receive an automatic confirmation email.",
+      "Submissions are routed to Admin@cigarsommelierinstitute.com. You will receive an automatic confirmation email.",
     privacy: "Privacy",
     terms: "Terms",
   },
@@ -68,7 +68,7 @@ export const COPY = {
     nav_programs: "Cours", // ✅ backward compatibility
     nav_about: "À propos",
     nav_system: "Cigar Peak-Flavor System®",
-    nav_partners: "Lounges partenaires",
+    nav_partners: "Ressources",
     nav_contact: "Contact",
 
     // Home
@@ -94,9 +94,9 @@ export const COPY = {
       "Les cours ICSI s’adressent aux lounges, détaillants premium et aficionados exigeants qui recherchent une performance aromatique reproductible. La certification renforce la crédibilité des équipes, améliore le conseil client, et contribue à augmenter la conversion et les achats répétés grâce à une expérience de fumage plus constante. Le programme met l’accent sur le conditionnement post-fabrique, le staging spécifique au blend, et les diagnostics fondés sur le Peak-Flavor System™.",
 
     // Course cards
-    ccs_title: "Certified Cigar Sommelier (CCS®)",
-    acs_title: "Advanced Cigar Sommelier (ACS®)",
-    amc_title: "Aficionado Master Class (AMC®)",
+    ccs_title: "Certified Cigar Sommelier (CCS)",
+    acs_title: "Advanced Cigar Sommelier (ACS)",
+    amc_title: "Aficionado Master Class (AMC)",
 
     ccs_blurb:
       "La norme professionnelle du sommelier cigare. Maîtrisez combustion, humidité et arômes avec confiance et précision scientifique.",
@@ -112,11 +112,11 @@ export const COPY = {
 
     // Contact / footer
     note:
-      "Utilisez le formulaire de contact pour candidater ou demander une invitation. CSI répondra avec les prochaines étapes.",
+      "Utilisez le formulaire de contact pour candidater ou demander une invitation.",
     contact_title: "Contact",
     contact_lead: "Demandes pour candidats, lounges et hôtels.",
     notice:
-      "Les messages sont envoyés à CDCAdmin@cdc-advisory.com. Vous recevrez un email de confirmation automatique.",
+      "Les messages sont envoyés à Admin@cigarsommelierinstitute.com. Vous recevrez un email de confirmation automatique.",
     privacy: "Confidentialité",
     terms: "Conditions",
   },
@@ -141,7 +141,7 @@ export const COPY = {
     // CTAs
     cta_courses: "Kurse ansehen",
     cta_programs: "Kurse ansehen", // ✅ backward compatibility
-    cta_partner: "Partner werden",
+    cta_partner: "Ressourcen",
     learn_more: "Mehr erfahren",
 
     // Courses page
@@ -155,9 +155,9 @@ export const COPY = {
       "Die ICSI-Kurse richten sich an Premium-Lounges, Fachhändler und anspruchsvolle Aficionados, die reproduzierbare Peak-Flavor-Performance erzielen wollen. Eine Zertifizierung steigert die Glaubwürdigkeit des Teams, verbessert die Kundenberatung und kann Conversion sowie Wiederkäufe erhöhen, weil die Raucherfahrung konsistenter wird. Der Fokus liegt auf Post-Factory Conditioning, blend-spezifischem Staging und Diagnostik auf Basis des proprietären Peak-Flavor-Systems™.",
 
     // Course cards
-    ccs_title: "Certified Cigar Sommelier (CCS®)",
-    acs_title: "Advanced Cigar Sommelier (ACS®)",
-    amc_title: "Aficionado Master Class (AMC®)",
+    ccs_title: "Certified Cigar Sommelier (CCS)",
+    acs_title: "Advanced Cigar Sommelier (ACS)",
+    amc_title: "Aficionado Master Class (AMC)",
 
     ccs_blurb:
       "Der professionelle Standard für Zigarrenkompetenz. Verbrennung, Feuchte und Aromatik wissenschaftlich beherrschen.",
@@ -173,11 +173,11 @@ export const COPY = {
 
     // Contact / footer
     note:
-      "Nutzen Sie das Kontaktformular für Bewerbung oder Einladung. CSI meldet sich mit den nächsten Schritten.",
+      "Nutzen Sie das Kontaktformular für Bewerbung oder Einladung.",
     contact_title: "Kontakt",
     contact_lead: "Anfragen für Kandidaten, Lounges und Hotels.",
     notice:
-      "Nachrichten gehen an CDCAdmin@cdc-advisory.com. Sie erhalten eine automatische Bestätigung per E-Mail.",
+      "Nachrichten gehen an Admin@cigarsommelierinstitute.com. Sie erhalten eine automatische Bestätigung per E-Mail.",
     privacy: "Datenschutz",
     terms: "AGB",
   },
