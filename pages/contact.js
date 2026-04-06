@@ -16,9 +16,9 @@ export default function Contact() {
   const copy = {
     en: {
       title: "Application & Contact",
-      intro: "Applications are reviewed individually. Admission is selective.",
+      intro: "Contact us to apply for our courses, classes or access to our digital applications. All applications are reviewed individually, and admission is selective.",
       instructions:
-        "Please send your CV or professional resume along with a short statement of intent.",
+        "If you are applying to our courses, please include your CV or resume along with a short statement of intent.",
       emailLabel: "Email your application:",
       whatsappLabel: "Or contact us directly via Swiss WhatsApp:",
       closing:
@@ -33,14 +33,14 @@ export default function Contact() {
       seoTitle:
         "Application & Contact | International Cigar Sommelier Institute",
       seoDescription:
-        "Apply to CCS®, ACS®, request an invite to AMC™, or contact CSI for lounge partnerships.",
+        "Apply to CCS, ACS, request an invite to AMC, or contact ICSI.",
     },
     fr: {
       title: "Candidature & Contact",
       intro:
-        "Les candidatures sont examinées individuellement. L’admission est sélective.",
+        "Contactez-nous pour postuler à nos cours, classes ou accéder à nos applications numériques. Toutes les candidatures sont examinées individuellement et l'admission est sélective.",
       instructions:
-        "Veuillez transmettre votre CV accompagné d’une courte lettre d’intention.",
+        "Si vous postulez à nos cours, veuillez inclure votre CV ainsi qu'une courte déclaration d'intention.",
       emailLabel: "Envoyer votre candidature par email :",
       whatsappLabel: "Ou nous contacter via WhatsApp (Suisse) :",
       closing:
@@ -60,9 +60,9 @@ export default function Contact() {
     de: {
       title: "Bewerbung & Kontakt",
       intro:
-        "Bewerbungen werden individuell geprüft. Die Zulassung ist selektiv.",
+        "Kontaktieren Sie uns, um sich für unsere Kurse, Klassen oder den Zugang zu unseren digitalen Anwendungen zu bewerben. Alle Bewerbungen werden individuell geprüft, und die Zulassung ist selektiv.",
       instructions:
-        "Bitte senden Sie Ihren Lebenslauf sowie ein kurzes Motivationsschreiben.",
+        "Wenn Sie sich für unsere Kurse bewerben, fügen Sie bitte Ihren Lebenslauf oder Ihre Bewerbung zusammen mit einer kurzen Absichtserklärung bei.",
       emailLabel: "Bewerbung per E-Mail:",
       whatsappLabel: "Oder kontaktieren Sie uns direkt via Schweizer WhatsApp:",
       closing: "Alle Einsendungen werden vertraulich behandelt.",
