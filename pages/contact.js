@@ -17,7 +17,7 @@ export default function Contact() {
     en: {
       title: "Application & Contact",
       intro: "Contact us to apply to our courses, classes or access to our digital applications. All applications are reviewed individually, and admission is selective.",
-      instructions:
+      intro: 
         "If you are applying to our courses, please include your CV or resume along with a short statement of intent.",
       emailLabel: "Email your application:",
       whatsappLabel: "Or contact us directly via Swiss WhatsApp:",
@@ -39,7 +39,7 @@ export default function Contact() {
       title: "Candidature & Contact",
       intro:
         "Contactez-nous pour postuler à nos cours, classes ou accéder à nos applications numériques. Toutes les candidatures sont examinées individuellement et l'admission est sélective.",
-      instructions:
+      intro:
         "Si vous postulez à nos cours, veuillez inclure votre CV ainsi qu'une courte déclaration d'intention.",
       emailLabel: "Envoyer votre candidature par email :",
       whatsappLabel: "Ou nous contacter via WhatsApp (Suisse) :",
@@ -61,7 +61,7 @@ export default function Contact() {
       title: "Bewerbung & Kontakt",
       intro:
         "Kontaktieren Sie uns, um sich für unsere Kurse, Klassen oder den Zugang zu unseren digitalen Anwendungen zu bewerben. Alle Bewerbungen werden individuell geprüft, und die Zulassung ist selektiv.",
-      instructions:
+      intro:
         "Wenn Sie sich für unsere Kurse bewerben, fügen Sie bitte Ihren Lebenslauf oder Ihre Bewerbung zusammen mit einer kurzen Absichtserklärung bei.",
       emailLabel: "Bewerbung per E-Mail:",
       whatsappLabel: "Oder kontaktieren Sie uns direkt via Schweizer WhatsApp:",
