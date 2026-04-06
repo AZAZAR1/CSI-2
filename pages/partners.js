@@ -10,29 +10,29 @@ export default function Partners() {
     en: {
       title: "Digital Applications",
       body:
-        "Discover the ideal smoking conditions for any cigar. Powered by the Cigar Peak-Flavor System™, this tool evaluates key blend parameters to calculate optimal humidity targets and recommend structurally similar cigars—helping smokers refine their experience and confidently explore beyond their usual selections.",
+        "Discover ICSI’s digital applications, including the igar Peak-Flavor System®: advanced tools for cigar analysis, humidity optimization, and identifying structurally similar blends to enhance the smoking experience.",
       seoTitle:
-        "Partner Lounges | International Cigar Sommelier Institute",
+        "Digital Applications | International Cigar Sommelier Institute",
       seoDescription:
-        "ICSI partners with premium cigar lounges and luxury hotel cigar rooms through discreet pilot programs, co-branding, and data-driven refinement.",
+        "ICSI develops and implements digital applications to support premium cigar professionals, retailers, lounges and luxury hotel cigar rooms, through discreet pilot programs and data-driven refinement.",
     },
     fr: {
-      title: "Lounges partenaires",
+      title: "Applications Numériques",
       body:
-        "Un modèle de partenariat discret destiné aux lounges de cigares premium et aux salons de cigares d’hôtels de luxe. Projets pilotes sur invitation, co-branding discret et boucles de retour d’expérience pour affiner les systèmes en conditions réelles.",
+        "Découvrez les applications numériques de l’ICSI, dont le Cigar Peak-Flavor System® : outils avancés pour analyser les cigares, optimiser l’humidité et explorer des mélanges similaires afin d’améliorer l’expérience de dégustation.",
       seoTitle:
-        "Lounges partenaires | International Cigar Sommelier Institute",
+        "Applications Numériques | International Cigar Sommelier Institute",
       seoDescription:
-        "ICSI collabore avec des lounges premium et hôtels de luxe via des programmes pilotes discrets et une approche fondée sur les données.",
+        "ICSI conçoit et déploie des applications digitales dédiées aux professionnels du cigare, lounges, et espaces cigares d’hôtels de luxe, à travers des programmes pilotes discrets et une optimisation continue fondée sur l’analyse de données.",
     },
     de: {
-      title: "Partner-Lounges",
+      title: "Digitale Lösungen",
       body:
-        "Ein diskretes Partnerschaftsmodell für Premium-Zigarrenlounges und luxuriöse Hotel-Cigar-Rooms. Invite-only Pilotprogramme, dezentes Co-Branding und datenbasierte Optimierung in realen Umgebungen.",
+        "Entdecken Sie die digitalen Anwendungen des ICSI, einschließlich des Cigar Peak-Flavor System®: innovative Tools zur Zigarrenanalyse, zur Optimierung der Luftfeuchtigkeit und zur gezielten Entdeckung ähnlicher Blends für ein verfeinertes Raucherlebnis.",
       seoTitle:
-        "Partner-Lounges | International Cigar Sommelier Institute",
+        "Digitale Lösungen | International Cigar Sommelier Institute",
       seoDescription:
-        "ICSI kooperiert mit Premium-Lounges und Luxushotels über diskrete Pilotprogramme und datenbasierte Systemoptimierung.",
+        "ICSI entwickelt und implementiert digitale Anwendungen zur Unterstützung von Premium-Zigarrenprofis, Fachhändlern, Lounges sowie Zigarrenräumen in Luxushotels, durch diskrete Pilotprogramme und eine kontinuierliche, datenbasierte Optimierung.",
     },
   };
 
