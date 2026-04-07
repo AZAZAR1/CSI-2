@@ -10,41 +10,96 @@ export default function Courses() {
   const lang = (locale || "en").toLowerCase();
   const c = COPY[lang] || COPY.en;
 
-  const intro = {
-    en: "The International Cigar Sommelier Institute offers structured pathways for individuals, lounges, and cigar retailers seeking to master the science and commercial value of the cigar experience. Each course is built upon the proprietary Peak-Flavor System®, combining tobacco knowledge, combustion dynamics, and post-factory conditioning to achieve consistent aromatic performance. Certified professionals develop the analytical skills required to understand cigar construction, humidity behavior, and flavor evolution; enabling lounges and shops to deliver superior cigar experiences that strengthen customer loyalty and increase cigar sales.",
-    fr: "L’International Cigar Sommelier Institute propose des parcours structurés destinés aux particuliers, lounges et détaillants souhaitant maîtriser à la fois la science et la valeur commerciale de l’expérience cigare. Chaque programme repose sur le système propriétaire Peak-Flavor®, combinant connaissance du tabac, dynamique de combustion et conditionnement post-fabrication afin d’obtenir une performance aromatique constante. Les professionnels certifiés développent une compréhension analytique de la construction du cigare, du comportement de l’humidité et de l’évolution des arômes, permettant aux lounges et boutiques d’offrir une expérience supérieure qui renforce la fidélité des clients et stimule les ventes.",
-    de: "Das International Cigar Sommelier Institute bietet strukturierte Ausbildungswege für Einzelpersonen, Lounges und Zigarrenfachhändler, die sowohl die wissenschaftlichen als auch die kommerziellen Aspekte des Zigarrenerlebnisses beherrschen möchten. Jeder Kurs basiert auf dem proprietären Peak-Flavor-System®, das Tabakwissen, Verbrennungsdynamik und Post-Factory-Conditioning kombiniert, um eine konsistente Aromaperformance zu erreichen. Zertifizierte Fachkräfte entwickeln ein analytisches Verständnis für Zigarrenkonstruktion, Feuchteverhalten und Aromadynamik, wodurch Lounges und Geschäfte ein überlegenes Zigarrenerlebnis bieten können, das Kundenbindung stärkt und den Zigarrenverkauf steigert.",
-  };
-
-  const seo = {
+  const pageCopy = {
     en: {
-      title: "Cigar Certification Courses (CCS®, ACS®, AMC®) | ICSI",
-      description:
-        "ICSI’s cigar certification courses help professionals, lounges, and retailers increase customer loyalty and cigar sales through scientific post-factory conditioning and peak-flavor performance.",
-      path: "/courses",
+      title: "Professional Pathways & Industry Solutions",
+      intro:
+        "ICSI serves three distinct audiences across the modern cigar world: aspiring professionals building a career, retailers and lounges seeking to modernize for growth, and dedicated aficionados pursuing a higher standard of personal mastery. Each pathway is grounded in the scientific Cigar Peak-Flavor System® and designed to bring greater structure, confidence, and performance to an increasingly complex global blend landscape.",
+      individualsTitle: "For Aspiring Cigar Professionals",
+      individualsBody:
+        "Build a career grounded in precision, structure, and credibility. ICSI’s certification programs develop a rigorous understanding of cigar construction, combustion dynamics, humidity behavior, and flavor evolution—preparing candidates for roles in premium lounges, retail environments, and luxury hospitality.",
+      businessTitle: "For Retailers, Lounges & Hospitality Groups",
+      businessBody:
+        "Modernize your cigar offering and create consistent, high-quality client experiences. ICSI provides implementation and certification of the Cigar Peak-Flavor System® to help businesses standardize service, optimize performance, strengthen loyalty, and grow cigar sales with greater confidence.",
+      aficionadosTitle: "For Aficionados & Collectors",
+      aficionadosBody:
+        "Pursue a more exacting level of personal cigar mastery. ICSI’s advanced private pathway supports committed aficionados and collectors seeking a more precise understanding of calibration, aging, performance staging, and peak-flavor delivery across a wider range of blends.",
+      bridge:
+        "Whether developing a professional career, strengthening a cigar business, or deepening personal mastery, ICSI provides the structure required to move from intuition to calibrated performance.",
+      pathwaysLead:
+        "Four tailored pathways for professional development, industry modernization, and advanced personal optimization.",
+      systemTitle: "Cigar Peak-Flavor System® Implementation & Certification",
+      systemBody:
+        "A comprehensive implementation and certification solution for retailers, lounges, and hospitality environments seeking to modernize operations, standardize cigar performance, and elevate the client experience.",
+      systemCta: "Request Partnership",
+      seoTitle: "Professional Pathways & Industry Solutions | ICSI",
+      seoDescription:
+        "ICSI supports aspiring cigar professionals, retailers, lounges, hospitality groups, and aficionados through structured certification pathways, Cigar Peak-Flavor System implementation, and advanced cigar mastery solutions.",
     },
     fr: {
-      title: "Cours & Certifications Cigare (CCS®, ACS®, AMC®) | ICSI",
-      description:
-        "Les cours et certifications ICSI aident professionnels, lounges et détaillants à renforcer la fidélité et augmenter les ventes grâce au conditionnement post-fabrication et à la performance aromatique.",
-      path: "/courses",
+      title: "Parcours Professionnels & Solutions pour l’Industrie",
+      intro:
+        "L’ICSI s’adresse à trois publics distincts dans le monde moderne du cigare : les futurs professionnels construisant une carrière, les détaillants et lounges cherchant à se moderniser pour croître, ainsi que les aficionados engagés recherchant un niveau supérieur de maîtrise personnelle. Chaque parcours s’appuie sur le Cigar Peak-Flavor System® scientifique et vise à apporter davantage de structure, de confiance et de performance dans un paysage mondial de mélanges toujours plus complexe.",
+      individualsTitle: "Pour les futurs professionnels du cigare",
+      individualsBody:
+        "Construisez une carrière fondée sur la précision, la structure et la crédibilité. Les programmes de certification ICSI développent une compréhension rigoureuse de la construction du cigare, de la dynamique de combustion, du comportement hygrométrique et de l’évolution aromatique—préparant les candidats à des fonctions en lounges premium, en distribution spécialisée et dans l’hôtellerie de luxe.",
+      businessTitle: "Pour les détaillants, lounges & groupes hôteliers",
+      businessBody:
+        "Modernisez votre offre cigare et créez une expérience client constante et qualitative. ICSI propose l’implémentation et la certification du Cigar Peak-Flavor System® afin d’aider les entreprises à standardiser le service, optimiser la performance, renforcer la fidélité et développer les ventes de cigares avec davantage d’assurance.",
+      aficionadosTitle: "Pour les aficionados & collectionneurs",
+      aficionadosBody:
+        "Atteignez un niveau plus exigeant de maîtrise personnelle du cigare. Le parcours privé avancé de l’ICSI accompagne les aficionados et collectionneurs engagés qui souhaitent affiner leur compréhension de la calibration, du vieillissement, de la mise en performance et de la restitution Peak-Flavor sur une plus grande diversité de mélanges.",
+      bridge:
+        "Qu’il s’agisse de développer une carrière professionnelle, de renforcer une activité cigare ou d’approfondir une maîtrise personnelle, l’ICSI apporte la structure nécessaire pour passer de l’intuition à une performance calibrée.",
+      pathwaysLead:
+        "Quatre parcours adaptés au développement professionnel, à la modernisation des environnements cigare et à l’optimisation personnelle avancée.",
+      systemTitle: "Implémentation & Certification du Cigar Peak-Flavor System®",
+      systemBody:
+        "Une solution complète d’implémentation et de certification destinée aux détaillants, lounges et environnements hôteliers souhaitant moderniser leurs opérations, standardiser la performance des cigares et élever l’expérience client.",
+      systemCta: "Demander un partenariat",
+      seoTitle: "Parcours Professionnels & Solutions pour l’Industrie | ICSI",
+      seoDescription:
+        "L’ICSI accompagne les futurs professionnels du cigare, les détaillants, lounges, groupes hôteliers et aficionados grâce à des parcours de certification structurés, à l’implémentation du Cigar Peak-Flavor System et à des solutions avancées de maîtrise du cigare.",
     },
     de: {
-      title: "Zigarren-Zertifizierungskurse (CCS®, ACS®, AMC®) | ICSI",
-      description:
-        "ICSI-Zertifizierungskurse unterstützen Professionals, Lounges und Händler dabei, Kundenbindung und Zigarrenverkauf zu steigern—durch Post-Factory-Conditioning und reproduzierbare Peak-Flavor-Performance.",
-      path: "/courses",
+      title: "Berufliche Wege & Branchenlösungen",
+      intro:
+        "ICSI richtet sich an drei unterschiedliche Zielgruppen in der modernen Zigarrenwelt: angehende Fachkräfte, die eine Karriere aufbauen möchten, Fachhändler und Lounges, die sich für Wachstum modernisieren wollen, sowie engagierte Aficionados, die ein höheres Maß an persönlicher Meisterschaft anstreben. Jeder Weg basiert auf dem wissenschaftlichen Cigar Peak-Flavor System® und wurde entwickelt, um in einer zunehmend komplexen globalen Blend-Landschaft mehr Struktur, Sicherheit und Performance zu schaffen.",
+      individualsTitle: "Für angehende Zigarrenprofis",
+      individualsBody:
+        "Bauen Sie eine Karriere auf, die auf Präzision, Struktur und Glaubwürdigkeit basiert. Die Zertifizierungsprogramme von ICSI vermitteln ein fundiertes Verständnis von Zigarrenkonstruktion, Verbrennungsdynamik, Feuchtigkeitsverhalten und Aromenentwicklung—und bereiten Kandidaten auf Aufgaben in Premium-Lounges, im Fachhandel und in der Luxushotellerie vor.",
+      businessTitle: "Für Fachhändler, Lounges & Hotelgruppen",
+      businessBody:
+        "Modernisieren Sie Ihr Zigarrenangebot und schaffen Sie konsistente, hochwertige Kundenerlebnisse. ICSI bietet die Implementierung und Zertifizierung des Cigar Peak-Flavor System® an, damit Unternehmen ihren Service standardisieren, ihre Performance optimieren, Loyalität stärken und Zigarrenumsätze mit größerer Sicherheit steigern können.",
+      aficionadosTitle: "Für Aficionados & Sammler",
+      aficionadosBody:
+        "Erreichen Sie ein anspruchsvolleres Niveau persönlicher Zigarrenmeisterschaft. Der fortgeschrittene private Weg von ICSI unterstützt engagierte Aficionados und Sammler, die ein präziseres Verständnis von Kalibrierung, Reifung, Performance-Staging und Peak-Flavor-Entfaltung über ein breiteres Spektrum an Blends hinweg anstreben.",
+      bridge:
+        "Ob beim Aufbau einer professionellen Karriere, bei der Stärkung eines Zigarrengeschäfts oder bei der Vertiefung persönlicher Meisterschaft—ICSI liefert die Struktur, die nötig ist, um von Intuition zu kalibrierter Performance zu gelangen.",
+      pathwaysLead:
+        "Vier zugeschnittene Wege für berufliche Entwicklung, Branchenmodernisierung und fortgeschrittene persönliche Optimierung.",
+      systemTitle: "Cigar Peak-Flavor System® Implementierung & Zertifizierung",
+      systemBody:
+        "Eine umfassende Implementierungs- und Zertifizierungslösung für Fachhändler, Lounges und Hospitality-Umgebungen, die ihre Abläufe modernisieren, die Zigarrenperformance standardisieren und das Kundenerlebnis aufwerten möchten.",
+      systemCta: "Partnerschaft anfragen",
+      seoTitle: "Berufliche Wege & Branchenlösungen | ICSI",
+      seoDescription:
+        "ICSI unterstützt angehende Zigarrenprofis, Fachhändler, Lounges, Hotelgruppen und Aficionados mit strukturierten Zertifizierungswegen, Cigar Peak-Flavor System Implementierung und fortgeschrittenen Lösungen zur Zigarrenmeisterschaft.",
     },
   };
 
-  const s = seo[lang] || seo.en;
-  const introText = intro[lang] || intro.en;
+  const p = pageCopy[lang] || pageCopy.en;
+
+  const seo = {
+    title: p.seoTitle,
+    description: p.seoDescription,
+    path: "/courses",
+  };
 
   return (
     <Layout>
-      <Seo title={s.title} description={s.description} path={s.path} />
+      <Seo title={seo.title} description={seo.description} path={seo.path} />
 
-      {/* Structured data for Google */}
       <Head>
         <script
           type="application/ld+json"
@@ -55,7 +110,7 @@ export default function Courses() {
               name: "International Cigar Sommelier Institute",
               url: "https://cigarsommelierinstitute.com",
               description:
-                "Professional cigar sommelier training and certification based on the scientific Peak-Flavor System.",
+                "Professional cigar sommelier training, Peak-Flavor System implementation, and advanced cigar mastery based on the scientific Cigar Peak-Flavor System.",
               hasCourse: [
                 { "@type": "Course", name: "Certified Cigar Sommelier (CCS®)" },
                 { "@type": "Course", name: "Advanced Cigar Sommelier (ACS®)" },
@@ -68,20 +123,47 @@ export default function Courses() {
 
       <div className="section">
         <div className="container">
-          {/* Keep page H1 consistent (great for SEO) */}
-          <h1>{c.courses_title || c.programs_title}</h1>
+          <h1>{p.title}</h1>
 
-          {/* SEO intro paragraph */}
           <p className="lead" style={{ maxWidth: "78ch", marginTop: 12 }}>
-            {introText}
+            {p.intro}
           </p>
 
-          <p className="small" style={{ marginTop: 12 }}>
-            {c.courses_lead || c.programs_lead}
+          <div
+            style={{
+              marginTop: 20,
+              display: "grid",
+              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+              gap: 18,
+            }}
+          >
+            <div className="card">
+              <h2 style={{ marginTop: 0 }}>{p.individualsTitle}</h2>
+              <p style={{ marginBottom: 0 }}>{p.individualsBody}</p>
+            </div>
+
+            <div className="card">
+              <h2 style={{ marginTop: 0 }}>{p.businessTitle}</h2>
+              <p style={{ marginBottom: 0 }}>{p.businessBody}</p>
+            </div>
+
+            <div className="card">
+              <h2 style={{ marginTop: 0 }}>{p.aficionadosTitle}</h2>
+              <p style={{ marginBottom: 0 }}>{p.aficionadosBody}</p>
+            </div>
+          </div>
+
+          <div className="card" style={{ marginTop: 18 }}>
+            <p className="small" style={{ margin: 0, lineHeight: 1.7 }}>
+              {p.bridge}
+            </p>
+          </div>
+
+          <p className="small" style={{ marginTop: 14 }}>
+            {p.pathwaysLead}
           </p>
 
           <div className="grid3" style={{ marginTop: 14 }}>
-            {/* CCS */}
             <div className="card programCard">
               <div className="programBody">
                 <h3>{c.ccs_title}</h3>
@@ -108,7 +190,6 @@ export default function Courses() {
               </div>
             </div>
 
-            {/* ACS */}
             <div className="card programCard">
               <div className="programBody">
                 <h3>{c.acs_title}</h3>
@@ -135,7 +216,25 @@ export default function Courses() {
               </div>
             </div>
 
-            {/* AMC */}
+            <div className="card programCard">
+              <div className="programBody">
+                <h3>{p.systemTitle}</h3>
+                <p>{p.systemBody}</p>
+              </div>
+
+              <div className="ctaRow programButtons">
+                <Link
+                  className="btn primary"
+                  href={{ pathname: "/contact", query: { inquiry: "system-certification" } }}
+                  locale={lang}
+                >
+                  {p.systemCta}
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid3" style={{ marginTop: 18 }}>
             <div className="card programCard">
               <div className="programBody">
                 <h3>{c.amc_title}</h3>
