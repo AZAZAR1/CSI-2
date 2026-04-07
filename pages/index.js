@@ -138,19 +138,20 @@ export default function Home() {
           </div>
 
           <div className="heroCard heroCardTight">
-            <div className="heroMediaSquare" style={{ position: "relative" }}>
-              {/* Next.js Image: responsive, optimized, prevents CLS */}
-              <Image
-                src="/img/hero.png"
-                alt="Tobacco leaf macro"
-                fill
-                priority
-                sizes="(max-width: 900px) 100vw, 520px"
-                className="heroMediaImg"
-              />
+            <div className="heroMediaCircleWrap">
+              <div className="heroMediaCircle" style={{ position: "relative" }}>
+                <Image
+                  src="/img/hero.png"
+                  alt="Tobacco leaf macro"
+                  fill
+                  priority
+                  sizes="(max-width: 900px) 100vw, 520px"
+                  className="heroMediaImg"
+                />
 
-              <div className="heroMediaOverlay">
-                Conditioning · Aging · Mastery
+                <div className="heroMediaOverlay">
+                  Conditioning · Aging · Mastery
+                </div>
               </div>
             </div>
           </div>
