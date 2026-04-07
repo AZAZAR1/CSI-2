@@ -15,7 +15,7 @@ export default function Courses() {
     en: {
       title: "Professional Pathways & Industry Solutions",
       intro:
-        "ICSI serves three distinct audiences across the modern cigar world: aspiring professionals building a career, retailers and lounges seeking to modernize for growth, and dedicated aficionados pursuing a higher standard of personal mastery. Each pathway is grounded in the scientific Cigar Peak-Flavor System® and designed to bring greater structure, confidence, and performance to an increasingly complex global blend landscape.",
+        "ICSI serves three distinct audiences across the modern cigar world: aspiring professionals building a career, retailers and lounges seeking to modernize for growth, and dedicated aficionados pursuing a higher standard of personal mastery. Each pathway is grounded in the scientific Cigar Peak-Flavor System® and designed to bring greater structure, confidence, and performance to an increasingly complex global blend landscape. ICSI applies the ISO/IEC 17024 Quality Systems framework.",
       individualsTitle: "For Aspiring Cigar Professionals",
       individualsBody:
         "Build a career grounded in precision, structure, and credibility. ICSI’s certification programs develop a rigorous understanding of cigar construction, combustion dynamics, humidity behavior, and flavor evolution—preparing candidates for roles in premium lounges, retail environments, and luxury hospitality.",
@@ -40,7 +40,7 @@ export default function Courses() {
     fr: {
       title: "Parcours Professionnels & Solutions pour l’Industrie",
       intro:
-        "L’ICSI s’adresse à trois publics distincts dans le monde moderne du cigare : les futurs professionnels construisant une carrière, les détaillants et lounges cherchant à se moderniser pour croître, ainsi que les aficionados engagés recherchant un niveau supérieur de maîtrise personnelle. Chaque parcours s’appuie sur le Cigar Peak-Flavor System® scientifique et vise à apporter davantage de structure, de confiance et de performance dans un paysage mondial de mélanges toujours plus complexe.",
+        "L’ICSI s’adresse à trois publics distincts dans le monde moderne du cigare : les futurs professionnels construisant une carrière, les détaillants et lounges cherchant à se moderniser pour croître, ainsi que les aficionados engagés recherchant un niveau supérieur de maîtrise personnelle. Chaque parcours s’appuie sur le Cigar Peak-Flavor System® scientifique et vise à apporter davantage de structure, de confiance et de performance dans un paysage mondial de mélanges toujours plus complexe. ICSI applique le cadre du système de qualité ISO/IEC 17024.",
       individualsTitle: "Pour les futurs professionnels du cigare",
       individualsBody:
         "Construisez une carrière fondée sur la précision, la structure et la crédibilité. Les programmes de certification ICSI développent une compréhension rigoureuse de la construction du cigare, de la dynamique de combustion, du comportement hygrométrique et de l’évolution aromatique—préparant les candidats à des fonctions en lounges premium, en distribution spécialisée et dans l’hôtellerie de luxe.",
@@ -65,7 +65,7 @@ export default function Courses() {
     de: {
       title: "Berufliche Wege & Branchenlösungen",
       intro:
-        "ICSI richtet sich an drei unterschiedliche Zielgruppen in der modernen Zigarrenwelt: angehende Fachkräfte, die eine Karriere aufbauen möchten, Fachhändler und Lounges, die sich für Wachstum modernisieren wollen, sowie engagierte Aficionados, die ein höheres Maß an persönlicher Meisterschaft anstreben. Jeder Weg basiert auf dem wissenschaftlichen Cigar Peak-Flavor System® und wurde entwickelt, um in einer zunehmend komplexen globalen Blend-Landschaft mehr Struktur, Sicherheit und Performance zu schaffen.",
+        "ICSI richtet sich an drei unterschiedliche Zielgruppen in der modernen Zigarrenwelt: angehende Fachkräfte, die eine Karriere aufbauen möchten, Fachhändler und Lounges, die sich für Wachstum modernisieren wollen, sowie engagierte Aficionados, die ein höheres Maß an persönlicher Meisterschaft anstreben. Jeder Weg basiert auf dem wissenschaftlichen Cigar Peak-Flavor System® und wurde entwickelt, um in einer zunehmend komplexen globalen Blend-Landschaft mehr Struktur, Sicherheit und Performance zu schaffen. ICSI wendet den ISO/IEC 17024 Qualitätsmanagement-Rahmen an.",
       individualsTitle: "Für angehende Zigarrenprofis",
       individualsBody:
         "Bauen Sie eine Karriere auf, die auf Präzision, Struktur und Glaubwürdigkeit basiert. Die Zertifizierungsprogramme von ICSI vermitteln ein fundiertes Verständnis von Zigarrenkonstruktion, Verbrennungsdynamik, Feuchtigkeitsverhalten und Aromenentwicklung—und bereiten Kandidaten auf Aufgaben in Premium-Lounges, im Fachhandel und in der Luxushotellerie vor.",
