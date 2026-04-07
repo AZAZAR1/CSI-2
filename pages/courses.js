@@ -132,49 +132,36 @@ export default function Courses() {
         />
       </Head>
 
-      <div className="section">
+      <div className="section coursesSection">
         <div className="container">
-          <h1>{p.title}</h1>
+          <h1 className="coursesTitle">{p.title}</h1>
 
-          <p className="lead" style={{ maxWidth: "78ch", marginTop: 12 }}>
-            {p.intro}
-          </p>
+          <p className="lead coursesIntro">{p.intro}</p>
 
-          <div
-            style={{
-              marginTop: 20,
-              display: "grid",
-              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-              gap: 18,
-            }}
-          >
-            <div className="card">
+          <div className="audienceGrid">
+            <div className="card audienceCard">
               <h2 style={{ marginTop: 0 }}>{p.individualsTitle}</h2>
               <p style={{ marginBottom: 0 }}>{p.individualsBody}</p>
             </div>
 
-            <div className="card">
+            <div className="card audienceCard">
               <h2 style={{ marginTop: 0 }}>{p.businessTitle}</h2>
               <p style={{ marginBottom: 0 }}>{p.businessBody}</p>
             </div>
 
-            <div className="card">
+            <div className="card audienceCard">
               <h2 style={{ marginTop: 0 }}>{p.aficionadosTitle}</h2>
               <p style={{ marginBottom: 0 }}>{p.aficionadosBody}</p>
             </div>
           </div>
 
-          <div className="card" style={{ marginTop: 18 }}>
-            <p className="small" style={{ margin: 0, lineHeight: 1.7 }}>
-              {p.bridge}
-            </p>
+          <div className="card bridgeCard" style={{ marginTop: 18 }}>
+            <p className="small bridgeText">{p.bridge}</p>
           </div>
 
-          <p className="small" style={{ marginTop: 14 }}>
-            {p.pathwaysLead}
-          </p>
+          <p className="small pathwaysLead">{p.pathwaysLead}</p>
 
-          <div className="grid3" style={{ marginTop: 14 }}>
+          <div className="programGrid" style={{ marginTop: 14 }}>
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
@@ -250,7 +237,7 @@ export default function Courses() {
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
-                  src="/img/CPFS_logo.png"
+                  src="/img/CPFS_logo.PNG"
                   alt="Cigar Peak-Flavor System implementation and certification logo"
                   fill
                   sizes="(max-width: 900px) 100vw, 360px"
@@ -273,13 +260,11 @@ export default function Courses() {
                 </Link>
               </div>
             </div>
-          </div>
 
-          <div className="grid3" style={{ marginTop: 18 }}>
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
-                  src="/img/AMC_logo.png"
+                  src="/img/AMC_logo.PNG"
                   alt="Aficionado Master Class logo"
                   fill
                   sizes="(max-width: 900px) 100vw, 360px"
@@ -314,6 +299,150 @@ export default function Courses() {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .coursesSection {
+          padding-top: 34px;
+        }
+
+        .coursesTitle {
+          max-width: 16ch;
+        }
+
+        .coursesIntro {
+          max-width: 78ch;
+          margin-top: 12px;
+          line-height: 1.7;
+        }
+
+        .audienceGrid {
+          margin-top: 20px;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 18px;
+        }
+
+        .audienceCard {
+          height: 100%;
+        }
+
+        .bridgeText {
+          margin: 0;
+          line-height: 1.7;
+        }
+
+        .pathwaysLead {
+          margin-top: 14px;
+        }
+
+        .programGrid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 18px;
+          align-items: stretch;
+        }
+
+        .programCard {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
+        .programBody {
+          flex: 1 1 auto;
+        }
+
+        .programButtons {
+          margin-top: 16px;
+        }
+
+        @media (max-width: 1100px) {
+          .audienceGrid,
+          .programGrid {
+            gap: 16px;
+          }
+        }
+
+        @media (max-width: 900px) {
+          .coursesSection {
+            padding-top: 22px;
+          }
+
+          .coursesTitle {
+            max-width: none;
+          }
+
+          .coursesIntro {
+            font-size: 1.12rem;
+            line-height: 1.75;
+          }
+
+          .audienceGrid,
+          .programGrid {
+            grid-template-columns: 1fr;
+            gap: 28px;
+          }
+
+          .audienceCard,
+          .programCard,
+          .bridgeCard {
+            padding: 22px;
+          }
+
+          .programCard h3 {
+            font-size: 1.4rem;
+            line-height: 1.2;
+          }
+
+          .programCard p,
+          .audienceCard p {
+            font-size: 1.05rem;
+            line-height: 1.65;
+          }
+
+          .programButtons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 14px;
+          }
+
+          .programButtons :global(.btn) {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .coursesTitle {
+            font-size: clamp(2.2rem, 10vw, 3.2rem);
+            line-height: 0.98;
+            letter-spacing: -0.04em;
+          }
+
+          .coursesIntro {
+            font-size: 1.05rem;
+            line-height: 1.72;
+          }
+
+          .audienceCard,
+          .programCard,
+          .bridgeCard {
+            padding: 18px;
+          }
+
+          .programCard h3 {
+            font-size: 1.28rem;
+          }
+
+          .programCard p,
+          .audienceCard p,
+          .bridgeText {
+            font-size: 1rem;
+            line-height: 1.62;
+          }
+        }
+      `}</style>
     </Layout>
   );
 }
