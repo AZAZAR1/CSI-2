@@ -40,7 +40,7 @@ function HomeCopy() {
       </div>
 
       <div className="small heroPowered">
-        <i>Powered by the scientific Cigar Peak-Flavor System®.</i>
+        <i>ISO/IEC 17024 Quality Framework. Powered by the scientific Cigar Peak-Flavor System®.</i>
       </div>
     </>
   );
