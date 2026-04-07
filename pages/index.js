@@ -138,20 +138,28 @@ export default function Home() {
           </div>
 
           <div className="heroCard heroCardTight">
-            <div className="heroMediaCircleWrap">
-              <div className="heroMediaCircle" style={{ position: "relative" }}>
-                <Image
-                  src="/img/hero.png"
-                  alt="Tobacco leaf macro"
-                  fill
-                  priority
-                  sizes="(max-width: 900px) 100vw, 520px"
-                  className="heroMediaImg"
-                />
+            <div
+              className="heroMediaSquare"
+              style={{
+                position: "relative",
+                width: "520px",
+                height: "520px",
+                borderRadius: "50%",
+                overflow: "hidden",
+                margin: "0 auto",
+              }}
+            >
+              <Image
+                src="/img/hero.png"
+                alt="Tobacco leaf macro"
+                fill
+                priority
+                sizes="(max-width: 900px) 100vw, 520px"
+                style={{ objectFit: "cover" }}
+              />
 
-                <div className="heroMediaOverlay">
-                  Conditioning · Aging · Mastery
-                </div>
+              <div className="heroMediaOverlay">
+                Conditioning · Aging · Mastery
               </div>
             </div>
           </div>
