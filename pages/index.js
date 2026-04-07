@@ -13,16 +13,16 @@ function HomeCopy() {
   return (
     <>
       <div className="kicker">{c.kicker}</div>
-      <h1>{c.h1}</h1>
-      <p className="lead">{c.lead}</p>
+      <h1 className="heroTitle">{c.h1}</h1>
+      <p className="lead heroLead">{c.lead}</p>
 
-      <div className="ctaRow">
-        <Link className="btn primary" href="/courses" locale={lang}>
+      <div className="heroButtons">
+        <Link className="btn primary heroBtnPrimary" href="/courses" locale={lang}>
           {c.cta_courses}
         </Link>
 
         <a
-          className="btn"
+          className="btn heroBtnSecondary"
           href="/brochures/Cigar-Predictive-Mastery.pdf"
           target="_blank"
           rel="noopener noreferrer"
@@ -30,16 +30,16 @@ function HomeCopy() {
           {c.learn_more}
         </a>
 
-        <Link className="btn" href="/contact" locale={lang}>
+        <Link className="btn heroBtnSecondary" href="/contact" locale={lang}>
           {c.nav_contact}
         </Link>
 
-        <Link className="btn" href="/partners" locale={lang}>
+        <Link className="btn heroBtnSecondary" href="/partners" locale={lang}>
           {c.cta_partner}
         </Link>
       </div>
 
-      <div className="small" style={{ marginTop: 14 }}>
+      <div className="small heroPowered">
         <i>Powered by the scientific Cigar Peak-Flavor System®.</i>
       </div>
     </>
@@ -101,14 +101,12 @@ function DigitalEmpowermentSection() {
   const c = copy[lang] || copy.en;
 
   return (
-    <div className="section">
+    <div className="section digitalSection">
       <div className="container">
         <h2>{c.title}</h2>
-        <p className="small" style={{ maxWidth: 980, lineHeight: 1.7 }}>
-          {c.lead}
-        </p>
+        <p className="small digitalLead">{c.lead}</p>
 
-        <div className="grid3" style={{ marginTop: 18 }}>
+        <div className="grid3 digitalGrid" style={{ marginTop: 18 }}>
           <div className="card">
             <h3>{c.card1Title}</h3>
             <p>{c.card1Body}</p>
@@ -125,7 +123,7 @@ function DigitalEmpowermentSection() {
           </div>
         </div>
 
-        <div className="ctaRow" style={{ marginTop: 18 }}>
+        <div className="ctaRow digitalCtaRow" style={{ marginTop: 18 }}>
           <Link className="btn primary" href="/partners" locale={lang}>
             {c.cta}
           </Link>
@@ -166,13 +164,13 @@ export default function Home() {
     <Layout>
       <Seo title={s.title} description={s.description} path={s.path} />
 
-      <div className="hero">
-        <div className="container heroGrid">
-          <div>
+      <div className="hero homeHero">
+        <div className="container heroGridResponsive">
+          <div className="heroTextCol">
             <HomeCopy />
           </div>
 
-          <div className="heroCard heroCardTight">
+          <div className="heroImageCol">
             <div
               className="heroMediaSquare"
               style={{
@@ -189,7 +187,7 @@ export default function Home() {
                 alt="Tobacco leaf macro"
                 fill
                 priority
-                sizes="(max-width: 900px) 100vw, 520px"
+                sizes="(max-width: 900px) 92vw, 520px"
                 style={{ objectFit: "cover" }}
               />
 
@@ -202,6 +200,202 @@ export default function Home() {
       </div>
 
       <DigitalEmpowermentSection />
+
+      <style jsx>{`
+        .homeHero {
+          padding-top: 44px;
+          padding-bottom: 54px;
+        }
+
+        .heroGridResponsive {
+          display: grid;
+          grid-template-columns: minmax(0, 1.05fr) minmax(420px, 520px);
+          gap: 44px;
+          align-items: center;
+        }
+
+        .heroTextCol {
+          min-width: 0;
+        }
+
+        .heroImageCol {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .heroTitle {
+          font-size: clamp(3.8rem, 6vw, 5.8rem);
+          line-height: 0.96;
+          letter-spacing: -0.04em;
+          margin-bottom: 20px;
+        }
+
+        .heroLead {
+          max-width: 18.5ch;
+          font-size: clamp(1.12rem, 1.55vw, 1.45rem);
+          line-height: 1.52;
+          margin-bottom: 0;
+        }
+
+        .heroButtons {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-top: 26px;
+        }
+
+        .heroBtnPrimary {
+          min-width: 172px;
+        }
+
+        .heroBtnSecondary {
+          min-width: 132px;
+        }
+
+        .heroPowered {
+          margin-top: 16px;
+          font-size: 1rem;
+          opacity: 0.9;
+        }
+
+        .heroMediaOverlay {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          color: #fff;
+          font-size: 1.05rem;
+          letter-spacing: 0.18em;
+          font-weight: 600;
+          text-transform: uppercase;
+          width: 78%;
+          text-shadow: 0 2px 18px rgba(0, 0, 0, 0.3);
+          line-height: 1.35;
+        }
+
+        .digitalSection {
+          padding-top: 34px;
+        }
+
+        .digitalLead {
+          max-width: 980px;
+          line-height: 1.72;
+          font-size: 1rem;
+        }
+
+        @media (max-width: 1100px) {
+          .heroGridResponsive {
+            grid-template-columns: minmax(0, 1fr) minmax(340px, 440px);
+            gap: 28px;
+          }
+
+          .heroTitle {
+            max-width: 10ch;
+          }
+        }
+
+        @media (max-width: 900px) {
+          .homeHero {
+            padding-top: 24px;
+            padding-bottom: 34px;
+          }
+
+          .heroGridResponsive {
+            grid-template-columns: 1fr;
+            gap: 26px;
+          }
+
+          .heroImageCol {
+            order: 1;
+          }
+
+          .heroTextCol {
+            order: 2;
+          }
+
+          .heroMediaSquare {
+            width: min(92vw, 560px) !important;
+            height: min(92vw, 560px) !important;
+          }
+
+          .heroTitle {
+            font-size: clamp(2.8rem, 11vw, 4.2rem);
+            line-height: 0.96;
+            max-width: 11ch;
+            margin-bottom: 16px;
+          }
+
+          .heroLead {
+            max-width: none;
+            font-size: 1.26rem;
+            line-height: 1.6;
+          }
+
+          .heroButtons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 22px;
+          }
+
+          .heroBtnPrimary,
+          .heroBtnSecondary {
+            width: 100%;
+            min-width: 0;
+            justify-content: center;
+          }
+
+          .heroPowered {
+            margin-top: 14px;
+            font-size: 0.98rem;
+          }
+
+          .heroMediaOverlay {
+            font-size: 0.95rem;
+            letter-spacing: 0.15em;
+            width: 74%;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .homeHero {
+            padding-top: 18px;
+            padding-bottom: 26px;
+          }
+
+          .heroGridResponsive {
+            gap: 20px;
+          }
+
+          .heroMediaSquare {
+            width: 92vw !important;
+            height: 92vw !important;
+          }
+
+          .heroTitle {
+            font-size: clamp(2.45rem, 12vw, 3.5rem);
+            line-height: 0.97;
+            letter-spacing: -0.045em;
+          }
+
+          .heroLead {
+            font-size: 1.18rem;
+            line-height: 1.58;
+          }
+
+          .heroButtons {
+            gap: 10px;
+          }
+
+          .heroMediaOverlay {
+            font-size: 0.88rem;
+            letter-spacing: 0.13em;
+            width: 78%;
+          }
+        }
+      `}</style>
     </Layout>
   );
 }
