@@ -763,3 +763,37 @@ img{
   font-weight: 500;
   opacity: 0.9;
 }
+
+@media (max-width: 900px) {
+  .grid3 {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .programCard {
+    padding: 22px;
+    border-radius: 16px;
+  }
+
+  .programCard h3 {
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+
+  .programCard p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .programButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .programButtons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
