@@ -237,7 +237,7 @@ export default function Courses() {
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
-                  src="/img/CPFS_logo.PNG"
+                  src="/img/CPFS_logo.png"
                   alt="Cigar Peak-Flavor System implementation and certification logo"
                   fill
                   sizes="(max-width: 900px) 100vw, 360px"
@@ -264,7 +264,7 @@ export default function Courses() {
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
-                  src="/img/AMC_logo.PNG"
+                  src="/img/AMC_logo.png"
                   alt="Aficionado Master Class logo"
                   fill
                   sizes="(max-width: 900px) 100vw, 360px"
