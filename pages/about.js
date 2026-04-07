@@ -14,7 +14,7 @@ export default function About() {
 
       qualityTitle: "Quality Assurance Charter",
       qualityBody1:
-        "ICSI is built upon a structured quality framework aligned with internationally recognized certification principles, including ISO/IEC 17024. This framework defines clear domains of competence across sensory analysis, combustion dynamics, humidity optimization, and client advisory—ensuring that certification reflects real-world professional capability.",
+        "ICSI is built upon a structured quality framework aligned with internationally recognized certification principles, including ISO/IEC 17024. This framework defines clear domains of competence across sensory analysis, combustion dynamics, humidity optimization, and client advisory, ensuring that certification reflects real-world professional capability.",
       qualityBody2:
         "The Institute applies a rigorous methodology combining job-task analysis, competence mapping, and multi-layered assessment systems integrating theoretical knowledge, sensory evaluation, and applied reasoning. Each certification outcome is measurable, auditable, and directly linked to industry practice.",
       qualityBody3:
