@@ -12,9 +12,9 @@ export const COPY = {
 
     // Home
     kicker: "Swiss institutional • Scientific authority",
-    h1: "Perfecting the cigar experience.",
+    h1: "The modern cigar world has evolved. Your standards should too.",
     lead:
-      "ICSI equips candidates, lounges, and collectors with a rigorous, discreet methodology to achieve the Blender's peak-flavor dynamics. Ensuring a perfect and repeatable smoking experience every time.",
+      "As the global market expands beyond classic Cuban references, professionals and aficionados face an unprecedented diversity of blends, constructions, and flavor profiles. ICSI provides a rigorous, discreet system to decode this complexity, translating blend structure into precise smoking conditions and repeatable peak-flavour performance.",
 
     // CTAs
     cta_courses: "Explore courses",
@@ -73,9 +73,9 @@ export const COPY = {
 
     // Home
     kicker: "Institutionnel suisse • Autorité scientifique",
-    h1: "Concevoir l’expérience de cigare parfaite.",
+    h1: "Le monde moderne du cigare a évolué. Vos standards devraient en faire autant.",
     lead:
-      "ICSI forme et prépare ses candidats, lounges de cigare et collectionneurs à l'excellence avec une méthode rigoureuse et discrète pour contrôler la combustion, humidité et dynamique aromatique. Cela afin d’obtenir une excellence reproductible.",
+      "Alors que le marché mondial s'étend au-delà des références cubaines classiques, les professionnels et les amateurs sont confrontés à une diversité sans précédent de mélanges, de constructions et de profils de saveurs. ICSI propose un système rigoureux et discret pour décrypter cette complexité, en traduisant la structure des mélanges en conditions de fumage précises et en performances de saveur maximales reproductibles.",
 
     // CTAs
     cta_courses: "Découvrir les cours",
@@ -134,9 +134,9 @@ export const COPY = {
 
     // Home
     kicker: "Schweizer institutioneller • Wissenschaftliche Autorität",
-    h1: "Das perfekte Zigarrenerlebnis,präzise gestaltet.",
+    h1: "Die moderne Zigarrenwelt hat sich entwickelt. Deine Standards sollten es auch.",
     lead:
-      "CSI vermittelt Kandidaten, Lounges und Sammlern eine rigorose, diskrete Methodik zur Kontrolle von Verbrennung, Feuchte und Aromadynamik — für reproduzierbare Exzellenz.",
+      "Da sich der globale Markt über klassische kubanische Referenzen hinaus ausdehnt, stehen Fachleute und Liebhaber einer beispiellosen Vielfalt an Mischungen, Konstruktionen und Geschmacksprofilen gegenüber. ICSI bietet ein rigoroses, diskretes System, um diese Komplexität zu entschlüsseln – indem es die Mischungsstruktur in präzise Rauchbedingungen und wiederholbare Spitzenaromen umsetzt.",
 
     // CTAs
     cta_courses: "Kurse ansehen",
