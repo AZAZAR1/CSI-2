@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { COPY } from "../components/copy";
 
@@ -96,6 +97,16 @@ export default function Courses() {
     path: "/courses",
   };
 
+  const imageCardStyle = {
+    position: "relative",
+    width: "100%",
+    aspectRatio: "1 / 1",
+    borderRadius: 16,
+    overflow: "hidden",
+    marginBottom: 18,
+    background: "#f3f1ed",
+  };
+
   return (
     <Layout>
       <Seo title={seo.title} description={seo.description} path={seo.path} />
@@ -165,6 +176,16 @@ export default function Courses() {
 
           <div className="grid3" style={{ marginTop: 14 }}>
             <div className="card programCard">
+              <div style={imageCardStyle}>
+                <Image
+                  src="/CCS_logo.png"
+                  alt="Certified Cigar Sommelier logo"
+                  fill
+                  sizes="(max-width: 900px) 100vw, 360px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+
               <div className="programBody">
                 <h3>{c.ccs_title}</h3>
                 <p>{c.ccs_blurb}</p>
@@ -191,6 +212,16 @@ export default function Courses() {
             </div>
 
             <div className="card programCard">
+              <div style={imageCardStyle}>
+                <Image
+                  src="/ACS_logo.png"
+                  alt="Advanced Cigar Sommelier logo"
+                  fill
+                  sizes="(max-width: 900px) 100vw, 360px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+
               <div className="programBody">
                 <h3>{c.acs_title}</h3>
                 <p>{c.acs_blurb}</p>
@@ -217,6 +248,16 @@ export default function Courses() {
             </div>
 
             <div className="card programCard">
+              <div style={imageCardStyle}>
+                <Image
+                  src="/CPFS_logo.png"
+                  alt="Cigar Peak-Flavor System implementation and certification logo"
+                  fill
+                  sizes="(max-width: 900px) 100vw, 360px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+
               <div className="programBody">
                 <h3>{p.systemTitle}</h3>
                 <p>{p.systemBody}</p>
@@ -236,6 +277,16 @@ export default function Courses() {
 
           <div className="grid3" style={{ marginTop: 18 }}>
             <div className="card programCard">
+              <div style={imageCardStyle}>
+                <Image
+                  src="/AMC_logo.png"
+                  alt="Aficionado Master Class logo"
+                  fill
+                  sizes="(max-width: 900px) 100vw, 360px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+
               <div className="programBody">
                 <h3>{c.amc_title}</h3>
                 <p>{c.amc_blurb}</p>
