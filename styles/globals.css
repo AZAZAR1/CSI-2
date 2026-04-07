@@ -750,3 +750,16 @@ img{
   justify-content: center;
   text-align: center;
 }
+
+.heroMediaOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  opacity: 0.9;
+}
