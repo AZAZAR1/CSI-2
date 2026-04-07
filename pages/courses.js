@@ -178,7 +178,7 @@ export default function Courses() {
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
-                  src="/CCS_logo.png"
+                  src="/img/CCS_logo.png"
                   alt="Certified Cigar Sommelier logo"
                   fill
                   sizes="(max-width: 900px) 100vw, 360px"
@@ -214,7 +214,7 @@ export default function Courses() {
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
-                  src="/ACS_logo.png"
+                  src="/img/ACS_logo.png"
                   alt="Advanced Cigar Sommelier logo"
                   fill
                   sizes="(max-width: 900px) 100vw, 360px"
@@ -250,7 +250,7 @@ export default function Courses() {
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
-                  src="/CPFS_logo.png"
+                  src="/img/CPFS_logo.png"
                   alt="Cigar Peak-Flavor System implementation and certification logo"
                   fill
                   sizes="(max-width: 900px) 100vw, 360px"
@@ -279,7 +279,7 @@ export default function Courses() {
             <div className="card programCard">
               <div style={imageCardStyle}>
                 <Image
-                  src="/AMC_logo.png"
+                  src="/img/AMC_logo.png"
                   alt="Aficionado Master Class logo"
                   fill
                   sizes="(max-width: 900px) 100vw, 360px"
