@@ -15,7 +15,14 @@ export default function Courses() {
     en: {
       title: "Learning Pathways & Professional Solutions",
       intro:
-        "ICSI serves three distinct audiences across the modern cigar world: aspiring professionals building a career, retailers and lounges seeking to modernize for growth, and dedicated aficionados pursuing a higher standard of personal mastery. Each pathway is grounded in the scientific Cigar Peak-Flavor System® and designed to bring greater structure, confidence, and performance to an increasingly complex global blend landscape. ICSI is the first globally to offer certification courses that include: Sensory science, Quantification of flavor/aroma, Data-driven cigar classification, Digital tools like Apps, analytics, guided tasting systems). ICSI applies the ISO/IEC 17024 Quality Systems framework.",
+        "ICSI serves three distinct audiences across the modern cigar world: aspiring professionals building a career, retailers and lounges seeking to modernize for growth, and dedicated aficionados pursuing a higher standard of personal mastery. Each pathway is grounded in the scientific Cigar Peak-Flavor System® and designed to bring greater structure, confidence, and performance to an increasingly complex global blend landscape. ICSI is the first globally to offer certification courses that include: 
+        <ul className="small">
+        <li>Sensory science</li>
+        <li>Quantification of flavor/aroma</li>
+        <li>Data-driven cigar classification</li>
+        <li>Digital tools like Apps, analytics and guided tasting systems</li>
+        </ul>
+        ICSI applies the ISO/IEC 17024 Quality Systems framework.",
       individualsTitle: "For Aspiring Cigar Professionals",
       individualsBody:
         "Build a career grounded in precision, structure, and credibility. ICSI’s certification programs develop a rigorous understanding of cigar construction, combustion dynamics, humidity behavior, and flavor evolution—preparing candidates for roles in premium lounges, retail environments, and luxury hospitality.",
