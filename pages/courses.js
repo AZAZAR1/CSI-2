@@ -142,7 +142,7 @@ ICSI arbeitet nach dem Qualitätsrahmen ISO/IEC 17024.",
         <div className="container">
           <h1 className="coursesTitle">{p.title}</h1>
 
-          <p className="lead coursesIntro">{p.intro}</p>
+          <p className="lead" dangerouslySetInnerHTML={{ __html: p.intro }} />
 
           <div className="audienceGrid">
             <div className="card audienceCard">
