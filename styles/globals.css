@@ -797,3 +797,21 @@ img{
     justify-content: center;
   }
 }
+
+ul.small {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.small li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 10px;
+}
+
+ul.small li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #c8a96a; /* luxury gold tone */
+}
