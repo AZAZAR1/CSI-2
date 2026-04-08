@@ -133,7 +133,7 @@ export default function Courses() {
       </Head>
 
       <div className="section coursesSection">
-        <div className="container" style={{ maxWidth: "1300px" }}>
+        <div className="container">
           <h1 className="coursesTitle">{p.title}</h1>
 
           <p className="lead" dangerouslySetInnerHTML={{ __html: p.intro }} />
