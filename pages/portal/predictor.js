@@ -134,6 +134,7 @@ const BINDERS = [
   "Brazilian",
   "Peruvian",
   "Cameroon",
+  "Costarican",
   "San Andres",
   "Connecticut",
   "Sumatra",
