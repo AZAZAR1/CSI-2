@@ -684,8 +684,7 @@ UI
             User" button to launch. In the Cigar Blend Lookup section, enter the
             blend Brand and Line then press "Blend Lookup" button. The blend
             specific details will automatically appear below. You have the option manually adjust the Blend details using the drop-down menus. By pressing the "Run Predictor" button,
-            you will see the blend&apos;s target smoking Peak-Flavor core leaf-level
-            relative humidity %, and its tasting card.
+            the application will produce the blend's optimal smoking leaf-level relative humidity %, and its tasting card. By pressing the "Find Similar Blends" button, the application will list the top blends that most closely match your selection.
             <br />
             <strong>Important note</strong>: Leaf-level relative humidity % is measured using a
             commercially available Cigar Humidity Meter.
