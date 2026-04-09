@@ -76,7 +76,7 @@ export default function IdealCigarHumidity() {
       closingP:
         "When moisture, combustion, and chemistry align, a cigar does not merely burn correctly, it expresses its intended identity.",
       relatedTitle: "Related",
-      relatedLink: "Peak-Flavor System™ overview",
+      relatedLink: "Cigar Peak-Flavor System™ overview",
     },
 
     fr: {
