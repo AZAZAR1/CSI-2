@@ -680,16 +680,14 @@ UI
           <h1>Cigar Peak-Flavor Predictor (beta)</h1>
           <label>
             Instructions: The Predictor tool is available exclusively to approved
-            subscribers. Enter your registered email address and press the Check
-            User button to launch. In the Cigar Blend Lookup section, enter the
-            blend Brand and Line then press Blend Lookup button. The blend
-            specific details will automatically appear below. Blend details can
-            also be entered or adjusted manually, in case the blend is still in
-            small batch/experimental stage. By pressing the Run Predictor button,
+            subscribers. Enter your registered email address and press the "Check
+            User" button to launch. In the Cigar Blend Lookup section, enter the
+            blend Brand and Line then press "Blend Lookup" button. The blend
+            specific details will automatically appear below. You have the option manually adjust the Blend details using the drop-down menus. By pressing the "Run Predictor" button,
             you will see the blend&apos;s target smoking Peak-Flavor core leaf-level
             relative humidity %, and its tasting card.
             <br />
-            Important note: Leaf-level relative humidity % is measured using a
+            <strong>Important note</strong>: Leaf-level relative humidity % is measured using a
             commercially available Cigar Humidity Meter.
           </label>
 
