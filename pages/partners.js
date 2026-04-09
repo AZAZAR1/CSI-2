@@ -12,7 +12,7 @@ export default function Partners() {
     en: {
       title: "Digital Applications",
       body:
-        "Discover ICSI’s digital applications, including the cigar Peak-Flavor System®: advanced tools for cigar analysis, humidity optimization, and identifying structurally similar blends to enhance the smoking experience.",
+        "Discover ICSI’s digital applications, including the Cigar Peak-Flavor System®: advanced tools for cigar analysis, humidity optimization, and identifying structurally similar blends to enhance the smoking experience.",
       button: "ICSI Predictor",
       subscribePrefix: "Not subscribed yet? Apply ",
       subscribeLink: "here",
@@ -20,7 +20,7 @@ export default function Partners() {
       seoTitle:
         "Digital Applications | International Cigar Sommelier Institute",
       seoDescription:
-        "Discover ICSI’s digital applications, including the Peak-Flavor System®: advanced tools for cigar analysis, humidity optimization, and identifying structurally similar blends to enhance the smoking experience.",
+        "Discover ICSI’s digital applications, including the Cigar Peak-Flavor System®: advanced tools for cigar analysis, humidity optimization, and identifying structurally similar blends to enhance the smoking experience.",
     },
     fr: {
       title: "Applications Numériques",
@@ -33,7 +33,7 @@ export default function Partners() {
       seoTitle:
         "Applications Numériques | International Cigar Sommelier Institute",
       seoDescription:
-        "Découvrez les applications numériques de l’ICSI, dont le Peak-Flavor System® : outils avancés pour analyser les cigares, optimiser l’humidité et explorer des mélanges similaires afin d’améliorer l’expérience de dégustation.",
+        "Découvrez les applications numériques de l’ICSI, dont le Cigar Peak-Flavor System® : outils avancés pour analyser les cigares, optimiser l’humidité et explorer des mélanges similaires afin d’améliorer l’expérience de dégustation.",
     },
     de: {
       title: "Digitale Anwendungen",
@@ -46,7 +46,7 @@ export default function Partners() {
       seoTitle:
         "Digitale Anwendungen | International Cigar Sommelier Institute",
       seoDescription:
-        "Entdecken Sie die digitalen Anwendungen des ICSI, einschließlich des Peak-Flavor System®: innovative Tools zur Zigarrenanalyse, zur Optimierung der Luftfeuchtigkeit und zur gezielten Entdeckung ähnlicher Blends für ein verfeinertes Raucherlebnis.",
+        "Entdecken Sie die digitalen Anwendungen des ICSI, einschließlich des Cigar Peak-Flavor System®: innovative Tools zur Zigarrenanalyse, zur Optimierung der Luftfeuchtigkeit und zur gezielten Entdeckung ähnlicher Blends für ein verfeinertes Raucherlebnis.",
     },
   };
 
