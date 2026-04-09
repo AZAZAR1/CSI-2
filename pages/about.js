@@ -24,7 +24,7 @@ export default function About() {
 
       founderTitle: "Founder",
       founderBody:
-        "ICSI was founded by Anthony Azar, a thermodynamics engineer whose work bridges scientific modeling and the cigar domain. Through years of research and applied experimentation, he developed the Cigar Peak-Flavor System®, a proprietary methodology designed to diagnose and predict optimal smoking conditions, support aging strategies, and bring analytical structure to cigar performance.",
+        "Anthony Azar is emerging as an authority in the science and appreciation of premium cigars. His work sits at the intersection of craftsmanship, science, and modern luxury. Redefining how cigars are understood, evaluated, and experienced. Educated at Imperial College London, where he earned Master’s degrees in Thermodynamics & Combustion Science and Business Administration, Anthony brings a rare depth of technical and strategic expertise to the cigar world. Over a distinguished 25-year executive career, he has led global initiatives in advanced training systems, operational excellence and digital transformation. His lifelong passion for cigars, spanning more than three decades, led to the creation of the Cigar Peak-Flavor System, a proprietary scientific framework designed to unlock optimal flavour expression through thermodynamic balance. Now embedded in a suite of digital applications, this system offers a new standard for performance and consistency across all cigar blends. Through his institute, Anthony curates a refined educational experience for discerning aficionados and professionals, elevating cigar appreciation into a discipline of precision, insight, and mastery.",
 
       footer:
         "ICSI is part of CreateDeliverCapture Sàrl, a Geneva-based technical consultancy.",
@@ -51,7 +51,7 @@ export default function About() {
 
       founderTitle: "Fondateur",
       founderBody:
-        "ICSI a été fondé par Anthony Azar, ingénieur en thermodynamique, créateur du Cigar Peak-Flavor System®.",
+        "Anthony Azar devient une référence dans la science et l'appréciation des cigares haut de gamme. Son travail se situe à l'intersection de l'artisanat, de la science et du luxe moderne. Il redéfinit la manière dont les cigares sont compris, évalués et expérimentés. Diplômé de l'Imperial College de Londres, où il a obtenu des maîtrises en thermodynamique et science de la combustion ainsi qu'en administration des affaires, Anthony apporte une rare profondeur d'expertise technique et stratégique dans le monde du cigare. Au cours d'une remarquable carrière de dirigeant de 25 ans, il a dirigé des initiatives mondiales dans les systèmes de formation avancés, l'excellence opérationnelle et la transformation numérique. Sa passion de toute une vie pour les cigares, qui s'étend sur plus de trois décennies, a conduit à la création du Cigar Peak-Flavor System, un cadre scientifique propriétaire conçu pour révéler l'expression optimale des saveurs grâce à l'équilibre thermodynamique. Désormais intégré dans une suite d'applications numériques, ce système offre une nouvelle norme de performance et de constance pour tous les blends de cigares.À travers son institut, Anthony propose une expérience éducative raffinée pour les amateurs et les professionnels avertis, élevant l'appréciation du cigare en une discipline de précision, de perspicacité et de maîtrise.",
 
       footer:
         "ICSI fait partie de CreateDeliverCapture Sàrl.",
@@ -78,7 +78,7 @@ export default function About() {
 
       founderTitle: "Gründer",
       founderBody:
-        "Gegründet von Anthony Azar, Entwickler des Cigar Peak-Flavor System®.",
+        "Anthony Azar entwickelt sich zu einer Autorität in der Wissenschaft und Wertschätzung von Premium-Zigarren. Seine Arbeit liegt an der Schnittstelle von Handwerkskunst, Wissenschaft und modernem Luxus. Er definiert neu, wie Zigarren verstanden, bewertet und erlebt werden. Ausgebildet am Imperial College London, wo er Master-Abschlüsse in Thermodynamik & Verbrennungswissenschaft und Betriebswirtschaft erworben hat, bringt Anthony eine seltene Tiefe an technischer und strategischer Expertise in die Zigarrenwelt ein. Während einer renommierten 25-jährigen Führungslaufbahn leitete er globale Initiativen in den Bereichen fortschrittliche Trainingssysteme, operative Exzellenz und digitale Transformation. Seine lebenslange Leidenschaft für Zigarren, die sich über mehr als drei Jahrzehnte erstreckt, führte zur Schaffung des Cigar Peak-Flavor Systems, eines proprietären wissenschaftlichen Rahmens, der darauf ausgelegt ist, den optimalen Geschmacks-Ausdruck durch thermodynamisches Gleichgewicht zu erschließen. Heute in eine Reihe digitaler Anwendungen integriert, bietet dieses System einen neuen Standard für Leistung und Konsistenz aller Zigarrenmischungen. Durch sein Institut gestaltet Anthony eine verfeinerte Bildungserfahrung für anspruchsvolle Kenner und Fachleute und erhebt die Zigarrenbewertung in eine Disziplin der Präzision, Einsicht und Meisterschaft.",
 
       footer:
         "Teil von CreateDeliverCapture Sàrl.",
