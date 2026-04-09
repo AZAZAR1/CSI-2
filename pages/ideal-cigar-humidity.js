@@ -61,7 +61,7 @@ export default function IdealCigarHumidity() {
         "This window is narrow. When achieved, the cigar transitions from fragmented flavor notes to structured aromatic architecture.",
       s5Title: "The Thermodynamic Approach",
       s5P1:
-        "The International Cigar Sommelier Institute applies a structured conditioning framework known as the Peak-Flavor System™. Rather than relying on generalized storage targets, this approach evaluates:",
+        "The International Cigar Sommelier Institute applies a structured conditioning framework known as the Cigar Peak-Flavor System®. Rather than relying on generalized storage targets, this approach evaluates:",
       s5Bullets: [
         "Leaf hygroscopic equilibrium",
         "Temperature-humidity coupling",
@@ -76,7 +76,7 @@ export default function IdealCigarHumidity() {
       closingP:
         "When moisture, combustion, and chemistry align, a cigar does not merely burn correctly, it expresses its intended identity.",
       relatedTitle: "Related",
-      relatedLink: "Cigar Peak-Flavor System™ overview",
+      relatedLink: "Cigar Peak-Flavor System® overview",
     },
 
     fr: {
@@ -132,7 +132,7 @@ export default function IdealCigarHumidity() {
         "Cette fenêtre est étroite. Lorsqu’elle est atteinte, le cigare passe d’arômes fragmentés à une architecture aromatique structurée.",
       s5Title: "L’approche thermodynamique",
       s5P1:
-        "ICSI applique un cadre de conditionnement structuré : le Peak-Flavor System™. Plutôt que des cibles génériques, l’approche évalue :",
+        "ICSI applique un cadre de conditionnement structuré : le Cigar Peak-Flavor System®. Plutôt que des cibles génériques, l’approche évalue :",
       s5Bullets: [
         "Équilibre hygroscopique",
         "Couplage température–humidité",
@@ -147,7 +147,7 @@ export default function IdealCigarHumidity() {
       closingP:
         "Quand humidité, combustion et chimie s’alignent, le cigare ne brûle pas seulement correctement, il exprime son identité.",
       relatedTitle: "À lire aussi",
-      relatedLink: "Présentation du Peak-Flavor System™",
+      relatedLink: "Présentation du Cigar Peak-Flavor System®",
     },
 
     de: {
@@ -203,7 +203,7 @@ export default function IdealCigarHumidity() {
         "Dieses Fenster ist eng. Wenn es erreicht wird, wechselt die Zigarre von fragmentierten Noten zu strukturierter Aromatik.",
       s5Title: "Der thermodynamische Ansatz",
       s5P1:
-        "ICSI nutzt ein strukturiertes Konditionierungs-Framework: das Peak-Flavor System™. Statt generischer Targets bewertet es:",
+        "ICSI nutzt ein strukturiertes Konditionierungs-Framework: das Cigar Peak-Flavor System®. Statt generischer Targets bewertet es:",
       s5Bullets: [
         "Hygroskopisches Gleichgewicht",
         "Temperatur–Feuchte-Kopplung",
@@ -218,7 +218,7 @@ export default function IdealCigarHumidity() {
       closingP:
         "Wenn Feuchte, Verbrennung und Chemie übereinstimmen, brennt eine Zigarre nicht nur korrekt, sie zeigt ihre Identität.",
       relatedTitle: "Weiterführend",
-      relatedLink: "Peak-Flavor System™ Übersicht",
+      relatedLink: "Cigar Peak-Flavor System® Übersicht",
     },
   };
 
