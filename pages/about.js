@@ -23,9 +23,11 @@ export default function About() {
         "ICSI operates under a quality management approach designed for transparency, consistency, and traceability, with a formal ISO-aligned certification pathway currently in development.",
 
       founderTitle: "Founder",
-      founderBody:
+      founderBody: (
+        <>
         "<strong>Anthony Azar</strong> is emerging as an authority in the science and appreciation of premium cigars. His work sits at the intersection of craftsmanship, science, and modern luxury. Redefining how cigars are understood, evaluated, and experienced. Educated at Imperial College London, where he earned Master’s degrees in <strong>Thermodynamics & Combustion Science</strong> and Business Administration, with a focus on the design and development of boosting technologies for high-performance engines. During his distinguished 25-year career as a corporate executive, he led global initiatives in advanced training systems, operational excellence and digital transformation. His lifelong passion for cigars, spanning more than three decades, led to the creation of the Cigar Peak-Flavor System, a proprietary scientific framework designed to unlock optimal flavour expression through thermodynamic balance. Now embedded in a suite of digital applications, this system offers a new standard for performance and consistency across all cigar blends. Through his institute, Anthony curates a refined educational experience for discerning aficionados and professionals, elevating cigar appreciation into a discipline of precision, insight, and mastery.",
-
+        </>
+      )
       footer:
         "ICSI is part of CreateDeliverCapture Sàrl, a Geneva-based technical consultancy.",
 
