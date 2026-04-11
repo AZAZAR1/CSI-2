@@ -148,6 +148,8 @@ const BINDERS = [
 const FILLER_OPTIONS = [
   "",
   "Cuba",
+  "Viso",
+  "Alta Viso",
   "Dominican Republic",
   "Nicaragua",
   "Honduras",
@@ -174,6 +176,7 @@ const LIGERO_OPTIONS = ["", "none", "low", "moderate", "high"];
 const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "",
   "Medio Tiempo",
+  "Alta Viso",
   "Piloto Cubano",
   "Olor Dominicano",
   "Pelo de Oro",
