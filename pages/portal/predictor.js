@@ -176,7 +176,7 @@ const LIGERO_OPTIONS = ["", "none", "low", "moderate", "high"];
 const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "",
   "Medio Tiempo",
-  "Alta Viso",
+  "Alta Viso-heavy",
   "Piloto Cubano",
   "Olor Dominicano",
   "Pelo de Oro",
