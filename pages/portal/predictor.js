@@ -148,7 +148,7 @@ const BINDERS = [
 const FILLER_OPTIONS = [
   "",
   "Cuba",
-  "Viso",
+  "Cuban Viso",
   "Alta Viso",
   "Dominican Republic",
   "Nicaragua",
@@ -166,7 +166,7 @@ const FILLER_OPTIONS = [
   "Corojo",
   "Criollo",
   "Ligero",
-  "Seco",
+  "Cuban Seco",
   "Volado",
   "Medio Tiempo",
 ];
