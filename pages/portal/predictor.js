@@ -186,6 +186,8 @@ const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "Cotui",
   "San Vicente",
   "Brazilian Cubra",
+  "Brazilian Mata Fina",
+  "Brazilian Mata Norte",
   "Broadleaf-heavy",
   "San Andres-heavy",
   "Aged filler",
