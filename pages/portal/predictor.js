@@ -179,6 +179,7 @@ const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "Alta Viso-heavy",
   "Piloto Cubano",
   "Olor Dominicano",
+  "Dominican Bonao",
   "Pelo de Oro",
   "Corojo",
   "Criollo",
