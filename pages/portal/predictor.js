@@ -198,8 +198,8 @@ const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "San Andres-heavy",
   "SA Negrito",
   "HVA",
-  "Jalapa"
-  "Filipino Simaba"
+  "Jalapa",
+  "Filipino Simaba",
   "Vuelta Abajo",
   "Aged filler",
   "Extra fermented",
