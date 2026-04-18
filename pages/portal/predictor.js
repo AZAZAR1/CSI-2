@@ -166,6 +166,7 @@ const FILLER_OPTIONS = [
   "Corojo",
   "Criollo",
   "Ligero",
+  "Ecuadorian Ligero",
   "Cuban Seco",
   "Volado",
   "Medio Tiempo",
@@ -195,6 +196,11 @@ const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "Pueblo Nuevo",
   "Broadleaf-heavy",
   "San Andres-heavy",
+  "SA Negrito",
+  "HVA",
+  "Jalapa"
+  "Filipino Simaba"
+  "Vuelta Abajo",
   "Aged filler",
   "Extra fermented",
   "Culebra style bunching",
