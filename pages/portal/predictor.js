@@ -160,6 +160,7 @@ const FILLER_OPTIONS = [
   "Brazil",
   "Peru",
   "Cameroon",
+  "Colombia",
   "United States",
   "Piloto Cubano",
   "Olor Dominicano",
