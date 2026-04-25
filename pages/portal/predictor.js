@@ -195,6 +195,7 @@ const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "Masatepe",
   "Ometepe",
   "Pueblo Nuevo",
+  "Jamastran",
   "Broadleaf-heavy",
   "San Andres-heavy",
   "SA Negrito",
