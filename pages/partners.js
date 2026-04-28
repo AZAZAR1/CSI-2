@@ -69,7 +69,7 @@ export default function Partners() {
 
             <div style={{ marginTop: 24 }}>
               <a
-                href="https://www.cigarsommelierinstitute.com/portal/predictor"
+                href="https://www.cigarsommelierinstitute.com/portal/PredictorPro"
                 style={{
                   display: "inline-block",
                   padding: "12px 24px",
