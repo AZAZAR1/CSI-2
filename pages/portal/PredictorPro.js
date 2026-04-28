@@ -318,6 +318,9 @@ export default function PredictorPage() {
   };
 
   const isAuthorizedUser =
+  const hasProAccess =
+  isAuthorizedUser && usage?.pro_access === true;
+  
     isUserValidated &&
     cleanText(validatedEmail).toLowerCase() ===
       cleanText(form.user_email).toLowerCase();
@@ -551,6 +554,11 @@ API CALLS
       return;
     }
 
+    if (!hasProAccess) {
+      setLookupStatus("Pro access is not enabled for this account.");
+      return;
+    }
+
     const brand = cleanText(form.brand);
     const line = cleanText(form.line);
 
@@ -619,6 +627,17 @@ API CALLS
 
   const runPrediction = async () => {
     setErr("");
+
+    if (!isAuthorizedUser) {
+      setErr("Please enter your registered email and press Check User first.");
+      return;
+    }
+
+    if (!hasProAccess) {
+      setErr("Pro access is not enabled for this account.");
+      return;
+    }
+
     setLoadingPredict(true);
     setResult(null);
     setTastingCard(null);
@@ -654,8 +673,13 @@ API CALLS
     setErr("");
 
     if (!isAuthorizedUser) {
-    setErr("Please enter your registered email and press Check User first.");
-    return;
+      setErr("Please enter your registered email and press Check User first.");
+      return;
+    }
+
+    if (!hasProAccess) {
+      setErr("Pro access is not enabled for this account.");
+      return;
     }
 
     setLoadingSimilar(true);
@@ -691,13 +715,13 @@ UI
 
   return (
     <Layout>
-      <Seo title="Predictor | ICSI" path="/portal/predictor" />
+      <Seo title="Predictor Pro | ICSI" path="/portal/predictorpro" />
 
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
           <h1>Cigar Peak-Flavor Predictor (beta)</h1>
           <label>
-            Instructions: The Predictor tool is available exclusively to approved
+            Instructions: Predictor Pro is available exclusively to approved
             subscribers. Enter your registered email address and press the "Check
             User" button to launch. In the Cigar Blend Lookup section, enter the
             blend Brand and Line then press "Blend Lookup" button. The blend
@@ -730,8 +754,15 @@ UI
 
             {!isAuthorizedUser && (
               <div className="small" style={{ marginTop: 10 }}>
-                Please check your registered email first to enable Blend Lookup and
-                Similar Blends.
+                Please check your registered email first to enable Predictor Pro.
+              </div>
+            )}
+
+            {isAuthorizedUser && !hasProAccess && (
+              <div className="notice" style={{ marginTop: 12 }}>
+                <b>Pro access is not enabled for this account.</b>
+                <br />
+                Please contact ICSI to activate Predictor Pro.
               </div>
             )}
 
@@ -739,6 +770,9 @@ UI
               <div className="small" style={{ marginTop: 12, lineHeight: 1.8 }}>
                 <div>
                   Tier: <b>{usage.tier}</b>
+                </div>
+                <div>
+                  Pro Access: <b>{usage.pro_access ? "Yes" : "No"}</b>
                 </div>
                 <div>
                   Annual: <b>{usage.runs_used}</b> used / <b>{usage.annual_limit}</b>
@@ -813,7 +847,7 @@ UI
                 className="btn"
                 type="button"
                 onClick={lookupBlend}
-                disabled={loadingLookup || !isAuthorizedUser}
+                disabled={loadingLookup || !hasProAccess}
               >
                 {loadingLookup ? "Searching..." : "Lookup Blend"}
               </button>
@@ -1132,7 +1166,7 @@ UI
               <button
                 className="btn primary"
                 onClick={runPrediction}
-                disabled={loadingPredict}
+                disabled={loadingPredict || !hasProAccess}
                 type="button"
               >
                 {loadingPredict ? "Running..." : "Run Predictor"}
@@ -1141,7 +1175,7 @@ UI
               <button
                 className="btn"
                 onClick={findSimilarBlends}
-                disabled={loadingSimilar || !isAuthorizedUser}
+                disabled={loadingSimilar || !hasProAccess}
                 type="button"
               >
                 {loadingSimilar ? "Searching..." : "Find Similar Blends"}
