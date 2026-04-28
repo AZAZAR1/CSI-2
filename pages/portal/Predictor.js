@@ -24,140 +24,318 @@ const autocompleteItem = {
   borderBottom: "1px solid rgba(0,0,0,.06)",
 };
 
-const readOnlyGrid = {
+/* --------------------------
+DATA CONSTANTS
+-------------------------- */
+
+const ORIGINS = [
+  "",
+  "Cuba",
+  "Dominican Republic",
+  "Nicaragua",
+  "Honduras",
+  "Mexico",
+  "Costa Rica",
+  "Panama",
+  "Ecuador",
+  "Brazil",
+  "Peru",
+  "United States",
+  "Jamaica",
+  "Philippines",
+];
+
+const FACTORIES = [
+  "",
+  "El Laguito",
+  "H. Upmann",
+  "Partagas",
+  "La Corona",
+  "TABACUBA",
+  "My Father Cigars",
+  "Tabacalera Garcia",
+  "General Cigar Dominicana",
+  "La Aurora",
+  "La Flor Dominicana",
+  "Kelner SAS",
+  "Quesada Cigars",
+  "Tabacalera AJ Fernandez",
+  "Plasencia Cigars",
+  "Joya de Nicaragua",
+  "Oliva Cigar Co.",
+  "PDR Cigars",
+  "Davidoff",
+  "Tabadom",
+  "Tabacos de Costa Rica",
+  "Unknown / Mixed",
+];
+
+const WRAPPERS = [
+  "",
+  "Cuban",
+  "Habano",
+  "Nicaraguan Habano",
+  "Habano 2000",
+  "Dominican",
+  "Brazilian",
+  "Corojo",
+  "Corojo 99",
+  "Criollo",
+  "Criollo 98",
+  "Connecticut Shade",
+  "Connecticut Broadleaf",
+  "Connecticut Habano",
+  "Costarican",
+  "Broadleaf",
+  "Honduran",
+  "San Andres",
+  "Cameroon",
+  "Sumatra",
+  "Ecuadorian Sumatra",
+  "Ecuadorian Habano",
+  "Ecuadorian Connecticut",
+  "Maduro",
+  "Oscuro",
+  "Rosado",
+  "Colorado",
+  "Mexican",
+  "Pennsylvania Broadleaf",
+  "Hybrid / Other",
+];
+
+const WRAPPER_PROCESSES = [
+  "",
+  "Natural",
+  "Claro",
+  "Colorado",
+  "Colorado Claro",
+  "Colorado Maduro",
+  "Rosado",
+  "Maduro",
+  "Oscuro",
+  "Corojo-processed",
+  "Sun Grown",
+  "Shade Grown",
+  "Double Fermented",
+  "Barrel Aged",
+  "Other",
+];
+
+const WRAPPER_THICKNESS_OPTIONS = ["thin", "medium", "thick"];
+const WRAPPER_OILINESS_OPTIONS = ["low", "medium", "high"];
+
+const BINDERS = [
+  "",
+  "Cuban",
+  "Dominican",
+  "Nicaraguan",
+  "Honduran",
+  "Mexican",
+  "Brazilian",
+  "Peruvian",
+  "Cameroon",
+  "Costarican",
+  "San Andres",
+  "Connecticut",
+  "Sumatra",
+  "Ecuadorian",
+  "Broadleaf",
+  "Criollo",
+  "Corojo",
+  "Hybrid / Other",
+];
+
+const FILLER_OPTIONS = [
+  "",
+  "Cuba",
+  "Cuban Viso",
+  "Alta Viso",
+  "Dominican Republic",
+  "Nicaragua",
+  "Honduras",
+  "Mexico",
+  "Costa Rica",
+  "Panama",
+  "Ecuador",
+  "Brazil",
+  "Peru",
+  "Cameroon",
+  "Colombia",
+  "United States",
+  "Piloto Cubano",
+  "Olor Dominicano",
+  "Corojo",
+  "Criollo",
+  "Ligero",
+  "Ecuadorian Ligero",
+  "Cuban Seco",
+  "Volado",
+  "Medio Tiempo",
+];
+
+const LIGERO_OPTIONS = ["", "none", "low", "moderate", "high"];
+
+const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
+  "",
+  "Medio Tiempo",
+  "Alta Viso-heavy",
+  "Piloto Cubano",
+  "Olor Dominicano",
+  "Dominican Bonao",
+  "Pelo de Oro",
+  "Corojo",
+  "Criollo",
+  "Andullo",
+  "Cotui",
+  "San Vicente",
+  "Brazilian Cubra",
+  "Brazilian Mata Fina",
+  "Brazilian Mata Norte",
+  "Brazilian Arapiraca",
+  "Masatepe",
+  "Ometepe",
+  "Pueblo Nuevo",
+  "Jamastran",
+  "Broadleaf-heavy",
+  "San Andres-heavy",
+  "SA Negrito",
+  "HVA",
+  "Jalapa",
+  "Filipino Simaba",
+  "Vuelta Abajo",
+  "Aged filler",
+  "Extra fermented",
+  "Culebra style bunching",
+  "Small-batch / experimental",
+];
+
+const SMOKER_STYLE_OPTIONS = ["both", "slow", "fast"];
+
+const EMPTY_LOOKUP_FIELDS = {
+  origin: "",
+  factory: "",
+
+  wrapper: "",
+  wrapper_custom: "",
+  wrapper_process: "",
+  wrapper_thickness: "medium",
+  wrapper_oiliness: "medium",
+
+  binder: "",
+  binder_custom: "",
+
+  filler_1: "",
+  filler_2: "",
+  filler_3: "",
+
+  ligero: "moderate",
+
+  flag_1: "",
+  flag_2: "",
+  flag_3: "",
+};
+
+const readOnlyGridStyle = {
   display: "grid",
   gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
   gap: 12,
-  marginTop: 14,
+  marginTop: 12,
 };
 
-const readOnlyBox = {
+const readOnlyFieldStyle = {
   border: "1px solid rgba(0,0,0,.08)",
   borderRadius: 10,
   padding: "12px",
   background: "rgba(0,0,0,.015)",
 };
 
-const valueStyle = {
+const readOnlyValueStyle = {
   marginTop: 4,
   fontWeight: 600,
+  lineHeight: 1.45,
 };
 
-const emptyValue = "—";
-
-/* --------------------------
-HELPERS
--------------------------- */
-
-const cleanText = (value) => {
-  return String(value || "")
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[’‘]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/[–—]/g, "-")
-    .replace(/\s+/g, " ")
-    .trim();
-};
-
-const normalizeList = (value) => {
-  if (Array.isArray(value)) {
-    return [...new Set(value.map(cleanText).filter(Boolean))];
-  }
-
-  if (typeof value === "string" && value.trim()) {
-    return value
-      .split(/[;,|]/)
-      .map(cleanText)
-      .filter(Boolean);
-  }
-
-  return [];
-};
-
-const displayList = (value) => {
-  const list = normalizeList(value);
-  return list.length ? list.join(", ") : emptyValue;
-};
-
-const getBlendValue = (blend, key) => {
-  const value = cleanText(blend?.[key]);
-  return value || emptyValue;
-};
-
-const buildPayloadFromBlend = ({ userEmail, brand, line, blend }) => ({
-  user_email: cleanText(userEmail),
-
-  brand: cleanText(brand || blend?.brand),
-  line: cleanText(line || blend?.line),
-
-  origin: cleanText(blend?.origin),
-  factory: cleanText(blend?.factory),
-
-  wrapper: cleanText(blend?.wrapper),
-  wrapper_process: cleanText(blend?.wrapper_process),
-  wrapper_thickness: cleanText(blend?.wrapper_thickness || "medium"),
-  wrapper_oiliness: cleanText(blend?.wrapper_oiliness || "medium"),
-
-  binder: cleanText(blend?.binder),
-
-  filler: normalizeList(blend?.filler),
-
-  ligero: cleanText(blend?.ligero || "moderate"),
-
-  special_tobacco_flags: normalizeList(blend?.special_tobacco_flags),
-
-  age_years: null,
-  smoker_style: "both",
-
-  vitola: "",
-  bunch_density: "medium",
-});
-
-function ReadOnlyField({ label, value }) {
-  return (
-    <div style={readOnlyBox}>
-      <div className="small" style={{ opacity: 0.75 }}>
-        {label}
-      </div>
-      <div style={valueStyle}>{value || emptyValue}</div>
-    </div>
-  );
-}
+const EMPTY_VALUE = "—";
 
 /* --------------------------
 COMPONENT
 -------------------------- */
 
 export default function PredictorPage() {
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
   const [form, setForm] = useState({
     user_email: "",
     brand: "",
     line: "",
+
+    origin: "",
+    factory: "",
+
+    wrapper: "",
+    wrapper_custom: "",
+    wrapper_process: "",
+    wrapper_thickness: "medium",
+    wrapper_oiliness: "medium",
+
+    binder: "",
+    binder_custom: "",
+
+    filler_1: "",
+    filler_2: "",
+    filler_3: "",
+
+    ligero: "moderate",
+
+    flag_1: "",
+    flag_2: "",
+    flag_3: "",
+
+    age_years: "",
+    smoker_style: "both",
+
+    /* hidden fields for backend compatibility */
+    vitola: "",
+    bunch_density: "medium",
   });
 
-  const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-
   const [usage, setUsage] = useState(null);
-  const [blend, setBlend] = useState(null);
-  const [lookupSource, setLookupSource] = useState("");
-  const [lookupStatus, setLookupStatus] = useState("");
+  const [validatedEmail, setValidatedEmail] = useState("");
+  const [isUserValidated, setIsUserValidated] = useState(false);
 
   const [result, setResult] = useState(null);
   const [tastingCard, setTastingCard] = useState(null);
   const [similarBlends, setSimilarBlends] = useState(null);
-
   const [err, setErr] = useState("");
 
   const [loadingUsage, setLoadingUsage] = useState(false);
-  const [loadingLookup, setLoadingLookup] = useState(false);
   const [loadingPredict, setLoadingPredict] = useState(false);
+  const [loadingLookup, setLoadingLookup] = useState(false);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
+
+  const [lookupStatus, setLookupStatus] = useState("");
+  const [lookupSource, setLookupSource] = useState("");
 
   const update = (key, value) => {
     setForm((f) => ({ ...f, [key]: value }));
   };
+
+  const cleanText = (value) => {
+    return String(value || "")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’‘]/g, "'")
+      .replace(/[“”]/g, '"')
+      .replace(/[–—]/g, "-")
+      .replace(/\s+/g, " ")
+      .trim();
+  };
+
+  const isAuthorizedUser =
+    isUserValidated &&
+    cleanText(validatedEmail).toLowerCase() ===
+      cleanText(form.user_email).toLowerCase();
 
   /* --------------------------
 AUTOCOMPLETE
@@ -199,6 +377,168 @@ AUTOCOMPLETE
   };
 
   /* --------------------------
+HELPERS
+-------------------------- */
+
+  const buildCustomValue = (choice, custom) => {
+    if (choice === "Custom / Other" || choice === "Hybrid / Other") {
+      return String(custom || "").trim();
+    }
+    return choice;
+  };
+
+  const buildUniqueList = (values) => {
+    return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
+  };
+
+  const mapLookupValue = (value, options) => {
+    const v = cleanText(value);
+    if (!v) return "";
+    return options.includes(v) ? v : "";
+  };
+
+  const resetUserValidation = () => {
+    setUsage(null);
+    setValidatedEmail("");
+    setIsUserValidated(false);
+    setLookupStatus("");
+    setLookupSource("");
+  };
+
+  const displayValue = (value) => {
+    const cleaned = cleanText(value);
+    return cleaned || EMPTY_VALUE;
+  };
+
+  const displayList = (values) => {
+    const list = buildUniqueList(values);
+    return list.length ? list.join(", ") : EMPTY_VALUE;
+  };
+
+  const ReadOnlyField = ({ label, value }) => (
+    <div style={readOnlyFieldStyle}>
+      <div className="small" style={{ opacity: 0.72 }}>
+        {label}
+      </div>
+      <div style={readOnlyValueStyle}>{value || EMPTY_VALUE}</div>
+    </div>
+  );
+
+  const applyLookupMatch = (match) => {
+    const cleanedBrand = cleanText(match?.brand);
+    const cleanedLine = cleanText(match?.line);
+
+    const cleanedOrigin = mapLookupValue(match?.origin, ORIGINS);
+    const cleanedFactory = mapLookupValue(match?.factory, FACTORIES);
+
+    const rawWrapper = cleanText(match?.wrapper);
+    const wrapperInList = rawWrapper && WRAPPERS.includes(rawWrapper);
+
+    const rawBinder = cleanText(match?.binder);
+    const binderInList = rawBinder && BINDERS.includes(rawBinder);
+
+    const filler = Array.isArray(match?.filler)
+      ? match.filler.map(cleanText).filter(Boolean)
+      : [];
+
+    const validFillers = filler.filter((x) => FILLER_OPTIONS.includes(x));
+
+    const flags = Array.isArray(match?.special_tobacco_flags)
+      ? match.special_tobacco_flags.map(cleanText).filter(Boolean)
+      : [];
+
+    const validFlags = flags.filter((x) =>
+      SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(x)
+    );
+
+    const cleanedLigero = mapLookupValue(match?.ligero, LIGERO_OPTIONS);
+    const cleanedWrapperProcess = mapLookupValue(
+      match?.wrapper_process,
+      WRAPPER_PROCESSES
+    );
+    const cleanedWrapperThickness = mapLookupValue(
+      match?.wrapper_thickness,
+      WRAPPER_THICKNESS_OPTIONS
+    );
+    const cleanedWrapperOiliness = mapLookupValue(
+      match?.wrapper_oiliness,
+      WRAPPER_OILINESS_OPTIONS
+    );
+
+    setForm((f) => ({
+      ...f,
+
+      brand: cleanedBrand || f.brand,
+      line: cleanedLine || f.line,
+
+      ...EMPTY_LOOKUP_FIELDS,
+
+      origin: cleanedOrigin,
+      factory: cleanedFactory,
+
+      wrapper: rawWrapper
+        ? (wrapperInList ? rawWrapper : "Hybrid / Other")
+        : "",
+      wrapper_custom: rawWrapper && !wrapperInList ? rawWrapper : "",
+      wrapper_process: cleanedWrapperProcess,
+      wrapper_thickness: cleanedWrapperThickness || "medium",
+      wrapper_oiliness: cleanedWrapperOiliness || "medium",
+
+      binder: rawBinder
+        ? (binderInList ? rawBinder : "Hybrid / Other")
+        : "",
+      binder_custom: rawBinder && !binderInList ? rawBinder : "",
+
+      filler_1: validFillers[0] || "",
+      filler_2: validFillers[1] || "",
+      filler_3: validFillers[2] || "",
+
+      ligero: cleanedLigero || "moderate",
+
+      flag_1: validFlags[0] || "",
+      flag_2: validFlags[1] || "",
+      flag_3: validFlags[2] || "",
+    }));
+  };
+
+  const buildPayload = () => ({
+    user_email: cleanText(form.user_email),
+
+    brand: cleanText(form.brand),
+    line: cleanText(form.line),
+
+    origin: cleanText(form.origin),
+    factory: cleanText(form.factory),
+
+    wrapper: cleanText(buildCustomValue(form.wrapper, form.wrapper_custom)),
+    wrapper_process: cleanText(form.wrapper_process),
+    wrapper_thickness: cleanText(form.wrapper_thickness),
+    wrapper_oiliness: cleanText(form.wrapper_oiliness),
+
+    binder: cleanText(buildCustomValue(form.binder, form.binder_custom)),
+
+    filler: buildUniqueList([
+      cleanText(form.filler_1),
+      cleanText(form.filler_2),
+      cleanText(form.filler_3),
+    ]),
+
+    ligero: cleanText(form.ligero),
+
+    special_tobacco_flags: buildUniqueList([
+      cleanText(form.flag_1),
+      cleanText(form.flag_2),
+      cleanText(form.flag_3),
+    ]),
+
+    age_years: form.age_years === "" ? null : Number(form.age_years),
+    smoker_style: cleanText(form.smoker_style),
+
+    vitola: "",
+    bunch_density: "medium",
+  });
+
+  /* --------------------------
 API CALLS
 -------------------------- */
 
@@ -206,26 +546,30 @@ API CALLS
     setErr("");
     setLoadingUsage(true);
     setUsage(null);
+    setLookupStatus("");
+    setLookupSource("");
 
     try {
-      const email = cleanText(form.user_email);
-
-      if (!email) {
-        throw new Error("Enter your registered email address first.");
-      }
+      const cleanedEmail = cleanText(form.user_email);
 
       const res = await fetch(
-        `/api/predictor/usage?email=${encodeURIComponent(email)}`
+        `/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}`
       );
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
+        setIsUserValidated(false);
+        setValidatedEmail("");
         throw new Error(data.error || data.detail || "Failed to load usage");
       }
 
       setUsage(data);
+      setValidatedEmail(cleanedEmail);
+      setIsUserValidated(true);
     } catch (e) {
+      setIsUserValidated(false);
+      setValidatedEmail("");
       setErr(e.message || "Usage request failed");
     } finally {
       setLoadingUsage(false);
@@ -235,11 +579,11 @@ API CALLS
   const lookupBlend = async () => {
     setErr("");
     setLookupSource("");
-    setLookupStatus("");
-    setBlend(null);
-    setResult(null);
-    setTastingCard(null);
-    setSimilarBlends(null);
+
+    if (!isAuthorizedUser) {
+      setLookupStatus("Please enter your registered email and press Check User first.");
+      return;
+    }
 
     const brand = cleanText(form.brand);
     const line = cleanText(form.line);
@@ -256,21 +600,23 @@ API CALLS
       const res = await fetch(`/api/predictor/lookup-blend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ brand, line }),
+        body: JSON.stringify({
+          user_email: cleanText(form.user_email),
+          brand,
+          line,
+        }),
       });
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.ok || !data.match) {
-        setLookupStatus(data.error || "No reliable blend match found.");
+        setLookupStatus(data.error || data.detail || "No reliable blend match found.");
         return;
       }
 
-      const match = data.match || {};
-
-      setBlend(match);
-      setLookupSource(data.source?.label || match.source_label || "");
-      setLookupStatus("Blend found.");
+      applyLookupMatch(data.match);
+      setLookupSource(data.source?.label || "");
+      setLookupStatus("Blend found and displayed below.");
     } catch {
       setLookupStatus("Lookup failed.");
     } finally {
@@ -286,6 +632,7 @@ API CALLS
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          user_email: cleanText(form.user_email),
           brand: cleanText(brand),
           line: cleanText(line),
         }),
@@ -309,23 +656,16 @@ API CALLS
     setLoadingPredict(true);
     setResult(null);
     setTastingCard(null);
+    setSimilarBlends(null);
+
+    const cleanedBrand = cleanText(form.brand);
+    const cleanedLine = cleanText(form.line);
 
     try {
-      if (!blend) {
-        throw new Error("Lookup a blend first.");
-      }
-
-      const payload = buildPayloadFromBlend({
-        userEmail: form.user_email,
-        brand: form.brand,
-        line: form.line,
-        blend,
-      });
-
       const res = await fetch(`/api/predictor/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(buildPayload()),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -336,7 +676,7 @@ API CALLS
 
       setResult(data);
       await loadUsage();
-      await loadTastingCard(payload.brand, payload.line);
+      await loadTastingCard(cleanedBrand, cleanedLine);
     } catch (e) {
       setErr(e.message || "Prediction request failed");
     } finally {
@@ -346,31 +686,28 @@ API CALLS
 
   const findSimilarBlends = async () => {
     setErr("");
+
+    if (!isAuthorizedUser) {
+      setErr("Please enter your registered email and press Check User first.");
+      return;
+    }
+
     setLoadingSimilar(true);
     setSimilarBlends(null);
+    setResult(null);
+    setTastingCard(null);
 
     try {
-      if (!blend) {
-        throw new Error("Lookup a blend first.");
-      }
-
-      const payload = buildPayloadFromBlend({
-        userEmail: form.user_email,
-        brand: form.brand,
-        line: form.line,
-        blend,
-      });
-
       const res = await fetch(`/api/predictor/similar-blends`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(buildPayload()),
       });
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
-        throw new Error(data.error || data.detail || "Similar blends request failed");
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || data.detail || "Similar blends lookup failed");
       }
 
       setSimilarBlends(data);
@@ -392,23 +729,35 @@ UI
 
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
-          <h1>ICSI Predictor</h1>
-
-          <p className="small" style={{ lineHeight: 1.7 }}>
-            Search a cigar by brand and line to view its blend profile, generate
-            a Peak-Flavor diagnostic, and discover structurally similar blends.
-            Blend details are displayed as read-only values in this version.
-          </p>
+          <h1>Cigar Peak-Flavor Predictor (beta)</h1>
+          <label>
+            Instructions: The Predictor tool is available exclusively to approved
+            subscribers. Enter your registered email address and press the "Check
+            User" button to launch. In the Cigar Blend Lookup section, enter the
+            blend Brand and Line then press "Blend Lookup" button. The blend
+            specific details will automatically appear below as read-only values.
+            By pressing the "Run Predictor" button, the application will produce
+            the blend's optimal smoking leaf-level relative humidity %, and its
+            tasting card. By pressing the "Find Similar Blends" button, the
+            application will list the top blends that most closely match your
+            selection.
+            <br />
+            <strong>Important note</strong>: Leaf-level relative humidity % is measured using a
+            commercially available Cigar Humidity Meter.
+          </label>
 
           {/* USER */}
           <div className="card" style={{ marginTop: 16 }}>
-            <h3>User Access</h3>
+            <h3>User Login</h3>
 
             <label>Email</label>
             <input
               value={form.user_email}
-              placeholder="Enter your registered email"
-              onChange={(e) => update("user_email", e.target.value)}
+              placeholder="Enter your subscription email"
+              onChange={(e) => {
+                update("user_email", e.target.value);
+                resetUserValidation();
+              }}
             />
 
             <div className="ctaRow" style={{ marginTop: 12 }}>
@@ -416,6 +765,13 @@ UI
                 {loadingUsage ? "Loading..." : "Check User"}
               </button>
             </div>
+
+            {!isAuthorizedUser && (
+              <div className="small" style={{ marginTop: 10 }}>
+                Please check your registered email first to enable Blend Lookup and
+                Similar Blends.
+              </div>
+            )}
 
             {usage && (
               <div className="small" style={{ marginTop: 12, lineHeight: 1.8 }}>
@@ -441,9 +797,9 @@ UI
             )}
           </div>
 
-          {/* LOOKUP */}
+          {/* CIGAR IDENTITY */}
           <div className="card" style={{ marginTop: 16 }}>
-            <h3>Blend Lookup</h3>
+            <h3>Cigar Blend Lookup</h3>
 
             <div className="row2">
               <div style={{ position: "relative" }}>
@@ -495,7 +851,7 @@ UI
                 className="btn"
                 type="button"
                 onClick={lookupBlend}
-                disabled={loadingLookup}
+                disabled={loadingLookup || !isAuthorizedUser}
               >
                 {loadingLookup ? "Searching..." : "Lookup Blend"}
               </button>
@@ -514,50 +870,74 @@ UI
             )}
           </div>
 
-          {/* READ-ONLY BLEND PROFILE */}
-          {blend && (
-            <div className="card" style={{ marginTop: 16 }}>
-              <h3>Blend Profile</h3>
+          {/* READ-ONLY BLEND CONSTRUCTION */}
+          <div className="card" style={{ marginTop: 16 }}>
+            <h3>Blend Details: Autofilled &amp; Read-Only</h3>
 
-              <div style={readOnlyGrid}>
-                <ReadOnlyField label="Brand" value={getBlendValue(blend, "brand") || form.brand} />
-                <ReadOnlyField label="Line" value={getBlendValue(blend, "line") || form.line} />
-                <ReadOnlyField label="Origin" value={getBlendValue(blend, "origin")} />
-                <ReadOnlyField label="Factory" value={getBlendValue(blend, "factory")} />
-                <ReadOnlyField label="Wrapper" value={getBlendValue(blend, "wrapper")} />
-                <ReadOnlyField label="Wrapper Process" value={getBlendValue(blend, "wrapper_process")} />
-                <ReadOnlyField label="Wrapper Thickness" value={getBlendValue(blend, "wrapper_thickness")} />
-                <ReadOnlyField label="Wrapper Oiliness" value={getBlendValue(blend, "wrapper_oiliness")} />
-                <ReadOnlyField label="Binder" value={getBlendValue(blend, "binder")} />
-                <ReadOnlyField label="Ligero" value={getBlendValue(blend, "ligero")} />
-                <ReadOnlyField label="Filler" value={displayList(blend?.filler)} />
-                <ReadOnlyField
-                  label="Special Tobacco Flags"
-                  value={displayList(blend?.special_tobacco_flags)}
-                />
-              </div>
-
-              <div className="ctaRow" style={{ marginTop: 18 }}>
-                <button
-                  className="btn primary"
-                  onClick={runPrediction}
-                  disabled={loadingPredict}
-                  type="button"
-                >
-                  {loadingPredict ? "Running..." : "Run Predictor"}
-                </button>
-
-                <button
-                  className="btn"
-                  onClick={findSimilarBlends}
-                  disabled={loadingSimilar}
-                  type="button"
-                >
-                  {loadingSimilar ? "Searching..." : "Find Similar Blends"}
-                </button>
-              </div>
+            <div style={readOnlyGridStyle}>
+              <ReadOnlyField label="Origin" value={displayValue(form.origin)} />
+              <ReadOnlyField label="Factory" value={displayValue(form.factory)} />
+              <ReadOnlyField
+                label="Wrapper"
+                value={displayValue(buildCustomValue(form.wrapper, form.wrapper_custom))}
+              />
+              <ReadOnlyField
+                label="Wrapper Process"
+                value={displayValue(form.wrapper_process)}
+              />
+              <ReadOnlyField
+                label="Wrapper Thickness"
+                value={displayValue(form.wrapper_thickness)}
+              />
+              <ReadOnlyField
+                label="Wrapper Oiliness"
+                value={displayValue(form.wrapper_oiliness)}
+              />
+              <ReadOnlyField
+                label="Binder"
+                value={displayValue(buildCustomValue(form.binder, form.binder_custom))}
+              />
+              <ReadOnlyField label="Ligero" value={displayValue(form.ligero)} />
+              <ReadOnlyField
+                label="Filler Components"
+                value={displayList([form.filler_1, form.filler_2, form.filler_3])}
+              />
+              <ReadOnlyField
+                label="Special Tobacco Flags"
+                value={displayList([form.flag_1, form.flag_2, form.flag_3])}
+              />
+              <ReadOnlyField label="Blend Age" value={displayValue(form.age_years)} />
+              <ReadOnlyField label="Smoker Style" value={displayValue(form.smoker_style)} />
             </div>
-          )}
+
+            <div
+              className="ctaRow"
+              style={{
+                marginTop: 16,
+                display: "flex",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
+            >
+              <button
+                className="btn primary"
+                onClick={runPrediction}
+                disabled={loadingPredict}
+                type="button"
+              >
+                {loadingPredict ? "Running..." : "Run Predictor"}
+              </button>
+
+              <button
+                className="btn"
+                onClick={findSimilarBlends}
+                disabled={loadingSimilar || !isAuthorizedUser}
+                type="button"
+              >
+                {loadingSimilar ? "Searching..." : "Find Similar Blends"}
+              </button>
+            </div>
+          </div>
 
           {err && (
             <div className="notice" style={{ marginTop: 16 }}>
@@ -565,7 +945,6 @@ UI
             </div>
           )}
 
-          {/* RESULT */}
           {result && (
             <div className="card" style={{ marginTop: 16 }}>
               <h3>Blend Peak-Flavor Prediction Result</h3>
@@ -575,11 +954,12 @@ UI
                   Cigar Peak-Flavor System Family: <b>{result.family}</b>
                 </div>
                 <div>
-                  Target Smoking Core Relative Humidity %: <b>{result.target_rh}</b>
+                  Target Smoking Core Relative Humidity % (measured with Cigar Humidity Meter):{" "}
+                  <b>{result.target_rh}</b>
                 </div>
                 <div>
-                  Smoking Core Relative Humidity % Window:{" "}
-                  <b>{result.window_low}</b> to <b>{result.window_high}</b>
+                  Smoking Core Relative Humidity % Window: <b>{result.window_low}</b> to{" "}
+                  <b>{result.window_high}</b>
                 </div>
                 <div>
                   Runs used: <b>{result.runs_used}</b>
@@ -594,6 +974,8 @@ UI
                   Daily remaining: <b>{result.daily_remaining}</b>
                 </div>
               </div>
+
+              <hr className="sep" />
 
               {tastingCard && (
                 <>
@@ -649,53 +1031,87 @@ UI
             </div>
           )}
 
-          {/* SIMILAR BLENDS */}
           {similarBlends && (
             <div className="card" style={{ marginTop: 16 }}>
               <h3>Similar Blends</h3>
 
-              {Array.isArray(similarBlends?.results) &&
-              similarBlends.results.length > 0 ? (
-                <div style={{ display: "grid", gap: 12, marginTop: 12 }}>
-                  {similarBlends.results.map((item, i) => (
-                    <div key={i} className="card" style={{ marginTop: 0 }}>
-                      <h4 style={{ marginTop: 0 }}>
-                        {item.brand || "Unknown Brand"} — {item.line || "Unknown Line"}
-                      </h4>
-
-                      <div className="small" style={{ lineHeight: 1.7 }}>
-                        <div>
-                          Similarity: <b>{item.similarity_score ?? "—"}%</b>
-                        </div>
-                        <div>
-                          Wrapper: <b>{item.wrapper || "—"}</b>
-                        </div>
-                        <div>
-                          Process: <b>{item.wrapper_process || "—"}</b>
-                        </div>
-                        <div>
-                          Binder: <b>{item.binder || "—"}</b>
-                        </div>
-                        <div>
-                          Ligero: <b>{item.ligero || "—"}</b>
-                        </div>
-                        <div>
-                          Why similar:{" "}
-                          <b>{(item.why_similar || []).join(", ") || "—"}</b>
-                        </div>
+              {Array.isArray(similarBlends.results) && similarBlends.results.length > 0 ? (
+                <div className="small" style={{ lineHeight: 1.8 }}>
+                  {similarBlends.results.map((blend, idx) => (
+                    <div
+                      key={`${blend.brand || "brand"}-${blend.line || "line"}-${idx}`}
+                      style={{
+                        padding: "12px 0",
+                        borderBottom:
+                          idx === similarBlends.results.length - 1
+                            ? "none"
+                            : "1px solid rgba(0,0,0,.08)",
+                      }}
+                    >
+                      <div>
+                        <b>{blend.brand || "Unknown Brand"}</b>
+                        {blend.line ? ` — ${blend.line}` : ""}
                       </div>
+
+                      {blend.similarity_score != null && (
+                        <div>
+                          Similarity score: <b>{blend.similarity_score}%</b>
+                        </div>
+                      )}
+
+                      {Array.isArray(blend.why_similar) &&
+                        blend.why_similar.length > 0 && (
+                          <div>Why similar: {blend.why_similar.join(", ")}</div>
+                        )}
+
+                      {blend.origin && <div>Origin: {blend.origin}</div>}
+                      {blend.factory && <div>Factory: {blend.factory}</div>}
+                      {blend.wrapper && <div>Wrapper: {blend.wrapper}</div>}
+                      {blend.wrapper_process && (
+                        <div>Wrapper process: {blend.wrapper_process}</div>
+                      )}
+                      {blend.binder && <div>Binder: {blend.binder}</div>}
+
+                      {Array.isArray(blend.filler) && blend.filler.length > 0 && (
+                        <div>Filler: {blend.filler.join(", ")}</div>
+                      )}
+
+                      {blend.ligero && <div>Ligero: {blend.ligero}</div>}
+
+                      {Array.isArray(blend.special_tobacco_flags) &&
+                        blend.special_tobacco_flags.length > 0 && (
+                          <div>Flags: {blend.special_tobacco_flags.join(", ")}</div>
+                        )}
+
+                      {blend.source_label && <div>Source: {blend.source_label}</div>}
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="small" style={{ marginTop: 10 }}>
-                  No similar blends found.
-                </p>
+                <div className="small">No similar blends found.</div>
               )}
             </div>
           )}
         </div>
       </div>
+
+      <style jsx>{`
+        @media (max-width: 800px) {
+          .container {
+            max-width: 100% !important;
+          }
+
+          .row2 {
+            grid-template-columns: 1fr !important;
+          }
+        }
+
+        @media (max-width: 700px) {
+          div[style*="repeat(2"] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </Layout>
   );
 }
