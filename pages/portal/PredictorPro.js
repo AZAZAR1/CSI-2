@@ -318,12 +318,12 @@ export default function PredictorPage() {
   };
 
   const isAuthorizedUser =
-  const hasProAccess =
-  isAuthorizedUser && usage?.pro_access === true;
-  
     isUserValidated &&
     cleanText(validatedEmail).toLowerCase() ===
       cleanText(form.user_email).toLowerCase();
+  
+  const hasProAccess =
+    isAuthorizedUser && usage?.pro_access === true;
 
   /* --------------------------
 AUTOCOMPLETE
