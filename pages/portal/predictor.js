@@ -262,8 +262,10 @@ COMPONENT
 -------------------------- */
 
 export default function PredictorPage() {
-  const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [brandSuggestions, setBrandSuggestions] = useState([]);
+  const [lineSuggestions, setLineSuggestions] = useState([]);
+  const [showBrandSuggestions, setShowBrandSuggestions] = useState(false);
+  const [showLineSuggestions, setShowLineSuggestions] = useState(false);
 
   const [form, setForm] = useState({
     user_email: "",
@@ -341,39 +343,118 @@ export default function PredictorPage() {
 AUTOCOMPLETE
 -------------------------- */
 
-  const loadSuggestions = async (q) => {
+  const uniqueByBrand = (items) => {
+    const seen = new Set();
+    const out = [];
+
+    for (const item of items || []) {
+      const brand = cleanText(item.brand);
+      const key = brand.toLowerCase();
+
+      if (brand && !seen.has(key)) {
+        seen.add(key);
+        out.push({ brand, label: brand });
+      }
+    }
+
+    return out;
+  };
+
+  const uniqueLinesForBrand = (items, selectedBrand, q) => {
+    const brandKey = cleanText(selectedBrand).toLowerCase();
+    const lineQuery = cleanText(q).toLowerCase();
+    const seen = new Set();
+    const out = [];
+
+    for (const item of items || []) {
+      const itemBrand = cleanText(item.brand).toLowerCase();
+      const line = cleanText(item.line);
+      const lineKey = line.toLowerCase();
+
+      if (!line || itemBrand !== brandKey) continue;
+      if (lineQuery && !lineKey.includes(lineQuery)) continue;
+
+      if (!seen.has(lineKey)) {
+        seen.add(lineKey);
+        out.push({ brand: cleanText(item.brand), line, label: line });
+      }
+    }
+
+    return out;
+  };
+
+  const loadBrandSuggestions = async (q) => {
     const cleaned = cleanText(q);
 
     if (!cleaned || cleaned.length < 2) {
-      setSuggestions([]);
-      setShowSuggestions(false);
+      setBrandSuggestions([]);
+      setShowBrandSuggestions(false);
       return;
     }
 
     try {
       const res = await fetch(
-        `/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}`
+        `/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}&limit=100`
       );
       const data = await res.json().catch(() => ({}));
 
       if (Array.isArray(data?.results)) {
-        setSuggestions(data.results);
-        setShowSuggestions(true);
+        const brands = uniqueByBrand(data.results).slice(0, 12);
+        setBrandSuggestions(brands);
+        setShowBrandSuggestions(brands.length > 0);
       } else {
-        setSuggestions([]);
-        setShowSuggestions(false);
+        setBrandSuggestions([]);
+        setShowBrandSuggestions(false);
       }
     } catch {
-      setSuggestions([]);
-      setShowSuggestions(false);
+      setBrandSuggestions([]);
+      setShowBrandSuggestions(false);
     }
   };
 
-  const selectSuggestion = (item) => {
+  const loadLineSuggestions = async (brand, q) => {
+    const selectedBrand = cleanText(brand);
+    const cleanedLine = cleanText(q);
+
+    if (!selectedBrand) {
+      setLineSuggestions([]);
+      setShowLineSuggestions(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `/api/predictor/autocomplete?q=${encodeURIComponent(selectedBrand)}&limit=250`
+      );
+      const data = await res.json().catch(() => ({}));
+
+      if (Array.isArray(data?.results)) {
+        const lines = uniqueLinesForBrand(data.results, selectedBrand, cleanedLine).slice(0, 20);
+        setLineSuggestions(lines);
+        setShowLineSuggestions(lines.length > 0);
+      } else {
+        setLineSuggestions([]);
+        setShowLineSuggestions(false);
+      }
+    } catch {
+      setLineSuggestions([]);
+      setShowLineSuggestions(false);
+    }
+  };
+
+  const selectBrandSuggestion = (item) => {
     update("brand", cleanText(item.brand || ""));
+    update("line", "");
+    setShowBrandSuggestions(false);
+    setBrandSuggestions([]);
+    setLineSuggestions([]);
+    setShowLineSuggestions(false);
+  };
+
+  const selectLineSuggestion = (item) => {
     update("line", cleanText(item.line || ""));
-    setShowSuggestions(false);
-    setSuggestions([]);
+    setShowLineSuggestions(false);
+    setLineSuggestions([]);
   };
 
   /* --------------------------
@@ -730,6 +811,7 @@ UI
       <div className="section">
         <div className="container" style={{ maxWidth: 980 }}>
           <h1>Cigar Peak-Flavor Predictor (beta)</h1>
+
           <label>
             Instructions: The Predictor tool is available exclusively to approved
             subscribers. Enter your registered email address and press the "Check
@@ -807,19 +889,31 @@ UI
                 <input
                   value={form.brand}
                   placeholder="Start typing brand..."
+                  autoComplete="off"
+                  onFocus={() => loadBrandSuggestions(form.brand)}
                   onChange={(e) => {
-                    update("brand", e.target.value);
-                    loadSuggestions(e.target.value);
+                    const value = e.target.value;
+                    update("brand", value);
+                    update("line", "");
+                    setLineSuggestions([]);
+                    setShowLineSuggestions(false);
+                    loadBrandSuggestions(value);
+                  }}
+                  onBlur={() => {
+                    setTimeout(() => setShowBrandSuggestions(false), 150);
                   }}
                 />
 
-                {showSuggestions && suggestions.length > 0 && (
+                {showBrandSuggestions && brandSuggestions.length > 0 && (
                   <div style={autocompleteBox}>
-                    {suggestions.map((s, i) => (
+                    {brandSuggestions.map((s, i) => (
                       <div
-                        key={i}
+                        key={`${s.brand}-${i}`}
                         style={autocompleteItem}
-                        onClick={() => selectSuggestion(s)}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          selectBrandSuggestion(s);
+                        }}
                       >
                         {s.label}
                       </div>
@@ -828,13 +922,44 @@ UI
                 )}
               </div>
 
-              <div>
+              <div style={{ position: "relative" }}>
                 <label>Line</label>
                 <input
                   value={form.line}
-                  onChange={(e) => update("line", e.target.value)}
-                  placeholder="e.g. No. 2"
+                  autoComplete="off"
+                  disabled={!cleanText(form.brand)}
+                  onFocus={() => loadLineSuggestions(form.brand, form.line)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    update("line", value);
+                    loadLineSuggestions(form.brand, value);
+                  }}
+                  onBlur={() => {
+                    setTimeout(() => setShowLineSuggestions(false), 150);
+                  }}
+                  placeholder={
+                    cleanText(form.brand)
+                      ? "Start typing line..."
+                      : "Select brand first"
+                  }
                 />
+
+                {showLineSuggestions && lineSuggestions.length > 0 && (
+                  <div style={autocompleteBox}>
+                    {lineSuggestions.map((s, i) => (
+                      <div
+                        key={`${s.brand}-${s.line}-${i}`}
+                        style={autocompleteItem}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          selectLineSuggestion(s);
+                        }}
+                      >
+                        {s.label}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
