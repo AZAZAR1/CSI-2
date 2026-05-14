@@ -169,7 +169,7 @@ const FILLER_OPTIONS = [
   "Ligero",
   "Ecuadorian Ligero",
   "Cuban Seco",
-  "Volado",
+  "Cuban Volado",
   "Medio Tiempo",
 ];
 
