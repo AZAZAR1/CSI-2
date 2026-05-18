@@ -1,4 +1,3 @@
-```javascript
 // api/predictor/pairing-card.js
 
 /*
@@ -210,4 +209,3 @@ export default async function handler(req, res) {
     });
   }
 }
-```
