@@ -1,4 +1,3 @@
-```javascript
 // api/portal/predictor/pairing-card.js
 
 /*
@@ -20,7 +19,7 @@ predict.js
 returns family
 
 frontend:
-POST /api/portal/predictor/pairing-card
+POST /api/predictor/pairing-card
     ↓
 renders pairing_card
 
@@ -79,7 +78,21 @@ function normalizeFamily(value) {
   return aliases[raw] || "";
 }
 
-function cleanPayload(body = {}) {
+function toArray(value) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (value) {
+    return [value];
+  }
+
+  return [];
+}
+
+function cleanPayload(body) {
+  body = body || {};
+
   return {
     family:
       normalizeFamily(
@@ -112,17 +125,9 @@ function cleanPayload(body = {}) {
 
     origin: body.origin || "",
 
-    filler: Array.isArray(body.filler)
-      ? body.filler
-      : body.filler
-      ? [body.filler]
-      : [],
+    filler: toArray(body.filler),
 
-    special_tobacco_flags: Array.isArray(body.special_tobacco_flags)
-      ? body.special_tobacco_flags
-      : body.special_tobacco_flags
-      ? [body.special_tobacco_flags]
-      : [],
+    special_tobacco_flags: toArray(body.special_tobacco_flags),
   };
 }
 
@@ -151,9 +156,8 @@ async function callPythonPairingEngine(payload) {
 
   if (!response.ok) {
     throw new Error(
-      data?.error ||
-        data?.detail ||
-        `Pairing engine request failed (${response.status}).`
+      (data && (data.error || data.detail)) ||
+        "Pairing engine request failed (" + response.status + ")."
     );
   }
 
@@ -178,15 +182,16 @@ export default async function handler(req, res) {
     if (!payload.family) {
       return res.status(400).json({
         ok: false,
-        error:
-          "Missing RH family. Expected one of: A, B, C, C+, D.",
+        error: "Missing RH family. Expected one of: A, B, C, C+, D.",
       });
     }
 
     const engineResponse = await callPythonPairingEngine(payload);
 
     const pairingCard =
-      engineResponse.pairing_card || engineResponse;
+      engineResponse && engineResponse.pairing_card
+        ? engineResponse.pairing_card
+        : engineResponse;
 
     return res.status(200).json({
       ok: true,
@@ -198,9 +203,8 @@ export default async function handler(req, res) {
     return res.status(500).json({
       ok: false,
       error:
-        error?.message ||
+        (error && error.message) ||
         "Failed to generate pairing card.",
     });
   }
 }
-```
