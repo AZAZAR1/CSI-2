@@ -314,11 +314,13 @@ export default function PredictorPage() {
 
   const [result, setResult] = useState(null);
   const [tastingCard, setTastingCard] = useState(null);
+  const [pairingCard, setPairingCard] = useState(null);
   const [similarBlends, setSimilarBlends] = useState(null);
   const [err, setErr] = useState("");
 
   const [loadingUsage, setLoadingUsage] = useState(false);
   const [loadingPredict, setLoadingPredict] = useState(false);
+  const [loadingPairing, setLoadingPairing] = useState(false);
   const [loadingLookup, setLoadingLookup] = useState(false);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
 
@@ -502,12 +504,39 @@ HELPERS
     return list.length ? list.join(", ") : EMPTY_VALUE;
   };
 
+  const displayPairingList = (values) => {
+    if (!Array.isArray(values) || values.length === 0) return EMPTY_VALUE;
+    return values.filter(Boolean).join(", ") || EMPTY_VALUE;
+  };
+
   const ReadOnlyField = ({ label, value }) => (
     <div style={readOnlyFieldStyle}>
       <div className="small" style={{ opacity: 0.72 }}>
         {label}
       </div>
       <div style={readOnlyValueStyle}>{value || EMPTY_VALUE}</div>
+    </div>
+  );
+
+  const PairingCategoryCard = ({ title, data }) => (
+    <div className="card" style={{ marginTop: 0 }}>
+      <h4 style={{ marginTop: 0 }}>{title}</h4>
+
+      <div className="small" style={{ lineHeight: 1.8 }}>
+        <div>
+          <b>Primary / Exceptional Fit:</b>{" "}
+          {displayPairingList(data?.primary)}
+        </div>
+        <div>
+          <b>Secondary / Strong Fit:</b>{" "}
+          {displayPairingList(data?.secondary)}
+        </div>
+        {data?.basis && (
+          <div style={{ marginTop: 6, opacity: 0.78 }}>
+            <b>Basis:</b> {data.basis}
+          </div>
+        )}
+      </div>
     </div>
   );
 
@@ -738,11 +767,57 @@ API CALLS
     }
   };
 
+  const loadPairingCard = async (predictionData) => {
+    const family = cleanText(
+      predictionData?.family ||
+        predictionData?.rh_family ||
+        predictionData?.cps_family ||
+        predictionData?.peak_flavor_family ||
+        predictionData?.cigar_peak_flavor_system_family
+    );
+
+    if (!family) {
+      setPairingCard(null);
+      return;
+    }
+
+    setLoadingPairing(true);
+
+    try {
+      const payload = {
+        ...buildPayload(),
+        family,
+      };
+
+      const res = await fetch(`/api/predictor/pairing-card`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok || !data.pairing_card) {
+        setPairingCard(null);
+        return;
+      }
+
+      setPairingCard(data.pairing_card);
+    } catch {
+      setPairingCard(null);
+    } finally {
+      setLoadingPairing(false);
+    }
+  };
+
   const runPrediction = async () => {
     setErr("");
     setLoadingPredict(true);
     setResult(null);
     setTastingCard(null);
+    setPairingCard(null);
     setSimilarBlends(null);
 
     const cleanedBrand = cleanText(form.brand);
@@ -764,6 +839,7 @@ API CALLS
       setResult(data);
       await loadUsage();
       await loadTastingCard(cleanedBrand, cleanedLine);
+      await loadPairingCard(data);
     } catch (e) {
       setErr(e.message || "Prediction request failed");
     } finally {
@@ -783,6 +859,7 @@ API CALLS
     setSimilarBlends(null);
     setResult(null);
     setTastingCard(null);
+    setPairingCard(null);
 
     try {
       const res = await fetch(`/api/predictor/similar-blends`, {
@@ -1156,6 +1233,86 @@ UI
                         </div>
                       </div>
                     </div>
+                  </div>
+                </>
+              )}
+
+              {loadingPairing && (
+                <>
+                  <hr className="sep" />
+                  <div className="small">Loading pairing card...</div>
+                </>
+              )}
+
+              {pairingCard && (
+                <>
+                  <hr className="sep" />
+
+                  <h3>{pairingCard.title || "Cigar Pairing Card"}</h3>
+
+                  <div className="small" style={{ lineHeight: 1.8 }}>
+                    <div>
+                      RH Family: <b>{pairingCard.family}</b>
+                      {pairingCard.family_name ? ` — ${pairingCard.family_name}` : ""}
+                    </div>
+                    {pairingCard.peak_rh && (
+                      <div>
+                        Peak-Flavor RH: <b>{pairingCard.peak_rh}</b>
+                      </div>
+                    )}
+                    {pairingCard.summary && <div>{pairingCard.summary}</div>}
+                  </div>
+
+                  {pairingCard.wrapper_leaf_fit && (
+                    <div
+                      className="small"
+                      style={{
+                        marginTop: 12,
+                        lineHeight: 1.8,
+                        border: "1px solid rgba(0,0,0,.08)",
+                        borderRadius: 10,
+                        padding: 12,
+                        background: "rgba(0,0,0,.015)",
+                      }}
+                    >
+                      <div>
+                        <b>Wrapper Leaf Fit:</b>{" "}
+                        {pairingCard.wrapper_leaf_fit.fit || "—"}
+                      </div>
+                      {pairingCard.wrapper_leaf_fit.wrapper && (
+                        <div>
+                          Wrapper: <b>{pairingCard.wrapper_leaf_fit.wrapper}</b>
+                        </div>
+                      )}
+                      {pairingCard.wrapper_leaf_fit.wrapper_process && (
+                        <div>
+                          Wrapper Process:{" "}
+                          <b>{pairingCard.wrapper_leaf_fit.wrapper_process}</b>
+                        </div>
+                      )}
+                      {pairingCard.wrapper_leaf_fit.reason && (
+                        <div>{pairingCard.wrapper_leaf_fit.reason}</div>
+                      )}
+                    </div>
+                  )}
+
+                  {Array.isArray(pairingCard.blend_adjustment_notes) &&
+                    pairingCard.blend_adjustment_notes.length > 0 && (
+                      <div className="small" style={{ marginTop: 12, lineHeight: 1.8 }}>
+                        <b>Blend Adjustment Notes:</b>{" "}
+                        {pairingCard.blend_adjustment_notes.join(" ")}
+                      </div>
+                    )}
+
+                  <div className="row2" style={{ marginTop: 12 }}>
+                    <PairingCategoryCard title="Wine" data={pairingCard.wine} />
+                    <PairingCategoryCard title="Whisky" data={pairingCard.whisky} />
+                    <PairingCategoryCard title="Rum" data={pairingCard.rum} />
+                    <PairingCategoryCard title="Beer" data={pairingCard.beer} />
+                    <PairingCategoryCard
+                      title="Cocktails"
+                      data={pairingCard.cocktails}
+                    />
                   </div>
                 </>
               )}
