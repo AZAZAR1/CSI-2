@@ -778,6 +778,7 @@ API CALLS
 
     if (!family) {
       setPairingCard(null);
+      setErr("Pairing card failed: prediction response did not include an RH family.");
       return;
     }
 
@@ -801,12 +802,18 @@ API CALLS
 
       if (!res.ok || !data.ok || !data.pairing_card) {
         setPairingCard(null);
+        setErr(
+          data.error ||
+            data.detail ||
+            `Pairing card failed with status ${res.status}.`
+        );
         return;
       }
 
       setPairingCard(data.pairing_card);
-    } catch {
+    } catch (e) {
       setPairingCard(null);
+      setErr(e.message || "Pairing card request failed.");
     } finally {
       setLoadingPairing(false);
     }
