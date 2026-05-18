@@ -1,4 +1,5 @@
-// api/portal/predictor/pairing-card.js
+```javascript
+// api/predictor/pairing-card.js
 
 /*
 Standalone pairing-card endpoint.
@@ -9,45 +10,24 @@ Thin API wrapper around the EC2 Python pairing engine.
 
 This route:
 1. Accepts RH family + blend metadata
-2. Forwards request to EC2 pairing engine
+2. Forwards request to EC2 Python backend
 3. Returns normalized pairing_card payload
 
-Recommended frontend flow
--------------------------
-predict.js
+Frontend flow
+--------------
+portal/predictor.js
     ↓
-returns family
-
-frontend:
 POST /api/predictor/pairing-card
     ↓
-renders pairing_card
-
-Expected request body
----------------------
-{
-  "family": "C",
-  "wrapper": "Ecuador Habano",
-  "wrapper_process": "Colorado Maduro",
-  "wrapper_thickness": "medium",
-  "wrapper_oiliness": "high",
-  "ligero": "high",
-  "origin": "Nicaragua",
-  "filler": ["Nicaragua"],
-  "special_tobacco_flags": ["medio tiempo"]
-}
-
-Expected EC2 response
----------------------
-{
-  "pairing_card": { ... }
-}
+Vercel API proxy
+    ↓
+EC2 backend /pairing-card
+    ↓
+pairing_engine.py
 */
 
 const EC2_PAIRING_ENGINE_URL =
-  process.env.PAIRING_ENGINE_URL ||
-  process.env.NEXT_PUBLIC_PAIRING_ENGINE_URL ||
-  "";
+  process.env.PREDICTOR_BACKEND_URL || "";
 
 function normalizeFamily(value) {
   const raw = String(value || "")
@@ -127,37 +107,51 @@ function cleanPayload(body) {
 
     filler: toArray(body.filler),
 
-    special_tobacco_flags: toArray(body.special_tobacco_flags),
+    special_tobacco_flags: toArray(
+      body.special_tobacco_flags
+    ),
   };
 }
 
 async function callPythonPairingEngine(payload) {
   if (!EC2_PAIRING_ENGINE_URL) {
     throw new Error(
-      "PAIRING_ENGINE_URL environment variable is not configured."
+      "PREDICTOR_BACKEND_URL environment variable is not configured."
     );
   }
 
-  const response = await fetch(EC2_PAIRING_ENGINE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+  const backendUrl =
+    EC2_PAIRING_ENGINE_URL.replace(/\/$/, "");
+
+  const response = await fetch(
+    backendUrl + "/pairing-card",
+    {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify(payload),
+    }
+  );
 
   let data = null;
 
   try {
     data = await response.json();
   } catch (err) {
-    throw new Error("Invalid JSON returned from pairing engine.");
+    throw new Error(
+      "Invalid JSON returned from pairing engine."
+    );
   }
 
   if (!response.ok) {
     throw new Error(
       (data && (data.error || data.detail)) ||
-        "Pairing engine request failed (" + response.status + ")."
+        "Pairing engine request failed (" +
+          response.status +
+          ")."
     );
   }
 
@@ -182,14 +176,18 @@ export default async function handler(req, res) {
     if (!payload.family) {
       return res.status(400).json({
         ok: false,
-        error: "Missing RH family. Expected one of: A, B, C, C+, D.",
+
+        error:
+          "Missing RH family. Expected one of: A, B, C, C+, D.",
       });
     }
 
-    const engineResponse = await callPythonPairingEngine(payload);
+    const engineResponse =
+      await callPythonPairingEngine(payload);
 
     const pairingCard =
-      engineResponse && engineResponse.pairing_card
+      engineResponse &&
+      engineResponse.pairing_card
         ? engineResponse.pairing_card
         : engineResponse;
 
@@ -198,13 +196,18 @@ export default async function handler(req, res) {
       pairing_card: pairingCard,
     });
   } catch (error) {
-    console.error("PAIRING_CARD_ERROR:", error);
+    console.error(
+      "PAIRING_CARD_ERROR:",
+      error
+    );
 
     return res.status(500).json({
       ok: false,
+
       error:
         (error && error.message) ||
         "Failed to generate pairing card.",
     });
   }
 }
+```
