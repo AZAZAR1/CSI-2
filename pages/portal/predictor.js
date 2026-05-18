@@ -524,18 +524,14 @@ HELPERS
 
       <div className="small" style={{ lineHeight: 1.8 }}>
         <div>
-          <b>Primary / Exceptional Fit:</b>{" "}
+          <b>Primary:</b>{" "}
           {displayPairingList(data?.primary)}
         </div>
         <div>
-          <b>Secondary / Strong Fit:</b>{" "}
+          <b>Secondary:</b>{" "}
           {displayPairingList(data?.secondary)}
         </div>
-        {data?.basis && (
-          <div style={{ marginTop: 6, opacity: 0.78 }}>
-            <b>Basis:</b> {data.basis}
-          </div>
-        )}
+
       </div>
     </div>
   );
@@ -778,7 +774,6 @@ API CALLS
 
     if (!family) {
       setPairingCard(null);
-      setErr("Pairing card failed: prediction response did not include an RH family.");
       return;
     }
 
@@ -802,18 +797,12 @@ API CALLS
 
       if (!res.ok || !data.ok || !data.pairing_card) {
         setPairingCard(null);
-        setErr(
-          data.error ||
-            data.detail ||
-            `Pairing card failed with status ${res.status}.`
-        );
         return;
       }
 
       setPairingCard(data.pairing_card);
-    } catch (e) {
+    } catch {
       setPairingCard(null);
-      setErr(e.message || "Pairing card request failed.");
     } finally {
       setLoadingPairing(false);
     }
@@ -1256,60 +1245,6 @@ UI
                   <hr className="sep" />
 
                   <h3>{pairingCard.title || "Cigar Pairing Card"}</h3>
-
-                  <div className="small" style={{ lineHeight: 1.8 }}>
-                    <div>
-                      RH Family: <b>{pairingCard.family}</b>
-                      {pairingCard.family_name ? ` — ${pairingCard.family_name}` : ""}
-                    </div>
-                    {pairingCard.peak_rh && (
-                      <div>
-                        Peak-Flavor RH: <b>{pairingCard.peak_rh}</b>
-                      </div>
-                    )}
-                    {pairingCard.summary && <div>{pairingCard.summary}</div>}
-                  </div>
-
-                  {pairingCard.wrapper_leaf_fit && (
-                    <div
-                      className="small"
-                      style={{
-                        marginTop: 12,
-                        lineHeight: 1.8,
-                        border: "1px solid rgba(0,0,0,.08)",
-                        borderRadius: 10,
-                        padding: 12,
-                        background: "rgba(0,0,0,.015)",
-                      }}
-                    >
-                      <div>
-                        <b>Wrapper Leaf Fit:</b>{" "}
-                        {pairingCard.wrapper_leaf_fit.fit || "—"}
-                      </div>
-                      {pairingCard.wrapper_leaf_fit.wrapper && (
-                        <div>
-                          Wrapper: <b>{pairingCard.wrapper_leaf_fit.wrapper}</b>
-                        </div>
-                      )}
-                      {pairingCard.wrapper_leaf_fit.wrapper_process && (
-                        <div>
-                          Wrapper Process:{" "}
-                          <b>{pairingCard.wrapper_leaf_fit.wrapper_process}</b>
-                        </div>
-                      )}
-                      {pairingCard.wrapper_leaf_fit.reason && (
-                        <div>{pairingCard.wrapper_leaf_fit.reason}</div>
-                      )}
-                    </div>
-                  )}
-
-                  {Array.isArray(pairingCard.blend_adjustment_notes) &&
-                    pairingCard.blend_adjustment_notes.length > 0 && (
-                      <div className="small" style={{ marginTop: 12, lineHeight: 1.8 }}>
-                        <b>Blend Adjustment Notes:</b>{" "}
-                        {pairingCard.blend_adjustment_notes.join(" ")}
-                      </div>
-                    )}
 
                   <div className="row2" style={{ marginTop: 12 }}>
                     <PairingCategoryCard title="Wine" data={pairingCard.wine} />
