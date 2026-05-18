@@ -1,32 +1,28 @@
-// api/predictor/pairing-card.js
+// pages/api/predictor/pairing-card.js
 
 /*
 Standalone pairing-card endpoint.
 
 Purpose
 -------
-Thin API wrapper around the EC2 Python pairing engine.
+Thin Vercel API wrapper around the EC2 Python pairing engine.
 
 This route:
-1. Accepts RH family + blend metadata
-2. Forwards request to EC2 Python backend
-3. Returns normalized pairing_card payload
-
-Frontend flow
---------------
-portal/predictor.js
-    ↓
-POST /api/predictor/pairing-card
-    ↓
-Vercel API proxy
-    ↓
-EC2 backend /pairing-card
-    ↓
-pairing_engine.py
+1. Accepts RH family + blend metadata from portal/predictor.js
+2. Forwards the request to EC2 backend /pairing-card
+3. Sends the backend API key header
+4. Returns normalized pairing_card payload
+5. Surfaces useful debug detail if EC2 returns HTML/text instead of JSON
 */
 
-const EC2_PAIRING_ENGINE_URL =
+const PREDICTOR_BACKEND_URL =
   process.env.PREDICTOR_BACKEND_URL || "";
+
+const PREDICTOR_API_KEY =
+  process.env.PREDICTOR_API_KEY ||
+  process.env.BACKEND_API_KEY ||
+  process.env.API_KEY ||
+  "";
 
 function normalizeFamily(value) {
   const raw = String(value || "")
@@ -112,15 +108,31 @@ function cleanPayload(body) {
   };
 }
 
+function truncate(value, maxLength) {
+  const text = String(value || "");
+
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  return text.slice(0, maxLength) + "...";
+}
+
 async function callPythonPairingEngine(payload) {
-  if (!EC2_PAIRING_ENGINE_URL) {
+  if (!PREDICTOR_BACKEND_URL) {
     throw new Error(
       "PREDICTOR_BACKEND_URL environment variable is not configured."
     );
   }
 
+  if (!PREDICTOR_API_KEY) {
+    throw new Error(
+      "Backend API key environment variable is not configured. Expected PREDICTOR_API_KEY, BACKEND_API_KEY, or API_KEY."
+    );
+  }
+
   const backendUrl =
-    EC2_PAIRING_ENGINE_URL.replace(/\/$/, "");
+    PREDICTOR_BACKEND_URL.replace(/\/$/, "");
 
   const response = await fetch(
     backendUrl + "/pairing-card",
@@ -129,19 +141,25 @@ async function callPythonPairingEngine(payload) {
 
       headers: {
         "Content-Type": "application/json",
+        "x-api-key": PREDICTOR_API_KEY,
       },
 
       body: JSON.stringify(payload),
     }
   );
 
+  const rawText = await response.text();
+
   let data = null;
 
   try {
-    data = await response.json();
+    data = rawText ? JSON.parse(rawText) : null;
   } catch (err) {
     throw new Error(
-      "Invalid JSON returned from pairing engine."
+      "Invalid JSON returned from pairing engine. HTTP status: " +
+        response.status +
+        ". Response preview: " +
+        truncate(rawText, 500)
     );
   }
 
