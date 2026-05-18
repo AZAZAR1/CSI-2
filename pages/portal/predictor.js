@@ -171,6 +171,8 @@ const FILLER_OPTIONS = [
   "Cuban Seco",
   "Cuban Volado",
   "Medio Tiempo",
+  "Zimbabwe",
+  "Paraguay",
 ];
 
 const LIGERO_OPTIONS = ["", "none", "low", "moderate", "high"];
@@ -205,6 +207,8 @@ const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
   "Jalapa",
   "Filipino Simaba",
   "Vuelta Abajo",
+  "Honduran Talanga",
+  "Costarican Puriscal",
   "Aged filler",
   "Extra fermented",
   "Culebra style bunching",
