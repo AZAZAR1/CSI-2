@@ -135,7 +135,7 @@ async function callPythonPairingEngine(payload) {
     PREDICTOR_BACKEND_URL.replace(/\/$/, "");
 
   const response = await fetch(
-    backendUrl + "/pairing-card",
+    backendUrl + "/api/predictor/pairing-card",
     {
       method: "POST",
 
