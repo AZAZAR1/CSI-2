@@ -148,21 +148,21 @@ export default function System() {
       <Seo title={c.seoTitle} description={c.seoDescription} path="/system" />
 
       <div className="hero homeHero">
-        <div className="container heroGridResponsive">
-          <div className="heroTextCol">
+        <div className="container">
+          <div className="systemHeroStack">
             <div className="kicker">{c.kicker}</div>
-            <h1 className="heroTitle">{c.title}</h1>
-            <p className="lead heroLead">{c.lead}</p>
-          </div>
 
-          <div className="heroImageCol">
+            <h1 className="heroTitle">{c.title}</h1>
+
+            <p className="lead heroLead">{c.lead}</p>
+
             <div className="heroMediaRect">
               <Image
                 src="/img/cigar-peak-flavor-system-science.png"
                 alt="Cigar Peak Flavor System"
                 fill
                 priority
-                sizes="(max-width: 900px) 92vw, 620px"
+                sizes="(max-width: 900px) 92vw, 980px"
                 style={{ objectFit: "cover" }}
               />
             </div>
@@ -175,6 +175,7 @@ export default function System() {
           <div className="grid3 systemCardsGrid">
             <div className="card systemInfoCard">
               <h3>{c.settlingTitle}</h3>
+
               <p>{c.settlingIntro}</p>
 
               <ul>
@@ -186,7 +187,9 @@ export default function System() {
 
             <div className="card systemInfoCard">
               <h3>{c.peakTitle}</h3>
+
               <p>{c.p2}</p>
+
               <p>{c.p3}</p>
 
               <div className="furtherReading">
@@ -201,6 +204,7 @@ export default function System() {
 
             <div className="card systemInfoCard">
               <h3>{c.pairingTitle}</h3>
+
               <p>{c.pairingIntro}</p>
 
               <ol>
@@ -213,6 +217,7 @@ export default function System() {
 
           <div className="systemApplications">
             <h3>{c.applicationsTitle}</h3>
+
             <p>{c.applicationsText}</p>
 
             <ul>
@@ -244,21 +249,8 @@ export default function System() {
           padding-bottom: 54px;
         }
 
-        .heroGridResponsive {
-          display: grid;
-          grid-template-columns: minmax(0, 1.05fr) minmax(420px, 620px);
-          gap: 44px;
-          align-items: center;
-        }
-
-        .heroTextCol {
-          min-width: 0;
-        }
-
-        .heroImageCol {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+        .systemHeroStack {
+          max-width: 980px;
         }
 
         .heroTitle {
@@ -270,7 +262,7 @@ export default function System() {
         }
 
         .heroLead {
-          max-width: 28ch;
+          max-width: 720px;
           font-size: clamp(1.12rem, 1.55vw, 1.45rem);
           line-height: 1.52;
           margin-bottom: 0;
@@ -279,11 +271,11 @@ export default function System() {
         .heroMediaRect {
           position: relative;
           width: 100%;
-          max-width: 620px;
-          height: 420px;
+          max-width: 980px;
+          height: 520px;
           border-radius: 26px;
           overflow: hidden;
-          margin: 0 auto;
+          margin-top: 34px;
         }
 
         .systemCardsGrid {
@@ -342,44 +334,14 @@ export default function System() {
           margin-top: 14px;
         }
 
-        @media (max-width: 1100px) {
-          .heroGridResponsive {
-            grid-template-columns: minmax(0, 1fr) minmax(340px, 500px);
-            gap: 28px;
-          }
-
-          .heroTitle {
-            max-width: 10ch;
-          }
-        }
-
         @media (max-width: 900px) {
           .homeHero {
             padding-top: 24px;
             padding-bottom: 34px;
           }
 
-          .heroGridResponsive {
-            grid-template-columns: 1fr;
-            gap: 26px;
-          }
-
-          .heroImageCol {
-            order: 1;
-          }
-
-          .heroTextCol {
-            order: 2;
-          }
-
-          .heroMediaRect {
-            width: min(92vw, 560px);
-            height: 380px;
-          }
-
           .heroTitle {
             font-size: clamp(2.8rem, 11vw, 4.2rem);
-            line-height: 0.96;
             max-width: 11ch;
             margin-bottom: 16px;
           }
@@ -389,6 +351,11 @@ export default function System() {
             font-size: 1.26rem;
             line-height: 1.6;
           }
+
+          .heroMediaRect {
+            height: 420px;
+            margin-top: 28px;
+          }
         }
 
         @media (max-width: 640px) {
@@ -397,25 +364,17 @@ export default function System() {
             padding-bottom: 26px;
           }
 
-          .heroGridResponsive {
-            gap: 20px;
-          }
-
-          .heroMediaRect {
-            width: 92vw;
-            height: 320px;
-            border-radius: 20px;
-          }
-
           .heroTitle {
             font-size: clamp(2.45rem, 12vw, 3.5rem);
-            line-height: 0.97;
-            letter-spacing: -0.045em;
           }
 
           .heroLead {
             font-size: 1.18rem;
-            line-height: 1.58;
+          }
+
+          .heroMediaRect {
+            height: 330px;
+            border-radius: 20px;
           }
 
           .systemInfoCard {
