@@ -12,72 +12,142 @@ export default function System() {
     en: {
       title: "Cigar Peak-Flavor System®",
       lead: "Controlled. Measured. Predictable.",
-      p1: `Most cigars are evaluated emotionally or based on what we hear or see. Very few are evaluated on scientific insights, with the Blender's philosophy and intent in mind.
-           We treat a cigar as a dynamic system that combines various tobacco leaf seeds, tobacco origin and soil, and construction techniques.`,
-      bullets: [
-        "Leaf hygroscopic equilibrium",
-        "Temperature-humidity coupling",
-        "Pre-heat zone behavior",
-        "Volatile activation thresholds",
-        "Blend architecture (wrapper / binder / filler)",
+
+      p1: `Most cigars are evaluated emotionally or based on what we hear or see. Very few are evaluated on scientific insights, with the Blender's philosophy and intent in mind. We treat a cigar as a dynamic system that combines various tobacco leaf seeds, tobacco origin and soil, and construction techniques.`,
+
+      settlingTitle: "Settling & Aging Science",
+
+      settlingBullets: [
+        "Axial moisture coherence",
+        "Ammonia dissipation",
+        "Blend marrying / sensory maturation",
+        "Temperature shock recovery",
+        "Radial moisture equilibrium",
       ],
+
+      pairingTitle: "Pairing Science",
+
+      pairingIntro:
+        "The best pairing is the one that either extends the cigar’s intended combustion profile or buffers its failure mode:",
+
+      pairingBullets: [
+        "Cigar smoke chemistry: combustion temperature, volatility of aromatic compounds, smoke density, oil/aerosol load, nicotine delivery, bitterness, pepper, mineral, sweetness, and resin",
+
+        "Beverage structure: acidity, tannin, alcohol heat, residual sugar, oak lactones, aldehydes, esters, phenolics, glycerol texture, barrel-derived vanillin, caramel, spice, smoke, and oxidation notes",
+      ],
+
       p2: `Peak flavor occurs within a narrow moisture activation window specific to each blend family.`,
+
       p3: `The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.`,
-      download: "Download system overview (PDF)",
+
       applicationsTitle: "Program Applications",
+
       applicationsText:
         "The Cigar Peak-Flavor System® is deployed across ICSI’s professional and elite pathways:",
+
       furtherReadingLabel: "Further reading:",
       furtherReadingTitle: "Ideal Cigar Humidity & Peak Flavor Timing",
-      seoTitle: "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
+
+      seoTitle:
+        "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
+
       seoDescription:
         "The proprietary Cigar Peak-Flavor System® applies thermodynamics, combustion science, and blend architecture modeling to achieve repeatable cigar excellence.",
     },
+
     fr: {
       title: "Cigar Peak-Flavor System®",
       lead: "Contrôlé. Mesuré. Prévisible.",
-      p1: `La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du créateur (blender). Nous traitons un cigare comme un système dynamique combinant diverses semences de feuilles de tabac, l'origine du tabac et du sol, ainsi que des techniques de fabrication.`,
-      bullets: [
-        "Équilibre hygroscopique du tabac",
-        "Interaction température–humidité",
-        "Comportement de la zone de pré-chauffe",
-        "Seuils d’activation des composés volatils",
-        "Architecture du mélange (cape / sous-cape / tripe)",
+
+      p1: `La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du blender. Nous traitons le cigare comme un système dynamique combinant différentes semences de tabac, l’origine du tabac et du sol, ainsi que des techniques de construction.`,
+
+      settlingTitle: "Science du repos et du vieillissement",
+
+      settlingBullets: [
+        "Cohérence axiale de l’humidité",
+        "Dissipation de l’ammoniac",
+        "Mariage du blend / maturation sensorielle",
+        "Récupération après choc thermique",
+        "Équilibre radial de l’humidité",
       ],
-      p2: `Le pic aromatique se situe dans une fenêtre d’humidité précise, propre à chaque famille de mélanges.`,
-      p3: `Le système permet une mise en condition reproductible, un diagnostic avant allumage, et un passage contrôlé vers une expression aromatique maximale.`,
-      download: "Télécharger la présentation du système (PDF)",
-      applicationsTitle: "Applications du système",
+
+      pairingTitle: "Science des accords",
+
+      pairingIntro:
+        "Le meilleur accord est celui qui prolonge le profil de combustion du cigare ou compense son mode de défaillance :",
+
+
+      pairingBullets: [
+        "Chimie de la fumée du cigare : température de combustion, volatilité des composés aromatiques, densité de fumée, charge huile/aérosol, délivrance de nicotine, amertume, poivre, minéralité, douceur et résine",
+
+        "Structure de la boisson : acidité, tanins, chaleur alcoolique, sucre résiduel, lactones de chêne, aldéhydes, esters, composés phénoliques, texture glycérinée, vanilline du fût, caramel, épices, fumée et notes oxydatives",
+      ],
+
+      p2: `Le pic aromatique apparaît dans une fenêtre d’activation hygrométrique spécifique à chaque famille de blends.`,
+
+      p3: `Le système permet une mise en condition reproductible, un diagnostic avant allumage et un chemin contrôlé vers l’expression aromatique maximale.`,
+
+      applicationsTitle: "Applications du programme",
+
       applicationsText:
-        "Le système Cigar Peak-Flavor® est appliqué dans les parcours professionnels et élite d’ICSI :",
-      furtherReadingLabel: "À lire aussi :",
-      furtherReadingTitle: "Humidité idéale & timing du pic aromatique",
-      seoTitle: "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
+        "Le Cigar Peak-Flavor System® est utilisé dans les parcours professionnels et élite de l’ICSI :",
+
+      furtherReadingLabel: "Lecture complémentaire :",
+      furtherReadingTitle:
+        "Humidité idéale du cigare & timing du pic aromatique",
+
+      seoTitle:
+        "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
+
       seoDescription:
-        "Le système propriétaire Peak-Flavor® applique thermodynamique et science de combustion pour une excellence aromatique reproductible.",
+        "Le système propriétaire Cigar Peak-Flavor System® applique thermodynamique, science de combustion et modélisation des blends pour atteindre une excellence reproductible.",
     },
+
     de: {
-      title: "Cigar Peak-Flavor-System®",
-      lead: "Kontrolliert. Messbar. Reproduzierbar.",
-      p1: `Die meisten Zigarren werden emotional oder basierend auf dem bewertet, was wir hören oder sehen. Nur wenige werden auf der Grundlage wissenschaftlicher Erkenntnisse bewertet, wobei die Philosophie und Absicht des Blenders im Vordergrund stehen. Das Peak-Flavor System® betrachtet eine Zigarre als ein dynamisches System, das verschiedene Tabaksamensorten, Tabakherkunft und Bodenbeschaffenheit sowie Konstruktionstechniken miteinander verbindet.`,
-      bullets: [
-        "Hygroskopisches Gleichgewicht des Tabaks",
-        "Temperatur–Feuchte-Kopplung",
-        "Verhalten der Vorwärmzone",
-        "Aktivierungsschwellen flüchtiger Aromastoffe",
-        "Blend-Architektur (Deckblatt / Umblatt / Einlage)",
+      title: "Cigar Peak-Flavor System®",
+      lead: "Kontrolliert. Messbar. Vorhersehbar.",
+
+      p1: `Die meisten Zigarren werden emotional oder anhand dessen bewertet, was wir hören oder sehen. Nur wenige werden auf wissenschaftlicher Grundlage bewertet und dabei die Philosophie und Intention des Blenders berücksichtigt. Wir betrachten die Zigarre als dynamisches System aus verschiedenen Tabaksamen, Herkunft und Bodenbeschaffenheit sowie Konstruktionstechniken.`,
+
+      settlingTitle: "Wissenschaft von Ruhe & Reifung",
+
+      settlingBullets: [
+        "Axiale Feuchtigkeitskohärenz",
+        "Ammoniakabbau",
+        "Vermählung des Blends / sensorische Reifung",
+        "Erholung nach Temperaturschock",
+        "Radiales Feuchtigkeitsgleichgewicht",
       ],
-      p2: `Maximales Aroma liegt in einem engen, blend-spezifischen Feuchtefenster.`,
-      p3: `Das System ermöglicht reproduzierbares Staging, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur Peak-Aromatik.`,
-      download: "Systemübersicht herunterladen (PDF)",
+
+      pairingTitle: "Pairing-Wissenschaft",
+
+      pairingIntro:
+        "Das beste Pairing ist jenes, das entweder das gewünschte Verbrennungsprofil der Zigarre verlängert oder ihren Fehlermodus abfedert:",
+
+      pairingBullets: [
+        "Chemie des Zigarrenrauchs: Verbrennungstemperatur, Flüchtigkeit aromatischer Verbindungen, Rauchdichte, Öl-/Aerosollast, Nikotinabgabe, Bitterkeit, Pfeffer, Mineralität, Süße und Harz",
+
+        "Struktur des Getränks: Säure, Tannine, Alkoholwärme, Restzucker, Eichenlactone, Aldehyde, Ester, Phenole, Glycerinstruktur, Fass-Vanillin, Karamell, Gewürze, Rauch und Oxidationsnoten",
+      ],
+
+      p2: `Das optimale Aroma liegt innerhalb eines engen Feuchtigkeits-Aktivierungsfensters, das für jede Blend-Familie spezifisch ist.`,
+
+      p3: `Das System ermöglicht reproduzierbare Konditionierung, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur maximalen aromatischen Entfaltung.`,
+
       applicationsTitle: "Programmanwendungen",
+
       applicationsText:
-        "Das Cigar Peak-Flavor System® wird in den professionellen und Elite-Programmen von ICSI eingesetzt:",
-      furtherReadingLabel: "Weiterführend:",
-      furtherReadingTitle: "Ideale Zigarrenfeuchte & Peak-Flavor Timing",
-      seoTitle: "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
+        "Das Cigar Peak-Flavor System® wird in den professionellen und Elite-Programmen des ICSI eingesetzt:",
+
+      furtherReadingLabel: "Weiterführende Lektüre:",
+      furtherReadingTitle:
+        "Ideale Zigarrenfeuchtigkeit & Peak-Flavor Timing",
+
+      seoTitle:
+        "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
+
       seoDescription:
-        "Das proprietäre Cigar Peak-Flavor System® verbindet Thermodynamik und Verbrennungsphysik für reproduzierbare Zigarren-Exzellenz.",
+        "Das proprietäre Cigar Peak-Flavor System® verbindet Thermodynamik, Verbrennungswissenschaft und Blend-Architektur für reproduzierbare Zigarren-Exzellenz.",
     },
   };
 
@@ -85,71 +155,84 @@ export default function System() {
 
   return (
     <Layout>
-      <Seo title={c.seoTitle} description={c.seoDescription} path="/system" />
+      <Seo
+        title={c.seoTitle}
+        description={c.seoDescription}
+        path="/system"
+      />
 
       <div className="section">
         <div className="container">
-          {/* HERO IMAGE */}
-          <div className="systemHero">
-            {/* systemImageWrap MUST be position:relative and have a fixed height in CSS */}
-            <div className="systemImageWrap">
+
+          <section className="systemHero systemHeroSplit">
+
+            <div className="systemHeroCopy">
+
+              <div className="systemHeroMeta">
+                <div className="systemKicker">
+                  <span className="systemPill">Framework</span>
+                  <span className="systemPill">Blend-specific</span>
+                  <span className="systemPill">Proprietary</span>
+                </div>
+
+                <div className="systemTagline">
+                  <i>{c.lead}</i>
+                </div>
+              </div>
+
+              <h1 className="systemTitle">{c.title}</h1>
+
+              <p className="systemLead">{c.p1}</p>
+
+            </div>
+
+            <div
+              className="systemHeroImageWrap"
+              style={{
+                position: "relative",
+                minHeight: "520px",
+                borderRadius: "24px",
+                overflow: "hidden",
+              }}
+            >
               <Image
-                src="/img/peak-flavor-system.png"
-                alt="Peak-Flavor System"
+                src="/img/cigar-peak-flavor-system-science.png"
+                alt="Cigar Peak Flavor System"
                 fill
                 priority
-                sizes="(max-width: 900px) 100vw, 980px"
-                style={{ objectFit: "contain" }}
+                sizes="(max-width: 900px) 100vw, 48vw"
+                style={{ objectFit: "cover" }}
               />
             </div>
 
-            <div className="systemHeroMeta">
-              <div className="systemKicker">
-                <span className="systemPill">Framework</span>
-                <span className="systemPill">Blend-specific</span>
-                <span className="systemPill">Proprietary</span>
-              </div>
-              <div className="systemTagline">
-                <i>{c.lead}</i>
-              </div>
-            </div>
-          </div>
+          </section>
 
-          {/* TEXT */}
           <section className="systemText">
-            <h1 className="systemTitle">{c.title}</h1>
-            <p className="systemLead">{c.p1}</p>
 
             <div className="systemGrid">
-              {/* CORE DRIVERS */}
+
+              {/* SETTLING & AGING SCIENCE */}
               <div className="systemCard">
-                <h3>Core drivers</h3>
+
+                <h3>{c.settlingTitle}</h3>
+
                 <ul>
-                  {c.bullets.map((b) => (
+                  {c.settlingBullets.map((b) => (
                     <li key={b}>{b}</li>
                   ))}
                 </ul>
 
-                <div style={{ marginTop: 24 }}>
-                  <a
-                    className="btn"
-                    href="/brochures/Cigar-Peak-Flavor-System.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Download Peak-Flavor System PDF"
-                  >
-                    {c.download}
-                  </a>
-                </div>
               </div>
 
               {/* PEAK WINDOW */}
               <div className="systemCard">
+
                 <h3>Peak window</h3>
+
                 <p>{c.p2}</p>
+
                 <p style={{ marginTop: 10 }}>{c.p3}</p>
 
-                {/* Refined internal link (Option 2: editorial underline) */}
                 <div style={{ marginTop: 18 }}>
                   <small>
                     {c.furtherReadingLabel}{" "}
@@ -167,33 +250,58 @@ export default function System() {
                     </Link>
                   </small>
                 </div>
+
               </div>
+
+              {/* PAIRING SCIENCE */}
+              <div className="systemCard systemCardWide">
+
+                <h3>{c.pairingTitle}</h3>
+
+                <p>{c.pairingIntro}</p>
+
+                <ol style={{ marginTop: 12 }}>
+                  {c.pairingBullets.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ol>
+
+              </div>
+
             </div>
 
-            {/* INTERNAL LINKING SECTION */}
             <div style={{ marginTop: 50 }}>
+
               <h3>{c.applicationsTitle}</h3>
+
               <p>{c.applicationsText}</p>
 
               <ul style={{ marginTop: 12 }}>
+
                 <li>
                   <Link href="/ccs" locale={lang}>
                     Certified Cigar Sommelier (CCS®)
                   </Link>
                 </li>
+
                 <li>
                   <Link href="/acs" locale={lang}>
                     Advanced Cigar Sommelier (ACS®)
                   </Link>
                 </li>
+
                 <li>
                   <Link href="/amc" locale={lang}>
                     Aficionado Master Class (AMC®)
                   </Link>
                 </li>
+
               </ul>
+
             </div>
+
           </section>
+
         </div>
       </div>
     </Layout>
