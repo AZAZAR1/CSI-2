@@ -299,11 +299,13 @@ export default function PredictorPage() {
 
   const [result, setResult] = useState(null);
   const [tastingCard, setTastingCard] = useState(null);
+  const [pairingCard, setPairingCard] = useState(null);
   const [similarBlends, setSimilarBlends] = useState(null);
   const [err, setErr] = useState("");
 
   const [loadingUsage, setLoadingUsage] = useState(false);
   const [loadingPredict, setLoadingPredict] = useState(false);
+  const [loadingPairing, setLoadingPairing] = useState(false);
   const [loadingLookup, setLoadingLookup] = useState(false);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
 
@@ -479,6 +481,28 @@ HELPERS
     setLookupStatus("");
     setLookupSource("");
   };
+
+  const displayPairingList = (values) => {
+    if (!Array.isArray(values) || values.length === 0) return "—";
+    return values.filter(Boolean).join(", ") || "—";
+  };
+
+  const PairingCategoryCard = ({ title, data }) => (
+    <div className="card" style={{ marginTop: 0 }}>
+      <h4 style={{ marginTop: 0 }}>{title}</h4>
+
+      <div className="small" style={{ lineHeight: 1.8 }}>
+        <div>
+          <b>Primary:</b>{" "}
+          {displayPairingList(data?.primary)}
+        </div>
+        <div>
+          <b>Secondary:</b>{" "}
+          {displayPairingList(data?.secondary)}
+        </div>
+      </div>
+    </div>
+  );
 
   const applyLookupMatch = (match) => {
     const cleanedBrand = cleanText(match?.brand);
@@ -712,6 +736,58 @@ API CALLS
     }
   };
 
+  const loadPairingCard = async (predictionData) => {
+    const family = cleanText(
+      predictionData?.family ||
+        predictionData?.rh_family ||
+        predictionData?.cps_family ||
+        predictionData?.peak_flavor_family ||
+        predictionData?.cigar_peak_flavor_system_family
+    );
+
+    if (!family) {
+      setPairingCard(null);
+      setErr("Pairing card failed: prediction response did not include an RH family.");
+      return;
+    }
+
+    setLoadingPairing(true);
+
+    try {
+      const payload = {
+        ...buildPayload(),
+        family,
+      };
+
+      const res = await fetch(`/api/predictor/pairing-card`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok || !data.pairing_card) {
+        setPairingCard(null);
+        setErr(
+          data.error ||
+            data.detail ||
+            `Pairing card failed with status ${res.status}.`
+        );
+        return;
+      }
+
+      setPairingCard(data.pairing_card);
+    } catch (e) {
+      setPairingCard(null);
+      setErr(e.message || "Pairing card request failed.");
+    } finally {
+      setLoadingPairing(false);
+    }
+  };
+
   const runPrediction = async () => {
     setErr("");
 
@@ -728,6 +804,7 @@ API CALLS
     setLoadingPredict(true);
     setResult(null);
     setTastingCard(null);
+    setPairingCard(null);
     setSimilarBlends(null);
 
     const cleanedBrand = cleanText(form.brand);
@@ -749,6 +826,7 @@ API CALLS
       setResult(data);
       await loadUsage();
       await loadTastingCard(cleanedBrand, cleanedLine);
+      await loadPairingCard(data);
     } catch (e) {
       setErr(e.message || "Prediction request failed");
     } finally {
@@ -773,6 +851,7 @@ API CALLS
     setSimilarBlends(null);
     setResult(null);
     setTastingCard(null);
+    setPairingCard(null);
 
     try {
       const res = await fetch(`/api/predictor/similar-blends`, {
@@ -1400,6 +1479,32 @@ UI
                         </div>
                       </div>
                     </div>
+                  </div>
+                </>
+              )}
+
+              {loadingPairing && (
+                <>
+                  <hr className="sep" />
+                  <div className="small">Loading pairing card...</div>
+                </>
+              )}
+
+              {pairingCard && (
+                <>
+                  <hr className="sep" />
+
+                  <h3>{pairingCard.title || "Cigar Pairing Card"}</h3>
+
+                  <div className="row2" style={{ marginTop: 12 }}>
+                    <PairingCategoryCard title="Wine" data={pairingCard.wine} />
+                    <PairingCategoryCard title="Whisky" data={pairingCard.whisky} />
+                    <PairingCategoryCard title="Rum" data={pairingCard.rum} />
+                    <PairingCategoryCard title="Beer" data={pairingCard.beer} />
+                    <PairingCategoryCard
+                      title="Cocktails"
+                      data={pairingCard.cocktails}
+                    />
                   </div>
                 </>
               )}
