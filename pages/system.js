@@ -13,7 +13,7 @@ export default function System() {
       kicker: "Scientific Framework",
       title: "Cigar Peak-Flavor System®",
       lead:
-        "Most cigars are evaluated emotionally or based on what we hear or see. Very few are evaluated on scientific insights, with the Blender's philosophy and intent in mind. We treat a cigar as a dynamic system that combines various tobacco leaf seeds, tobacco origin and soil, and construction techniques.",
+        "Most cigars are evaluated emotionally or based on what we hear or see. Very few are evaluated on scientific insights, with the Blender's philosophy and intent in mind. We treat a cigar as a dynamic system that combines various tobacco leaf seeds, tobacco origin and soil, and construction techniques. This allows us to unlock the full flavour, burn and pairing potential of premium cigars world-wide.",
 
       settlingTitle: "Settling & Aging Science",
       settlingIntro:
@@ -56,7 +56,7 @@ export default function System() {
       kicker: "Cadre scientifique",
       title: "Cigar Peak-Flavor System®",
       lead:
-        "La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du blender. Nous traitons le cigare comme un système dynamique combinant différentes semences de tabac, l’origine du tabac et du sol, ainsi que des techniques de construction.",
+        "La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du blender. Nous traitons le cigare comme un système dynamique combinant différentes semences de tabac, l’origine du tabac et du sol, ainsi que des techniques de construction. Cela nous permet de libérer tout le potentiel aromatique, de combustion et d’accord des cigares premium dans le monde entier.",
 
       settlingTitle: "Science du repos et du vieillissement",
       settlingIntro:
@@ -100,7 +100,7 @@ export default function System() {
       kicker: "Wissenschaftliches Framework",
       title: "Cigar Peak-Flavor System®",
       lead:
-        "Die meisten Zigarren werden emotional oder anhand dessen bewertet, was wir hören oder sehen. Nur wenige werden auf wissenschaftlicher Grundlage bewertet und dabei die Philosophie und Intention des Blenders berücksichtigt. Wir betrachten die Zigarre als dynamisches System aus verschiedenen Tabaksamen, Herkunft und Bodenbeschaffenheit sowie Konstruktionstechniken.",
+        "Die meisten Zigarren werden emotional oder anhand dessen bewertet, was wir hören oder sehen. Nur wenige werden auf wissenschaftlicher Grundlage bewertet und dabei die Philosophie und Intention des Blenders berücksichtigt. Wir betrachten die Zigarre als dynamisches System aus verschiedenen Tabaksamen, Herkunft und Bodenbeschaffenheit sowie Konstruktionstechniken. Dadurch können wir das volle Aroma-, Abbrand- und Pairing-Potenzial von Premium-Zigarren weltweit erschließen.",
 
       settlingTitle: "Wissenschaft von Ruhe & Reifung",
       settlingIntro:
@@ -162,8 +162,8 @@ export default function System() {
                 alt="Cigar Peak Flavor System"
                 fill
                 priority
-                sizes="(max-width: 900px) 92vw, 980px"
-                style={{ objectFit: "cover" }}
+                sizes="(max-width: 900px) 92vw, 1180px"
+                style={{ objectFit: "contain" }}
               />
             </div>
           </div>
@@ -250,7 +250,8 @@ export default function System() {
         }
 
         .systemHeroStack {
-          max-width: 980px;
+          max-width: none;
+          width: 100%;
         }
 
         .heroTitle {
@@ -258,24 +259,27 @@ export default function System() {
           line-height: 0.96;
           letter-spacing: -0.04em;
           margin-bottom: 20px;
-          max-width: 9.5ch;
+          max-width: none;
+          width: 100%;
         }
 
         .heroLead {
-          max-width: 720px;
+          max-width: none;
+          width: 100%;
           font-size: clamp(1.12rem, 1.55vw, 1.45rem);
-          line-height: 1.52;
+          line-height: 1.62;
           margin-bottom: 0;
         }
 
         .heroMediaRect {
           position: relative;
           width: 100%;
-          max-width: 980px;
-          height: 520px;
+          max-width: 1180px;
+          height: 720px;
           border-radius: 26px;
           overflow: hidden;
           margin-top: 34px;
+          background: transparent;
         }
 
         .systemCardsGrid {
@@ -342,7 +346,7 @@ export default function System() {
 
           .heroTitle {
             font-size: clamp(2.8rem, 11vw, 4.2rem);
-            max-width: 11ch;
+            max-width: none;
             margin-bottom: 16px;
           }
 
@@ -353,7 +357,7 @@ export default function System() {
           }
 
           .heroMediaRect {
-            height: 420px;
+            height: 520px;
             margin-top: 28px;
           }
         }
@@ -373,7 +377,7 @@ export default function System() {
           }
 
           .heroMediaRect {
-            height: 330px;
+            height: 360px;
             border-radius: 20px;
           }
 
