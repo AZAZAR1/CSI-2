@@ -26,6 +26,14 @@ export default function System() {
         "Radial moisture equilibrium",
       ],
 
+      peakTitle: "Peak-Flavor Window",
+      p2:
+        "Peak flavor occurs within a narrow moisture activation window specific to each blend family.",
+      p3:
+        "The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.",
+      furtherReadingLabel: "Further reading:",
+      furtherReadingTitle: "Ideal Cigar Humidity & Peak Flavor Timing",
+
       pairingTitle: "Pairing Science",
       pairingIntro:
         "The best pairing is the one that either extends the cigar’s intended combustion profile or buffers its failure mode:",
@@ -33,12 +41,6 @@ export default function System() {
         "Cigar smoke chemistry: combustion temperature, volatility of aromatic compounds, smoke density, oil/aerosol load, nicotine delivery, bitterness, pepper, mineral, sweetness, and resin",
         "Beverage structure: acidity, tannin, alcohol heat, residual sugar, oak lactones, aldehydes, esters, phenolics, glycerol texture, barrel-derived vanillin, caramel, spice, smoke, and oxidation notes",
       ],
-
-      peakTitle: "Peak window",
-      p2: "Peak flavor occurs within a narrow moisture activation window specific to each blend family.",
-      p3: "The system enables repeatable staging, diagnostics before lighting, and a controlled pathway from conditioning to peak aromatic expression.",
-      furtherReadingLabel: "Further reading:",
-      furtherReadingTitle: "Ideal Cigar Humidity & Peak Flavor Timing",
 
       applicationsTitle: "Program Applications",
       applicationsText:
@@ -67,6 +69,15 @@ export default function System() {
         "Équilibre radial de l’humidité",
       ],
 
+      peakTitle: "Fenêtre Peak-Flavor",
+      p2:
+        "Le pic aromatique apparaît dans une fenêtre d’activation hygrométrique spécifique à chaque famille de blends.",
+      p3:
+        "Le système permet une mise en condition reproductible, un diagnostic avant allumage et un chemin contrôlé vers l’expression aromatique maximale.",
+      furtherReadingLabel: "Lecture complémentaire :",
+      furtherReadingTitle:
+        "Humidité idéale du cigare & timing du pic aromatique",
+
       pairingTitle: "Science des accords",
       pairingIntro:
         "Le meilleur accord est celui qui prolonge le profil de combustion du cigare ou compense son mode de défaillance :",
@@ -74,12 +85,6 @@ export default function System() {
         "Chimie de la fumée du cigare : température de combustion, volatilité des composés aromatiques, densité de fumée, charge huile/aérosol, délivrance de nicotine, amertume, poivre, minéralité, douceur et résine",
         "Structure de la boisson : acidité, tanins, chaleur alcoolique, sucre résiduel, lactones de chêne, aldéhydes, esters, composés phénoliques, texture glycérinée, vanilline du fût, caramel, épices, fumée et notes oxydatives",
       ],
-
-      peakTitle: "Fenêtre Peak-Flavor",
-      p2: "Le pic aromatique apparaît dans une fenêtre d’activation hygrométrique spécifique à chaque famille de blends.",
-      p3: "Le système permet une mise en condition reproductible, un diagnostic avant allumage et un chemin contrôlé vers l’expression aromatique maximale.",
-      furtherReadingLabel: "Lecture complémentaire :",
-      furtherReadingTitle: "Humidité idéale du cigare & timing du pic aromatique",
 
       applicationsTitle: "Applications du programme",
       applicationsText:
@@ -108,6 +113,15 @@ export default function System() {
         "Radiales Feuchtigkeitsgleichgewicht",
       ],
 
+      peakTitle: "Peak-Flavor-Fenster",
+      p2:
+        "Das optimale Aroma liegt innerhalb eines engen Feuchtigkeits-Aktivierungsfensters, das für jede Blend-Familie spezifisch ist.",
+      p3:
+        "Das System ermöglicht reproduzierbare Konditionierung, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur maximalen aromatischen Entfaltung.",
+      furtherReadingLabel: "Weiterführende Lektüre:",
+      furtherReadingTitle:
+        "Ideale Zigarrenfeuchtigkeit & Peak-Flavor Timing",
+
       pairingTitle: "Pairing-Wissenschaft",
       pairingIntro:
         "Das beste Pairing ist jenes, das entweder das gewünschte Verbrennungsprofil der Zigarre verlängert oder ihren Fehlermodus abfedert:",
@@ -115,12 +129,6 @@ export default function System() {
         "Chemie des Zigarrenrauchs: Verbrennungstemperatur, Flüchtigkeit aromatischer Verbindungen, Rauchdichte, Öl-/Aerosollast, Nikotinabgabe, Bitterkeit, Pfeffer, Mineralität, Süße und Harz",
         "Struktur des Getränks: Säure, Tannine, Alkoholwärme, Restzucker, Eichenlactone, Aldehyde, Ester, Phenole, Glycerinstruktur, Fass-Vanillin, Karamell, Gewürze, Rauch und Oxidationsnoten",
       ],
-
-      peakTitle: "Peak-Fenster",
-      p2: "Das optimale Aroma liegt innerhalb eines engen Feuchtigkeits-Aktivierungsfensters, das für jede Blend-Familie spezifisch ist.",
-      p3: "Das System ermöglicht reproduzierbare Konditionierung, Diagnostik vor dem Anzünden und einen kontrollierten Weg zur maximalen aromatischen Entfaltung.",
-      furtherReadingLabel: "Weiterführende Lektüre:",
-      furtherReadingTitle: "Ideale Zigarrenfeuchtigkeit & Peak-Flavor Timing",
 
       applicationsTitle: "Programmanwendungen",
       applicationsText:
@@ -140,21 +148,21 @@ export default function System() {
       <Seo title={c.seoTitle} description={c.seoDescription} path="/system" />
 
       <div className="hero homeHero">
-        <div className="container">
-          <div className="systemHeroContent">
+        <div className="container heroGridResponsive">
+          <div className="heroTextCol">
             <div className="kicker">{c.kicker}</div>
-
             <h1 className="heroTitle">{c.title}</h1>
-
             <p className="lead heroLead">{c.lead}</p>
+          </div>
 
-            <div className="systemHeroImage">
+          <div className="heroImageCol">
+            <div className="heroMediaRect">
               <Image
                 src="/img/cigar-peak-flavor-system-science.png"
                 alt="Cigar Peak Flavor System"
                 fill
                 priority
-                sizes="(max-width: 900px) 92vw, 980px"
+                sizes="(max-width: 900px) 92vw, 620px"
                 style={{ objectFit: "cover" }}
               />
             </div>
@@ -164,63 +172,50 @@ export default function System() {
 
       <div className="section">
         <div className="container">
-          <div className="grid3" style={{ marginTop: 10 }}>
-            <div className="card">
+          <div className="grid3 systemCardsGrid">
+            <div className="card systemInfoCard">
               <h3>{c.settlingTitle}</h3>
-              <p style={{ marginTop: 14 }}>{c.settlingIntro}</p>
+              <p>{c.settlingIntro}</p>
 
-              <ul style={{ marginTop: 16 }}>
+              <ul>
                 {c.settlingBullets.map((b) => (
-                  <li key={b} style={{ marginBottom: 10 }}>
-                    {b}
-                  </li>
+                  <li key={b}>{b}</li>
                 ))}
               </ul>
             </div>
 
-            <div className="card">
+            <div className="card systemInfoCard">
               <h3>{c.peakTitle}</h3>
               <p>{c.p2}</p>
-              <p style={{ marginTop: 14 }}>{c.p3}</p>
+              <p>{c.p3}</p>
 
-              <div style={{ marginTop: 18 }}>
+              <div className="furtherReading">
                 <small>
                   {c.furtherReadingLabel}{" "}
-                  <Link
-                    href="/ideal-cigar-humidity"
-                    locale={lang}
-                    style={{
-                      fontWeight: 600,
-                      borderBottom: "1px solid currentColor",
-                      paddingBottom: 1,
-                      textDecoration: "none",
-                    }}
-                  >
+                  <Link href="/ideal-cigar-humidity" locale={lang}>
                     {c.furtherReadingTitle}
                   </Link>
                 </small>
               </div>
             </div>
 
-            <div className="card">
+            <div className="card systemInfoCard">
               <h3>{c.pairingTitle}</h3>
               <p>{c.pairingIntro}</p>
 
-              <ol style={{ marginTop: 16 }}>
+              <ol>
                 {c.pairingBullets.map((b) => (
-                  <li key={b} style={{ marginBottom: 14 }}>
-                    {b}
-                  </li>
+                  <li key={b}>{b}</li>
                 ))}
               </ol>
             </div>
           </div>
 
-          <div style={{ marginTop: 54 }}>
+          <div className="systemApplications">
             <h3>{c.applicationsTitle}</h3>
             <p>{c.applicationsText}</p>
 
-            <ul style={{ marginTop: 14 }}>
+            <ul>
               <li>
                 <Link href="/ccs" locale={lang}>
                   Certified Cigar Sommelier (CCS®)
@@ -249,8 +244,21 @@ export default function System() {
           padding-bottom: 54px;
         }
 
-        .systemHeroContent {
-          max-width: 980px;
+        .heroGridResponsive {
+          display: grid;
+          grid-template-columns: minmax(0, 1.05fr) minmax(420px, 620px);
+          gap: 44px;
+          align-items: center;
+        }
+
+        .heroTextCol {
+          min-width: 0;
+        }
+
+        .heroImageCol {
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .heroTitle {
@@ -262,26 +270,111 @@ export default function System() {
         }
 
         .heroLead {
-          max-width: 720px;
+          max-width: 28ch;
           font-size: clamp(1.12rem, 1.55vw, 1.45rem);
           line-height: 1.52;
           margin-bottom: 0;
         }
 
-        .systemHeroImage {
+        .heroMediaRect {
           position: relative;
           width: 100%;
-          max-width: 980px;
-          height: 520px;
+          max-width: 620px;
+          height: 420px;
           border-radius: 26px;
           overflow: hidden;
-          margin-top: 34px;
+          margin: 0 auto;
+        }
+
+        .systemCardsGrid {
+          margin-top: 10px;
+          align-items: stretch;
+        }
+
+        .systemInfoCard {
+          padding: 34px 34px 38px;
+        }
+
+        .systemInfoCard h3 {
+          font-size: 1.65rem;
+          line-height: 1.15;
+          letter-spacing: -0.025em;
+          margin-bottom: 18px;
+        }
+
+        .systemInfoCard p,
+        .systemInfoCard li,
+        .systemInfoCard small {
+          font-size: 1rem;
+          line-height: 1.68;
+        }
+
+        .systemInfoCard p {
+          margin: 0 0 16px;
+        }
+
+        .systemInfoCard ul,
+        .systemInfoCard ol {
+          margin-top: 18px;
+          padding-left: 24px;
+        }
+
+        .systemInfoCard li {
+          margin-bottom: 10px;
+        }
+
+        .furtherReading {
+          margin-top: 18px;
+        }
+
+        .furtherReading a {
+          font-weight: 600;
+          border-bottom: 1px solid currentColor;
+          padding-bottom: 1px;
+          text-decoration: none;
+        }
+
+        .systemApplications {
+          margin-top: 54px;
+        }
+
+        .systemApplications ul {
+          margin-top: 14px;
+        }
+
+        @media (max-width: 1100px) {
+          .heroGridResponsive {
+            grid-template-columns: minmax(0, 1fr) minmax(340px, 500px);
+            gap: 28px;
+          }
+
+          .heroTitle {
+            max-width: 10ch;
+          }
         }
 
         @media (max-width: 900px) {
           .homeHero {
             padding-top: 24px;
             padding-bottom: 34px;
+          }
+
+          .heroGridResponsive {
+            grid-template-columns: 1fr;
+            gap: 26px;
+          }
+
+          .heroImageCol {
+            order: 1;
+          }
+
+          .heroTextCol {
+            order: 2;
+          }
+
+          .heroMediaRect {
+            width: min(92vw, 560px);
+            height: 380px;
           }
 
           .heroTitle {
@@ -296,17 +389,22 @@ export default function System() {
             font-size: 1.26rem;
             line-height: 1.6;
           }
-
-          .systemHeroImage {
-            height: 420px;
-            margin-top: 28px;
-          }
         }
 
         @media (max-width: 640px) {
           .homeHero {
             padding-top: 18px;
             padding-bottom: 26px;
+          }
+
+          .heroGridResponsive {
+            gap: 20px;
+          }
+
+          .heroMediaRect {
+            width: 92vw;
+            height: 320px;
+            border-radius: 20px;
           }
 
           .heroTitle {
@@ -320,9 +418,12 @@ export default function System() {
             line-height: 1.58;
           }
 
-          .systemHeroImage {
-            height: 330px;
-            border-radius: 20px;
+          .systemInfoCard {
+            padding: 28px 26px 30px;
+          }
+
+          .systemInfoCard h3 {
+            font-size: 1.45rem;
           }
         }
       `}</style>
