@@ -1255,6 +1255,10 @@ UI
                       title="Cocktails"
                       data={pairingCard.cocktails}
                     />
+                    <PairingCategoryCard
+                      title="Tequila"
+                      data={pairingCard.tequila}
+                    />
                   </div>
                 </>
               )}
