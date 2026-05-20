@@ -1496,14 +1496,30 @@ UI
 
                   <h3>{pairingCard.title || "Cigar Pairing Card"}</h3>
 
-                  <div className="row2" style={{ marginTop: 12 }}>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(2, minmax(0,1fr))",
+                      gap: 12,
+                      marginTop: 12,
+                    }}
+                  >
                     <PairingCategoryCard title="Wine" data={pairingCard.wine} />
+                  
                     <PairingCategoryCard title="Whisky" data={pairingCard.whisky} />
+                  
                     <PairingCategoryCard title="Rum" data={pairingCard.rum} />
+                  
                     <PairingCategoryCard title="Beer" data={pairingCard.beer} />
+                  
                     <PairingCategoryCard
                       title="Cocktails"
                       data={pairingCard.cocktails}
+                    />
+
+                    <PairingCategoryCard
+                      title="Tequila"
+                      data={pairingCard.tequila}
                     />
                   </div>
                 </>
