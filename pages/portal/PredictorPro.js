@@ -300,6 +300,7 @@ export default function PredictorPage() {
   const [result, setResult] = useState(null);
   const [tastingCard, setTastingCard] = useState(null);
   const [pairingCard, setPairingCard] = useState(null);
+  const [pairingSelection, setPairingSelection] = useState("None");
   const [similarBlends, setSimilarBlends] = useState(null);
   const [err, setErr] = useState("");
 
@@ -485,6 +486,26 @@ HELPERS
   const displayPairingList = (values) => {
     if (!Array.isArray(values) || values.length === 0) return "—";
     return values.filter(Boolean).join(", ") || "—";
+  };
+
+  const getFilteredPairingCard = () => {
+    if (!pairingCard || pairingSelection === "None") {
+      return null;
+    }
+
+    const normalized = pairingSelection.toLowerCase();
+
+    const mapping = {
+      wine: pairingCard.wine,
+      whisky: pairingCard.whisky,
+      rum: pairingCard.rum,
+      cognac: pairingCard.cognac,
+      tequila: pairingCard.tequila,
+      beer: pairingCard.beer,
+      cocktail: pairingCard.cocktails,
+    };
+
+    return mapping[normalized] || null;
   };
 
   const PairingCategoryCard = ({ title, data }) => (
@@ -771,18 +792,25 @@ API CALLS
 
       if (!res.ok || !data.ok || !data.pairing_card) {
         setPairingCard(null);
-        setErr(
-          data.error ||
-            data.detail ||
-            `Pairing card failed with status ${res.status}.`
-        );
+
+        if (pairingSelection !== "None") {
+          setErr(
+            data.error ||
+              data.detail ||
+              `Pairing card failed with status ${res.status}.`
+          );
+        }
+
         return;
       }
 
       setPairingCard(data.pairing_card);
     } catch (e) {
       setPairingCard(null);
-      setErr(e.message || "Pairing card request failed.");
+
+      if (pairingSelection !== "None") {
+        setErr(e.message || "Pairing card request failed.");
+      }
     } finally {
       setLoadingPairing(false);
     }
@@ -890,10 +918,38 @@ UI
           <label>
             Instructions: Predictor Pro is available exclusively to approved
             subscribers. Enter your registered email address and press the "Check
-            User" button to launch. In the Cigar Blend Lookup section, enter the
-            blend Brand and Line then press "Blend Lookup" button. The blend
-            specific details will automatically appear below. You have the option manually adjust the Blend details using the drop-down menus. By pressing the "Run Predictor" button,
-            the application will produce the blend's optimal smoking leaf-level relative humidity %, and its tasting card. By pressing the "Find Similar Blends" button, the application will list the top blends that most closely match your selection.
+            User" button to access the platform. In the Cigar Blend Lookup section,
+            enter the blend Brand and Line, then press the "Lookup Blend" button.
+            The blend's construction and tobacco composition details will
+            automatically populate below.
+            <br />
+            <br />
+            Predictor Pro allows you to manually adjust the autofilled blend
+            details using the dropdown menus before running the prediction. These
+            adjustable fields include wrapper, wrapper process, wrapper thickness,
+            wrapper oiliness, binder, filler components, ligero level, special
+            tobacco flags, blend age, and smoker style.
+            <br />
+            <br />
+            Before running the prediction, you may optionally select a beverage
+            category from the "Pairing" dropdown menu. Available categories include
+            Wine, Whisky, Rum, Cognac, Tequila, Beer, and Cocktail. If "None" is
+            selected, the application will only generate the peak-flavor prediction
+            result and tasting card.
+            <br />
+            <br />
+            By pressing the "Run Predictor" button, the application will generate
+            the blend's optimal smoking leaf-level relative humidity %, together
+            with a professional tasting card describing the predicted palate,
+            retrohale, texture, and finish characteristics at peak-flavor
+            equilibrium. If a pairing category has been selected, the application
+            will also generate a dedicated pairing card for that selected beverage
+            category only.
+            <br />
+            <br />
+            By pressing the "Find Similar Blends" button, the application will
+            identify and display the cigar blends that most closely match the
+            selected blend's structural and sensory profile.
             <br />
             <strong>Important note</strong>: Leaf-level relative humidity % is measured using a
             commercially available Cigar Humidity Meter.
@@ -1365,6 +1421,30 @@ UI
             </div>
 
             <div
+              style={{
+                marginTop: 16,
+                marginBottom: 12,
+                maxWidth: 320,
+              }}
+            >
+              <label>Pairing</label>
+
+              <select
+                value={pairingSelection}
+                onChange={(e) => setPairingSelection(e.target.value)}
+              >
+                <option value="None">None</option>
+                <option value="Wine">Wine</option>
+                <option value="Whisky">Whisky</option>
+                <option value="Rum">Rum</option>
+                <option value="Cognac">Cognac</option>
+                <option value="Tequila">Tequila</option>
+                <option value="Beer">Beer</option>
+                <option value="Cocktail">Cocktail</option>
+              </select>
+            </div>
+
+            <div
               className="ctaRow"
               style={{
                 marginTop: 16,
@@ -1483,44 +1563,35 @@ UI
                 </>
               )}
 
-              {loadingPairing && (
+              {loadingPairing && pairingSelection !== "None" && (
                 <>
                   <hr className="sep" />
                   <div className="small">Loading pairing card...</div>
                 </>
               )}
 
-              {pairingCard && (
+              {pairingCard && pairingSelection !== "None" && (
                 <>
                   <hr className="sep" />
 
-                  <h3>{pairingCard.title || "Cigar Pairing Card"}</h3>
+                  <h3>{pairingSelection} Pairing Card</h3>
 
                   <div
                     style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(2, minmax(0,1fr))",
-                      gap: 12,
                       marginTop: 12,
+                      maxWidth: 760,
                     }}
                   >
-                    <PairingCategoryCard title="Wine" data={pairingCard.wine} />
-                  
-                    <PairingCategoryCard title="Whisky" data={pairingCard.whisky} />
-                  
-                    <PairingCategoryCard title="Rum" data={pairingCard.rum} />
-                  
-                    <PairingCategoryCard title="Beer" data={pairingCard.beer} />
-                  
-                    <PairingCategoryCard
-                      title="Cocktails"
-                      data={pairingCard.cocktails}
-                    />
-
-                    <PairingCategoryCard
-                      title="Tequila"
-                      data={pairingCard.tequila}
-                    />
+                    {getFilteredPairingCard() ? (
+                      <PairingCategoryCard
+                        title={pairingSelection}
+                        data={getFilteredPairingCard()}
+                      />
+                    ) : (
+                      <div className="small">
+                        No {pairingSelection.toLowerCase()} pairing data was returned for this blend.
+                      </div>
+                    )}
                   </div>
                 </>
               )}
