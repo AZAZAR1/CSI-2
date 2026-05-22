@@ -315,6 +315,7 @@ export default function PredictorPage() {
   const [result, setResult] = useState(null);
   const [tastingCard, setTastingCard] = useState(null);
   const [pairingCard, setPairingCard] = useState(null);
+  const [pairingSelection, setPairingSelection] = useState("None");
   const [similarBlends, setSimilarBlends] = useState(null);
   const [err, setErr] = useState("");
 
@@ -508,6 +509,27 @@ HELPERS
     if (!Array.isArray(values) || values.length === 0) return EMPTY_VALUE;
     return values.filter(Boolean).join(", ") || EMPTY_VALUE;
   };
+
+  const getFilteredPairingCard = () => {
+    if (!pairingCard || pairingSelection === "None") {
+      return null;
+    }
+
+    const normalized = pairingSelection.toLowerCase();
+
+    const mapping = {
+      wine: pairingCard.wine,
+      whisky: pairingCard.whisky,
+      rum: pairingCard.rum,
+      cognac: pairingCard.cognac,
+      tequila: pairingCard.tequila,
+      beer: pairingCard.beer,
+      cocktail: pairingCard.cocktails,
+    };
+
+    return mapping[normalized] || null;
+  };
+
 
   const ReadOnlyField = ({ label, value }) => (
     <div style={readOnlyFieldStyle}>
@@ -835,7 +857,10 @@ API CALLS
       setResult(data);
       await loadUsage();
       await loadTastingCard(cleanedBrand, cleanedLine);
-      await loadPairingCard(data);
+
+      if (pairingSelection !== "None") {
+        await loadPairingCard(data);
+      }
     } catch (e) {
       setErr(e.message || "Prediction request failed");
     } finally {
@@ -1115,6 +1140,30 @@ UI
             </div>
 
             <div
+              style={{
+                marginTop: 16,
+                marginBottom: 12,
+                maxWidth: 320,
+              }}
+            >
+              <label>Pairing</label>
+
+              <select
+                value={pairingSelection}
+                onChange={(e) => setPairingSelection(e.target.value)}
+              >
+                <option value="None">None</option>
+                <option value="Wine">Wine</option>
+                <option value="Whisky">Whisky</option>
+                <option value="Rum">Rum</option>
+                <option value="Cognac">Cognac</option>
+                <option value="Tequila">Tequila</option>
+                <option value="Beer">Beer</option>
+                <option value="Cocktail">Cocktail</option>
+              </select>
+            </div>
+
+            <div
               className="ctaRow"
               style={{
                 marginTop: 16,
@@ -1240,24 +1289,21 @@ UI
                 </>
               )}
 
-              {pairingCard && (
+              {pairingCard && pairingSelection !== "None" && (
                 <>
                   <hr className="sep" />
 
-                  <h3>{pairingCard.title || "Cigar Pairing Card"}</h3>
+                  <h3>{pairingSelection} Pairing Card</h3>
 
-                  <div className="row2" style={{ marginTop: 12 }}>
-                    <PairingCategoryCard title="Wine" data={pairingCard.wine} />
-                    <PairingCategoryCard title="Whisky" data={pairingCard.whisky} />
-                    <PairingCategoryCard title="Rum" data={pairingCard.rum} />
-                    <PairingCategoryCard title="Beer" data={pairingCard.beer} />
+                  <div
+                    style={{
+                      marginTop: 12,
+                      maxWidth: 760,
+                    }}
+                  >
                     <PairingCategoryCard
-                      title="Cocktails"
-                      data={pairingCard.cocktails}
-                    />
-                    <PairingCategoryCard
-                      title="Tequila"
-                      data={pairingCard.tequila}
+                      title={pairingSelection}
+                      data={getFilteredPairingCard()}
                     />
                   </div>
                 </>
