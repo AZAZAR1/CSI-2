@@ -819,12 +819,25 @@ API CALLS
 
       if (!res.ok || !data.ok || !data.pairing_card) {
         setPairingCard(null);
+
+        if (pairingSelection !== "None") {
+          setErr(
+            data.error ||
+              data.detail ||
+              `Pairing card failed with status ${res.status}.`
+          );
+        }
+
         return;
       }
 
       setPairingCard(data.pairing_card);
-    } catch {
+    } catch (e) {
       setPairingCard(null);
+
+      if (pairingSelection !== "None") {
+        setErr(e.message || "Pairing card request failed.");
+      }
     } finally {
       setLoadingPairing(false);
     }
@@ -916,14 +929,31 @@ UI
           <label>
             Instructions: The Predictor tool is available exclusively to approved
             subscribers. Enter your registered email address and press the "Check
-            User" button to launch. In the Cigar Blend Lookup section, enter the
-            blend Brand and Line then press "Blend Lookup" button. The blend
-            specific details will automatically appear below as read-only values.
-            By pressing the "Run Predictor" button, the application will produce
-            the blend's optimal smoking leaf-level relative humidity %, and its
-            tasting card. By pressing the "Find Similar Blends" button, the
-            application will list the top blends that most closely match your
-            selection.
+            User" button to access the platform. In the Cigar Blend Lookup section,
+            enter the blend Brand and Line, then press the "Blend Lookup" button.
+            The blend's construction and tobacco composition details will
+            automatically populate below as read-only values.
+            <br />
+            <br />
+            Before running the prediction, you may optionally select a beverage
+            category from the "Pairing" dropdown menu. Available categories include
+            Wine, Whisky, Rum, Cognac, Tequila, Beer, and Cocktail. If "None" is
+            selected, the application will only generate the peak-flavor prediction
+            result and tasting card.
+            <br />
+            <br />
+            By pressing the "Run Predictor" button, the application will generate
+            the blend's optimal smoking leaf-level relative humidity %, together
+            with a professional tasting card describing the predicted palate,
+            retrohale, texture, and finish characteristics at peak-flavor
+            equilibrium. If a pairing category has been selected, the application
+            will also generate a dedicated pairing card for that selected beverage
+            category only.
+            <br />
+            <br />
+            By pressing the "Find Similar Blends" button, the application will
+            identify and display the cigar blends that most closely match the
+            selected blend's structural and sensory profile.
             <br />
             <strong>Important note</strong>: Leaf-level relative humidity % is measured using a
             commercially available Cigar Humidity Meter.
