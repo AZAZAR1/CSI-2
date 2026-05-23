@@ -485,6 +485,13 @@ HELPERS
     return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
   };
 
+  const splitPipeValues = (value) => {
+    return String(value || "")
+      .split("|")
+      .map((x) => cleanText(x))
+      .filter(Boolean);
+  };
+
   const mapLookupValue = (value, options) => {
     const v = cleanText(value);
     if (!v) return "";
@@ -512,6 +519,15 @@ HELPERS
   const displayPairingList = (values) => {
     if (!Array.isArray(values) || values.length === 0) return EMPTY_VALUE;
     return values.filter(Boolean).join(", ") || EMPTY_VALUE;
+  };
+
+  const displayBinderComponents = () => {
+    const values = [
+      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
+      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
+    ].filter(Boolean);
+
+    return values.length > 0 ? values.join(", ") : EMPTY_VALUE;
   };
 
   const getFilteredPairingCard = () => {
@@ -572,10 +588,13 @@ HELPERS
     const rawWrapper = cleanText(match?.wrapper);
     const wrapperInList = rawWrapper && WRAPPERS.includes(rawWrapper);
 
+    const binderPipeValues = splitPipeValues(match?.binder);
+
     const rawBinder1 = cleanText(
       match?.binder_1 ||
         match?.binder1 ||
         match?.primary_binder ||
+        binderPipeValues[0] ||
         match?.binder
     );
 
@@ -583,7 +602,9 @@ HELPERS
       match?.binder_2 ||
         match?.binder2 ||
         match?.secondary_binder ||
-        match?.second_binder
+        match?.second_binder ||
+        binderPipeValues[1] ||
+        ""
     );
 
     const binder1InList = rawBinder1 && BINDERS.includes(rawBinder1);
@@ -1179,12 +1200,8 @@ UI
                 value={displayValue(form.wrapper_oiliness)}
               />
               <ReadOnlyField
-                label="Binder 1"
-                value={displayValue(buildCustomValue(form.binder_1, form.binder_1_custom))}
-              />
-              <ReadOnlyField
-                label="Binder 2"
-                value={displayValue(buildCustomValue(form.binder_2, form.binder_2_custom))}
+                label="Binder Components"
+                value={displayBinderComponents()}
               />
               <ReadOnlyField label="Ligero" value={displayValue(form.ligero)} />
               <ReadOnlyField
@@ -1416,10 +1433,18 @@ UI
                       {blend.wrapper_process && (
                         <div>Wrapper process: {blend.wrapper_process}</div>
                       )}
-                      {(blend.binder_1 || blend.binder) && (
-                        <div>Binder 1: {blend.binder_1 || blend.binder}</div>
+                      {(blend.binder_1 || blend.binder_2 || blend.binder) && (
+                        <div>
+                          Binder Components:{" "}
+                          {[
+                            ...splitPipeValues(blend.binder || ""),
+                            cleanText(blend.binder_1 || ""),
+                            cleanText(blend.binder_2 || ""),
+                          ]
+                            .filter(Boolean)
+                            .join(", ")}
+                        </div>
                       )}
-                      {blend.binder_2 && <div>Binder 2: {blend.binder_2}</div>}
 
                       {Array.isArray(blend.filler) && blend.filler.length > 0 && (
                         <div>Filler: {blend.filler.join(", ")}</div>
