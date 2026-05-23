@@ -47,125 +47,27 @@ const ORIGINS = [
 
 const FACTORIES = [
   "",
-  "A.CONTI",
-  "Abam",
-  "Abeja Cigar",
-  "Aganorsa",
-  "Agio",
-  "Agroindustrias",
-  "Altadis USA",
-  "Augusto Reyes",
-  "Barreda",
-  "Blackbird Dom",
-  "Blanco Cigars",
-  "Buena Vista",
-  "Caldwell",
-  "Camacho Factory",
-  "Casa 1910",
-  "Charles Fairmorn",
-  "CLE",
-  "Cortez",
-  "D'Hatuey",
-  "Dannemann",
-  "De Los reyes",
-  "Don Palomor",
-  "Drew Estate",
-  "El Aladino",
   "El Laguito",
-  "El Maestro",
-  "El Paraiso",
-  "El Rey de Los Habanos",
-  "El Sueno",
-  "El Titan de Bronze",
-  "El Viejo",
-  "EPC",
-  "Fabrica Centroamericana",
-  "Fabrica De Tabacos HVC",
-  "Fabrica Oveja Negra",
-  "Flor de Copan",
-  "Garmendia",
-  "General Cigar Dominicana",
-  "GR Tabacaleras",
-  "Graycliff Factory",
-  "Gurkha",
   "H. Upmann",
-  "HATSA",
-  "Honduras american",
-  "Horacio",
-  "JC Newman",
-  "JRE Tobacco",
-  "Kelner Boutique",
-  "Kristoff Cigars",
-  "la Alianza",
-  "La Aurora",
-  "La Corona",
-  "La Flor De Copa",
-  "La Zona",
-  "Luciano Tabacos",
-  "Maya Selva",
-  "Meerapfel",
-  "MGE",
-  "Mi Havana",
-  "Micallef",
-  "Mina Del Rey",
-  "My Father Cigars",
-  "Natura",
-  "Nica Sueno",
-  "Nicaragua American",
-  "Oscar Vallardes",
-  "Oveja Negra",
-  "Padron",
   "Partagas",
-  "PDR",
-  "Plasencia Cigars",
-  "Pure Aroma",
-  "Quesada",
-  "Raices Cubanas",
-  "Rocky Patel",
-  "San Lotano",
-  "Sanj Patel",
-  "Selected Tobacco",
-  "ST Group",
-  "STG Esteli",
-  "Tabacalera Altagracia",
-  "Tabacalera AJ Fernandez",
-  "Tabacalera Carreras",
-  "Tabacalera Cubanas",
-  "Tabacalera Davidoff",
-  "Tabacalera De Oliva",
-  "Tabacalera Diaz",
-  "Tabacalera El Artista",
-  "Tabacalera Fuente",
+  "La Corona",
+  "TABACUBA",
+  "My Father Cigars",
   "Tabacalera Garcia",
-  "Tabacalera Joya de Nicaragua",
-  "Tabacalera Kafie",
-  "Tabacalera La Alianza",
-  "Tabacalera La Flor",
-  "Tabacalera La Isla",
-  "Tabacalera Las Lavas",
-  "Tabacalera Oveja Negra",
-  "Tabacalera Palma",
-  "Tabacalera Pichardo",
-  "Tabacalera Rocky Patel",
-  "Tabacalera Tropical",
-  "Tabacalera Villa Cuba",
-  "Tabacalera William Ventura",
-  "Tabacos De Costa Rica",
-  "Tabacos De Exportacion",
-  "Tabacos de Valle Jalapa",
-  "Tabacos Ranchos",
-  "Tabacos Valle de Jalapa",
-  "Tabacuba",
+  "General Cigar Dominicana",
+  "La Aurora",
+  "La Flor Dominicana",
+  "Kelner SAS",
+  "Quesada Cigars",
+  "Tabacalera AJ Fernandez",
+  "Plasencia Cigars",
+  "Joya de Nicaragua",
+  "Oliva Cigar Co.",
+  "PDR Cigars",
+  "Davidoff",
   "Tabadom",
-  "Tabaos Vale De Jalapa",
-  "TABSA",
-  "TacaNicsa",
-  "TAF",
-  "Tavicusa Factory",
-  "The Foundation Cigars",
-  "Topper",
-  "Ventura",
-  "Villiger de Nicaragua"
+  "Tabacos de Costa Rica",
+  "Unknown / Mixed",
 ];
 
 const WRAPPERS = [
@@ -325,8 +227,10 @@ const EMPTY_LOOKUP_FIELDS = {
   wrapper_thickness: "medium",
   wrapper_oiliness: "medium",
 
-  binder: "",
-  binder_custom: "",
+  binder_1: "",
+  binder_1_custom: "",
+  binder_2: "",
+  binder_2_custom: "",
 
   filler_1: "",
   filler_2: "",
@@ -385,8 +289,10 @@ export default function PredictorPage() {
     wrapper_thickness: "medium",
     wrapper_oiliness: "medium",
 
-    binder: "",
-    binder_custom: "",
+    binder_1: "",
+    binder_1_custom: "",
+    binder_2: "",
+    binder_2_custom: "",
 
     filler_1: "",
     filler_2: "",
@@ -666,8 +572,22 @@ HELPERS
     const rawWrapper = cleanText(match?.wrapper);
     const wrapperInList = rawWrapper && WRAPPERS.includes(rawWrapper);
 
-    const rawBinder = cleanText(match?.binder);
-    const binderInList = rawBinder && BINDERS.includes(rawBinder);
+    const rawBinder1 = cleanText(
+      match?.binder_1 ||
+        match?.binder1 ||
+        match?.primary_binder ||
+        match?.binder
+    );
+
+    const rawBinder2 = cleanText(
+      match?.binder_2 ||
+        match?.binder2 ||
+        match?.secondary_binder ||
+        match?.second_binder
+    );
+
+    const binder1InList = rawBinder1 && BINDERS.includes(rawBinder1);
+    const binder2InList = rawBinder2 && BINDERS.includes(rawBinder2);
 
     const filler = Array.isArray(match?.filler)
       ? match.filler.map(cleanText).filter(Boolean)
@@ -716,10 +636,15 @@ HELPERS
       wrapper_thickness: cleanedWrapperThickness || "medium",
       wrapper_oiliness: cleanedWrapperOiliness || "medium",
 
-      binder: rawBinder
-        ? (binderInList ? rawBinder : "Hybrid / Other")
+      binder_1: rawBinder1
+        ? (binder1InList ? rawBinder1 : "Hybrid / Other")
         : "",
-      binder_custom: rawBinder && !binderInList ? rawBinder : "",
+      binder_1_custom: rawBinder1 && !binder1InList ? rawBinder1 : "",
+
+      binder_2: rawBinder2
+        ? (binder2InList ? rawBinder2 : "Hybrid / Other")
+        : "",
+      binder_2_custom: rawBinder2 && !binder2InList ? rawBinder2 : "",
 
       filler_1: validFillers[0] || "",
       filler_2: validFillers[1] || "",
@@ -747,7 +672,13 @@ HELPERS
     wrapper_thickness: cleanText(form.wrapper_thickness),
     wrapper_oiliness: cleanText(form.wrapper_oiliness),
 
-    binder: cleanText(buildCustomValue(form.binder, form.binder_custom)),
+    binder: cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
+    binder_1: cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
+    binder_2: cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
+    binders: buildUniqueList([
+      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
+      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
+    ]),
 
     filler: buildUniqueList([
       cleanText(form.filler_1),
@@ -1248,8 +1179,12 @@ UI
                 value={displayValue(form.wrapper_oiliness)}
               />
               <ReadOnlyField
-                label="Binder"
-                value={displayValue(buildCustomValue(form.binder, form.binder_custom))}
+                label="Binder 1"
+                value={displayValue(buildCustomValue(form.binder_1, form.binder_1_custom))}
+              />
+              <ReadOnlyField
+                label="Binder 2"
+                value={displayValue(buildCustomValue(form.binder_2, form.binder_2_custom))}
               />
               <ReadOnlyField label="Ligero" value={displayValue(form.ligero)} />
               <ReadOnlyField
@@ -1481,7 +1416,10 @@ UI
                       {blend.wrapper_process && (
                         <div>Wrapper process: {blend.wrapper_process}</div>
                       )}
-                      {blend.binder && <div>Binder: {blend.binder}</div>}
+                      {(blend.binder_1 || blend.binder) && (
+                        <div>Binder 1: {blend.binder_1 || blend.binder}</div>
+                      )}
+                      {blend.binder_2 && <div>Binder 2: {blend.binder_2}</div>}
 
                       {Array.isArray(blend.filler) && blend.filler.length > 0 && (
                         <div>Filler: {blend.filler.join(", ")}</div>
