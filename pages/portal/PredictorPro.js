@@ -71,7 +71,7 @@ const styles = {
     border: `1px solid rgba(139,26,26,0.35)`,
     borderRadius: 2,
     padding: "3px 10px",
-    fontSize: 10,
+    fontSize: 15,
     fontFamily: DS.fontMono,
     letterSpacing: "0.12em",
     color: DS.gold,
@@ -97,7 +97,7 @@ const styles = {
   },
   subtitle: {
     fontFamily: DS.fontMono,
-    fontSize: 11,
+    fontSize: 16,
     color: DS.textMuted,
     letterSpacing: "0.08em",
     textTransform: "uppercase",
@@ -119,7 +119,7 @@ const styles = {
 
   sectionLabel: {
     fontFamily: DS.fontMono,
-    fontSize: 9,
+    fontSize: 14,
     letterSpacing: "0.16em",
     textTransform: "uppercase",
     color: DS.textMuted,
@@ -152,7 +152,7 @@ const styles = {
   },
   label: {
     fontFamily: DS.fontMono,
-    fontSize: 9,
+    fontSize: 14,
     letterSpacing: "0.12em",
     textTransform: "uppercase",
     color: DS.textMuted,
@@ -214,7 +214,7 @@ const styles = {
     color: "#f0e8e0",
     cursor: "pointer",
     fontFamily: DS.fontMono,
-    fontSize: 10,
+    fontSize: 15,
     fontWeight: 600,
     letterSpacing: "0.12em",
     padding: "11px 24px",
@@ -230,7 +230,7 @@ const styles = {
     color: DS.textSecond,
     cursor: "pointer",
     fontFamily: DS.fontMono,
-    fontSize: 10,
+    fontSize: 15,
     fontWeight: 500,
     letterSpacing: "0.12em",
     padding: "11px 24px",
@@ -288,7 +288,7 @@ const styles = {
   },
   dataLabel: {
     fontFamily: DS.fontMono,
-    fontSize: 10,
+    fontSize: 15,
     letterSpacing: "0.08em",
     textTransform: "uppercase",
     color: DS.textMuted,
@@ -358,7 +358,7 @@ const styles = {
   },
   metaItem: {
     fontFamily: DS.fontMono,
-    fontSize: 9,
+    fontSize: 14,
     letterSpacing: "0.1em",
     textTransform: "uppercase",
     color: DS.textMuted,
@@ -436,7 +436,7 @@ const GlobalStyles = () => (
 
     /* Instruction block */
     .pp-instructions {
-      font-size: 13px;
+      font-size: 15px;
       line-height: 1.9;
       color: #8a8278;
       border-left: 2px solid rgba(139,26,26,0.4);
@@ -540,7 +540,7 @@ const ProcessingIndicator = ({ label }) => (
     gap: 10,
     padding: "10px 0",
     fontFamily: DS.fontMono,
-    fontSize: 11,
+    fontSize: 16,
     color: DS.gold,
     letterSpacing: "0.08em",
   }}>
@@ -709,6 +709,13 @@ export default function PredictorPage() {
     return (!v) ? "" : (options.includes(v) ? v : "");
   };
 
+  const lookupOptionList = (options, selectedValue) => {
+    const selected = cleanText(selectedValue);
+    if (!selected || options.includes(selected)) return options;
+    const withoutBlank = options.filter(Boolean);
+    return ["", selected, ...withoutBlank];
+  };
+
   const resetUserValidation = () => {
     setUsage(null); setValidatedEmail(""); setIsUserValidated(false);
     setLookupStatus(""); setLookupSource("");
@@ -745,7 +752,7 @@ export default function PredictorPage() {
       line:  cleanText(match?.line)  || f.line,
       ...EMPTY_LOOKUP_FIELDS,
       origin:            mapLookupValue(match?.origin,   ORIGINS),
-      factory:           mapLookupValue(match?.factory,  FACTORIES),
+      factory:           cleanText(match?.factory || match?.factory_name || match?.manufacturer || match?.producer || match?.made_by),
       wrapper:           rawWrapper ? (wrapperInList ? rawWrapper : "Hybrid / Other") : "",
       wrapper_custom:    rawWrapper && !wrapperInList ? rawWrapper : "",
       wrapper_process:   mapLookupValue(match?.wrapper_process,   WRAPPER_PROCESSES),
@@ -963,7 +970,7 @@ export default function PredictorPage() {
                 </span>
               )}
               {!isAuthorizedUser && !loadingUsage && (
-                <span style={{ fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.08em" }}>
+                <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.08em" }}>
                   Validation required to enable Predictor Pro
                 </span>
               )}
@@ -1046,14 +1053,14 @@ export default function PredictorPage() {
               </button>
 
               {lookupStatus && (
-                <span style={{ fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
                   {lookupStatus}
                 </span>
               )}
             </div>
 
             {lookupSource && (
-              <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.07em" }}>
+              <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
                 Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
               </div>
             )}
@@ -1070,7 +1077,7 @@ export default function PredictorPage() {
               <div>
                 <label style={styles.label}>Factory</label>
                 <select className="pp-select" style={styles.select} value={form.factory} onChange={(e) => update("factory", e.target.value)}>
-                  {FACTORIES.map((x) => <option key={x||"blank-factory"} value={x}>{x||"Select Factory"}</option>)}
+                  {lookupOptionList(FACTORIES, form.factory).map((x) => <option key={x||"blank-factory"} value={x}>{x||"Select Factory"}</option>)}
                 </select>
               </div>
             </div>
@@ -1270,7 +1277,7 @@ export default function PredictorPage() {
                 </div>
                 <div style={styles.rhPanel}>
                   <div style={styles.dataLabel}>CPFS Family</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 16, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em" }}>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
                     {result.family}
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 4 }}>Classification</div>
@@ -1383,14 +1390,14 @@ export default function PredictorPage() {
                     </div>
 
                     {Array.isArray(blend.why_similar) && blend.why_similar.length > 0 && (
-                      <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                      <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
                         Similarity basis: {blend.why_similar.join(" · ")}
                       </div>
                     )}
                   </div>
                 ))
               ) : (
-                <div style={{ fontFamily: DS.fontMono, fontSize: 11, color: DS.textMuted }}>
+                <div style={{ fontFamily: DS.fontMono, fontSize: 16, color: DS.textMuted }}>
                   No structurally similar blends identified in the current database.
                 </div>
               )}
