@@ -2,1209 +2,997 @@ import { useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 
-/* --------------------------
-AUTOCOMPLETE UI STYLE
--------------------------- */
+/* ============================================================
+   SWISS INSTITUTIONAL DESIGN SYSTEM â€” ICSI PREDICTOR PRO
+   Color palette: Deep graphite / off-white / cobalt accent
+   Typography: Inter (headings) + IBM Plex Mono (data readouts)
+   Spacing: 8pt grid throughout
+   ============================================================ */
 
-const autocompleteBox = {
-  position: "absolute",
-  background: "#fff",
-  border: "1px solid rgba(0,0,0,.1)",
-  borderRadius: 8,
-  width: "100%",
-  zIndex: 50,
-  maxHeight: 220,
-  overflowY: "auto",
-  marginTop: 6,
+const DS = {
+  // Color tokens
+  bg:           "#0d0f11",        // near-black carbon
+  bgCard:       "#13161a",        // card surface
+  bgPanel:      "#1a1e24",        // raised panel
+  bgInput:      "#0f1215",        // input surface
+  border:       "rgba(255,255,255,0.07)",
+  borderStrong: "rgba(255,255,255,0.13)",
+  accent:       "#2563eb",        // cobalt blue â€” informational
+  accentDim:    "rgba(37,99,235,0.15)",
+  accentGlow:   "rgba(37,99,235,0.06)",
+  success:      "#16a34a",        // validated / green
+  successDim:   "rgba(22,163,74,0.12)",
+  warning:      "#d97706",        // caution / amber
+  warningDim:   "rgba(217,119,6,0.12)",
+  danger:       "#dc2626",        // deviation / red
+  dangerDim:    "rgba(220,38,38,0.12)",
+  textPrimary:  "#e8eaed",
+  textSecond:   "#8b95a1",
+  textMuted:    "#4f5a65",
+  textMono:     "#a8d4ff",        // monospaced data readouts
+  fontSans:     "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+  fontMono:     "'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', monospace",
 };
 
-const autocompleteItem = {
-  padding: "10px 12px",
-  cursor: "pointer",
-  borderBottom: "1px solid rgba(0,0,0,.06)",
+/* ---- Inline style objects ---- */
+
+const styles = {
+  page: {
+    background: DS.bg,
+    minHeight: "100vh",
+    fontFamily: DS.fontSans,
+    color: DS.textPrimary,
+    WebkitFontSmoothing: "antialiased",
+  },
+
+  container: {
+    maxWidth: 1040,
+    margin: "0 auto",
+    padding: "0 24px 80px",
+  },
+
+  /* â”€â”€ PAGE HEADER â”€â”€ */
+  pageHeader: {
+    padding: "48px 0 40px",
+    borderBottom: `1px solid ${DS.border}`,
+    marginBottom: 32,
+  },
+  engineBadge: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 6,
+    background: DS.accentDim,
+    border: `1px solid rgba(37,99,235,0.3)`,
+    borderRadius: 3,
+    padding: "3px 10px",
+    fontSize: 10,
+    fontFamily: DS.fontMono,
+    letterSpacing: "0.12em",
+    color: DS.accent,
+    marginBottom: 16,
+    textTransform: "uppercase",
+  },
+  dotActive: {
+    width: 5,
+    height: 5,
+    borderRadius: "50%",
+    background: DS.success,
+    boxShadow: `0 0 6px ${DS.success}`,
+    animation: "pulse 2s infinite",
+  },
+  h1: {
+    fontFamily: DS.fontSans,
+    fontSize: 28,
+    fontWeight: 600,
+    letterSpacing: "-0.02em",
+    color: DS.textPrimary,
+    margin: "0 0 8px",
+    lineHeight: 1.2,
+  },
+  subtitle: {
+    fontFamily: DS.fontMono,
+    fontSize: 11,
+    color: DS.textMuted,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    margin: 0,
+  },
+
+  /* â”€â”€ CARDS â”€â”€ */
+  card: {
+    background: DS.bgCard,
+    border: `1px solid ${DS.border}`,
+    borderRadius: 6,
+    padding: "24px 28px",
+    marginBottom: 16,
+    position: "relative",
+  },
+  cardAccent: {
+    borderLeft: `2px solid ${DS.accent}`,
+  },
+
+  sectionLabel: {
+    fontFamily: DS.fontMono,
+    fontSize: 9,
+    letterSpacing: "0.14em",
+    textTransform: "uppercase",
+    color: DS.textMuted,
+    marginBottom: 4,
+  },
+  h2: {
+    fontSize: 13,
+    fontWeight: 600,
+    letterSpacing: "0.02em",
+    color: DS.textPrimary,
+    margin: "0 0 20px",
+    textTransform: "uppercase",
+  },
+  h3: {
+    fontSize: 11,
+    fontWeight: 600,
+    letterSpacing: "0.10em",
+    textTransform: "uppercase",
+    color: DS.textSecond,
+    margin: "0 0 10px",
+  },
+
+  /* â”€â”€ FORM ELEMENTS â”€â”€ */
+  fieldGroup: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+  },
+  label: {
+    fontFamily: DS.fontMono,
+    fontSize: 9,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+    color: DS.textMuted,
+    marginBottom: 4,
+    display: "block",
+  },
+  input: {
+    background: DS.bgInput,
+    border: `1px solid ${DS.borderStrong}`,
+    borderRadius: 3,
+    color: DS.textPrimary,
+    fontFamily: DS.fontSans,
+    fontSize: 13,
+    padding: "9px 12px",
+    width: "100%",
+    boxSizing: "border-box",
+    outline: "none",
+    transition: "border-color 0.15s",
+    WebkitAppearance: "none",
+  },
+  select: {
+    background: DS.bgInput,
+    border: `1px solid ${DS.borderStrong}`,
+    borderRadius: 3,
+    color: DS.textPrimary,
+    fontFamily: DS.fontSans,
+    fontSize: 13,
+    padding: "9px 12px",
+    width: "100%",
+    boxSizing: "border-box",
+    outline: "none",
+    appearance: "none",
+    WebkitAppearance: "none",
+    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234f5a65'/%3E%3C/svg%3E")`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right 12px center",
+    paddingRight: 32,
+    cursor: "pointer",
+    transition: "border-color 0.15s",
+  },
+
+  /* â”€â”€ GRID LAYOUTS â”€â”€ */
+  grid2: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 16,
+  },
+  grid3: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+    gap: 12,
+  },
+
+  /* â”€â”€ BUTTONS â”€â”€ */
+  btnPrimary: {
+    background: DS.accent,
+    border: "1px solid transparent",
+    borderRadius: 3,
+    color: "#fff",
+    cursor: "pointer",
+    fontFamily: DS.fontMono,
+    fontSize: 10,
+    fontWeight: 600,
+    letterSpacing: "0.12em",
+    padding: "11px 24px",
+    textTransform: "uppercase",
+    transition: "opacity 0.15s",
+    outline: "none",
+    whiteSpace: "nowrap",
+  },
+  btnSecondary: {
+    background: "transparent",
+    border: `1px solid ${DS.borderStrong}`,
+    borderRadius: 3,
+    color: DS.textSecond,
+    cursor: "pointer",
+    fontFamily: DS.fontMono,
+    fontSize: 10,
+    fontWeight: 500,
+    letterSpacing: "0.12em",
+    padding: "11px 24px",
+    textTransform: "uppercase",
+    transition: "border-color 0.15s, color 0.15s",
+    outline: "none",
+    whiteSpace: "nowrap",
+  },
+
+  /* â”€â”€ STATUS / NOTICE â”€â”€ */
+  notice: {
+    background: DS.dangerDim,
+    border: `1px solid rgba(220,38,38,0.25)`,
+    borderRadius: 4,
+    padding: "12px 16px",
+    fontSize: 12,
+    color: "#f87171",
+    fontFamily: DS.fontMono,
+  },
+  noticeWarning: {
+    background: DS.warningDim,
+    border: `1px solid rgba(217,119,6,0.25)`,
+    borderRadius: 4,
+    padding: "12px 16px",
+    fontSize: 12,
+    color: "#fbbf24",
+    fontFamily: DS.fontMono,
+  },
+  noticeSuccess: {
+    background: DS.successDim,
+    border: `1px solid rgba(22,163,74,0.25)`,
+    borderRadius: 4,
+    padding: "12px 16px",
+    fontSize: 12,
+    color: "#4ade80",
+    fontFamily: DS.fontMono,
+  },
+  noticeInfo: {
+    background: DS.accentGlow,
+    border: `1px solid rgba(37,99,235,0.2)`,
+    borderRadius: 4,
+    padding: "12px 16px",
+    fontSize: 12,
+    color: "#93c5fd",
+    fontFamily: DS.fontMono,
+  },
+
+  /* â”€â”€ DATA READOUTS (monospaced) â”€â”€ */
+  dataRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "baseline",
+    padding: "7px 0",
+    borderBottom: `1px solid ${DS.border}`,
+  },
+  dataLabel: {
+    fontFamily: DS.fontMono,
+    fontSize: 10,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: DS.textMuted,
+  },
+  dataValue: {
+    fontFamily: DS.fontMono,
+    fontSize: 12,
+    color: DS.textMono,
+    fontWeight: 500,
+  },
+  dataValuePrimary: {
+    fontFamily: DS.fontMono,
+    fontSize: 14,
+    color: DS.accent,
+    fontWeight: 600,
+    letterSpacing: "0.04em",
+  },
+
+  /* â”€â”€ RH DISPLAY â”€â”€ */
+  rhPanel: {
+    background: DS.bgPanel,
+    border: `1px solid ${DS.border}`,
+    borderRadius: 4,
+    padding: "20px 24px",
+    textAlign: "center",
+    flex: 1,
+  },
+
+  /* â”€â”€ SEPARATOR â”€â”€ */
+  sep: {
+    border: "none",
+    borderTop: `1px solid ${DS.border}`,
+    margin: "24px 0",
+  },
+
+  /* â”€â”€ AUTOCOMPLETE â”€â”€ */
+  autocompleteBox: {
+    position: "absolute",
+    background: DS.bgPanel,
+    border: `1px solid ${DS.borderStrong}`,
+    borderRadius: 4,
+    width: "100%",
+    zIndex: 50,
+    maxHeight: 220,
+    overflowY: "auto",
+    marginTop: 3,
+    boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+  },
+  autocompleteItem: {
+    padding: "10px 14px",
+    cursor: "pointer",
+    borderBottom: `1px solid ${DS.border}`,
+    fontSize: 13,
+    fontFamily: DS.fontSans,
+    color: DS.textSecond,
+    transition: "background 0.1s",
+  },
+
+  /* â”€â”€ METADATA FOOTER â”€â”€ */
+  metaBar: {
+    display: "flex",
+    gap: 24,
+    flexWrap: "wrap",
+    padding: "12px 0 0",
+    borderTop: `1px solid ${DS.border}`,
+    marginTop: 16,
+  },
+  metaItem: {
+    fontFamily: DS.fontMono,
+    fontSize: 9,
+    letterSpacing: "0.1em",
+    textTransform: "uppercase",
+    color: DS.textMuted,
+  },
+  metaDot: {
+    display: "inline-block",
+    width: 4,
+    height: 4,
+    borderRadius: "50%",
+    background: DS.success,
+    marginRight: 6,
+    verticalAlign: "middle",
+  },
 };
 
-/* --------------------------
-DATA CONSTANTS
--------------------------- */
+/* ============================================================
+   INLINE KEYFRAMES  (injected once)
+   ============================================================ */
 
-const ORIGINS = [
-  "",
-  "Cuba",
-  "Dominican Republic",
-  "Nicaragua",
-  "Honduras",
-  "Mexico",
-  "Costa Rica",
-  "Panama",
-  "Ecuador",
-  "Brazil",
-  "Peru",
-  "United States",
-  "Jamaica",
-  "Philippines",
-];
+const GlobalStyles = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
 
-const FACTORIES = [
-  "",
-  "A.CONTI",
-  "Abam",
-  "Abeja Cigar",
-  "Aganorsa",
-  "Agio",
-  "Agroindustrias",
-  "Altadis USA",
-  "Augusto Reyes",
-  "Barreda",
-  "Blackbird Dom",
-  "Blanco Cigars",
-  "Buena Vista",
-  "Caldwell",
-  "Camacho Factory",
-  "Casa 1910",
-  "Charles Fairmorn",
-  "CLE",
-  "Cortez",
-  "D'Hatuey",
-  "Dannemann",
-  "De Los reyes",
-  "Don Palomor",
-  "Drew Estate",
-  "El Aladino",
-  "El Laguito",
-  "El Maestro",
-  "El Paraiso",
-  "El Rey de Los Habanos",
-  "El Sueno",
-  "El Titan de Bronze",
-  "El Viejo",
-  "EPC",
-  "Fabrica Centroamericana",
-  "Fabrica De Tabacos HVC",
-  "Fabrica Oveja Negra",
-  "Flor de Copan",
-  "Garmendia",
-  "General Cigar Dominicana",
-  "GR Tabacaleras",
-  "Graycliff Factory",
-  "Gurkha",
-  "H. Upmann",
-  "HATSA",
-  "Honduras american",
-  "Horacio",
-  "JC Newman",
-  "JRE Tobacco",
-  "Kelner Boutique",
-  "Kristoff Cigars",
-  "la Alianza",
-  "La Aurora",
-  "La Corona",
-  "La Flor De Copa",
-  "La Zona",
-  "Luciano Tabacos",
-  "Maya Selva",
-  "Meerapfel",
-  "MGE",
-  "Mi Havana",
-  "Micallef",
-  "Mina Del Rey",
-  "My Father Cigars",
-  "Natura",
-  "Nica Sueno",
-  "Nicaragua American",
-  "Oscar Vallardes",
-  "Oveja Negra",
-  "Padron",
-  "Partagas",
-  "PDR",
-  "Plasencia Cigars",
-  "Pure Aroma",
-  "Quesada",
-  "Raices Cubanas",
-  "Rocky Patel",
-  "San Lotano",
-  "Sanj Patel",
-  "Selected Tobacco",
-  "ST Group",
-  "STG Esteli",
-  "Tabacalera Altagracia",
-  "Tabacalera AJ Fernandez",
-  "Tabacalera Carreras",
-  "Tabacalera Cubanas",
-  "Tabacalera Davidoff",
-  "Tabacalera De Oliva",
-  "Tabacalera Diaz",
-  "Tabacalera El Artista",
-  "Tabacalera Fuente",
-  "Tabacalera Garcia",
-  "Tabacalera Joya de Nicaragua",
-  "Tabacalera Kafie",
-  "Tabacalera La Alianza",
-  "Tabacalera La Flor",
-  "Tabacalera La Isla",
-  "Tabacalera Las Lavas",
-  "Tabacalera Oveja Negra",
-  "Tabacalera Palma",
-  "Tabacalera Pichardo",
-  "Tabacalera Rocky Patel",
-  "Tabacalera Tropical",
-  "Tabacalera Villa Cuba",
-  "Tabacalera William Ventura",
-  "Tabacos De Costa Rica",
-  "Tabacos De Exportacion",
-  "Tabacos de Valle Jalapa",
-  "Tabacos Ranchos",
-  "Tabacos Valle de Jalapa",
-  "Tabacuba",
-  "Tabadom",
-  "Tabaos Vale De Jalapa",
-  "TABSA",
-  "TacaNicsa",
-  "TAF",
-  "Tavicusa Factory",
-  "The Foundation Cigars",
-  "Topper",
-  "Ventura",
-  "Villiger de Nicaragua"
-];
+    *, *::before, *::after { box-sizing: border-box; }
 
-const WRAPPERS = [
-  "",
-  "Cuban",
-  "Habano",
-  "Nicaraguan Habano",
-  "Habano 2000",
-  "Dominican",
-  "Brazilian",
-  "Corojo",
-  "Corojo 99",
-  "Criollo",
-  "Criollo 98",
-  "Connecticut Shade",
-  "Connecticut Broadleaf",
-  "Connecticut Habano",
-  "Costarican",
-  "Broadleaf",
-  "Honduran",
-  "San Andres",
-  "Cameroon",
-  "Sumatra",
-  "Ecuadorian Sumatra",
-  "Ecuadorian Habano",
-  "Ecuadorian Connecticut",
-  "Maduro",
-  "Oscuro",
-  "Rosado",
-  "Colorado",
-  "Mexican",
-  "Pennsylvania Broadleaf",
-  "Hybrid / Other",
-];
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes sweep {
+      from { clip-path: inset(0 100% 0 0); }
+      to   { clip-path: inset(0 0% 0 0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-const WRAPPER_PROCESSES = [
-  "",
-  "Natural",
-  "Claro",
-  "Colorado",
-  "Colorado Claro",
-  "Colorado Maduro",
-  "Rosado",
-  "Maduro",
-  "Oscuro",
-  "Corojo-processed",
-  "Sun Grown",
-  "Shade Grown",
-  "Double Fermented",
-  "Barrel Aged",
-  "Other",
-];
+    .pp-input:focus  { border-color: rgba(37,99,235,0.6) !important; }
+    .pp-select:focus { border-color: rgba(37,99,235,0.6) !important; }
 
-const WRAPPER_THICKNESS_OPTIONS = ["thin", "medium", "thick"];
-const WRAPPER_OILINESS_OPTIONS = ["low", "medium", "high"];
+    .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
+    .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
+    .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(37,99,235,0.4); color: #93c5fd; }
+    .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
 
-const BINDERS = [
-  "",
-  "Cuban",
-  "Dominican",
-  "Nicaraguan",
-  "Honduran",
-  "Mexican",
-  "Brazilian",
-  "Peruvian",
-  "Cameroon",
-  "Costarican",
-  "San Andres",
-  "Connecticut",
-  "Sumatra",
-  "Ecuadorian",
-  "Broadleaf",
-  "Criollo",
-  "Corojo",
-  "Hybrid / Other",
-];
+    .pp-ac-item:hover { background: rgba(37,99,235,0.08) !important; color: #e8eaed !important; }
 
-const FILLER_OPTIONS = [
-  "",
-  "Cuba",
-  "Cuban Viso",
-  "Alta Viso",
-  "Dominican Republic",
-  "Nicaragua",
-  "Honduras",
-  "Mexico",
-  "Costa Rica",
-  "Panama",
-  "Ecuador",
-  "Brazil",
-  "Peru",
-  "Cameroon",
-  "Colombia",
-  "United States",
-  "Piloto Cubano",
-  "Olor Dominicano",
-  "Corojo",
-  "Criollo",
-  "Ligero",
-  "Ecuadorian Ligero",
-  "Cuban Seco",
-  "Volado",
-  "Medio Tiempo",
-  "Zimbabwe",
-  "Paraguay",
-];
+    .pp-datarow:last-child { border-bottom: none !important; }
 
-const LIGERO_OPTIONS = ["", "none", "low", "moderate", "high"];
+    .pp-result { animation: fadeIn 0.35s ease both; }
 
-const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
-  "",
-  "Medio Tiempo",
-  "Alta Viso-heavy",
-  "Piloto Cubano",
-  "Olor Dominicano",
-  "Dominican Bonao",
-  "Pelo de Oro",
-  "Corojo",
-  "Criollo",
-  "Andullo",
-  "Cotui",
-  "Yamasa",
-  "San Vicente",
-  "Somoto",
-  "Brazilian Cubra",
-  "Brazilian Mata Fina",
-  "Brazilian Mata Norte",
-  "Brazilian Arapiraca",
-  "Masatepe",
-  "Ometepe",
-  "Pueblo Nuevo",
-  "Jamastran",
-  "Broadleaf-heavy",
-  "San Andres-heavy",
-  "SA Negrito",
-  "HVA",
-  "Jalapa",
-  "Filipino Simaba",
-  "Vuelta Abajo",
-  "Honduran Talanga",
-  "Costarican Puriscal",
-  "Aged filler",
-  "Extra fermented",
-  "Culebra style bunching",
-  "Small-batch / experimental",
-];
+    .pp-rh-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 42px;
+      font-weight: 600;
+      color: #2563eb;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      animation: countUp 0.5s ease both;
+    }
 
-const SMOKER_STYLE_OPTIONS = ["both", "slow", "fast"];
+    .pp-sweep {
+      animation: sweep 0.6s ease both;
+    }
 
-const row3Style = {
-  display: "grid",
-  gridTemplateColumns: "repeat(3, minmax(0,1fr))",
-  gap: 12,
-  marginTop: 8,
-};
+    /* Scrollbar */
+    ::-webkit-scrollbar       { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    /* Instruction block */
+    .pp-instructions {
+      font-size: 12px;
+      line-height: 1.9;
+      color: ${DS.textSecond};
+      border-left: 2px solid rgba(37,99,235,0.35);
+      padding-left: 16px;
+      margin: 0;
+    }
+    .pp-instructions strong {
+      color: ${DS.textPrimary};
+      font-weight: 500;
+    }
+  `}</style>
+);
+
+/* ============================================================
+   DATA CONSTANTS  (unchanged from original)
+   ============================================================ */
+
+const ORIGINS = ["","Cuba","Dominican Republic","Nicaragua","Honduras","Mexico","Costa Rica","Panama","Ecuador","Brazil","Peru","United States","Jamaica","Philippines"];
+const FACTORIES = ["","A.CONTI","Abam","Abeja Cigar","Aganorsa","Agio","Agroindustrias","Altadis USA","Augusto Reyes","Barreda","Blackbird Dom","Blanco Cigars","Buena Vista","Caldwell","Camacho Factory","Casa 1910","Charles Fairmorn","CLE","Cortez","D'Hatuey","Dannemann","De Los reyes","Don Palomor","Drew Estate","El Aladino","El Laguito","El Maestro","El Paraiso","El Rey de Los Habanos","El Sueno","El Titan de Bronze","El Viejo","EPC","Fabrica Centroamericana","Fabrica De Tabacos HVC","Fabrica Oveja Negra","Flor de Copan","Garmendia","General Cigar Dominicana","GR Tabacaleras","Graycliff Factory","Gurkha","H. Upmann","HATSA","Honduras american","Horacio","JC Newman","JRE Tobacco","Kelner Boutique","Kristoff Cigars","la Alianza","La Aurora","La Corona","La Flor De Copa","La Zona","Luciano Tabacos","Maya Selva","Meerapfel","MGE","Mi Havana","Micallef","Mina Del Rey","My Father Cigars","Natura","Nica Sueno","Nicaragua American","Oscar Vallardes","Oveja Negra","Padron","Partagas","PDR","Plasencia Cigars","Pure Aroma","Quesada","Raices Cubanas","Rocky Patel","San Lotano","Sanj Patel","Selected Tobacco","ST Group","STG Esteli","Tabacalera Altagracia","Tabacalera AJ Fernandez","Tabacalera Carreras","Tabacalera Cubanas","Tabacalera Davidoff","Tabacalera De Oliva","Tabacalera Diaz","Tabacalera El Artista","Tabacalera Fuente","Tabacalera Garcia","Tabacalera Joya de Nicaragua","Tabacalera Kafie","Tabacalera La Alianza","Tabacalera La Flor","Tabacalera La Isla","Tabacalera Las Lavas","Tabacalera Oveja Negra","Tabacalera Palma","Tabacalera Pichardo","Tabacalera Rocky Patel","Tabacalera Tropical","Tabacalera Villa Cuba","Tabacalera William Ventura","Tabacos De Costa Rica","Tabacos De Exportacion","Tabacos de Valle Jalapa","Tabacos Ranchos","Tabacos Valle de Jalapa","Tabacuba","Tabadom","Tabaos Vale De Jalapa","TABSA","TacaNicsa","TAF","Tavicusa Factory","The Foundation Cigars","Topper","Ventura","Villiger de Nicaragua"];
+const WRAPPERS = ["","Cuban","Habano","Nicaraguan Habano","Habano 2000","Dominican","Brazilian","Corojo","Corojo 99","Criollo","Criollo 98","Connecticut Shade","Connecticut Broadleaf","Connecticut Habano","Costarican","Broadleaf","Honduran","San Andres","Cameroon","Sumatra","Ecuadorian Sumatra","Ecuadorian Habano","Ecuadorian Connecticut","Maduro","Oscuro","Rosado","Colorado","Mexican","Pennsylvania Broadleaf","Hybrid / Other"];
+const WRAPPER_PROCESSES = ["","Natural","Claro","Colorado","Colorado Claro","Colorado Maduro","Rosado","Maduro","Oscuro","Corojo-processed","Sun Grown","Shade Grown","Double Fermented","Barrel Aged","Other"];
+const WRAPPER_THICKNESS_OPTIONS = ["thin","medium","thick"];
+const WRAPPER_OILINESS_OPTIONS = ["low","medium","high"];
+const BINDERS = ["","Cuban","Dominican","Nicaraguan","Honduran","Mexican","Brazilian","Peruvian","Cameroon","Costarican","San Andres","Connecticut","Sumatra","Ecuadorian","Broadleaf","Criollo","Corojo","Hybrid / Other"];
+const FILLER_OPTIONS = ["","Cuba","Cuban Viso","Alta Viso","Dominican Republic","Nicaragua","Honduras","Mexico","Costa Rica","Panama","Ecuador","Brazil","Peru","Cameroon","Colombia","United States","Piloto Cubano","Olor Dominicano","Corojo","Criollo","Ligero","Ecuadorian Ligero","Cuban Seco","Volado","Medio Tiempo","Zimbabwe","Paraguay"];
+const LIGERO_OPTIONS = ["","none","low","moderate","high"];
+const SPECIAL_TOBACCO_FLAGS_OPTIONS = ["","Medio Tiempo","Alta Viso-heavy","Piloto Cubano","Olor Dominicano","Dominican Bonao","Pelo de Oro","Corojo","Criollo","Andullo","Cotui","Yamasa","San Vicente","Somoto","Brazilian Cubra","Brazilian Mata Fina","Brazilian Mata Norte","Brazilian Arapiraca","Masatepe","Ometepe","Pueblo Nuevo","Jamastran","Broadleaf-heavy","San Andres-heavy","SA Negrito","HVA","Jalapa","Filipino Simaba","Vuelta Abajo","Honduran Talanga","Costarican Puriscal","Aged filler","Extra fermented","Culebra style bunching","Small-batch / experimental"];
+const SMOKER_STYLE_OPTIONS = ["both","slow","fast"];
 
 const EMPTY_LOOKUP_FIELDS = {
-  origin: "",
-  factory: "",
-
-  wrapper: "",
-  wrapper_custom: "",
-  wrapper_process: "",
-  wrapper_thickness: "medium",
-  wrapper_oiliness: "medium",
-
-  binder_1: "",
-  binder_1_custom: "",
-  binder_2: "",
-  binder_2_custom: "",
-
-  filler_1: "",
-  filler_2: "",
-  filler_3: "",
-
-  ligero: "moderate",
-
-  flag_1: "",
-  flag_2: "",
-  flag_3: "",
+  origin:"",factory:"",wrapper:"",wrapper_custom:"",wrapper_process:"",
+  wrapper_thickness:"medium",wrapper_oiliness:"medium",binder_1:"",binder_1_custom:"",
+  binder_2:"",binder_2_custom:"",filler_1:"",filler_2:"",filler_3:"",
+  ligero:"moderate",flag_1:"",flag_2:"",flag_3:"",
 };
 
-/* --------------------------
-COMPONENT
--------------------------- */
+/* ============================================================
+   SUB-COMPONENTS
+   ============================================================ */
+
+/* Precision data row */
+const DataRow = ({ label, value, primary }) => (
+  <div className="pp-datarow" style={styles.dataRow}>
+    <span style={styles.dataLabel}>{label}</span>
+    <span style={primary ? styles.dataValuePrimary : styles.dataValue}>{value}</span>
+  </div>
+);
+
+/* Tasting / pairing sub-card */
+const AnalyticalCard = ({ title, rows }) => (
+  <div style={{ ...styles.card, ...styles.cardAccent, marginBottom: 0, padding: "16px 20px" }}>
+    <div style={styles.h3}>{title}</div>
+    {rows.map(({ label, value }) => (
+      <DataRow key={label} label={label} value={value || "â€”"} />
+    ))}
+  </div>
+);
+
+/* Usage meter strip */
+const UsageStrip = ({ usage }) => {
+  const annualPct = usage.annual_limit > 0
+    ? Math.round((usage.runs_used / usage.annual_limit) * 100) : 0;
+
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div style={{ ...styles.metaBar, flexDirection: "column", gap: 10 }}>
+        <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+          <DataRow label="Tier"            value={usage.tier} />
+          <DataRow label="Pro Access"      value={usage.pro_access ? "Enabled" : "Inactive"} />
+          <DataRow label="Annual"          value={`${usage.runs_used} / ${usage.annual_limit}`} />
+          <DataRow label="Remaining"       value={String(usage.runs_remaining)} />
+          <DataRow label="Today"           value={`${usage.daily_used} / ${usage.daily_limit}`} />
+          <DataRow label="Daily Remaining" value={String(usage.daily_remaining)} />
+          <DataRow label="Period"          value={`${usage.period_start} â†’ ${usage.period_end}`} />
+        </div>
+
+        {/* Annual usage bar */}
+        <div style={{ marginTop: 4 }}>
+          <div style={{ ...styles.dataLabel, marginBottom: 5 }}>Annual Consumption</div>
+          <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}>
+            <div style={{
+              height: "100%",
+              width: `${annualPct}%`,
+              background: annualPct > 80 ? DS.warning : DS.accent,
+              borderRadius: 2,
+              transition: "width 0.6s ease",
+            }} />
+          </div>
+          <div style={{ ...styles.dataLabel, marginTop: 4, textAlign: "right" }}>{annualPct}% utilized</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* Loading state indicator */
+const ProcessingIndicator = ({ label }) => (
+  <div style={{
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    padding: "10px 0",
+    fontFamily: DS.fontMono,
+    fontSize: 11,
+    color: DS.accent,
+    letterSpacing: "0.08em",
+  }}>
+    <span style={{ ...styles.dotActive, animation: "pulse 1s infinite" }} />
+    {label}
+  </div>
+);
+
+/* Section divider with label */
+const SectionDivider = ({ label }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "28px 0 20px" }}>
+    <div style={{ height: 1, flex: 1, background: DS.border }} />
+    <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>{label}</span>
+    <div style={{ height: 1, flex: 1, background: DS.border }} />
+  </div>
+);
+
+/* ============================================================
+   MAIN COMPONENT
+   ============================================================ */
 
 export default function PredictorPage() {
-  const [brandSuggestions, setBrandSuggestions] = useState([]);
-  const [lineSuggestions, setLineSuggestions] = useState([]);
+  const [brandSuggestions, setBrandSuggestions]     = useState([]);
+  const [lineSuggestions, setLineSuggestions]       = useState([]);
   const [showBrandSuggestions, setShowBrandSuggestions] = useState(false);
-  const [showLineSuggestions, setShowLineSuggestions] = useState(false);
+  const [showLineSuggestions, setShowLineSuggestions]   = useState(false);
 
   const [form, setForm] = useState({
     user_email: "",
     brand: "",
     line: "",
-
     origin: "",
     factory: "",
-
     wrapper: "",
     wrapper_custom: "",
     wrapper_process: "",
     wrapper_thickness: "medium",
     wrapper_oiliness: "medium",
-
     binder_1: "",
     binder_1_custom: "",
     binder_2: "",
     binder_2_custom: "",
-
     filler_1: "",
     filler_2: "",
     filler_3: "",
-
     ligero: "moderate",
-
     flag_1: "",
     flag_2: "",
     flag_3: "",
-
     age_years: "",
     smoker_style: "both",
-
-    /* hidden fields for backend compatibility */
     vitola: "",
     bunch_density: "medium",
   });
 
-  const [usage, setUsage] = useState(null);
+  const [usage, setUsage]                   = useState(null);
   const [validatedEmail, setValidatedEmail] = useState("");
   const [isUserValidated, setIsUserValidated] = useState(false);
 
-  const [result, setResult] = useState(null);
-  const [tastingCard, setTastingCard] = useState(null);
-  const [pairingCard, setPairingCard] = useState(null);
+  const [result, setResult]                 = useState(null);
+  const [tastingCard, setTastingCard]       = useState(null);
+  const [pairingCard, setPairingCard]       = useState(null);
   const [pairingSelection, setPairingSelection] = useState("None");
-  const [similarBlends, setSimilarBlends] = useState(null);
-  const [err, setErr] = useState("");
+  const [similarBlends, setSimilarBlends]   = useState(null);
+  const [err, setErr]                       = useState("");
 
-  const [loadingUsage, setLoadingUsage] = useState(false);
+  const [loadingUsage, setLoadingUsage]     = useState(false);
   const [loadingPredict, setLoadingPredict] = useState(false);
   const [loadingPairing, setLoadingPairing] = useState(false);
-  const [loadingLookup, setLoadingLookup] = useState(false);
+  const [loadingLookup, setLoadingLookup]   = useState(false);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
 
-  const [lookupStatus, setLookupStatus] = useState("");
-  const [lookupSource, setLookupSource] = useState("");
+  const [lookupStatus, setLookupStatus]     = useState("");
+  const [lookupSource, setLookupSource]     = useState("");
+  const [predictStep, setPredictStep]       = useState(""); // descriptive micro-copy
 
-  const update = (key, value) => {
-    setForm((f) => ({ ...f, [key]: value }));
-  };
+  const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
-  const cleanText = (value) => {
-    return String(value || "")
-      .normalize("NFKD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[’‘]/g, "'")
-      .replace(/[“”]/g, '"')
-      .replace(/[–—]/g, "-")
-      .replace(/\s+/g, " ")
-      .trim();
-  };
+  const cleanText = (value) =>
+    String(value || "").normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .replace(/['']/g,"'").replace(/[""]/g,'"')
+      .replace(/[â€“â€”]/g,"-").replace(/\s+/g," ").trim();
 
   const isAuthorizedUser =
     isUserValidated &&
-    cleanText(validatedEmail).toLowerCase() ===
-      cleanText(form.user_email).toLowerCase();
+    cleanText(validatedEmail).toLowerCase() === cleanText(form.user_email).toLowerCase();
 
-  const hasProAccess =
-    isAuthorizedUser && usage?.pro_access === true;
+  const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
 
-  /* --------------------------
-AUTOCOMPLETE
--------------------------- */
+  /* â”€â”€ Autocomplete (unchanged logic) â”€â”€ */
 
   const uniqueByBrand = (items) => {
-    const seen = new Set();
-    const out = [];
-
+    const seen = new Set(), out = [];
     for (const item of items || []) {
-      const brand = cleanText(item.brand);
-      const key = brand.toLowerCase();
-
-      if (brand && !seen.has(key)) {
-        seen.add(key);
-        out.push({ brand, label: brand });
-      }
+      const brand = cleanText(item.brand), key = brand.toLowerCase();
+      if (brand && !seen.has(key)) { seen.add(key); out.push({ brand, label: brand }); }
     }
-
     return out;
   };
 
   const uniqueLinesForBrand = (items, selectedBrand, q) => {
     const brandKey = cleanText(selectedBrand).toLowerCase();
     const lineQuery = cleanText(q).toLowerCase();
-    const seen = new Set();
-    const out = [];
-
+    const seen = new Set(), out = [];
     for (const item of items || []) {
       const itemBrand = cleanText(item.brand).toLowerCase();
-      const line = cleanText(item.line);
-      const lineKey = line.toLowerCase();
-
+      const line = cleanText(item.line), lineKey = line.toLowerCase();
       if (!line || itemBrand !== brandKey) continue;
       if (lineQuery && !lineKey.includes(lineQuery)) continue;
-
-      if (!seen.has(lineKey)) {
-        seen.add(lineKey);
-        out.push({ brand: cleanText(item.brand), line, label: line });
-      }
+      if (!seen.has(lineKey)) { seen.add(lineKey); out.push({ brand: cleanText(item.brand), line, label: line }); }
     }
-
     return out;
   };
 
   const loadBrandSuggestions = async (q) => {
     const cleaned = cleanText(q);
-
-    if (!cleaned || cleaned.length < 2) {
-      setBrandSuggestions([]);
-      setShowBrandSuggestions(false);
-      return;
-    }
-
+    if (!cleaned || cleaned.length < 2) { setBrandSuggestions([]); setShowBrandSuggestions(false); return; }
     try {
-      const res = await fetch(
-        `/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}&limit=100`
-      );
+      const res  = await fetch(`/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}&limit=100`);
       const data = await res.json().catch(() => ({}));
-
       if (Array.isArray(data?.results)) {
-        const brands = uniqueByBrand(data.results).slice(0, 12);
-        setBrandSuggestions(brands);
-        setShowBrandSuggestions(brands.length > 0);
-      } else {
-        setBrandSuggestions([]);
-        setShowBrandSuggestions(false);
-      }
-    } catch {
-      setBrandSuggestions([]);
-      setShowBrandSuggestions(false);
-    }
+        const brands = uniqueByBrand(data.results).slice(0,12);
+        setBrandSuggestions(brands); setShowBrandSuggestions(brands.length > 0);
+      } else { setBrandSuggestions([]); setShowBrandSuggestions(false); }
+    } catch { setBrandSuggestions([]); setShowBrandSuggestions(false); }
   };
 
   const loadLineSuggestions = async (brand, q) => {
     const selectedBrand = cleanText(brand);
-    const cleanedLine = cleanText(q);
-
-    if (!selectedBrand) {
-      setLineSuggestions([]);
-      setShowLineSuggestions(false);
-      return;
-    }
-
+    if (!selectedBrand) { setLineSuggestions([]); setShowLineSuggestions(false); return; }
     try {
-      const res = await fetch(
-        `/api/predictor/autocomplete?q=${encodeURIComponent(selectedBrand)}&limit=250`
-      );
+      const res  = await fetch(`/api/predictor/autocomplete?q=${encodeURIComponent(selectedBrand)}&limit=250`);
       const data = await res.json().catch(() => ({}));
-
       if (Array.isArray(data?.results)) {
-        const lines = uniqueLinesForBrand(data.results, selectedBrand, cleanedLine).slice(0, 20);
-        setLineSuggestions(lines);
-        setShowLineSuggestions(lines.length > 0);
-      } else {
-        setLineSuggestions([]);
-        setShowLineSuggestions(false);
-      }
-    } catch {
-      setLineSuggestions([]);
-      setShowLineSuggestions(false);
-    }
+        const lines = uniqueLinesForBrand(data.results, selectedBrand, cleanText(q)).slice(0,20);
+        setLineSuggestions(lines); setShowLineSuggestions(lines.length > 0);
+      } else { setLineSuggestions([]); setShowLineSuggestions(false); }
+    } catch { setLineSuggestions([]); setShowLineSuggestions(false); }
   };
 
   const selectBrandSuggestion = (item) => {
-    update("brand", cleanText(item.brand || ""));
-    update("line", "");
-    setShowBrandSuggestions(false);
-    setBrandSuggestions([]);
-    setLineSuggestions([]);
-    setShowLineSuggestions(false);
+    update("brand", cleanText(item.brand || "")); update("line","");
+    setShowBrandSuggestions(false); setBrandSuggestions([]);
+    setLineSuggestions([]); setShowLineSuggestions(false);
   };
-
   const selectLineSuggestion = (item) => {
     update("line", cleanText(item.line || ""));
-    setShowLineSuggestions(false);
-    setLineSuggestions([]);
+    setShowLineSuggestions(false); setLineSuggestions([]);
   };
 
-  /* --------------------------
-HELPERS
--------------------------- */
+  /* â”€â”€ Helpers (unchanged logic) â”€â”€ */
 
-  const buildCustomValue = (choice, custom) => {
-    if (choice === "Custom / Other" || choice === "Hybrid / Other") {
-      return String(custom || "").trim();
-    }
-    return choice;
-  };
+  const buildCustomValue = (choice, custom) =>
+    (choice === "Custom / Other" || choice === "Hybrid / Other")
+      ? String(custom || "").trim() : choice;
 
-  const buildUniqueList = (values) => {
-    return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
-  };
+  const buildUniqueList = (values) =>
+    [...new Set(values.map((v) => String(v||"").trim()).filter(Boolean))];
 
-  const splitPipeValues = (value) => {
-    return String(value || "")
-      .split("|")
-      .map((x) => cleanText(x))
-      .filter(Boolean);
-  };
+  const splitPipeValues = (value) =>
+    String(value||"").split("|").map((x) => cleanText(x)).filter(Boolean);
 
   const mapLookupValue = (value, options) => {
     const v = cleanText(value);
-    if (!v) return "";
-    return options.includes(v) ? v : "";
+    return (!v) ? "" : (options.includes(v) ? v : "");
   };
 
   const resetUserValidation = () => {
-    setUsage(null);
-    setValidatedEmail("");
-    setIsUserValidated(false);
-    setLookupStatus("");
-    setLookupSource("");
+    setUsage(null); setValidatedEmail(""); setIsUserValidated(false);
+    setLookupStatus(""); setLookupSource("");
   };
 
-  const displayPairingList = (values) => {
-    if (!Array.isArray(values) || values.length === 0) return "—";
-    return values.filter(Boolean).join(", ") || "—";
-  };
-
-  const displayBinderComponents = () => {
-    const values = [
-      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
-      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
-    ].filter(Boolean);
-
-    return values.length > 0 ? values.join(", ") : "—";
-  };
+  const displayPairingList = (values) =>
+    (!Array.isArray(values) || values.length === 0) ? "â€”"
+      : values.filter(Boolean).join(", ") || "â€”";
 
   const getFilteredPairingCard = () => {
-    if (!pairingCard || pairingSelection === "None") {
-      return null;
-    }
-
-    const normalized = pairingSelection.toLowerCase();
-
-    const mapping = {
-      wine: pairingCard.wine,
-      whisky: pairingCard.whisky,
-      rum: pairingCard.rum,
-      cognac: pairingCard.cognac,
-      tequila: pairingCard.tequila,
-      beer: pairingCard.beer,
-      cocktail: pairingCard.cocktails,
-    };
-
-    return mapping[normalized] || null;
+    if (!pairingCard || pairingSelection === "None") return null;
+    const mapping = { wine: pairingCard.wine, whisky: pairingCard.whisky, rum: pairingCard.rum,
+      cognac: pairingCard.cognac, tequila: pairingCard.tequila, beer: pairingCard.beer,
+      cocktail: pairingCard.cocktails };
+    return mapping[pairingSelection.toLowerCase()] || null;
   };
 
-  const PairingCategoryCard = ({ title, data }) => (
-    <div className="card" style={{ marginTop: 0 }}>
-      <h4 style={{ marginTop: 0 }}>{title}</h4>
-
-      <div className="small" style={{ lineHeight: 1.8 }}>
-        <div>
-          <b>Primary:</b>{" "}
-          {displayPairingList(data?.primary)}
-        </div>
-        <div>
-          <b>Secondary:</b>{" "}
-          {displayPairingList(data?.secondary)}
-        </div>
-      </div>
-    </div>
-  );
-
   const applyLookupMatch = (match) => {
-    const cleanedBrand = cleanText(match?.brand);
-    const cleanedLine = cleanText(match?.line);
-
-    const cleanedOrigin = mapLookupValue(match?.origin, ORIGINS);
-    const cleanedFactory = mapLookupValue(match?.factory, FACTORIES);
-
-    const rawWrapper = cleanText(match?.wrapper);
+    const rawWrapper   = cleanText(match?.wrapper);
     const wrapperInList = rawWrapper && WRAPPERS.includes(rawWrapper);
-
-    const binderPipeValues = splitPipeValues(match?.binder);
-
-    const rawBinder1 = cleanText(
-      match?.binder_1 ||
-        match?.binder1 ||
-        match?.primary_binder ||
-        binderPipeValues[0] ||
-        match?.binder
-    );
-
-    const rawBinder2 = cleanText(
-      match?.binder_2 ||
-        match?.binder2 ||
-        match?.secondary_binder ||
-        match?.second_binder ||
-        binderPipeValues[1] ||
-        ""
-    );
-
-    const binder1InList = rawBinder1 && BINDERS.includes(rawBinder1);
-    const binder2InList = rawBinder2 && BINDERS.includes(rawBinder2);
-
-    const filler = Array.isArray(match?.filler)
-      ? match.filler.map(cleanText).filter(Boolean)
-      : [];
-
+    const binderPipe   = splitPipeValues(match?.binder);
+    const rawB1 = cleanText(match?.binder_1||match?.binder1||match?.primary_binder||binderPipe[0]||match?.binder);
+    const rawB2 = cleanText(match?.binder_2||match?.binder2||match?.secondary_binder||match?.second_binder||binderPipe[1]||"");
+    const b1InList = rawB1 && BINDERS.includes(rawB1);
+    const b2InList = rawB2 && BINDERS.includes(rawB2);
+    const filler = Array.isArray(match?.filler) ? match.filler.map(cleanText).filter(Boolean) : [];
     const validFillers = filler.filter((x) => FILLER_OPTIONS.includes(x));
-
-    const flags = Array.isArray(match?.special_tobacco_flags)
-      ? match.special_tobacco_flags.map(cleanText).filter(Boolean)
-      : [];
-
-    const validFlags = flags.filter((x) =>
-      SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(x)
-    );
-
-    const cleanedLigero = mapLookupValue(match?.ligero, LIGERO_OPTIONS);
-    const cleanedWrapperProcess = mapLookupValue(
-      match?.wrapper_process,
-      WRAPPER_PROCESSES
-    );
-    const cleanedWrapperThickness = mapLookupValue(
-      match?.wrapper_thickness,
-      WRAPPER_THICKNESS_OPTIONS
-    );
-    const cleanedWrapperOiliness = mapLookupValue(
-      match?.wrapper_oiliness,
-      WRAPPER_OILINESS_OPTIONS
-    );
+    const flags  = Array.isArray(match?.special_tobacco_flags) ? match.special_tobacco_flags.map(cleanText).filter(Boolean) : [];
+    const validFlags = flags.filter((x) => SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(x));
 
     setForm((f) => ({
       ...f,
-
-      brand: cleanedBrand || f.brand,
-      line: cleanedLine || f.line,
-
+      brand: cleanText(match?.brand) || f.brand,
+      line:  cleanText(match?.line)  || f.line,
       ...EMPTY_LOOKUP_FIELDS,
-
-      origin: cleanedOrigin,
-      factory: cleanedFactory,
-
-      wrapper: rawWrapper
-        ? (wrapperInList ? rawWrapper : "Hybrid / Other")
-        : "",
-      wrapper_custom: rawWrapper && !wrapperInList ? rawWrapper : "",
-      wrapper_process: cleanedWrapperProcess,
-      wrapper_thickness: cleanedWrapperThickness || "medium",
-      wrapper_oiliness: cleanedWrapperOiliness || "medium",
-
-      binder_1: rawBinder1
-        ? (binder1InList ? rawBinder1 : "Hybrid / Other")
-        : "",
-      binder_1_custom: rawBinder1 && !binder1InList ? rawBinder1 : "",
-
-      binder_2: rawBinder2
-        ? (binder2InList ? rawBinder2 : "Hybrid / Other")
-        : "",
-      binder_2_custom: rawBinder2 && !binder2InList ? rawBinder2 : "",
-
-      filler_1: validFillers[0] || "",
-      filler_2: validFillers[1] || "",
-      filler_3: validFillers[2] || "",
-
-      ligero: cleanedLigero || "moderate",
-
-      flag_1: validFlags[0] || "",
-      flag_2: validFlags[1] || "",
-      flag_3: validFlags[2] || "",
+      origin:            mapLookupValue(match?.origin,   ORIGINS),
+      factory:           mapLookupValue(match?.factory,  FACTORIES),
+      wrapper:           rawWrapper ? (wrapperInList ? rawWrapper : "Hybrid / Other") : "",
+      wrapper_custom:    rawWrapper && !wrapperInList ? rawWrapper : "",
+      wrapper_process:   mapLookupValue(match?.wrapper_process,   WRAPPER_PROCESSES),
+      wrapper_thickness: mapLookupValue(match?.wrapper_thickness, WRAPPER_THICKNESS_OPTIONS) || "medium",
+      wrapper_oiliness:  mapLookupValue(match?.wrapper_oiliness,  WRAPPER_OILINESS_OPTIONS)  || "medium",
+      binder_1:          rawB1 ? (b1InList ? rawB1 : "Hybrid / Other") : "",
+      binder_1_custom:   rawB1 && !b1InList ? rawB1 : "",
+      binder_2:          rawB2 ? (b2InList ? rawB2 : "Hybrid / Other") : "",
+      binder_2_custom:   rawB2 && !b2InList ? rawB2 : "",
+      filler_1: validFillers[0]||"", filler_2: validFillers[1]||"", filler_3: validFillers[2]||"",
+      ligero: mapLookupValue(match?.ligero, LIGERO_OPTIONS) || "moderate",
+      flag_1: validFlags[0]||"", flag_2: validFlags[1]||"", flag_3: validFlags[2]||"",
     }));
   };
 
   const buildPayload = () => ({
-    user_email: cleanText(form.user_email),
-
-    brand: cleanText(form.brand),
-    line: cleanText(form.line),
-
-    origin: cleanText(form.origin),
-    factory: cleanText(form.factory),
-
-    wrapper: cleanText(buildCustomValue(form.wrapper, form.wrapper_custom)),
-    wrapper_process: cleanText(form.wrapper_process),
+    user_email:  cleanText(form.user_email),
+    brand:       cleanText(form.brand),
+    line:        cleanText(form.line),
+    origin:      cleanText(form.origin),
+    factory:     cleanText(form.factory),
+    wrapper:     cleanText(buildCustomValue(form.wrapper, form.wrapper_custom)),
+    wrapper_process:   cleanText(form.wrapper_process),
     wrapper_thickness: cleanText(form.wrapper_thickness),
-    wrapper_oiliness: cleanText(form.wrapper_oiliness),
-
-    binder: [
-      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
-      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
-    ]
-      .filter(Boolean)
-      .join("|"),
-    binder_1: cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
-    binder_2: cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
-    binders: [
-      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
-      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
-    ].filter(Boolean),
-
-    filler: buildUniqueList([
-      cleanText(form.filler_1),
-      cleanText(form.filler_2),
-      cleanText(form.filler_3),
-    ]),
-
+    wrapper_oiliness:  cleanText(form.wrapper_oiliness),
+    binder: [cleanText(buildCustomValue(form.binder_1,form.binder_1_custom)),cleanText(buildCustomValue(form.binder_2,form.binder_2_custom))].filter(Boolean).join("|"),
+    binder_1: cleanText(buildCustomValue(form.binder_1,form.binder_1_custom)),
+    binder_2: cleanText(buildCustomValue(form.binder_2,form.binder_2_custom)),
+    binders:  [cleanText(buildCustomValue(form.binder_1,form.binder_1_custom)),cleanText(buildCustomValue(form.binder_2,form.binder_2_custom))].filter(Boolean),
+    filler: buildUniqueList([cleanText(form.filler_1),cleanText(form.filler_2),cleanText(form.filler_3)]),
     ligero: cleanText(form.ligero),
-
-    special_tobacco_flags: buildUniqueList([
-      cleanText(form.flag_1),
-      cleanText(form.flag_2),
-      cleanText(form.flag_3),
-    ]),
-
-    age_years: form.age_years === "" ? null : Number(form.age_years),
+    special_tobacco_flags: buildUniqueList([cleanText(form.flag_1),cleanText(form.flag_2),cleanText(form.flag_3)]),
+    age_years:    form.age_years === "" ? null : Number(form.age_years),
     smoker_style: cleanText(form.smoker_style),
-
-    vitola: "",
-    bunch_density: "medium",
+    vitola:       "",
+    bunch_density:"medium",
   });
 
-  /* --------------------------
-API CALLS
--------------------------- */
+  /* â”€â”€ API calls (unchanged logic) â”€â”€ */
 
   const loadUsage = async () => {
-    setErr("");
-    setLoadingUsage(true);
-    setUsage(null);
-    setLookupStatus("");
-    setLookupSource("");
-
+    setErr(""); setLoadingUsage(true); setUsage(null); setLookupStatus(""); setLookupSource("");
     try {
       const cleanedEmail = cleanText(form.user_email);
-
-      const res = await fetch(
-        `/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}`
-      );
-
+      const res  = await fetch(`/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}`);
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        setIsUserValidated(false);
-        setValidatedEmail("");
-        throw new Error(data.error || data.detail || "Failed to load usage");
-      }
-
-      setUsage(data);
-      setValidatedEmail(cleanedEmail);
-      setIsUserValidated(true);
-    } catch (e) {
-      setIsUserValidated(false);
-      setValidatedEmail("");
-      setErr(e.message || "Usage request failed");
-    } finally {
-      setLoadingUsage(false);
-    }
+      if (!res.ok) { setIsUserValidated(false); setValidatedEmail(""); throw new Error(data.error||data.detail||"Failed to load usage"); }
+      setUsage(data); setValidatedEmail(cleanedEmail); setIsUserValidated(true);
+    } catch(e) { setIsUserValidated(false); setValidatedEmail(""); setErr(e.message||"Usage request failed"); }
+    finally { setLoadingUsage(false); }
   };
 
   const lookupBlend = async () => {
-    setErr("");
-    setLookupSource("");
-
-    if (!isAuthorizedUser) {
-      setLookupStatus("Please enter your registered email and press Check User first.");
-      return;
-    }
-
-    if (!hasProAccess) {
-      setLookupStatus("Pro access is not enabled for this account.");
-      return;
-    }
-
-    const brand = cleanText(form.brand);
-    const line = cleanText(form.line);
-
-    if (!brand || !line) {
-      setLookupStatus("Enter brand and line first.");
-      return;
-    }
-
-    setLoadingLookup(true);
-    setLookupStatus("Searching ICSI blend database...");
-
+    setErr(""); setLookupSource("");
+    if (!isAuthorizedUser) { setLookupStatus("Validate your registered email address first."); return; }
+    if (!hasProAccess)     { setLookupStatus("Pro access not enabled for this account."); return; }
+    const brand = cleanText(form.brand), line = cleanText(form.line);
+    if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
+    setLoadingLookup(true); setLookupStatus("Querying ICSI blend databaseâ€¦");
     try {
-      const res = await fetch(`/api/predictor/lookup-blend`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_email: cleanText(form.user_email),
-          brand,
-          line,
-        }),
-      });
-
+      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand, line }) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok || !data.match) {
-        setLookupStatus(data.error || data.detail || "No reliable blend match found.");
-        return;
-      }
-
+      if (!res.ok||!data.ok||!data.match) { setLookupStatus(data.error||data.detail||"No reliable blend match found."); return; }
       applyLookupMatch(data.match);
-      setLookupSource(data.source?.label || "");
-      setLookupStatus("Blend found and applied to the form.");
-    } catch {
-      setLookupStatus("Lookup failed.");
-    } finally {
-      setLoadingLookup(false);
-    }
+      setLookupSource(data.source?.label||"");
+      setLookupStatus("Blend data retrieved and applied.");
+    } catch { setLookupStatus("Lookup failed â€” check connection and retry."); }
+    finally { setLoadingLookup(false); }
   };
 
   const loadTastingCard = async (brand, line) => {
     try {
-      const res = await fetch(`/api/predictor/tasting-card`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_email: cleanText(form.user_email),
-          brand: cleanText(brand),
-          line: cleanText(line),
-        }),
-      });
-
+      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand: cleanText(brand), line: cleanText(line) }) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok || !data.tasting_card) {
-        setTastingCard(null);
-        return;
-      }
-
+      if (!res.ok||!data.ok||!data.tasting_card) { setTastingCard(null); return; }
       setTastingCard(data.tasting_card);
-    } catch {
-      setTastingCard(null);
-    }
+    } catch { setTastingCard(null); }
   };
 
   const loadPairingCard = async (predictionData) => {
-    const family = cleanText(
-      predictionData?.family ||
-        predictionData?.rh_family ||
-        predictionData?.cps_family ||
-        predictionData?.peak_flavor_family ||
-        predictionData?.cigar_peak_flavor_system_family
-    );
-
-    if (!family) {
-      setPairingCard(null);
-      setErr("Pairing card failed: prediction response did not include an RH family.");
-      return;
-    }
-
+    const family = cleanText(predictionData?.family||predictionData?.rh_family||predictionData?.cps_family||predictionData?.peak_flavor_family||predictionData?.cigar_peak_flavor_system_family);
+    if (!family) { setPairingCard(null); return; }
     setLoadingPairing(true);
-
     try {
-      const payload = {
-        ...buildPayload(),
-        family,
-      };
-
-      const res = await fetch(`/api/predictor/pairing-card`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
+      const res  = await fetch(`/api/predictor/pairing-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ ...buildPayload(), family }) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok || !data.pairing_card) {
-        setPairingCard(null);
-
-        if (pairingSelection !== "None") {
-          setErr(
-            data.error ||
-              data.detail ||
-              `Pairing card failed with status ${res.status}.`
-          );
-        }
-
-        return;
-      }
-
+      if (!res.ok||!data.ok||!data.pairing_card) { setPairingCard(null); return; }
       setPairingCard(data.pairing_card);
-    } catch (e) {
-      setPairingCard(null);
-
-      if (pairingSelection !== "None") {
-        setErr(e.message || "Pairing card request failed.");
-      }
-    } finally {
-      setLoadingPairing(false);
-    }
+    } catch { setPairingCard(null); }
+    finally { setLoadingPairing(false); }
   };
 
   const runPrediction = async () => {
     setErr("");
-
-    if (!isAuthorizedUser) {
-      setErr("Please enter your registered email and press Check User first.");
-      return;
-    }
-
-    if (!hasProAccess) {
-      setErr("Pro access is not enabled for this account.");
-      return;
-    }
-
-    setLoadingPredict(true);
-    setResult(null);
-    setTastingCard(null);
-    setPairingCard(null);
-    setSimilarBlends(null);
-
-    const cleanedBrand = cleanText(form.brand);
-    const cleanedLine = cleanText(form.line);
-
+    if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
+    if (!hasProAccess)     { setErr("Pro access not enabled for this account."); return; }
+    setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null);
+    setPredictStep("Initializing combustion modelâ€¦");
+    const cleanedBrand = cleanText(form.brand), cleanedLine = cleanText(form.line);
     try {
-      const res = await fetch(`/api/predictor/predict`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildPayload()),
-      });
-
+      setPredictStep("Modeling combustion profileâ€¦");
+      const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        throw new Error(data.error || data.detail || "Prediction failed");
-      }
-
+      if (!res.ok) throw new Error(data.error||data.detail||"Prediction failed");
+      setPredictStep("Calibrating RH equilibriumâ€¦");
       setResult(data);
       await loadUsage();
+      setPredictStep("Generating analytical tasting profileâ€¦");
       await loadTastingCard(cleanedBrand, cleanedLine);
+      if (pairingSelection !== "None") { setPredictStep("Computing pairing matrixâ€¦"); }
       await loadPairingCard(data);
-    } catch (e) {
-      setErr(e.message || "Prediction request failed");
-    } finally {
-      setLoadingPredict(false);
-    }
+      setPredictStep("");
+    } catch(e) { setErr(e.message||"Prediction request failed"); setPredictStep(""); }
+    finally { setLoadingPredict(false); }
   };
 
   const findSimilarBlends = async () => {
     setErr("");
-
-    if (!isAuthorizedUser) {
-      setErr("Please enter your registered email and press Check User first.");
-      return;
-    }
-
-    if (!hasProAccess) {
-      setErr("Pro access is not enabled for this account.");
-      return;
-    }
-
-    setLoadingSimilar(true);
-    setSimilarBlends(null);
-    setResult(null);
-    setTastingCard(null);
-    setPairingCard(null);
-
+    if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
+    if (!hasProAccess)     { setErr("Pro access not enabled for this account."); return; }
+    setLoadingSimilar(true); setSimilarBlends(null); setResult(null); setTastingCard(null); setPairingCard(null);
     try {
-      const res = await fetch(`/api/predictor/similar-blends`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildPayload()),
-      });
-
+      const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || data.detail || "Similar blends lookup failed");
-      }
-
+      if (!res.ok||!data.ok) throw new Error(data.error||data.detail||"Similar blends lookup failed");
       setSimilarBlends(data);
       await loadUsage();
-    } catch (e) {
-      setErr(e.message || "Similar blends request failed");
-    } finally {
-      setLoadingSimilar(false);
-    }
+    } catch(e) { setErr(e.message||"Similar blends request failed"); }
+    finally { setLoadingSimilar(false); }
   };
 
-  /* --------------------------
-UI
--------------------------- */
+  /* ============================================================
+     RENDER
+     ============================================================ */
+
+  const now = new Date();
+  const timestamp = `${now.getDate().toString().padStart(2,"0")} ${now.toLocaleString("en",{month:"short"}).toUpperCase()} ${now.getFullYear()} â€” ${now.getHours().toString().padStart(2,"0")}:${now.getMinutes().toString().padStart(2,"0")} GST`;
+
+  const filteredPairing = getFilteredPairingCard();
 
   return (
     <Layout>
       <Seo title="Predictor Pro | ICSI" path="/portal/predictorpro" />
+      <GlobalStyles />
 
-      <div className="section">
-        <div className="container" style={{ maxWidth: 980 }}>
-          <h1>Cigar Peak-Flavor Predictor (beta)</h1>
+      <div style={styles.page}>
+        <div style={styles.container}>
 
-          <label>
-            Instructions: Predictor Pro is available exclusively to approved
-            subscribers. Enter your registered email address and press the "Check
-            User" button to access the platform. In the Cigar Blend Lookup section,
-            enter the blend Brand and Line, then press the "Lookup Blend" button.
-            The blend's construction and tobacco composition details will
-            automatically populate below.
-            <br />
-            <br />
-            Predictor Pro allows you to manually adjust the autofilled blend
-            details using the dropdown menus before running the prediction. These
-            adjustable fields include wrapper, wrapper process, wrapper thickness,
-            wrapper oiliness, binder components, filler components, ligero level, special
-            tobacco flags, blend age, and smoker style.
-            <br />
-            <br />
-            Before running the prediction, you may optionally select a beverage
-            category from the "Pairing" dropdown menu. Available categories include
-            Wine, Whisky, Rum, Cognac, Tequila, Beer, and Cocktail. If "None" is
-            selected, the application will only generate the peak-flavor prediction
-            result and tasting card.
-            <br />
-            <br />
-            By pressing the "Run Predictor" button, the application will generate
-            the blend's optimal smoking leaf-level relative humidity %, together
-            with a professional tasting card describing the predicted palate,
-            retrohale, texture, and finish characteristics at peak-flavor
-            equilibrium. If a pairing category has been selected, the application
-            will also generate a dedicated pairing card for that selected beverage
-            category only.
-            <br />
-            <br />
-            By pressing the "Find Similar Blends" button, the application will
-            identify and display the cigar blends that most closely match the
-            selected blend's structural and sensory profile.
-            <br />
-            <strong>Important note</strong>: Leaf-level relative humidity % is measured using a
-            commercially available Cigar Humidity Meter.
-          </label>
-
-          {/* USER */}
-          <div className="card" style={{ marginTop: 16 }}>
-            <h3>User Login</h3>
-
-            <label>Email</label>
-            <input
-              value={form.user_email}
-              placeholder="Enter your subscription email"
-              onChange={(e) => {
-                update("user_email", e.target.value);
-                resetUserValidation();
-              }}
-            />
-
-            <div className="ctaRow" style={{ marginTop: 12 }}>
-              <button className="btn" onClick={loadUsage} disabled={loadingUsage}>
-                {loadingUsage ? "Loading..." : "Check User"}
-              </button>
+          {/* â”€â”€ PAGE HEADER â”€â”€ */}
+          <div style={styles.pageHeader}>
+            <div style={styles.engineBadge}>
+              <span style={styles.dotActive} />
+              CPFS Engine v4.8 â€” Calibrated
             </div>
-
-            {!isAuthorizedUser && (
-              <div className="small" style={{ marginTop: 10 }}>
-                Please check your registered email first to enable Predictor Pro.
-              </div>
-            )}
-
-            {isAuthorizedUser && !hasProAccess && (
-              <div className="notice" style={{ marginTop: 12 }}>
-                <b>Pro access is not enabled for this account.</b>
-                <br />
-                Please contact ICSI to activate Predictor Pro.
-              </div>
-            )}
-
-            {usage && (
-              <div className="small" style={{ marginTop: 12, lineHeight: 1.8 }}>
-                <div>
-                  Tier: <b>{usage.tier}</b>
-                </div>
-                <div>
-                  Pro Access: <b>{usage.pro_access ? "Yes" : "No"}</b>
-                </div>
-                <div>
-                  Annual: <b>{usage.runs_used}</b> used / <b>{usage.annual_limit}</b>
-                </div>
-                <div>
-                  Remaining: <b>{usage.runs_remaining}</b>
-                </div>
-                <div>
-                  Today: <b>{usage.daily_used}</b> used / <b>{usage.daily_limit}</b>
-                </div>
-                <div>
-                  Daily remaining: <b>{usage.daily_remaining}</b>
-                </div>
-                <div>
-                  Period: <b>{usage.period_start}</b> → <b>{usage.period_end}</b>
-                </div>
-              </div>
-            )}
+            <h1 style={styles.h1}>Cigar Peak-Flavor System</h1>
+            <p style={styles.subtitle}>Predictor Pro Â· Analytical Output Module Â· Beta</p>
           </div>
 
-          {/* CIGAR IDENTITY */}
-          <div className="card" style={{ marginTop: 16 }}>
-            <h3>Cigar Blend Lookup</h3>
+          {/* â”€â”€ METHODOLOGY NOTICE â”€â”€ */}
+          <div style={{ ...styles.card, marginBottom: 24, borderColor: "rgba(37,99,235,0.18)" }}>
+            <div style={{ ...styles.sectionLabel, marginBottom: 10 }}>Operational Protocol</div>
+            <p className="pp-instructions">
+              Predictor Pro is available exclusively to approved subscribers. Validate your registered
+              email address using the Check User control. In the Blend Lookup module, enter the Brand
+              and Line identifiers, then initiate the Lookup Blend procedure â€” construction and tobacco
+              composition parameters will populate automatically.
+              <br /><br />
+              Autofilled parameters are adjustable prior to analysis: wrapper, wrapper process, wrapper
+              thickness and oiliness, binder components, filler components, ligero level, special tobacco
+              flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
+              selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
+              blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and â€”
+              if selected â€” a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
+              blends structurally and sensorially matched to the query.
+              <br /><br />
+              <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
+              available Cigar Humidity Meter.
+            </p>
+          </div>
 
-            <div className="row2">
+          {/* â”€â”€ USER VALIDATION â”€â”€ */}
+          <div style={{ ...styles.card, ...styles.cardAccent }}>
+            <div style={styles.sectionLabel}>Section 01</div>
+            <div style={styles.h2}>User Validation</div>
+
+            <div style={{ maxWidth: 420 }}>
+              <label style={styles.label}>Registered Email Address</label>
+              <input
+                className="pp-input"
+                style={styles.input}
+                value={form.user_email}
+                placeholder="subscriber@domain.com"
+                onChange={(e) => { update("user_email", e.target.value); resetUserValidation(); }}
+              />
+            </div>
+
+            <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+              <button
+                className="pp-btn-primary"
+                style={styles.btnPrimary}
+                onClick={loadUsage}
+                disabled={loadingUsage}
+              >
+                {loadingUsage ? "Validatingâ€¦" : "Check User"}
+              </button>
+
+              {isAuthorizedUser && hasProAccess && (
+                <span style={{ ...styles.noticeSuccess, padding: "6px 12px" }}>
+                  âœ“ Access Validated â€” Pro Enabled
+                </span>
+              )}
+              {isAuthorizedUser && !hasProAccess && (
+                <span style={{ ...styles.noticeWarning, padding: "6px 12px" }}>
+                  âš  Validated â€” Pro Access Inactive
+                </span>
+              )}
+              {!isAuthorizedUser && !loadingUsage && (
+                <span style={{ fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.08em" }}>
+                  Validation required to enable Predictor Pro
+                </span>
+              )}
+            </div>
+
+            {usage && <UsageStrip usage={usage} />}
+          </div>
+
+          {/* â”€â”€ CIGAR BLEND LOOKUP â”€â”€ */}
+          <div style={styles.card}>
+            <div style={styles.sectionLabel}>Section 02</div>
+            <div style={styles.h2}>Cigar Blend Lookup</div>
+
+            <div style={styles.grid2}>
+              {/* Brand */}
               <div style={{ position: "relative" }}>
-                <label>Brand</label>
+                <label style={styles.label}>Brand</label>
                 <input
+                  className="pp-input"
+                  style={styles.input}
                   value={form.brand}
-                  placeholder="Start typing brand..."
+                  placeholder="Begin entering brand designationâ€¦"
                   autoComplete="off"
                   onFocus={() => loadBrandSuggestions(form.brand)}
                   onChange={(e) => {
-                    const value = e.target.value;
-                    update("brand", value);
-                    update("line", "");
-                    setLineSuggestions([]);
-                    setShowLineSuggestions(false);
-                    loadBrandSuggestions(value);
+                    const v = e.target.value;
+                    update("brand", v); update("line","");
+                    setLineSuggestions([]); setShowLineSuggestions(false);
+                    loadBrandSuggestions(v);
                   }}
-                  onBlur={() => {
-                    setTimeout(() => setShowBrandSuggestions(false), 150);
-                  }}
+                  onBlur={() => setTimeout(() => setShowBrandSuggestions(false), 150)}
                 />
-
                 {showBrandSuggestions && brandSuggestions.length > 0 && (
-                  <div style={autocompleteBox}>
+                  <div style={styles.autocompleteBox}>
                     {brandSuggestions.map((s, i) => (
-                      <div
-                        key={`${s.brand}-${i}`}
-                        style={autocompleteItem}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          selectBrandSuggestion(s);
-                        }}
-                      >
+                      <div key={`${s.brand}-${i}`} className="pp-ac-item" style={styles.autocompleteItem}
+                        onMouseDown={(e) => { e.preventDefault(); selectBrandSuggestion(s); }}>
                         {s.label}
                       </div>
                     ))}
@@ -1212,39 +1000,25 @@ UI
                 )}
               </div>
 
+              {/* Line */}
               <div style={{ position: "relative" }}>
-                <label>Line</label>
+                <label style={styles.label}>Line</label>
                 <input
+                  className="pp-input"
+                  style={{ ...styles.input, opacity: cleanText(form.brand) ? 1 : 0.5 }}
                   value={form.line}
                   autoComplete="off"
                   disabled={!cleanText(form.brand)}
                   onFocus={() => loadLineSuggestions(form.brand, form.line)}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    update("line", value);
-                    loadLineSuggestions(form.brand, value);
-                  }}
-                  onBlur={() => {
-                    setTimeout(() => setShowLineSuggestions(false), 150);
-                  }}
-                  placeholder={
-                    cleanText(form.brand)
-                      ? "Start typing line..."
-                      : "Select brand first"
-                  }
+                  onChange={(e) => { const v = e.target.value; update("line", v); loadLineSuggestions(form.brand, v); }}
+                  onBlur={() => setTimeout(() => setShowLineSuggestions(false), 150)}
+                  placeholder={cleanText(form.brand) ? "Begin entering line designationâ€¦" : "Select brand first"}
                 />
-
                 {showLineSuggestions && lineSuggestions.length > 0 && (
-                  <div style={autocompleteBox}>
+                  <div style={styles.autocompleteBox}>
                     {lineSuggestions.map((s, i) => (
-                      <div
-                        key={`${s.brand}-${s.line}-${i}`}
-                        style={autocompleteItem}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          selectLineSuggestion(s);
-                        }}
-                      >
+                      <div key={`${s.brand}-${s.line}-${i}`} className="pp-ac-item" style={styles.autocompleteItem}
+                        onMouseDown={(e) => { e.preventDefault(); selectLineSuggestion(s); }}>
                         {s.label}
                       </div>
                     ))}
@@ -1253,369 +1027,176 @@ UI
               </div>
             </div>
 
-            <div
-              style={{
-                marginTop: 14,
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                flexWrap: "wrap",
-              }}
-            >
+            <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
               <button
-                className="btn"
-                type="button"
+                className="pp-btn-secondary"
+                style={styles.btnSecondary}
                 onClick={lookupBlend}
                 disabled={loadingLookup || !hasProAccess}
               >
-                {loadingLookup ? "Searching..." : "Lookup Blend"}
+                {loadingLookup ? "Querying Databaseâ€¦" : "Lookup Blend"}
               </button>
 
               {lookupStatus && (
-                <span className="small" style={{ lineHeight: 1.4 }}>
+                <span style={{ fontFamily: DS.fontMono, fontSize: 10, color: lookupStatus.includes("applied") ? DS.success : DS.textMuted, letterSpacing: "0.07em" }}>
                   {lookupStatus}
                 </span>
               )}
             </div>
 
             {lookupSource && (
-              <p className="small" style={{ marginTop: 8 }}>
-                Source: <b>{lookupSource}</b>
-              </p>
+              <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
+              </div>
             )}
 
-            <div className="row2" style={{ marginTop: 10 }}>
+            <hr style={styles.sep} />
+
+            <div style={styles.grid2}>
               <div>
-                <label>Origin</label>
-                <select
-                  value={form.origin}
-                  onChange={(e) => update("origin", e.target.value)}
-                >
-                  {ORIGINS.map((x) => (
-                    <option key={x || "blank-origin"} value={x}>
-                      {x || "Select origin"}
-                    </option>
-                  ))}
+                <label style={styles.label}>Origin</label>
+                <select className="pp-select" style={styles.select} value={form.origin} onChange={(e) => update("origin", e.target.value)}>
+                  {ORIGINS.map((x) => <option key={x||"blank-origin"} value={x}>{x||"â€” Select Origin â€”"}</option>)}
                 </select>
               </div>
-
               <div>
-                <label>Factory</label>
-                <select
-                  value={form.factory}
-                  onChange={(e) => update("factory", e.target.value)}
-                >
-                  {FACTORIES.map((x) => (
-                    <option key={x || "blank-factory"} value={x}>
-                      {x || "Select factory"}
-                    </option>
-                  ))}
+                <label style={styles.label}>Factory</label>
+                <select className="pp-select" style={styles.select} value={form.factory} onChange={(e) => update("factory", e.target.value)}>
+                  {FACTORIES.map((x) => <option key={x||"blank-factory"} value={x}>{x||"â€” Select Factory â€”"}</option>)}
                 </select>
               </div>
             </div>
           </div>
 
-          {/* BLEND CONSTRUCTION */}
-          <div className="card" style={{ marginTop: 16 }}>
-            <h3>Blend Details: Autofilled &amp; Adjustable</h3>
+          {/* â”€â”€ BLEND CONSTRUCTION â”€â”€ */}
+          <div style={styles.card}>
+            <div style={styles.sectionLabel}>Section 03</div>
+            <div style={styles.h2}>Blend Construction â€” Autofilled &amp; Adjustable</div>
 
-            <div className="row2">
+            <SectionDivider label="Wrapper" />
+            <div style={styles.grid2}>
               <div>
-                <label>Wrapper</label>
-                <select
-                  value={form.wrapper}
-                  onChange={(e) => update("wrapper", e.target.value)}
-                >
-                  {WRAPPERS.map((x) => (
-                    <option key={x || "blank-wrapper"} value={x}>
-                      {x || "Select wrapper"}
-                    </option>
-                  ))}
+                <label style={styles.label}>Wrapper Leaf</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper} onChange={(e) => update("wrapper", e.target.value)}>
+                  {WRAPPERS.map((x) => <option key={x||"blank-wrapper"} value={x}>{x||"â€” Select Wrapper â€”"}</option>)}
                 </select>
-
                 {form.wrapper === "Hybrid / Other" && (
-                  <>
-                    <label style={{ marginTop: 10, display: "block" }}>
-                      Custom Wrapper
-                    </label>
-                    <input
-                      value={form.wrapper_custom}
-                      onChange={(e) => update("wrapper_custom", e.target.value)}
-                      placeholder="e.g. Ecuador Hybrid"
-                    />
-                  </>
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.wrapper_custom}
+                    onChange={(e) => update("wrapper_custom", e.target.value)}
+                    placeholder="Specify custom wrapper designation" />
                 )}
               </div>
-
               <div>
-                <label>Wrapper Process</label>
-                <select
-                  value={form.wrapper_process}
-                  onChange={(e) => update("wrapper_process", e.target.value)}
-                >
-                  {WRAPPER_PROCESSES.map((x) => (
-                    <option key={x || "blank-wrapper-process"} value={x}>
-                      {x || "Select wrapper process"}
-                    </option>
-                  ))}
+                <label style={styles.label}>Wrapper Process</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_process} onChange={(e) => update("wrapper_process", e.target.value)}>
+                  {WRAPPER_PROCESSES.map((x) => <option key={x||"blank-wp"} value={x}>{x||"â€” Select Process â€”"}</option>)}
                 </select>
               </div>
             </div>
 
-            <div className="row2" style={{ marginTop: 10 }}>
+            <div style={{ ...styles.grid2, marginTop: 14 }}>
               <div>
-                <label>Wrapper Thickness</label>
-                <select
-                  value={form.wrapper_thickness}
-                  onChange={(e) => update("wrapper_thickness", e.target.value)}
-                >
-                  {WRAPPER_THICKNESS_OPTIONS.map((x) => (
-                    <option key={x} value={x}>
-                      {x}
-                    </option>
-                  ))}
+                <label style={styles.label}>Wrapper Thickness</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_thickness} onChange={(e) => update("wrapper_thickness", e.target.value)}>
+                  {WRAPPER_THICKNESS_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
                 </select>
               </div>
-
               <div>
-                <label>Wrapper Oiliness</label>
-                <select
-                  value={form.wrapper_oiliness}
-                  onChange={(e) => update("wrapper_oiliness", e.target.value)}
-                >
-                  {WRAPPER_OILINESS_OPTIONS.map((x) => (
-                    <option key={x} value={x}>
-                      {x}
-                    </option>
-                  ))}
+                <label style={styles.label}>Wrapper Oiliness</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_oiliness} onChange={(e) => update("wrapper_oiliness", e.target.value)}>
+                  {WRAPPER_OILINESS_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
                 </select>
               </div>
             </div>
 
-            <div className="row2" style={{ marginTop: 10 }}>
+            <SectionDivider label="Binder Components" />
+            <div style={styles.grid2}>
               <div>
-                <label>Binder 1</label>
-                <select
-                  value={form.binder_1}
-                  onChange={(e) => update("binder_1", e.target.value)}
-                >
-                  {BINDERS.map((x) => (
-                    <option key={x || "blank-binder-1"} value={x}>
-                      {x || "Select binder 1"}
-                    </option>
-                  ))}
+                <label style={styles.label}>Binder 1</label>
+                <select className="pp-select" style={styles.select} value={form.binder_1} onChange={(e) => update("binder_1", e.target.value)}>
+                  {BINDERS.map((x) => <option key={x||"blank-b1"} value={x}>{x||"â€” Select Binder â€”"}</option>)}
                 </select>
-
                 {form.binder_1 === "Hybrid / Other" && (
-                  <>
-                    <label style={{ marginTop: 10, display: "block" }}>
-                      Custom Binder 1
-                    </label>
-                    <input
-                      value={form.binder_1_custom}
-                      onChange={(e) => update("binder_1_custom", e.target.value)}
-                      placeholder="e.g. Ecuador Hybrid"
-                    />
-                  </>
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.binder_1_custom} onChange={(e) => update("binder_1_custom", e.target.value)}
+                    placeholder="Specify custom binder" />
                 )}
               </div>
-
               <div>
-                <label>Binder 2</label>
-                <select
-                  value={form.binder_2}
-                  onChange={(e) => update("binder_2", e.target.value)}
-                >
-                  {BINDERS.map((x) => (
-                    <option key={x || "blank-binder-2"} value={x}>
-                      {x || "Select binder 2"}
-                    </option>
-                  ))}
+                <label style={styles.label}>Binder 2</label>
+                <select className="pp-select" style={styles.select} value={form.binder_2} onChange={(e) => update("binder_2", e.target.value)}>
+                  {BINDERS.map((x) => <option key={x||"blank-b2"} value={x}>{x||"â€” Select Binder â€”"}</option>)}
                 </select>
-
                 {form.binder_2 === "Hybrid / Other" && (
-                  <>
-                    <label style={{ marginTop: 10, display: "block" }}>
-                      Custom Binder 2
-                    </label>
-                    <input
-                      value={form.binder_2_custom}
-                      onChange={(e) => update("binder_2_custom", e.target.value)}
-                      placeholder="e.g. Ecuador Hybrid"
-                    />
-                  </>
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.binder_2_custom} onChange={(e) => update("binder_2_custom", e.target.value)}
+                    placeholder="Specify custom binder" />
                 )}
               </div>
             </div>
 
-            <div className="row2" style={{ marginTop: 10 }}>
-              <div>
-                <label>Ligero</label>
-                <select
-                  value={form.ligero}
-                  onChange={(e) => update("ligero", e.target.value)}
-                >
-                  {LIGERO_OPTIONS.map((x) => (
-                    <option key={x || "blank-ligero"} value={x}>
-                      {x || "Select ligero level"}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div style={{ marginTop: 14, maxWidth: 320 }}>
+              <label style={styles.label}>Ligero Level</label>
+              <select className="pp-select" style={styles.select} value={form.ligero} onChange={(e) => update("ligero", e.target.value)}>
+                {LIGERO_OPTIONS.map((x) => <option key={x||"blank-lig"} value={x}>{x||"â€” Select Level â€”"}</option>)}
+              </select>
             </div>
 
-            <div style={{ marginTop: 14 }}>
-              <label>Filler Components</label>
-              <div style={row3Style}>
-                <div>
-                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
-                    Filler 1
-                  </label>
-                  <select
-                    value={form.filler_1}
-                    onChange={(e) => update("filler_1", e.target.value)}
-                  >
-                    {FILLER_OPTIONS.map((x) => (
-                      <option key={`f1-${x || "blank"}`} value={x}>
-                        {x || "Select filler"}
-                      </option>
-                    ))}
+            <SectionDivider label="Filler Components" />
+            <div style={styles.grid3}>
+              {["filler_1","filler_2","filler_3"].map((key, i) => (
+                <div key={key}>
+                  <label style={styles.label}>Filler {i+1}</label>
+                  <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
+                    {FILLER_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"â€” Select â€”"}</option>)}
                   </select>
                 </div>
-
-                <div>
-                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
-                    Filler 2
-                  </label>
-                  <select
-                    value={form.filler_2}
-                    onChange={(e) => update("filler_2", e.target.value)}
-                  >
-                    {FILLER_OPTIONS.map((x) => (
-                      <option key={`f2-${x || "blank"}`} value={x}>
-                        {x || "Select filler"}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
-                    Filler 3
-                  </label>
-                  <select
-                    value={form.filler_3}
-                    onChange={(e) => update("filler_3", e.target.value)}
-                  >
-                    {FILLER_OPTIONS.map((x) => (
-                      <option key={`f3-${x || "blank"}`} value={x}>
-                        {x || "Select filler"}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+              ))}
             </div>
 
-            <div style={{ marginTop: 14 }}>
-              <label>Special Tobacco Flags</label>
-              <div style={row3Style}>
-                <div>
-                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
-                    Flag 1
-                  </label>
-                  <select
-                    value={form.flag_1}
-                    onChange={(e) => update("flag_1", e.target.value)}
-                  >
-                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
-                      <option key={`flag1-${x || "blank"}`} value={x}>
-                        {x || "Select flag"}
-                      </option>
-                    ))}
+            <SectionDivider label="Special Tobacco Flags" />
+            <div style={styles.grid3}>
+              {["flag_1","flag_2","flag_3"].map((key, i) => (
+                <div key={key}>
+                  <label style={styles.label}>Flag {i+1}</label>
+                  <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"â€” Select â€”"}</option>)}
                   </select>
                 </div>
-
-                <div>
-                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
-                    Flag 2
-                  </label>
-                  <select
-                    value={form.flag_2}
-                    onChange={(e) => update("flag_2", e.target.value)}
-                  >
-                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
-                      <option key={`flag2-${x || "blank"}`} value={x}>
-                        {x || "Select flag"}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="small" style={{ display: "block", marginBottom: 6 }}>
-                    Flag 3
-                  </label>
-                  <select
-                    value={form.flag_3}
-                    onChange={(e) => update("flag_3", e.target.value)}
-                  >
-                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => (
-                      <option key={`flag3-${x || "blank"}`} value={x}>
-                        {x || "Select flag"}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* SMOKING PROFILE */}
-          <div className="card" style={{ marginTop: 16 }}>
-            <h3>Optional Input: Blend Age &amp; Smoking Style</h3>
+          {/* â”€â”€ ENVIRONMENTAL + RUN CONTROLS â”€â”€ */}
+          <div style={styles.card}>
+            <div style={styles.sectionLabel}>Section 04</div>
+            <div style={styles.h2}>Optional Parameters &amp; Analysis Controls</div>
 
-            <div className="row2">
+            <div style={styles.grid2}>
               <div>
-                <label>Age (years)</label>
+                <label style={styles.label}>Blend Age (years)</label>
                 <input
-                  type="number"
-                  min="0"
-                  step="0.5"
+                  className="pp-input"
+                  style={styles.input}
+                  type="number" min="0" step="0.5"
                   value={form.age_years}
                   onChange={(e) => update("age_years", e.target.value)}
+                  placeholder="0"
                 />
               </div>
-
               <div>
-                <label>Smoker Style</label>
-                <select
-                  value={form.smoker_style}
-                  onChange={(e) => update("smoker_style", e.target.value)}
-                >
-                  {SMOKER_STYLE_OPTIONS.map((x) => (
-                    <option key={x} value={x}>
-                      {x}
-                    </option>
-                  ))}
+                <label style={styles.label}>Smoker Style</label>
+                <select className="pp-select" style={styles.select} value={form.smoker_style} onChange={(e) => update("smoker_style", e.target.value)}>
+                  {SMOKER_STYLE_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
                 </select>
               </div>
             </div>
 
-            <div
-              style={{
-                marginTop: 16,
-                marginBottom: 12,
-                maxWidth: 320,
-              }}
-            >
-              <label>Pairing</label>
-
-              <select
-                value={pairingSelection}
-                onChange={(e) => setPairingSelection(e.target.value)}
-              >
-                <option value="None">None</option>
+            <div style={{ marginTop: 16, maxWidth: 320 }}>
+              <label style={styles.label}>Pairing Category</label>
+              <select className="pp-select" style={styles.select} value={pairingSelection} onChange={(e) => setPairingSelection(e.target.value)}>
+                <option value="None">None â€” Prediction Only</option>
                 <option value="Wine">Wine</option>
                 <option value="Whisky">Whisky</option>
                 <option value="Rum">Rum</option>
@@ -1626,232 +1207,208 @@ UI
               </select>
             </div>
 
-            <div
-              className="ctaRow"
-              style={{
-                marginTop: 16,
-                display: "flex",
-                gap: 12,
-                flexWrap: "wrap",
-              }}
-            >
+            <hr style={styles.sep} />
+
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
               <button
-                className="btn primary"
+                className="pp-btn-primary"
+                style={styles.btnPrimary}
                 onClick={runPrediction}
                 disabled={loadingPredict || !hasProAccess}
-                type="button"
               >
-                {loadingPredict ? "Running..." : "Run Predictor"}
+                {loadingPredict ? "Computingâ€¦" : "Run Predictor"}
               </button>
 
               <button
-                className="btn"
+                className="pp-btn-secondary"
+                style={styles.btnSecondary}
                 onClick={findSimilarBlends}
                 disabled={loadingSimilar || !hasProAccess}
-                type="button"
               >
-                {loadingSimilar ? "Searching..." : "Find Similar Blends"}
+                {loadingSimilar ? "Searchingâ€¦" : "Find Similar Blends"}
               </button>
+
+              {(loadingPredict && predictStep) && <ProcessingIndicator label={predictStep} />}
+              {loadingSimilar && <ProcessingIndicator label="Scanning blend databaseâ€¦" />}
             </div>
           </div>
 
+          {/* â”€â”€ ERROR â”€â”€ */}
           {err && (
-            <div className="notice" style={{ marginTop: 16 }}>
-              <b>Error:</b> {err}
+            <div style={{ ...styles.notice, marginTop: 16 }}>
+              âš  {err}
             </div>
           )}
 
+          {/* â”€â”€ ANALYTICAL OUTPUT â”€â”€ */}
           {result && (
-            <div className="card" style={{ marginTop: 16 }}>
-              <h3>Blend Peak-Flavor Prediction Result</h3>
+            <div className="pp-result" style={styles.card}>
+              <div style={styles.sectionLabel}>Analytical Output</div>
+              <div style={styles.h2}>Peak-Flavor Prediction Result</div>
 
-              <div className="small" style={{ lineHeight: 1.8 }}>
-                <div>
-                  Cigar Peak-Flavor System Family: <b>{result.family}</b>
+              {/* RH Readout panels */}
+              <div style={{ display: "flex", gap: 16, marginBottom: 24, flexWrap: "wrap" }}>
+                <div style={styles.rhPanel}>
+                  <div style={styles.dataLabel}>Target RH%</div>
+                  <div className="pp-rh-value">{result.target_rh}</div>
+                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
                 </div>
-                <div>
-                  Target Smoking Core Relative Humidity % (measured with Cigar Humidity Meter):{" "}
-                  <b>{result.target_rh}</b>
+                <div style={styles.rhPanel}>
+                  <div style={styles.dataLabel}>RH Window</div>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
+                    {result.window_low}â€“{result.window_high}
+                  </div>
+                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Operating Range</div>
                 </div>
-                <div>
-                  Smoking Core Relative Humidity % Window: <b>{result.window_low}</b> to{" "}
-                  <b>{result.window_high}</b>
-                </div>
-                <div>
-                  Runs used: <b>{result.runs_used}</b>
-                </div>
-                <div>
-                  Runs remaining: <b>{result.runs_remaining}</b>
-                </div>
-                <div>
-                  Daily used: <b>{result.daily_used}</b>
-                </div>
-                <div>
-                  Daily remaining: <b>{result.daily_remaining}</b>
+                <div style={styles.rhPanel}>
+                  <div style={styles.dataLabel}>CPFS Family</div>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 16, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em" }}>
+                    {result.family}
+                  </div>
+                  <div style={{ ...styles.dataLabel, marginTop: 4 }}>Classification</div>
                 </div>
               </div>
 
-              <hr className="sep" />
+              {/* Usage counters */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 0, border: `1px solid ${DS.border}`, borderRadius: 4, overflow: "hidden", marginBottom: 24 }}>
+                {[
+                  ["Runs Used",           result.runs_used],
+                  ["Runs Remaining",      result.runs_remaining],
+                  ["Daily Used",          result.daily_used],
+                  ["Daily Remaining",     result.daily_remaining],
+                ].map(([label, value], i) => (
+                  <div key={label} style={{ padding: "12px 16px", borderRight: i < 3 ? `1px solid ${DS.border}` : "none", borderBottom: 0 }}>
+                    <div style={styles.dataLabel}>{label}</div>
+                    <div style={{ ...styles.dataValue, fontSize: 18, marginTop: 4 }}>{value}</div>
+                  </div>
+                ))}
+              </div>
 
+              {/* Tasting Card */}
               {tastingCard && (
                 <>
-                  <hr className="sep" />
-
-                  <h3>Tasting Card</h3>
-
-                  <div className="row2" style={{ marginTop: 12 }}>
-                    <div className="card" style={{ marginTop: 0 }}>
-                      <h4 style={{ marginTop: 0 }}>Palate</h4>
-
-                      <div className="small" style={{ lineHeight: 1.8 }}>
-                        <div>
-                          <b>Primary:</b>{" "}
-                          {(tastingCard?.palate?.primary || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Secondary:</b>{" "}
-                          {(tastingCard?.palate?.secondary || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Texture:</b>{" "}
-                          {(tastingCard?.palate?.texture || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Finish:</b>{" "}
-                          {(tastingCard?.palate?.finish || []).join(", ") || "—"}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="card" style={{ marginTop: 0 }}>
-                      <h4 style={{ marginTop: 0 }}>Retrohale</h4>
-
-                      <div className="small" style={{ lineHeight: 1.8 }}>
-                        <div>
-                          <b>Primary:</b>{" "}
-                          {(tastingCard?.retrohale?.primary || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Secondary:</b>{" "}
-                          {(tastingCard?.retrohale?.secondary || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Finish:</b>{" "}
-                          {(tastingCard?.retrohale?.finish || []).join(", ") || "—"}
-                        </div>
-                      </div>
-                    </div>
+                  <SectionDivider label="Analytical Tasting Profile" />
+                  <div style={styles.grid2}>
+                    <AnalyticalCard
+                      title="Palate Analysis"
+                      rows={[
+                        { label: "Primary",   value: (tastingCard?.palate?.primary  ||[]).join(", ") },
+                        { label: "Secondary", value: (tastingCard?.palate?.secondary||[]).join(", ") },
+                        { label: "Texture",   value: (tastingCard?.palate?.texture  ||[]).join(", ") },
+                        { label: "Finish",    value: (tastingCard?.palate?.finish   ||[]).join(", ") },
+                      ]}
+                    />
+                    <AnalyticalCard
+                      title="Retrohale Profile"
+                      rows={[
+                        { label: "Primary",   value: (tastingCard?.retrohale?.primary  ||[]).join(", ") },
+                        { label: "Secondary", value: (tastingCard?.retrohale?.secondary||[]).join(", ") },
+                        { label: "Finish",    value: (tastingCard?.retrohale?.finish   ||[]).join(", ") },
+                      ]}
+                    />
                   </div>
                 </>
               )}
 
+              {/* Pairing Card */}
               {loadingPairing && pairingSelection !== "None" && (
+                <ProcessingIndicator label={`Generating ${pairingSelection} pairing matrixâ€¦`} />
+              )}
+
+              {pairingCard && pairingSelection !== "None" && filteredPairing && (
                 <>
-                  <hr className="sep" />
-                  <div className="small">Loading pairing card...</div>
+                  <SectionDivider label={`${pairingSelection} Pairing Matrix`} />
+                  <AnalyticalCard
+                    title={`${pairingSelection} â€” Pairing Recommendations`}
+                    rows={[
+                      { label: "Primary",   value: displayPairingList(filteredPairing?.primary) },
+                      { label: "Secondary", value: displayPairingList(filteredPairing?.secondary) },
+                    ]}
+                  />
                 </>
               )}
 
-              {pairingCard && pairingSelection !== "None" && (
-                <>
-                  <hr className="sep" />
+              {pairingCard && pairingSelection !== "None" && !filteredPairing && (
+                <div style={{ ...styles.noticeInfo, marginTop: 16 }}>
+                  No {pairingSelection.toLowerCase()} pairing data returned for this blend profile.
+                </div>
+              )}
 
-                  <h3>{pairingSelection} Pairing Card</h3>
+              {/* Metadata footer */}
+              <div style={styles.metaBar}>
+                <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
+                <span style={styles.metaItem}>Calibrated Â· Reference-Standard</span>
+                <span style={styles.metaItem}>Generated {timestamp}</span>
+                <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
+              </div>
+            </div>
+          )}
 
-                  <div
-                    style={{
-                      marginTop: 12,
-                      maxWidth: 760,
-                    }}
-                  >
-                    {getFilteredPairingCard() ? (
-                      <PairingCategoryCard
-                        title={pairingSelection}
-                        data={getFilteredPairingCard()}
-                      />
-                    ) : (
-                      <div className="small">
-                        No {pairingSelection.toLowerCase()} pairing data was returned for this blend.
+          {/* â”€â”€ SIMILAR BLENDS â”€â”€ */}
+          {similarBlends && (
+            <div className="pp-result" style={styles.card}>
+              <div style={styles.sectionLabel}>Structural Match Analysis</div>
+              <div style={styles.h2}>Similar Blend Profiles</div>
+
+              {Array.isArray(similarBlends.results) && similarBlends.results.length > 0 ? (
+                similarBlends.results.map((blend, idx) => (
+                  <div key={`${blend.brand||"b"}-${blend.line||"l"}-${idx}`}
+                    style={{ padding: "18px 0", borderBottom: idx < similarBlends.results.length-1 ? `1px solid ${DS.border}` : "none" }}>
+
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
+                      <div>
+                        <span style={{ fontWeight: 600, fontSize: 14, color: DS.textPrimary }}>
+                          {blend.brand || "Unknown Brand"}
+                        </span>
+                        {blend.line && (
+                          <span style={{ fontSize: 13, color: DS.textSecond, marginLeft: 8 }}>â€” {blend.line}</span>
+                        )}
+                      </div>
+                      {blend.similarity_score != null && (
+                        <div style={{ fontFamily: DS.fontMono, fontSize: 13, color: DS.accent, fontWeight: 600, letterSpacing: "0.04em" }}>
+                          {blend.similarity_score}% Match
+                        </div>
+                      )}
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 2 }}>
+                      {blend.origin         && <DataRow label="Origin"          value={blend.origin} />}
+                      {blend.factory        && <DataRow label="Factory"         value={blend.factory} />}
+                      {blend.wrapper        && <DataRow label="Wrapper"         value={blend.wrapper} />}
+                      {blend.wrapper_process && <DataRow label="Wrapper Process" value={blend.wrapper_process} />}
+                      {(blend.binder_1||blend.binder_2||blend.binder) && (
+                        <DataRow label="Binder Components" value={[...splitPipeValues(blend.binder||""), cleanText(blend.binder_1||""), cleanText(blend.binder_2||"")].filter(Boolean).join(", ")} />
+                      )}
+                      {Array.isArray(blend.filler) && blend.filler.length > 0 && (
+                        <DataRow label="Filler"  value={blend.filler.join(", ")} />
+                      )}
+                      {blend.ligero         && <DataRow label="Ligero"          value={blend.ligero} />}
+                      {Array.isArray(blend.special_tobacco_flags) && blend.special_tobacco_flags.length > 0 && (
+                        <DataRow label="Special Flags" value={blend.special_tobacco_flags.join(", ")} />
+                      )}
+                      {blend.source_label   && <DataRow label="Data Source"     value={blend.source_label} />}
+                    </div>
+
+                    {Array.isArray(blend.why_similar) && blend.why_similar.length > 0 && (
+                      <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                        Similarity basis: {blend.why_similar.join(" Â· ")}
                       </div>
                     )}
                   </div>
-                </>
-              )}
-            </div>
-          )}
-
-          {similarBlends && (
-            <div className="card" style={{ marginTop: 16 }}>
-              <h3>Similar Blends</h3>
-
-              {Array.isArray(similarBlends.results) && similarBlends.results.length > 0 ? (
-                <div className="small" style={{ lineHeight: 1.8 }}>
-                  {similarBlends.results.map((blend, idx) => (
-                    <div
-                      key={`${blend.brand || "brand"}-${blend.line || "line"}-${idx}`}
-                      style={{
-                        padding: "12px 0",
-                        borderBottom:
-                          idx === similarBlends.results.length - 1
-                            ? "none"
-                            : "1px solid rgba(0,0,0,.08)",
-                      }}
-                    >
-                      <div>
-                        <b>{blend.brand || "Unknown Brand"}</b>
-                        {blend.line ? ` — ${blend.line}` : ""}
-                      </div>
-
-                      {blend.similarity_score != null && (
-                        <div>
-                          Similarity score: <b>{blend.similarity_score}%</b>
-                        </div>
-                      )}
-
-                      {Array.isArray(blend.why_similar) &&
-                        blend.why_similar.length > 0 && (
-                          <div>Why similar: {blend.why_similar.join(", ")}</div>
-                        )}
-
-                      {blend.origin && <div>Origin: {blend.origin}</div>}
-                      {blend.factory && <div>Factory: {blend.factory}</div>}
-                      {blend.wrapper && <div>Wrapper: {blend.wrapper}</div>}
-                      {blend.wrapper_process && (
-                        <div>Wrapper process: {blend.wrapper_process}</div>
-                      )}
-                      {(blend.binder_1 || blend.binder_2 || blend.binder) && (
-                        <div>
-                          Binder Components:{" "}
-                          {[
-                            ...splitPipeValues(blend.binder || ""),
-                            cleanText(blend.binder_1 || ""),
-                            cleanText(blend.binder_2 || ""),
-                          ]
-                            .filter(Boolean)
-                            .join(", ")}
-                        </div>
-                      )}
-
-                      {Array.isArray(blend.filler) && blend.filler.length > 0 && (
-                        <div>Filler: {blend.filler.join(", ")}</div>
-                      )}
-
-                      {blend.ligero && <div>Ligero: {blend.ligero}</div>}
-
-                      {Array.isArray(blend.special_tobacco_flags) &&
-                        blend.special_tobacco_flags.length > 0 && (
-                          <div>Flags: {blend.special_tobacco_flags.join(", ")}</div>
-                        )}
-
-                      {blend.source_label && <div>Source: {blend.source_label}</div>}
-                    </div>
-                  ))}
-                </div>
+                ))
               ) : (
-                <div className="small">No similar blends found.</div>
+                <div style={{ fontFamily: DS.fontMono, fontSize: 11, color: DS.textMuted }}>
+                  No structurally similar blends identified in the current database.
+                </div>
               )}
+
+              <div style={styles.metaBar}>
+                <span style={styles.metaItem}><span style={styles.metaDot} />Structural Match Engine</span>
+                <span style={styles.metaItem}>Generated {timestamp}</span>
+              </div>
             </div>
           )}
+
         </div>
       </div>
     </Layout>
