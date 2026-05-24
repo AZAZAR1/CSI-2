@@ -32,9 +32,9 @@ const DS = {
   danger:       "#8b1a1a",        // deviation / same as accent
   dangerDim:    "rgba(139,26,26,0.14)",
   textPrimary:  "#e6e2dc",        // warm off-white, not cold blue-white
-  textSecond:   "#e6e2dc",        // warm mid-tone
-  textMuted:    "#8a8278",        // warm muted
-  textMono:     "#e6e2dc",        // warm gold for mono readouts
+  textSecond:   "#8a8278",        // warm mid-tone
+  textMuted:    "#8a8278",        // warm muted, raised for on-screen legibility
+  textMono:     "#e6e2dc",        // off-white for output readouts
   fontSerif:    "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
   fontSans:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
   fontMono:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
@@ -406,7 +406,7 @@ const GlobalStyles = () => (
 
     .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
     .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
-    .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #e6e2dc; }
+    .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
     .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
 
     .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #e6e2dc !important; }
@@ -1277,10 +1277,7 @@ export default function PredictorPage() {
                 </div>
               </div>
 
-              {
-
               {/* Tasting Card */}
-}
               {tastingCard && (
                 <>
                   <SectionDivider label="Analytical Tasting Profile" />
