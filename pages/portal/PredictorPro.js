@@ -3,33 +3,39 @@ import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 
 /* ============================================================
-   SWISS INSTITUTIONAL DESIGN SYSTEM â€” ICSI PREDICTOR PRO
-   Color palette: Deep graphite / off-white / cobalt accent
-   Typography: Inter (headings) + IBM Plex Mono (data readouts)
+   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR PRO
+   Color palette: Carbon / ICSI Crimson / warm gold
+   Typography: Cormorant Garamond (sections) + IBM Plex Mono (data)
    Spacing: 8pt grid throughout
    ============================================================ */
 
 const DS = {
   // Color tokens
   bg:           "#0d0f11",        // near-black carbon
-  bgCard:       "#13161a",        // card surface
-  bgPanel:      "#1a1e24",        // raised panel
-  bgInput:      "#0f1215",        // input surface
+  bgCard:       "#131416",        // card surface
+  bgPanel:      "#1a1c1f",        // raised panel
+  bgInput:      "#0f1113",        // input surface
   border:       "rgba(255,255,255,0.07)",
-  borderStrong: "rgba(255,255,255,0.13)",
-  accent:       "#2563eb",        // cobalt blue â€” informational
-  accentDim:    "rgba(37,99,235,0.15)",
-  accentGlow:   "rgba(37,99,235,0.06)",
-  success:      "#16a34a",        // validated / green
-  successDim:   "rgba(22,163,74,0.12)",
-  warning:      "#d97706",        // caution / amber
-  warningDim:   "rgba(217,119,6,0.12)",
-  danger:       "#dc2626",        // deviation / red
-  dangerDim:    "rgba(220,38,38,0.12)",
-  textPrimary:  "#e8eaed",
-  textSecond:   "#8b95a1",
-  textMuted:    "#4f5a65",
-  textMono:     "#a8d4ff",        // monospaced data readouts
+  borderStrong: "rgba(255,255,255,0.12)",
+  // ICSI institutional crimson -- matches logo seal
+  accent:       "#8b1a1a",
+  accentLight:  "#a52020",
+  accentDim:    "rgba(139,26,26,0.18)",
+  accentGlow:   "rgba(139,26,26,0.07)",
+  // Warm gold -- complements the ICSI crest
+  gold:         "#b8922a",
+  goldDim:      "rgba(184,146,42,0.15)",
+  success:      "#2d7a4f",        // validated / forest green
+  successDim:   "rgba(45,122,79,0.14)",
+  warning:      "#b07d2a",        // caution / warm amber
+  warningDim:   "rgba(176,125,42,0.14)",
+  danger:       "#8b1a1a",        // deviation / same as accent
+  dangerDim:    "rgba(139,26,26,0.14)",
+  textPrimary:  "#e6e2dc",        // warm off-white, not cold blue-white
+  textSecond:   "#8a8278",        // warm mid-tone
+  textMuted:    "#4e4a45",        // warm muted
+  textMono:     "#c9a96e",        // warm gold for mono readouts
+  fontSerif:    "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
   fontSans:     "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
   fontMono:     "'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', monospace",
 };
@@ -62,13 +68,13 @@ const styles = {
     alignItems: "center",
     gap: 6,
     background: DS.accentDim,
-    border: `1px solid rgba(37,99,235,0.3)`,
-    borderRadius: 3,
+    border: `1px solid rgba(139,26,26,0.35)`,
+    borderRadius: 2,
     padding: "3px 10px",
     fontSize: 10,
     fontFamily: DS.fontMono,
     letterSpacing: "0.12em",
-    color: DS.accent,
+    color: DS.gold,
     marginBottom: 16,
     textTransform: "uppercase",
   },
@@ -114,26 +120,28 @@ const styles = {
   sectionLabel: {
     fontFamily: DS.fontMono,
     fontSize: 9,
-    letterSpacing: "0.14em",
+    letterSpacing: "0.16em",
     textTransform: "uppercase",
     color: DS.textMuted,
     marginBottom: 4,
   },
   h2: {
-    fontSize: 13,
+    fontFamily: DS.fontSerif,
+    fontSize: 22,
     fontWeight: 600,
-    letterSpacing: "0.02em",
+    letterSpacing: "0.04em",
     color: DS.textPrimary,
     margin: "0 0 20px",
-    textTransform: "uppercase",
+    lineHeight: 1.2,
   },
   h3: {
-    fontSize: 11,
+    fontFamily: DS.fontSerif,
+    fontSize: 14,
     fontWeight: 600,
-    letterSpacing: "0.10em",
-    textTransform: "uppercase",
+    letterSpacing: "0.06em",
     color: DS.textSecond,
     margin: "0 0 10px",
+    textTransform: "none",
   },
 
   /* â”€â”€ FORM ELEMENTS â”€â”€ */
@@ -202,8 +210,8 @@ const styles = {
   btnPrimary: {
     background: DS.accent,
     border: "1px solid transparent",
-    borderRadius: 3,
-    color: "#fff",
+    borderRadius: 2,
+    color: "#f0e8e0",
     cursor: "pointer",
     fontFamily: DS.fontMono,
     fontSize: 10,
@@ -218,7 +226,7 @@ const styles = {
   btnSecondary: {
     background: "transparent",
     border: `1px solid ${DS.borderStrong}`,
-    borderRadius: 3,
+    borderRadius: 2,
     color: DS.textSecond,
     cursor: "pointer",
     fontFamily: DS.fontMono,
@@ -235,38 +243,38 @@ const styles = {
   /* â”€â”€ STATUS / NOTICE â”€â”€ */
   notice: {
     background: DS.dangerDim,
-    border: `1px solid rgba(220,38,38,0.25)`,
-    borderRadius: 4,
+    border: `1px solid rgba(139,26,26,0.3)`,
+    borderRadius: 3,
     padding: "12px 16px",
     fontSize: 12,
-    color: "#f87171",
+    color: "#c97a7a",
     fontFamily: DS.fontMono,
   },
   noticeWarning: {
     background: DS.warningDim,
-    border: `1px solid rgba(217,119,6,0.25)`,
-    borderRadius: 4,
+    border: `1px solid rgba(176,125,42,0.3)`,
+    borderRadius: 3,
     padding: "12px 16px",
     fontSize: 12,
-    color: "#fbbf24",
+    color: "#c9a050",
     fontFamily: DS.fontMono,
   },
   noticeSuccess: {
     background: DS.successDim,
-    border: `1px solid rgba(22,163,74,0.25)`,
-    borderRadius: 4,
+    border: `1px solid rgba(45,122,79,0.3)`,
+    borderRadius: 3,
     padding: "12px 16px",
     fontSize: 12,
-    color: "#4ade80",
+    color: "#6daa88",
     fontFamily: DS.fontMono,
   },
   noticeInfo: {
     background: DS.accentGlow,
-    border: `1px solid rgba(37,99,235,0.2)`,
-    borderRadius: 4,
+    border: `1px solid rgba(139,26,26,0.2)`,
+    borderRadius: 3,
     padding: "12px 16px",
     fontSize: 12,
-    color: "#93c5fd",
+    color: "#c9a96e",
     fontFamily: DS.fontMono,
   },
 
@@ -294,7 +302,7 @@ const styles = {
   dataValuePrimary: {
     fontFamily: DS.fontMono,
     fontSize: 14,
-    color: DS.accent,
+    color: DS.gold,
     fontWeight: 600,
     letterSpacing: "0.04em",
   },
@@ -360,7 +368,7 @@ const styles = {
     width: 4,
     height: 4,
     borderRadius: "50%",
-    background: DS.success,
+    background: DS.gold,
     marginRight: 6,
     verticalAlign: "middle",
   },
@@ -372,7 +380,7 @@ const styles = {
 
 const GlobalStyles = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; }
 
@@ -393,15 +401,15 @@ const GlobalStyles = () => (
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .pp-input:focus  { border-color: rgba(37,99,235,0.6) !important; }
-    .pp-select:focus { border-color: rgba(37,99,235,0.6) !important; }
+    .pp-input:focus  { border-color: rgba(139,26,26,0.6) !important; }
+    .pp-select:focus { border-color: rgba(139,26,26,0.6) !important; }
 
     .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
     .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
-    .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(37,99,235,0.4); color: #93c5fd; }
+    .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
     .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
 
-    .pp-ac-item:hover { background: rgba(37,99,235,0.08) !important; color: #e8eaed !important; }
+    .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #e6e2dc !important; }
 
     .pp-datarow:last-child { border-bottom: none !important; }
 
@@ -411,7 +419,7 @@ const GlobalStyles = () => (
       font-family: 'IBM Plex Mono', monospace;
       font-size: 42px;
       font-weight: 600;
-      color: #2563eb;
+      color: #c9a96e;
       letter-spacing: -0.02em;
       line-height: 1;
       animation: countUp 0.5s ease both;
@@ -424,19 +432,19 @@ const GlobalStyles = () => (
     /* Scrollbar */
     ::-webkit-scrollbar       { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
 
     /* Instruction block */
     .pp-instructions {
-      font-size: 12px;
+      font-size: 13px;
       line-height: 1.9;
-      color: ${DS.textSecond};
-      border-left: 2px solid rgba(37,99,235,0.35);
+      color: #8a8278;
+      border-left: 2px solid rgba(139,26,26,0.4);
       padding-left: 16px;
       margin: 0;
     }
     .pp-instructions strong {
-      color: ${DS.textPrimary};
+      color: #e6e2dc;
       font-weight: 500;
     }
   `}</style>
@@ -502,7 +510,7 @@ const UsageStrip = ({ usage }) => {
           <DataRow label="Remaining"       value={String(usage.runs_remaining)} />
           <DataRow label="Today"           value={`${usage.daily_used} / ${usage.daily_limit}`} />
           <DataRow label="Daily Remaining" value={String(usage.daily_remaining)} />
-          <DataRow label="Period"          value={`${usage.period_start} â†’ ${usage.period_end}`} />
+          <DataRow label="Period"          value={`${usage.period_start} \u2192 ${usage.period_end}`} />
         </div>
 
         {/* Annual usage bar */}
@@ -512,7 +520,7 @@ const UsageStrip = ({ usage }) => {
             <div style={{
               height: "100%",
               width: `${annualPct}%`,
-              background: annualPct > 80 ? DS.warning : DS.accent,
+              background: annualPct > 80 ? DS.warning : DS.gold,
               borderRadius: 2,
               transition: "width 0.6s ease",
             }} />
@@ -533,7 +541,7 @@ const ProcessingIndicator = ({ label }) => (
     padding: "10px 0",
     fontFamily: DS.fontMono,
     fontSize: 11,
-    color: DS.accent,
+    color: DS.gold,
     letterSpacing: "0.08em",
   }}>
     <span style={{ ...styles.dotActive, animation: "pulse 1s infinite" }} />
@@ -804,7 +812,7 @@ export default function PredictorPage() {
       applyLookupMatch(data.match);
       setLookupSource(data.source?.label||"");
       setLookupStatus("Blend data retrieved and applied.");
-    } catch { setLookupStatus("Lookup failed â€” check connection and retry."); }
+    } catch { setLookupStatus("Lookup failed \u2014 check connection and retry."); }
     finally { setLoadingLookup(false); }
   };
 
@@ -874,7 +882,7 @@ export default function PredictorPage() {
      ============================================================ */
 
   const now = new Date();
-  const timestamp = `${now.getDate().toString().padStart(2,"0")} ${now.toLocaleString("en",{month:"short"}).toUpperCase()} ${now.getFullYear()} â€” ${now.getHours().toString().padStart(2,"0")}:${now.getMinutes().toString().padStart(2,"0")} GST`;
+  const timestamp = `${now.getDate().toString().padStart(2,"0")} ${now.toLocaleString("en",{month:"short"}).toUpperCase()} ${now.getFullYear()} \u2014 ${now.getHours().toString().padStart(2,"0")}:${now.getMinutes().toString().padStart(2,"0")} GST`;
 
   const filteredPairing = getFilteredPairingCard();
 
@@ -890,7 +898,7 @@ export default function PredictorPage() {
           <div style={styles.pageHeader}>
             <div style={styles.engineBadge}>
               <span style={styles.dotActive} />
-              CPFS Engine v4.8 â€” Calibrated
+              CPFS Engine v4.8 &#x2014; Calibrated
             </div>
             <h1 style={styles.h1}>Cigar Peak-Flavor System</h1>
             <p style={styles.subtitle}>Predictor Pro Â· Analytical Output Module Â· Beta</p>
@@ -902,15 +910,15 @@ export default function PredictorPage() {
             <p className="pp-instructions">
               Predictor Pro is available exclusively to approved subscribers. Validate your registered
               email address using the Check User control. In the Blend Lookup module, enter the Brand
-              and Line identifiers, then initiate the Lookup Blend procedure â€” construction and tobacco
+              and Line identifiers, then initiate the Lookup Blend procedure &#x2014; construction and tobacco
               composition parameters will populate automatically.
               <br /><br />
               Autofilled parameters are adjustable prior to analysis: wrapper, wrapper process, wrapper
               thickness and oiliness, binder components, filler components, ligero level, special tobacco
               flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
               selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
-              blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and â€”
-              if selected â€” a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
+              blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and &#x2014;
+              if selected &#x2014; a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
               blends structurally and sensorially matched to the query.
               <br /><br />
               <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
@@ -946,12 +954,12 @@ export default function PredictorPage() {
 
               {isAuthorizedUser && hasProAccess && (
                 <span style={{ ...styles.noticeSuccess, padding: "6px 12px" }}>
-                  âœ“ Access Validated â€” Pro Enabled
+                  &#x2713; Access Validated &#x2014; Pro Enabled
                 </span>
               )}
               {isAuthorizedUser && !hasProAccess && (
                 <span style={{ ...styles.noticeWarning, padding: "6px 12px" }}>
-                  âš  Validated â€” Pro Access Inactive
+                  &#x26A0; Validated &#x2014; Pro Access Inactive
                 </span>
               )}
               {!isAuthorizedUser && !loadingUsage && (
@@ -1056,13 +1064,13 @@ export default function PredictorPage() {
               <div>
                 <label style={styles.label}>Origin</label>
                 <select className="pp-select" style={styles.select} value={form.origin} onChange={(e) => update("origin", e.target.value)}>
-                  {ORIGINS.map((x) => <option key={x||"blank-origin"} value={x}>{x||"â€” Select Origin â€”"}</option>)}
+                  {ORIGINS.map((x) => <option key={x||"blank-origin"} value={x}>{x||"Select Origin"}</option>)}
                 </select>
               </div>
               <div>
                 <label style={styles.label}>Factory</label>
                 <select className="pp-select" style={styles.select} value={form.factory} onChange={(e) => update("factory", e.target.value)}>
-                  {FACTORIES.map((x) => <option key={x||"blank-factory"} value={x}>{x||"â€” Select Factory â€”"}</option>)}
+                  {FACTORIES.map((x) => <option key={x||"blank-factory"} value={x}>{x||"Select Factory"}</option>)}
                 </select>
               </div>
             </div>
@@ -1071,14 +1079,14 @@ export default function PredictorPage() {
           {/* â”€â”€ BLEND CONSTRUCTION â”€â”€ */}
           <div style={styles.card}>
             <div style={styles.sectionLabel}>Section 03</div>
-            <div style={styles.h2}>Blend Construction â€” Autofilled &amp; Adjustable</div>
+            <div style={styles.h2}>Blend Construction &#x2014; Autofilled &amp; Adjustable</div>
 
             <SectionDivider label="Wrapper" />
             <div style={styles.grid2}>
               <div>
                 <label style={styles.label}>Wrapper Leaf</label>
                 <select className="pp-select" style={styles.select} value={form.wrapper} onChange={(e) => update("wrapper", e.target.value)}>
-                  {WRAPPERS.map((x) => <option key={x||"blank-wrapper"} value={x}>{x||"â€” Select Wrapper â€”"}</option>)}
+                  {WRAPPERS.map((x) => <option key={x||"blank-wrapper"} value={x}>{x||"Select Wrapper"}</option>)}
                 </select>
                 {form.wrapper === "Hybrid / Other" && (
                   <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
@@ -1090,7 +1098,7 @@ export default function PredictorPage() {
               <div>
                 <label style={styles.label}>Wrapper Process</label>
                 <select className="pp-select" style={styles.select} value={form.wrapper_process} onChange={(e) => update("wrapper_process", e.target.value)}>
-                  {WRAPPER_PROCESSES.map((x) => <option key={x||"blank-wp"} value={x}>{x||"â€” Select Process â€”"}</option>)}
+                  {WRAPPER_PROCESSES.map((x) => <option key={x||"blank-wp"} value={x}>{x||"Select Process"}</option>)}
                 </select>
               </div>
             </div>
@@ -1115,7 +1123,7 @@ export default function PredictorPage() {
               <div>
                 <label style={styles.label}>Binder 1</label>
                 <select className="pp-select" style={styles.select} value={form.binder_1} onChange={(e) => update("binder_1", e.target.value)}>
-                  {BINDERS.map((x) => <option key={x||"blank-b1"} value={x}>{x||"â€” Select Binder â€”"}</option>)}
+                  {BINDERS.map((x) => <option key={x||"blank-b1"} value={x}>{x||"Select Binder"}</option>)}
                 </select>
                 {form.binder_1 === "Hybrid / Other" && (
                   <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
@@ -1126,7 +1134,7 @@ export default function PredictorPage() {
               <div>
                 <label style={styles.label}>Binder 2</label>
                 <select className="pp-select" style={styles.select} value={form.binder_2} onChange={(e) => update("binder_2", e.target.value)}>
-                  {BINDERS.map((x) => <option key={x||"blank-b2"} value={x}>{x||"â€” Select Binder â€”"}</option>)}
+                  {BINDERS.map((x) => <option key={x||"blank-b2"} value={x}>{x||"Select Binder"}</option>)}
                 </select>
                 {form.binder_2 === "Hybrid / Other" && (
                   <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
@@ -1139,7 +1147,7 @@ export default function PredictorPage() {
             <div style={{ marginTop: 14, maxWidth: 320 }}>
               <label style={styles.label}>Ligero Level</label>
               <select className="pp-select" style={styles.select} value={form.ligero} onChange={(e) => update("ligero", e.target.value)}>
-                {LIGERO_OPTIONS.map((x) => <option key={x||"blank-lig"} value={x}>{x||"â€” Select Level â€”"}</option>)}
+                {LIGERO_OPTIONS.map((x) => <option key={x||"blank-lig"} value={x}>{x||"Select Level"}</option>)}
               </select>
             </div>
 
@@ -1149,7 +1157,7 @@ export default function PredictorPage() {
                 <div key={key}>
                   <label style={styles.label}>Filler {i+1}</label>
                   <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
-                    {FILLER_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"â€” Select â€”"}</option>)}
+                    {FILLER_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
                   </select>
                 </div>
               ))}
@@ -1161,7 +1169,7 @@ export default function PredictorPage() {
                 <div key={key}>
                   <label style={styles.label}>Flag {i+1}</label>
                   <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
-                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"â€” Select â€”"}</option>)}
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
                   </select>
                 </div>
               ))}
@@ -1196,7 +1204,7 @@ export default function PredictorPage() {
             <div style={{ marginTop: 16, maxWidth: 320 }}>
               <label style={styles.label}>Pairing Category</label>
               <select className="pp-select" style={styles.select} value={pairingSelection} onChange={(e) => setPairingSelection(e.target.value)}>
-                <option value="None">None â€” Prediction Only</option>
+                <option value="None">None &#x2014; Prediction Only</option>
                 <option value="Wine">Wine</option>
                 <option value="Whisky">Whisky</option>
                 <option value="Rum">Rum</option>
@@ -1319,7 +1327,7 @@ export default function PredictorPage() {
                 <>
                   <SectionDivider label={`${pairingSelection} Pairing Matrix`} />
                   <AnalyticalCard
-                    title={`${pairingSelection} â€” Pairing Recommendations`}
+                    title={`${pairingSelection} \u2014 Pairing Recommendations`}
                     rows={[
                       { label: "Primary",   value: displayPairingList(filteredPairing?.primary) },
                       { label: "Secondary", value: displayPairingList(filteredPairing?.secondary) },
@@ -1361,11 +1369,11 @@ export default function PredictorPage() {
                           {blend.brand || "Unknown Brand"}
                         </span>
                         {blend.line && (
-                          <span style={{ fontSize: 13, color: DS.textSecond, marginLeft: 8 }}>â€” {blend.line}</span>
+                          <span style={{ fontSize: 13, color: DS.textSecond, marginLeft: 8 }}>&mdash; {blend.line}</span>
                         )}
                       </div>
                       {blend.similarity_score != null && (
-                        <div style={{ fontFamily: DS.fontMono, fontSize: 13, color: DS.accent, fontWeight: 600, letterSpacing: "0.04em" }}>
+                        <div style={{ fontFamily: DS.fontMono, fontSize: 13, color: DS.gold, fontWeight: 600, letterSpacing: "0.04em" }}>
                           {blend.similarity_score}% Match
                         </div>
                       )}
