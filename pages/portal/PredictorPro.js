@@ -332,8 +332,10 @@ const EMPTY_LOOKUP_FIELDS = {
   wrapper_thickness: "medium",
   wrapper_oiliness: "medium",
 
-  binder: "",
-  binder_custom: "",
+  binder_1: "",
+  binder_1_custom: "",
+  binder_2: "",
+  binder_2_custom: "",
 
   filler_1: "",
   filler_2: "",
@@ -370,8 +372,10 @@ export default function PredictorPage() {
     wrapper_thickness: "medium",
     wrapper_oiliness: "medium",
 
-    binder: "",
-    binder_custom: "",
+    binder_1: "",
+    binder_1_custom: "",
+    binder_2: "",
+    binder_2_custom: "",
 
     filler_1: "",
     filler_2: "",
@@ -567,6 +571,13 @@ HELPERS
     return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
   };
 
+  const splitPipeValues = (value) => {
+    return String(value || "")
+      .split("|")
+      .map((x) => cleanText(x))
+      .filter(Boolean);
+  };
+
   const mapLookupValue = (value, options) => {
     const v = cleanText(value);
     if (!v) return "";
@@ -584,6 +595,15 @@ HELPERS
   const displayPairingList = (values) => {
     if (!Array.isArray(values) || values.length === 0) return "—";
     return values.filter(Boolean).join(", ") || "—";
+  };
+
+  const displayBinderComponents = () => {
+    const values = [
+      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
+      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
+    ].filter(Boolean);
+
+    return values.length > 0 ? values.join(", ") : "—";
   };
 
   const getFilteredPairingCard = () => {
@@ -633,8 +653,27 @@ HELPERS
     const rawWrapper = cleanText(match?.wrapper);
     const wrapperInList = rawWrapper && WRAPPERS.includes(rawWrapper);
 
-    const rawBinder = cleanText(match?.binder);
-    const binderInList = rawBinder && BINDERS.includes(rawBinder);
+    const binderPipeValues = splitPipeValues(match?.binder);
+
+    const rawBinder1 = cleanText(
+      match?.binder_1 ||
+        match?.binder1 ||
+        match?.primary_binder ||
+        binderPipeValues[0] ||
+        match?.binder
+    );
+
+    const rawBinder2 = cleanText(
+      match?.binder_2 ||
+        match?.binder2 ||
+        match?.secondary_binder ||
+        match?.second_binder ||
+        binderPipeValues[1] ||
+        ""
+    );
+
+    const binder1InList = rawBinder1 && BINDERS.includes(rawBinder1);
+    const binder2InList = rawBinder2 && BINDERS.includes(rawBinder2);
 
     const filler = Array.isArray(match?.filler)
       ? match.filler.map(cleanText).filter(Boolean)
@@ -683,10 +722,15 @@ HELPERS
       wrapper_thickness: cleanedWrapperThickness || "medium",
       wrapper_oiliness: cleanedWrapperOiliness || "medium",
 
-      binder: rawBinder
-        ? (binderInList ? rawBinder : "Hybrid / Other")
+      binder_1: rawBinder1
+        ? (binder1InList ? rawBinder1 : "Hybrid / Other")
         : "",
-      binder_custom: rawBinder && !binderInList ? rawBinder : "",
+      binder_1_custom: rawBinder1 && !binder1InList ? rawBinder1 : "",
+
+      binder_2: rawBinder2
+        ? (binder2InList ? rawBinder2 : "Hybrid / Other")
+        : "",
+      binder_2_custom: rawBinder2 && !binder2InList ? rawBinder2 : "",
 
       filler_1: validFillers[0] || "",
       filler_2: validFillers[1] || "",
@@ -714,7 +758,18 @@ HELPERS
     wrapper_thickness: cleanText(form.wrapper_thickness),
     wrapper_oiliness: cleanText(form.wrapper_oiliness),
 
-    binder: cleanText(buildCustomValue(form.binder, form.binder_custom)),
+    binder: [
+      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
+      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
+    ]
+      .filter(Boolean)
+      .join("|"),
+    binder_1: cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
+    binder_2: cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
+    binders: [
+      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
+      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
+    ].filter(Boolean),
 
     filler: buildUniqueList([
       cleanText(form.filler_1),
@@ -1025,7 +1080,7 @@ UI
             Predictor Pro allows you to manually adjust the autofilled blend
             details using the dropdown menus before running the prediction. These
             adjustable fields include wrapper, wrapper process, wrapper thickness,
-            wrapper oiliness, binder, filler components, ligero level, special
+            wrapper oiliness, binder components, filler components, ligero level, special
             tobacco flags, blend age, and smoker style.
             <br />
             <br />
@@ -1339,32 +1394,61 @@ UI
 
             <div className="row2" style={{ marginTop: 10 }}>
               <div>
-                <label>Binder</label>
+                <label>Binder 1</label>
                 <select
-                  value={form.binder}
-                  onChange={(e) => update("binder", e.target.value)}
+                  value={form.binder_1}
+                  onChange={(e) => update("binder_1", e.target.value)}
                 >
                   {BINDERS.map((x) => (
-                    <option key={x || "blank-binder"} value={x}>
-                      {x || "Select binder"}
+                    <option key={x || "blank-binder-1"} value={x}>
+                      {x || "Select binder 1"}
                     </option>
                   ))}
                 </select>
 
-                {form.binder === "Hybrid / Other" && (
+                {form.binder_1 === "Hybrid / Other" && (
                   <>
                     <label style={{ marginTop: 10, display: "block" }}>
-                      Custom Binder
+                      Custom Binder 1
                     </label>
                     <input
-                      value={form.binder_custom}
-                      onChange={(e) => update("binder_custom", e.target.value)}
+                      value={form.binder_1_custom}
+                      onChange={(e) => update("binder_1_custom", e.target.value)}
                       placeholder="e.g. Ecuador Hybrid"
                     />
                   </>
                 )}
               </div>
 
+              <div>
+                <label>Binder 2</label>
+                <select
+                  value={form.binder_2}
+                  onChange={(e) => update("binder_2", e.target.value)}
+                >
+                  {BINDERS.map((x) => (
+                    <option key={x || "blank-binder-2"} value={x}>
+                      {x || "Select binder 2"}
+                    </option>
+                  ))}
+                </select>
+
+                {form.binder_2 === "Hybrid / Other" && (
+                  <>
+                    <label style={{ marginTop: 10, display: "block" }}>
+                      Custom Binder 2
+                    </label>
+                    <input
+                      value={form.binder_2_custom}
+                      onChange={(e) => update("binder_2_custom", e.target.value)}
+                      placeholder="e.g. Ecuador Hybrid"
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div className="row2" style={{ marginTop: 10 }}>
               <div>
                 <label>Ligero</label>
                 <select
@@ -1735,7 +1819,18 @@ UI
                       {blend.wrapper_process && (
                         <div>Wrapper process: {blend.wrapper_process}</div>
                       )}
-                      {blend.binder && <div>Binder: {blend.binder}</div>}
+                      {(blend.binder_1 || blend.binder_2 || blend.binder) && (
+                        <div>
+                          Binder Components:{" "}
+                          {[
+                            ...splitPipeValues(blend.binder || ""),
+                            cleanText(blend.binder_1 || ""),
+                            cleanText(blend.binder_2 || ""),
+                          ]
+                            .filter(Boolean)
+                            .join(", ")}
+                        </div>
+                      )}
 
                       {Array.isArray(blend.filler) && blend.filler.length > 0 && (
                         <div>Filler: {blend.filler.join(", ")}</div>
