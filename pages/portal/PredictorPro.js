@@ -32,9 +32,9 @@ const DS = {
   danger:       "#8b1a1a",        // deviation / same as accent
   dangerDim:    "rgba(139,26,26,0.14)",
   textPrimary:  "#e6e2dc",        // warm off-white, not cold blue-white
-  textSecond:   "#8a8278",        // warm mid-tone
-  textMuted:    "#4e4a45",        // warm muted
-  textMono:     "#c9a96e",        // warm gold for mono readouts
+  textSecond:   "#e6e2dc",        // warm mid-tone
+  textMuted:    "#8a8278",        // warm muted
+  textMono:     "#e6e2dc",        // warm gold for mono readouts
   fontSerif:    "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
   fontSans:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
   fontMono:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
@@ -406,7 +406,7 @@ const GlobalStyles = () => (
 
     .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
     .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
-    .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
+    .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #e6e2dc; }
     .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
 
     .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #e6e2dc !important; }
@@ -419,7 +419,7 @@ const GlobalStyles = () => (
       font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
       font-size: 42px;
       font-weight: 600;
-      color: #c9a96e;
+      color: #e6e2dc;
       letter-spacing: -0.02em;
       line-height: 1;
       animation: countUp 0.5s ease both;
@@ -1277,22 +1277,10 @@ export default function PredictorPage() {
                 </div>
               </div>
 
-              {/* Usage counters */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 0, border: `1px solid ${DS.border}`, borderRadius: 4, overflow: "hidden", marginBottom: 24 }}>
-                {[
-                  ["Runs Used",           result.runs_used],
-                  ["Runs Remaining",      result.runs_remaining],
-                  ["Daily Used",          result.daily_used],
-                  ["Daily Remaining",     result.daily_remaining],
-                ].map(([label, value], i) => (
-                  <div key={label} style={{ padding: "12px 16px", borderRight: i < 3 ? `1px solid ${DS.border}` : "none", borderBottom: 0 }}>
-                    <div style={styles.dataLabel}>{label}</div>
-                    <div style={{ ...styles.dataValue, fontSize: 18, marginTop: 4 }}>{value}</div>
-                  </div>
-                ))}
-              </div>
+              {
 
               {/* Tasting Card */}
+}
               {tastingCard && (
                 <>
                   <SectionDivider label="Analytical Tasting Profile" />
