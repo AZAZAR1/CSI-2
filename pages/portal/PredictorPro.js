@@ -25,8 +25,8 @@ const DS = {
   // Warm gold -- complements the ICSI crest
   gold:         "#b8922a",
   goldDim:      "rgba(184,146,42,0.15)",
-  success:      "#2d7a4f",        // validated / forest green
-  successDim:   "rgba(45,122,79,0.14)",
+  success:      "#b8922a",        // validated / warm institutional gold
+  successDim:   "rgba(184,146,42,0.14)",
   warning:      "#b07d2a",        // caution / warm amber
   warningDim:   "rgba(176,125,42,0.14)",
   danger:       "#8b1a1a",        // deviation / same as accent
@@ -36,8 +36,8 @@ const DS = {
   textMuted:    "#4e4a45",        // warm muted
   textMono:     "#c9a96e",        // warm gold for mono readouts
   fontSerif:    "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
-  fontSans:     "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-  fontMono:     "'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', monospace",
+  fontSans:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
+  fontMono:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
 };
 
 /* ---- Inline style objects ---- */
@@ -57,7 +57,7 @@ const styles = {
     padding: "0 24px 80px",
   },
 
-  /* â”€â”€ PAGE HEADER â”€â”€ */
+  /* ── PAGE HEADER ── */
   pageHeader: {
     padding: "48px 0 40px",
     borderBottom: `1px solid ${DS.border}`,
@@ -82,8 +82,8 @@ const styles = {
     width: 5,
     height: 5,
     borderRadius: "50%",
-    background: DS.success,
-    boxShadow: `0 0 6px ${DS.success}`,
+    background: DS.gold,
+    boxShadow: `0 0 6px ${DS.gold}`,
     animation: "pulse 2s infinite",
   },
   h1: {
@@ -104,7 +104,7 @@ const styles = {
     margin: 0,
   },
 
-  /* â”€â”€ CARDS â”€â”€ */
+  /* ── CARDS ── */
   card: {
     background: DS.bgCard,
     border: `1px solid ${DS.border}`,
@@ -144,7 +144,7 @@ const styles = {
     textTransform: "none",
   },
 
-  /* â”€â”€ FORM ELEMENTS â”€â”€ */
+  /* ── FORM ELEMENTS ── */
   fieldGroup: {
     display: "flex",
     flexDirection: "column",
@@ -194,7 +194,7 @@ const styles = {
     transition: "border-color 0.15s",
   },
 
-  /* â”€â”€ GRID LAYOUTS â”€â”€ */
+  /* ── GRID LAYOUTS ── */
   grid2: {
     display: "grid",
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
@@ -206,7 +206,7 @@ const styles = {
     gap: 12,
   },
 
-  /* â”€â”€ BUTTONS â”€â”€ */
+  /* ── BUTTONS ── */
   btnPrimary: {
     background: DS.accent,
     border: "1px solid transparent",
@@ -240,7 +240,7 @@ const styles = {
     whiteSpace: "nowrap",
   },
 
-  /* â”€â”€ STATUS / NOTICE â”€â”€ */
+  /* ── STATUS / NOTICE ── */
   notice: {
     background: DS.dangerDim,
     border: `1px solid rgba(139,26,26,0.3)`,
@@ -265,7 +265,7 @@ const styles = {
     borderRadius: 3,
     padding: "12px 16px",
     fontSize: 12,
-    color: "#6daa88",
+    color: DS.gold,
     fontFamily: DS.fontMono,
   },
   noticeInfo: {
@@ -278,7 +278,7 @@ const styles = {
     fontFamily: DS.fontMono,
   },
 
-  /* â”€â”€ DATA READOUTS (monospaced) â”€â”€ */
+  /* ── DATA READOUTS (monospaced) ── */
   dataRow: {
     display: "flex",
     justifyContent: "space-between",
@@ -307,7 +307,7 @@ const styles = {
     letterSpacing: "0.04em",
   },
 
-  /* â”€â”€ RH DISPLAY â”€â”€ */
+  /* ── RH DISPLAY ── */
   rhPanel: {
     background: DS.bgPanel,
     border: `1px solid ${DS.border}`,
@@ -317,14 +317,14 @@ const styles = {
     flex: 1,
   },
 
-  /* â”€â”€ SEPARATOR â”€â”€ */
+  /* ── SEPARATOR ── */
   sep: {
     border: "none",
     borderTop: `1px solid ${DS.border}`,
     margin: "24px 0",
   },
 
-  /* â”€â”€ AUTOCOMPLETE â”€â”€ */
+  /* ── AUTOCOMPLETE ── */
   autocompleteBox: {
     position: "absolute",
     background: DS.bgPanel,
@@ -347,7 +347,7 @@ const styles = {
     transition: "background 0.1s",
   },
 
-  /* â”€â”€ METADATA FOOTER â”€â”€ */
+  /* ── METADATA FOOTER ── */
   metaBar: {
     display: "flex",
     gap: 24,
@@ -380,7 +380,7 @@ const styles = {
 
 const GlobalStyles = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; }
 
@@ -416,7 +416,7 @@ const GlobalStyles = () => (
     .pp-result { animation: fadeIn 0.35s ease both; }
 
     .pp-rh-value {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
       font-size: 42px;
       font-weight: 600;
       color: #c9a96e;
@@ -490,7 +490,7 @@ const AnalyticalCard = ({ title, rows }) => (
   <div style={{ ...styles.card, ...styles.cardAccent, marginBottom: 0, padding: "16px 20px" }}>
     <div style={styles.h3}>{title}</div>
     {rows.map(({ label, value }) => (
-      <DataRow key={label} label={label} value={value || "â€”"} />
+      <DataRow key={label} label={label} value={value || "—"} />
     ))}
   </div>
 );
@@ -623,7 +623,7 @@ export default function PredictorPage() {
     String(value || "").normalize("NFKD")
       .replace(/[\u0300-\u036f]/g,"")
       .replace(/['']/g,"'").replace(/[""]/g,'"')
-      .replace(/[â€“â€”]/g,"-").replace(/\s+/g," ").trim();
+      .replace(/[–—]/g,"-").replace(/\s+/g," ").trim();
 
   const isAuthorizedUser =
     isUserValidated &&
@@ -631,7 +631,7 @@ export default function PredictorPage() {
 
   const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
 
-  /* â”€â”€ Autocomplete (unchanged logic) â”€â”€ */
+  /* ── Autocomplete (unchanged logic) ── */
 
   const uniqueByBrand = (items) => {
     const seen = new Set(), out = [];
@@ -692,7 +692,7 @@ export default function PredictorPage() {
     setShowLineSuggestions(false); setLineSuggestions([]);
   };
 
-  /* â”€â”€ Helpers (unchanged logic) â”€â”€ */
+  /* ── Helpers (unchanged logic) ── */
 
   const buildCustomValue = (choice, custom) =>
     (choice === "Custom / Other" || choice === "Hybrid / Other")
@@ -715,8 +715,8 @@ export default function PredictorPage() {
   };
 
   const displayPairingList = (values) =>
-    (!Array.isArray(values) || values.length === 0) ? "â€”"
-      : values.filter(Boolean).join(", ") || "â€”";
+    (!Array.isArray(values) || values.length === 0) ? "—"
+      : values.filter(Boolean).join(", ") || "—";
 
   const getFilteredPairingCard = () => {
     if (!pairingCard || pairingSelection === "None") return null;
@@ -784,7 +784,7 @@ export default function PredictorPage() {
     bunch_density:"medium",
   });
 
-  /* â”€â”€ API calls (unchanged logic) â”€â”€ */
+  /* ── API calls (unchanged logic) ── */
 
   const loadUsage = async () => {
     setErr(""); setLoadingUsage(true); setUsage(null); setLookupStatus(""); setLookupSource("");
@@ -804,7 +804,7 @@ export default function PredictorPage() {
     if (!hasProAccess)     { setLookupStatus("Pro access not enabled for this account."); return; }
     const brand = cleanText(form.brand), line = cleanText(form.line);
     if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
-    setLoadingLookup(true); setLookupStatus("Querying ICSI blend databaseâ€¦");
+    setLoadingLookup(true); setLookupStatus("Querying ICSI blend database...");
     try {
       const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand, line }) });
       const data = await res.json().catch(() => ({}));
@@ -843,19 +843,19 @@ export default function PredictorPage() {
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
     if (!hasProAccess)     { setErr("Pro access not enabled for this account."); return; }
     setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null);
-    setPredictStep("Initializing combustion modelâ€¦");
+    setPredictStep("Initializing combustion model...");
     const cleanedBrand = cleanText(form.brand), cleanedLine = cleanText(form.line);
     try {
-      setPredictStep("Modeling combustion profileâ€¦");
+      setPredictStep("Modeling combustion profile...");
       const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error||data.detail||"Prediction failed");
-      setPredictStep("Calibrating RH equilibriumâ€¦");
+      setPredictStep("Calibrating RH equilibrium...");
       setResult(data);
       await loadUsage();
-      setPredictStep("Generating analytical tasting profileâ€¦");
+      setPredictStep("Generating analytical tasting profile...");
       await loadTastingCard(cleanedBrand, cleanedLine);
-      if (pairingSelection !== "None") { setPredictStep("Computing pairing matrixâ€¦"); }
+      if (pairingSelection !== "None") { setPredictStep("Computing pairing matrix..."); }
       await loadPairingCard(data);
       setPredictStep("");
     } catch(e) { setErr(e.message||"Prediction request failed"); setPredictStep(""); }
@@ -894,17 +894,17 @@ export default function PredictorPage() {
       <div style={styles.page}>
         <div style={styles.container}>
 
-          {/* â”€â”€ PAGE HEADER â”€â”€ */}
+          {/* ── PAGE HEADER ── */}
           <div style={styles.pageHeader}>
             <div style={styles.engineBadge}>
               <span style={styles.dotActive} />
               CPFS Engine v4.8 &#x2014; Calibrated
             </div>
             <h1 style={styles.h1}>Cigar Peak-Flavor System</h1>
-            <p style={styles.subtitle}>Predictor Pro Â· Analytical Output Module Â· Beta</p>
+            <p style={styles.subtitle}>Predictor Pro · Analytical Output Module · Beta</p>
           </div>
 
-          {/* â”€â”€ METHODOLOGY NOTICE â”€â”€ */}
+          {/* ── METHODOLOGY NOTICE ── */}
           <div style={{ ...styles.card, marginBottom: 24, borderColor: "rgba(37,99,235,0.18)" }}>
             <div style={{ ...styles.sectionLabel, marginBottom: 10 }}>Operational Protocol</div>
             <p className="pp-instructions">
@@ -926,7 +926,7 @@ export default function PredictorPage() {
             </p>
           </div>
 
-          {/* â”€â”€ USER VALIDATION â”€â”€ */}
+          {/* ── USER VALIDATION ── */}
           <div style={{ ...styles.card, ...styles.cardAccent }}>
             <div style={styles.sectionLabel}>Section 01</div>
             <div style={styles.h2}>User Validation</div>
@@ -949,7 +949,7 @@ export default function PredictorPage() {
                 onClick={loadUsage}
                 disabled={loadingUsage}
               >
-                {loadingUsage ? "Validatingâ€¦" : "Check User"}
+                {loadingUsage ? "Validating..." : "Check User"}
               </button>
 
               {isAuthorizedUser && hasProAccess && (
@@ -972,7 +972,7 @@ export default function PredictorPage() {
             {usage && <UsageStrip usage={usage} />}
           </div>
 
-          {/* â”€â”€ CIGAR BLEND LOOKUP â”€â”€ */}
+          {/* ── CIGAR BLEND LOOKUP ── */}
           <div style={styles.card}>
             <div style={styles.sectionLabel}>Section 02</div>
             <div style={styles.h2}>Cigar Blend Lookup</div>
@@ -985,7 +985,7 @@ export default function PredictorPage() {
                   className="pp-input"
                   style={styles.input}
                   value={form.brand}
-                  placeholder="Begin entering brand designationâ€¦"
+                  placeholder="Begin entering brand designation..."
                   autoComplete="off"
                   onFocus={() => loadBrandSuggestions(form.brand)}
                   onChange={(e) => {
@@ -1020,7 +1020,7 @@ export default function PredictorPage() {
                   onFocus={() => loadLineSuggestions(form.brand, form.line)}
                   onChange={(e) => { const v = e.target.value; update("line", v); loadLineSuggestions(form.brand, v); }}
                   onBlur={() => setTimeout(() => setShowLineSuggestions(false), 150)}
-                  placeholder={cleanText(form.brand) ? "Begin entering line designationâ€¦" : "Select brand first"}
+                  placeholder={cleanText(form.brand) ? "Begin entering line designation..." : "Select brand first"}
                 />
                 {showLineSuggestions && lineSuggestions.length > 0 && (
                   <div style={styles.autocompleteBox}>
@@ -1042,11 +1042,11 @@ export default function PredictorPage() {
                 onClick={lookupBlend}
                 disabled={loadingLookup || !hasProAccess}
               >
-                {loadingLookup ? "Querying Databaseâ€¦" : "Lookup Blend"}
+                {loadingLookup ? "Querying Database..." : "Lookup Blend"}
               </button>
 
               {lookupStatus && (
-                <span style={{ fontFamily: DS.fontMono, fontSize: 10, color: lookupStatus.includes("applied") ? DS.success : DS.textMuted, letterSpacing: "0.07em" }}>
+                <span style={{ fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.07em" }}>
                   {lookupStatus}
                 </span>
               )}
@@ -1076,7 +1076,7 @@ export default function PredictorPage() {
             </div>
           </div>
 
-          {/* â”€â”€ BLEND CONSTRUCTION â”€â”€ */}
+          {/* ── BLEND CONSTRUCTION ── */}
           <div style={styles.card}>
             <div style={styles.sectionLabel}>Section 03</div>
             <div style={styles.h2}>Blend Construction &#x2014; Autofilled &amp; Adjustable</div>
@@ -1176,7 +1176,7 @@ export default function PredictorPage() {
             </div>
           </div>
 
-          {/* â”€â”€ ENVIRONMENTAL + RUN CONTROLS â”€â”€ */}
+          {/* ── ENVIRONMENTAL + RUN CONTROLS ── */}
           <div style={styles.card}>
             <div style={styles.sectionLabel}>Section 04</div>
             <div style={styles.h2}>Optional Parameters &amp; Analysis Controls</div>
@@ -1224,7 +1224,7 @@ export default function PredictorPage() {
                 onClick={runPrediction}
                 disabled={loadingPredict || !hasProAccess}
               >
-                {loadingPredict ? "Computingâ€¦" : "Run Predictor"}
+                {loadingPredict ? "Computing..." : "Run Predictor"}
               </button>
 
               <button
@@ -1233,22 +1233,22 @@ export default function PredictorPage() {
                 onClick={findSimilarBlends}
                 disabled={loadingSimilar || !hasProAccess}
               >
-                {loadingSimilar ? "Searchingâ€¦" : "Find Similar Blends"}
+                {loadingSimilar ? "Searching..." : "Find Similar Blends"}
               </button>
 
               {(loadingPredict && predictStep) && <ProcessingIndicator label={predictStep} />}
-              {loadingSimilar && <ProcessingIndicator label="Scanning blend databaseâ€¦" />}
+              {loadingSimilar && <ProcessingIndicator label="Scanning blend database..." />}
             </div>
           </div>
 
-          {/* â”€â”€ ERROR â”€â”€ */}
+          {/* ── ERROR ── */}
           {err && (
             <div style={{ ...styles.notice, marginTop: 16 }}>
-              âš  {err}
+              ⚠  {err}
             </div>
           )}
 
-          {/* â”€â”€ ANALYTICAL OUTPUT â”€â”€ */}
+          {/* ── ANALYTICAL OUTPUT ── */}
           {result && (
             <div className="pp-result" style={styles.card}>
               <div style={styles.sectionLabel}>Analytical Output</div>
@@ -1264,7 +1264,7 @@ export default function PredictorPage() {
                 <div style={styles.rhPanel}>
                   <div style={styles.dataLabel}>RH Window</div>
                   <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
-                    {result.window_low}â€“{result.window_high}
+                    {result.window_low}–{result.window_high}
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Operating Range</div>
                 </div>
@@ -1320,7 +1320,7 @@ export default function PredictorPage() {
 
               {/* Pairing Card */}
               {loadingPairing && pairingSelection !== "None" && (
-                <ProcessingIndicator label={`Generating ${pairingSelection} pairing matrixâ€¦`} />
+                <ProcessingIndicator label={`Generating ${pairingSelection} pairing matrix...`} />
               )}
 
               {pairingCard && pairingSelection !== "None" && filteredPairing && (
@@ -1345,14 +1345,14 @@ export default function PredictorPage() {
               {/* Metadata footer */}
               <div style={styles.metaBar}>
                 <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
-                <span style={styles.metaItem}>Calibrated Â· Reference-Standard</span>
+                <span style={styles.metaItem}>Calibrated · Reference-Standard</span>
                 <span style={styles.metaItem}>Generated {timestamp}</span>
                 <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
               </div>
             </div>
           )}
 
-          {/* â”€â”€ SIMILAR BLENDS â”€â”€ */}
+          {/* ── SIMILAR BLENDS ── */}
           {similarBlends && (
             <div className="pp-result" style={styles.card}>
               <div style={styles.sectionLabel}>Structural Match Analysis</div>
@@ -1399,7 +1399,7 @@ export default function PredictorPage() {
 
                     {Array.isArray(blend.why_similar) && blend.why_similar.length > 0 && (
                       <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 10, color: DS.textMuted, letterSpacing: "0.07em" }}>
-                        Similarity basis: {blend.why_similar.join(" Â· ")}
+                        Similarity basis: {blend.why_similar.join(" · ")}
                       </div>
                     )}
                   </div>
