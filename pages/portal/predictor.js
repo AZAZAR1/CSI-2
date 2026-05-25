@@ -637,6 +637,7 @@ export default function PredictorPage() {
     cleanText(validatedEmail).toLowerCase() === cleanText(form.user_email).toLowerCase();
 
   const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
+  const hasPredictorAccess = isAuthorizedUser && usage?.pro_access !== true;
   const hasBlendStructure = Boolean(cleanText(form.wrapper) || cleanText(form.binder_1) || cleanText(form.filler_1));
 
   /* ── Autocomplete (unchanged logic) ── */
@@ -830,7 +831,7 @@ export default function PredictorPage() {
   const lookupBlend = async () => {
     setErr(""); setLookupSource("");
     if (!isAuthorizedUser) { setLookupStatus("Validate your registered email address first."); return; }
-    if (!hasProAccess)     { setLookupStatus("Predictor access not enabled for this account."); return; }
+    if (!hasPredictorAccess) { setLookupStatus("Predictor access is only available to Standard users."); return; }
     const brand = cleanText(form.brand), line = cleanText(form.line);
     if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
     setLoadingLookup(true); setLookupStatus("Querying ICSI blend database...");
@@ -870,7 +871,7 @@ export default function PredictorPage() {
   const runPrediction = async () => {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
-    if (!hasProAccess)     { setErr("Predictor access not enabled for this account."); return; }
+    if (!hasPredictorAccess) { setErr("Predictor access is only available to Standard users."); return; }
     if (!hasBlendStructure) { setErr("Lookup Blend first. Predictor uses the database blend structure and does not support manual construction edits."); return; }
     setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null); setStructuralSnapshot(buildPayload());
     setPredictStep("Initializing combustion model...");
@@ -895,7 +896,7 @@ export default function PredictorPage() {
   const findSimilarBlends = async () => {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
-    if (!hasProAccess)     { setErr("Predictor access not enabled for this account."); return; }
+    if (!hasPredictorAccess) { setErr("Predictor access is only available to Standard users."); return; }
     setLoadingSimilar(true); setSimilarBlends(null); setResult(null); setTastingCard(null); setPairingCard(null); setStructuralSnapshot(null);
     try {
       const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
@@ -1008,14 +1009,14 @@ export default function PredictorPage() {
                 {loadingUsage ? "Validating..." : "Check User"}
               </button>
 
-              {isAuthorizedUser && hasProAccess && (
+              {isAuthorizedUser && hasPredictorAccess && (
                 <span style={{ ...styles.noticeSuccess, padding: "6px 12px" }}>
-                  &#x2713; Access Validated &#x2014; Access Enabled
+                  &#x2713; Access Validated &#x2014; Predictor Enabled
                 </span>
               )}
-              {isAuthorizedUser && !hasProAccess && (
+              {isAuthorizedUser && !hasPredictorAccess && (
                 <span style={{ ...styles.noticeWarning, padding: "6px 12px" }}>
-                  &#x26A0; Validated &#x2014; Predictor Access Inactive
+                  &#x26A0; Validated &#x2014; PredictorPro account detected
                 </span>
               )}
               {!isAuthorizedUser && !loadingUsage && (
@@ -1095,7 +1096,7 @@ export default function PredictorPage() {
                 className="pp-btn-secondary"
                 style={styles.btnSecondary}
                 onClick={lookupBlend}
-                disabled={loadingLookup || !hasProAccess}
+                disabled={loadingLookup || !hasPredictorAccess}
               >
                 {loadingLookup ? "Querying Database..." : "Lookup Blend"}
               </button>
@@ -1160,7 +1161,7 @@ export default function PredictorPage() {
                 className="pp-btn-primary"
                 style={styles.btnPrimary}
                 onClick={runPrediction}
-                disabled={loadingPredict || !hasProAccess || !hasBlendStructure}
+                disabled={loadingPredict || !hasPredictorAccess || !hasBlendStructure}
               >
                 {loadingPredict ? "Computing..." : "Run Predictor"}
               </button>
@@ -1169,7 +1170,7 @@ export default function PredictorPage() {
                 className="pp-btn-secondary"
                 style={styles.btnSecondary}
                 onClick={findSimilarBlends}
-                disabled={loadingSimilar || !hasProAccess || !hasBlendStructure}
+                disabled={loadingSimilar || !hasPredictorAccess || !hasBlendStructure}
               >
                 {loadingSimilar ? "Searching..." : "Find Similar Blends"}
               </button>
