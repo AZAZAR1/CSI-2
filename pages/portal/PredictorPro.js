@@ -136,7 +136,7 @@ const styles = {
   },
   h3: {
     fontFamily: DS.fontSerif,
-    fontSize: 14,
+    fontSize: 22,
     fontWeight: 600,
     letterSpacing: "0.06em",
     color: DS.textSecond,
@@ -295,13 +295,13 @@ const styles = {
   },
   dataValue: {
     fontFamily: DS.fontMono,
-    fontSize: 12,
+    fontSize: 16,
     color: DS.textMono,
     fontWeight: 500,
   },
   dataValuePrimary: {
     fontFamily: DS.fontMono,
-    fontSize: 14,
+    fontSize: 16,
     color: DS.gold,
     fontWeight: 600,
     letterSpacing: "0.04em",
@@ -415,6 +415,38 @@ const GlobalStyles = () => (
 
     .pp-result { animation: fadeIn 0.35s ease both; }
 
+    .pp-output-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 760px) {
+      .pp-output-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .pp-output-grid .pp-datarow {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px;
+      }
+
+      .pp-output-grid .pp-datarow span:last-child {
+        text-align: left;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        font-size: 16px !important;
+        line-height: 1.45;
+      }
+
+      .pp-output-grid .pp-datarow span:first-child {
+        font-size: 15px !important;
+        line-height: 1.2;
+      }
+    }
+
     .pp-rh-value {
       font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
       font-size: 42px;
@@ -495,42 +527,6 @@ const AnalyticalCard = ({ title, rows }) => (
   </div>
 );
 
-/* Usage meter strip */
-const UsageStrip = ({ usage }) => {
-  const annualPct = usage.annual_limit > 0
-    ? Math.round((usage.runs_used / usage.annual_limit) * 100) : 0;
-
-  return (
-    <div style={{ marginTop: 16 }}>
-      <div style={{ ...styles.metaBar, flexDirection: "column", gap: 10 }}>
-        <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-          <DataRow label="Tier"            value={usage.tier} />
-          <DataRow label="Pro Access"      value={usage.pro_access ? "Enabled" : "Inactive"} />
-          <DataRow label="Annual"          value={`${usage.runs_used} / ${usage.annual_limit}`} />
-          <DataRow label="Remaining"       value={String(usage.runs_remaining)} />
-          <DataRow label="Today"           value={`${usage.daily_used} / ${usage.daily_limit}`} />
-          <DataRow label="Daily Remaining" value={String(usage.daily_remaining)} />
-          <DataRow label="Period"          value={`${usage.period_start} \u2192 ${usage.period_end}`} />
-        </div>
-
-        {/* Annual usage bar */}
-        <div style={{ marginTop: 4 }}>
-          <div style={{ ...styles.dataLabel, marginBottom: 5 }}>Annual Consumption</div>
-          <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}>
-            <div style={{
-              height: "100%",
-              width: `${annualPct}%`,
-              background: annualPct > 80 ? DS.warning : DS.gold,
-              borderRadius: 2,
-              transition: "width 0.6s ease",
-            }} />
-          </div>
-          <div style={{ ...styles.dataLabel, marginTop: 4, textAlign: "right" }}>{annualPct}% utilized</div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 /* Loading state indicator */
 const ProcessingIndicator = ({ label }) => (
@@ -612,6 +608,7 @@ export default function PredictorPage() {
   const [loadingPairing, setLoadingPairing] = useState(false);
   const [loadingLookup, setLoadingLookup]   = useState(false);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
 
   const [lookupStatus, setLookupStatus]     = useState("");
   const [lookupSource, setLookupSource]     = useState("");
@@ -706,7 +703,29 @@ export default function PredictorPage() {
 
   const mapLookupValue = (value, options) => {
     const v = cleanText(value);
-    return (!v) ? "" : (options.includes(v) ? v : "");
+    if (!v) return "";
+    if (options.includes(v)) return v;
+    const normalized = v.toLowerCase();
+    const exactCaseInsensitive = options.find((x) => cleanText(x).toLowerCase() === normalized);
+    if (exactCaseInsensitive) return exactCaseInsensitive;
+    const compact = normalized.replace(/[^a-z0-9]/g, "");
+    const compactMatch = options.find((x) => cleanText(x).toLowerCase().replace(/[^a-z0-9]/g, "") === compact);
+    return compactMatch || "";
+  };
+
+  const firstCleanValue = (...values) => {
+    for (const value of values) {
+      const cleaned = cleanText(value);
+      if (cleaned) return cleaned;
+    }
+    return "";
+  };
+
+  const lookupOptionList = (options, selectedValue) => {
+    const selected = cleanText(selectedValue);
+    if (!selected || options.includes(selected)) return options;
+    const withoutBlank = options.filter(Boolean);
+    return ["", selected, ...withoutBlank];
   };
 
   const lookupOptionList = (options, selectedValue) => {
@@ -752,7 +771,7 @@ export default function PredictorPage() {
       line:  cleanText(match?.line)  || f.line,
       ...EMPTY_LOOKUP_FIELDS,
       origin:            mapLookupValue(match?.origin,   ORIGINS),
-      factory:           cleanText(match?.factory || match?.factory_name || match?.manufacturer || match?.producer || match?.made_by),
+      factory:           mapLookupValue(firstCleanValue(match?.factory, match?.factory_name, match?.factoryName, match?.manufacturing_factory, match?.manufacturingFactory, match?.tabacalera, match?.manufacturer, match?.producer, match?.made_by, match?.madeBy, match?.source?.factory, match?.source_factory, match?.factory_label, match?.factoryLabel), FACTORIES) || firstCleanValue(match?.factory, match?.factory_name, match?.factoryName, match?.manufacturing_factory, match?.manufacturingFactory, match?.tabacalera, match?.manufacturer, match?.producer, match?.made_by, match?.madeBy, match?.source?.factory, match?.source_factory, match?.factory_label, match?.factoryLabel),
       wrapper:           rawWrapper ? (wrapperInList ? rawWrapper : "Hybrid / Other") : "",
       wrapper_custom:    rawWrapper && !wrapperInList ? rawWrapper : "",
       wrapper_process:   mapLookupValue(match?.wrapper_process,   WRAPPER_PROCESSES),
@@ -911,26 +930,52 @@ export default function PredictorPage() {
             <p style={styles.subtitle}>Predictor Pro · Analytical Output Module · Beta</p>
           </div>
 
-          {/* ── METHODOLOGY NOTICE ── */}
-          <div style={{ ...styles.card, marginBottom: 24, borderColor: "rgba(37,99,235,0.18)" }}>
-            <div style={{ ...styles.sectionLabel, marginBottom: 10 }}>Operational Protocol</div>
-            <p className="pp-instructions">
-              Predictor Pro is available exclusively to approved subscribers. Validate your registered
-              email address using the Check User control. In the Blend Lookup module, enter the Brand
-              and Line identifiers, then initiate the Lookup Blend procedure &#x2014; construction and tobacco
-              composition parameters will populate automatically.
-              <br /><br />
-              Autofilled parameters are adjustable prior to analysis: wrapper, wrapper process, wrapper
-              thickness and oiliness, binder components, filler components, ligero level, special tobacco
-              flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
-              selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
-              blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and &#x2014;
-              if selected &#x2014; a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
-              blends structurally and sensorially matched to the query.
-              <br /><br />
-              <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
-              available Cigar Humidity Meter.
-            </p>
+          {/* ── COLLAPSIBLE METHODOLOGY NOTICE ── */}
+          <div style={{ ...styles.card, marginBottom: 24, borderColor: "rgba(37,99,235,0.18)", padding: instructionsOpen ? "20px 28px" : "14px 28px" }}>
+            <button
+              type="button"
+              onClick={() => setInstructionsOpen((v) => !v)}
+              aria-expanded={instructionsOpen}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 16,
+                background: "transparent",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                color: DS.textPrimary,
+                fontFamily: DS.fontMono,
+                textAlign: "left",
+              }}
+            >
+              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Operational Protocol</span>
+              <span style={{ ...styles.dataLabel, marginBottom: 0 }}>
+                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "−" : "+"}
+              </span>
+            </button>
+
+            {instructionsOpen && (
+              <p className="pp-instructions" style={{ marginTop: 14 }}>
+                Predictor Pro is available exclusively to approved subscribers. Validate your registered
+                email address using the Check User control. In the Blend Lookup module, enter the Brand
+                and Line identifiers, then initiate the Lookup Blend procedure &#x2014; construction and tobacco
+                composition parameters will populate automatically.
+                <br /><br />
+                Autofilled parameters are adjustable prior to analysis: wrapper, wrapper process, wrapper
+                thickness and oiliness, binder components, filler components, ligero level, special tobacco
+                flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
+                selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
+                blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and &#x2014;
+                if selected &#x2014; a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
+                blends structurally and sensorially matched to the query.
+                <br /><br />
+                <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
+                available Cigar Humidity Meter.
+              </p>
+            )}
           </div>
 
           {/* ── USER VALIDATION ── */}
@@ -976,7 +1021,6 @@ export default function PredictorPage() {
               )}
             </div>
 
-            {usage && <UsageStrip usage={usage} />}
           </div>
 
           {/* ── CIGAR BLEND LOOKUP ── */}
@@ -1288,7 +1332,7 @@ export default function PredictorPage() {
               {tastingCard && (
                 <>
                   <SectionDivider label="Analytical Tasting Profile" />
-                  <div style={styles.grid2}>
+                  <div className="pp-output-grid">
                     <AnalyticalCard
                       title="Palate Analysis"
                       rows={[
@@ -1318,13 +1362,15 @@ export default function PredictorPage() {
               {pairingCard && pairingSelection !== "None" && filteredPairing && (
                 <>
                   <SectionDivider label={`${pairingSelection} Pairing Matrix`} />
-                  <AnalyticalCard
-                    title={`${pairingSelection} \u2014 Pairing Recommendations`}
-                    rows={[
-                      { label: "Primary",   value: displayPairingList(filteredPairing?.primary) },
-                      { label: "Secondary", value: displayPairingList(filteredPairing?.secondary) },
-                    ]}
-                  />
+                  <div className="pp-output-grid">
+                    <AnalyticalCard
+                      title={`${pairingSelection} \u2014 Pairing Recommendations`}
+                      rows={[
+                        { label: "Primary",   value: displayPairingList(filteredPairing?.primary) },
+                        { label: "Secondary", value: displayPairingList(filteredPairing?.secondary) },
+                      ]}
+                    />
+                  </div>
                 </>
               )}
 
@@ -1357,15 +1403,15 @@ export default function PredictorPage() {
 
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
                       <div>
-                        <span style={{ fontWeight: 600, fontSize: 14, color: DS.textPrimary }}>
+                        <span style={{ fontWeight: 600, fontSize: 16, color: DS.textPrimary }}>
                           {blend.brand || "Unknown Brand"}
                         </span>
                         {blend.line && (
-                          <span style={{ fontSize: 13, color: DS.textSecond, marginLeft: 8 }}>&mdash; {blend.line}</span>
+                          <span style={{ fontSize: 16, color: DS.textSecond, marginLeft: 8 }}>&mdash; {blend.line}</span>
                         )}
                       </div>
                       {blend.similarity_score != null && (
-                        <div style={{ fontFamily: DS.fontMono, fontSize: 13, color: DS.gold, fontWeight: 600, letterSpacing: "0.04em" }}>
+                        <div style={{ fontFamily: DS.fontMono, fontSize: 16, color: DS.gold, fontWeight: 600, letterSpacing: "0.04em" }}>
                           {blend.similarity_score}% Match
                         </div>
                       )}
