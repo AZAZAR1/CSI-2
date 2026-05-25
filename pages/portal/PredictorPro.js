@@ -727,14 +727,6 @@ export default function PredictorPage() {
     const withoutBlank = options.filter(Boolean);
     return ["", selected, ...withoutBlank];
   };
-
-  const lookupOptionList = (options, selectedValue) => {
-    const selected = cleanText(selectedValue);
-    if (!selected || options.includes(selected)) return options;
-    const withoutBlank = options.filter(Boolean);
-    return ["", selected, ...withoutBlank];
-  };
-
   const resetUserValidation = () => {
     setUsage(null); setValidatedEmail(""); setIsUserValidated(false);
     setLookupStatus(""); setLookupSource("");
