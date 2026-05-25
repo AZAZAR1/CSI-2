@@ -165,7 +165,7 @@ const styles = {
     borderRadius: 3,
     color: DS.textPrimary,
     fontFamily: DS.fontSans,
-    fontSize: 13,
+    fontSize: 15,
     padding: "9px 12px",
     width: "100%",
     boxSizing: "border-box",
@@ -179,7 +179,7 @@ const styles = {
     borderRadius: 3,
     color: DS.textPrimary,
     fontFamily: DS.fontSans,
-    fontSize: 13,
+    fontSize: 15,
     padding: "9px 12px",
     width: "100%",
     boxSizing: "border-box",
@@ -341,7 +341,7 @@ const styles = {
     padding: "10px 14px",
     cursor: "pointer",
     borderBottom: `1px solid ${DS.border}`,
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: DS.fontSans,
     color: DS.textSecond,
     transition: "background 0.1s",
@@ -461,6 +461,15 @@ const GlobalStyles = () => (
       animation: sweep 0.6s ease both;
     }
 
+    
+    @media (max-width: 760px) {
+      .pp-input,
+      .pp-select {
+        font-size: 18px !important;
+      }
+    }
+
+
     /* Scrollbar */
     ::-webkit-scrollbar       { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -468,7 +477,7 @@ const GlobalStyles = () => (
 
     /* Instruction block */
     .pp-instructions {
-      font-size: 15px;
+      font-size: 18px;
       line-height: 1.9;
       color: #8a8278;
       border-left: 2px solid rgba(139,26,26,0.4);
