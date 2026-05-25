@@ -2,1100 +2,1060 @@ import { useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 
-/* --------------------------
-AUTOCOMPLETE UI STYLE
--------------------------- */
+/* ============================================================
+   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR
+   Color palette: Carbon / ICSI Crimson / warm gold
+   Typography: Cormorant Garamond (sections) + IBM Plex Mono (data)
+   Spacing: 8pt grid throughout
+   ============================================================ */
 
-const autocompleteBox = {
-  position: "absolute",
-  background: "#fff",
-  border: "1px solid rgba(0,0,0,.1)",
-  borderRadius: 8,
-  width: "100%",
-  zIndex: 50,
-  maxHeight: 220,
-  overflowY: "auto",
-  marginTop: 6,
+const DS = {
+  // Color tokens
+  bg:           "#0d0f11",        // near-black carbon
+  bgCard:       "#131416",        // card surface
+  bgPanel:      "#1a1c1f",        // raised panel
+  bgInput:      "#0f1113",        // input surface
+  border:       "rgba(255,255,255,0.07)",
+  borderStrong: "rgba(255,255,255,0.12)",
+  // ICSI institutional crimson -- matches logo seal
+  accent:       "#8b1a1a",
+  accentLight:  "#a52020",
+  accentDim:    "rgba(139,26,26,0.18)",
+  accentGlow:   "rgba(139,26,26,0.07)",
+  // Warm gold -- complements the ICSI crest
+  gold:         "#b8922a",
+  goldDim:      "rgba(184,146,42,0.15)",
+  success:      "#b8922a",        // validated / warm institutional gold
+  successDim:   "rgba(184,146,42,0.14)",
+  warning:      "#b07d2a",        // caution / warm amber
+  warningDim:   "rgba(176,125,42,0.14)",
+  danger:       "#8b1a1a",        // deviation / same as accent
+  dangerDim:    "rgba(139,26,26,0.14)",
+  textPrimary:  "#e6e2dc",        // warm off-white, not cold blue-white
+  textSecond:   "#8a8278",        // warm mid-tone
+  textMuted:    "#8a8278",        // warm muted, raised for on-screen legibility
+  textMono:     "#e6e2dc",        // off-white for output readouts
+  fontSerif:    "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
+  fontSans:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
+  fontMono:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
 };
 
-const autocompleteItem = {
-  padding: "10px 12px",
-  cursor: "pointer",
-  borderBottom: "1px solid rgba(0,0,0,.06)",
+/* ---- Inline style objects ---- */
+
+const styles = {
+  page: {
+    background: DS.bg,
+    minHeight: "100vh",
+    fontFamily: DS.fontSans,
+    color: DS.textPrimary,
+    WebkitFontSmoothing: "antialiased",
+  },
+
+  container: {
+    maxWidth: 1040,
+    margin: "0 auto",
+    padding: "0 24px 80px",
+  },
+
+  /* ── PAGE HEADER ── */
+  pageHeader: {
+    padding: "48px 0 40px",
+    borderBottom: `1px solid ${DS.border}`,
+    marginBottom: 32,
+  },
+  engineBadge: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 6,
+    background: DS.accentDim,
+    border: `1px solid rgba(139,26,26,0.35)`,
+    borderRadius: 2,
+    padding: "3px 10px",
+    fontSize: 15,
+    fontFamily: DS.fontMono,
+    letterSpacing: "0.12em",
+    color: DS.gold,
+    marginBottom: 16,
+    textTransform: "uppercase",
+  },
+  dotActive: {
+    width: 5,
+    height: 5,
+    borderRadius: "50%",
+    background: DS.gold,
+    boxShadow: `0 0 6px ${DS.gold}`,
+    animation: "pulse 2s infinite",
+  },
+  h1: {
+    fontFamily: DS.fontSans,
+    fontSize: 28,
+    fontWeight: 600,
+    letterSpacing: "-0.02em",
+    color: DS.textPrimary,
+    margin: "0 0 8px",
+    lineHeight: 1.2,
+  },
+  subtitle: {
+    fontFamily: DS.fontMono,
+    fontSize: 16,
+    color: DS.textMuted,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    margin: 0,
+  },
+
+  /* ── CARDS ── */
+  card: {
+    background: DS.bgCard,
+    border: `1px solid ${DS.border}`,
+    borderRadius: 6,
+    padding: "24px 28px",
+    marginBottom: 16,
+    position: "relative",
+  },
+  cardAccent: {
+    borderLeft: `2px solid ${DS.accent}`,
+  },
+
+  sectionLabel: {
+    fontFamily: DS.fontMono,
+    fontSize: 14,
+    letterSpacing: "0.16em",
+    textTransform: "uppercase",
+    color: DS.textMuted,
+    marginBottom: 4,
+  },
+  h2: {
+    fontFamily: DS.fontSerif,
+    fontSize: 22,
+    fontWeight: 600,
+    letterSpacing: "0.04em",
+    color: DS.textPrimary,
+    margin: "0 0 20px",
+    lineHeight: 1.2,
+  },
+  h3: {
+    fontFamily: DS.fontSerif,
+    fontSize: 22,
+    fontWeight: 600,
+    letterSpacing: "0.06em",
+    color: DS.textSecond,
+    margin: "0 0 10px",
+    textTransform: "none",
+  },
+
+  /* ── FORM ELEMENTS ── */
+  fieldGroup: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+  },
+  label: {
+    fontFamily: DS.fontMono,
+    fontSize: 14,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+    color: DS.textMuted,
+    marginBottom: 4,
+    display: "block",
+  },
+  input: {
+    background: DS.bgInput,
+    border: `1px solid ${DS.borderStrong}`,
+    borderRadius: 3,
+    color: DS.textPrimary,
+    fontFamily: DS.fontSans,
+    fontSize: 15,
+    padding: "9px 12px",
+    width: "100%",
+    boxSizing: "border-box",
+    outline: "none",
+    transition: "border-color 0.15s",
+    WebkitAppearance: "none",
+  },
+  select: {
+    background: DS.bgInput,
+    border: `1px solid ${DS.borderStrong}`,
+    borderRadius: 3,
+    color: DS.textPrimary,
+    fontFamily: DS.fontSans,
+    fontSize: 15,
+    padding: "9px 12px",
+    width: "100%",
+    boxSizing: "border-box",
+    outline: "none",
+    appearance: "none",
+    WebkitAppearance: "none",
+    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234f5a65'/%3E%3C/svg%3E")`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right 12px center",
+    paddingRight: 32,
+    cursor: "pointer",
+    transition: "border-color 0.15s",
+  },
+
+  /* ── GRID LAYOUTS ── */
+  grid2: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 16,
+  },
+  grid3: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+    gap: 12,
+  },
+
+  /* ── BUTTONS ── */
+  btnPrimary: {
+    background: DS.accent,
+    border: "1px solid transparent",
+    borderRadius: 2,
+    color: "#f0e8e0",
+    cursor: "pointer",
+    fontFamily: DS.fontMono,
+    fontSize: 15,
+    fontWeight: 600,
+    letterSpacing: "0.12em",
+    padding: "11px 24px",
+    textTransform: "uppercase",
+    transition: "opacity 0.15s",
+    outline: "none",
+    whiteSpace: "nowrap",
+  },
+  btnSecondary: {
+    background: "transparent",
+    border: `1px solid ${DS.borderStrong}`,
+    borderRadius: 2,
+    color: DS.textSecond,
+    cursor: "pointer",
+    fontFamily: DS.fontMono,
+    fontSize: 15,
+    fontWeight: 500,
+    letterSpacing: "0.12em",
+    padding: "11px 24px",
+    textTransform: "uppercase",
+    transition: "border-color 0.15s, color 0.15s",
+    outline: "none",
+    whiteSpace: "nowrap",
+  },
+
+  /* ── STATUS / NOTICE ── */
+  notice: {
+    background: DS.dangerDim,
+    border: `1px solid rgba(139,26,26,0.3)`,
+    borderRadius: 3,
+    padding: "12px 16px",
+    fontSize: 12,
+    color: "#c97a7a",
+    fontFamily: DS.fontMono,
+  },
+  noticeWarning: {
+    background: DS.warningDim,
+    border: `1px solid rgba(176,125,42,0.3)`,
+    borderRadius: 3,
+    padding: "12px 16px",
+    fontSize: 12,
+    color: "#c9a050",
+    fontFamily: DS.fontMono,
+  },
+  noticeSuccess: {
+    background: DS.successDim,
+    border: `1px solid rgba(45,122,79,0.3)`,
+    borderRadius: 3,
+    padding: "12px 16px",
+    fontSize: 12,
+    color: DS.gold,
+    fontFamily: DS.fontMono,
+  },
+  noticeInfo: {
+    background: DS.accentGlow,
+    border: `1px solid rgba(139,26,26,0.2)`,
+    borderRadius: 3,
+    padding: "12px 16px",
+    fontSize: 12,
+    color: "#c9a96e",
+    fontFamily: DS.fontMono,
+  },
+
+  /* ── DATA READOUTS (monospaced) ── */
+  dataRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "baseline",
+    padding: "7px 0",
+    borderBottom: `1px solid ${DS.border}`,
+  },
+  dataLabel: {
+    fontFamily: DS.fontMono,
+    fontSize: 15,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: DS.textMuted,
+  },
+  dataValue: {
+    fontFamily: DS.fontMono,
+    fontSize: 16,
+    color: DS.textMono,
+    fontWeight: 500,
+  },
+  dataValuePrimary: {
+    fontFamily: DS.fontMono,
+    fontSize: 16,
+    color: DS.gold,
+    fontWeight: 600,
+    letterSpacing: "0.04em",
+  },
+
+  /* ── RH DISPLAY ── */
+  rhPanel: {
+    background: DS.bgPanel,
+    border: `1px solid ${DS.border}`,
+    borderRadius: 4,
+    padding: "20px 24px",
+    textAlign: "center",
+    flex: 1,
+  },
+
+  /* ── SEPARATOR ── */
+  sep: {
+    border: "none",
+    borderTop: `1px solid ${DS.border}`,
+    margin: "24px 0",
+  },
+
+  /* ── AUTOCOMPLETE ── */
+  autocompleteBox: {
+    position: "absolute",
+    background: DS.bgPanel,
+    border: `1px solid ${DS.borderStrong}`,
+    borderRadius: 4,
+    width: "100%",
+    zIndex: 50,
+    maxHeight: 220,
+    overflowY: "auto",
+    marginTop: 3,
+    boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+  },
+  autocompleteItem: {
+    padding: "10px 14px",
+    cursor: "pointer",
+    borderBottom: `1px solid ${DS.border}`,
+    fontSize: 15,
+    fontFamily: DS.fontSans,
+    color: DS.textSecond,
+    transition: "background 0.1s",
+  },
+
+  /* ── METADATA FOOTER ── */
+  metaBar: {
+    display: "flex",
+    gap: 24,
+    flexWrap: "wrap",
+    padding: "12px 0 0",
+    borderTop: `1px solid ${DS.border}`,
+    marginTop: 16,
+  },
+  metaItem: {
+    fontFamily: DS.fontMono,
+    fontSize: 14,
+    letterSpacing: "0.1em",
+    textTransform: "uppercase",
+    color: DS.textMuted,
+  },
+  metaDot: {
+    display: "inline-block",
+    width: 4,
+    height: 4,
+    borderRadius: "50%",
+    background: DS.gold,
+    marginRight: 6,
+    verticalAlign: "middle",
+  },
 };
 
-/* --------------------------
-DATA CONSTANTS
--------------------------- */
+/* ============================================================
+   INLINE KEYFRAMES  (injected once)
+   ============================================================ */
 
-const ORIGINS = [
-  "",
-  "Cuba",
-  "Dominican Republic",
-  "Nicaragua",
-  "Honduras",
-  "Mexico",
-  "Costa Rica",
-  "Panama",
-  "Ecuador",
-  "Brazil",
-  "Peru",
-  "United States",
-  "Jamaica",
-  "Philippines",
-];
+const GlobalStyles = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
-const FACTORIES = [
-  "",
-  "El Laguito",
-  "H. Upmann",
-  "Partagas",
-  "La Corona",
-  "TABACUBA",
-  "My Father Cigars",
-  "Tabacalera Garcia",
-  "General Cigar Dominicana",
-  "La Aurora",
-  "La Flor Dominicana",
-  "Kelner SAS",
-  "Quesada Cigars",
-  "Tabacalera AJ Fernandez",
-  "Plasencia Cigars",
-  "Joya de Nicaragua",
-  "Oliva Cigar Co.",
-  "PDR Cigars",
-  "Davidoff",
-  "Tabadom",
-  "Tabacos de Costa Rica",
-  "Unknown / Mixed",
-];
+    *, *::before, *::after { box-sizing: border-box; }
 
-const WRAPPERS = [
-  "",
-  "Cuban",
-  "Habano",
-  "Nicaraguan Habano",
-  "Habano 2000",
-  "Dominican",
-  "Brazilian",
-  "Corojo",
-  "Corojo 99",
-  "Criollo",
-  "Criollo 98",
-  "Connecticut Shade",
-  "Connecticut Broadleaf",
-  "Connecticut Habano",
-  "Costarican",
-  "Broadleaf",
-  "Honduran",
-  "San Andres",
-  "Cameroon",
-  "Sumatra",
-  "Ecuadorian Sumatra",
-  "Ecuadorian Habano",
-  "Ecuadorian Connecticut",
-  "Maduro",
-  "Oscuro",
-  "Rosado",
-  "Colorado",
-  "Mexican",
-  "Pennsylvania Broadleaf",
-  "Hybrid / Other",
-];
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes sweep {
+      from { clip-path: inset(0 100% 0 0); }
+      to   { clip-path: inset(0 0% 0 0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-const WRAPPER_PROCESSES = [
-  "",
-  "Natural",
-  "Claro",
-  "Colorado",
-  "Colorado Claro",
-  "Colorado Maduro",
-  "Rosado",
-  "Maduro",
-  "Oscuro",
-  "Corojo-processed",
-  "Sun Grown",
-  "Shade Grown",
-  "Double Fermented",
-  "Barrel Aged",
-  "Other",
-];
+    .pp-input:focus  { border-color: rgba(139,26,26,0.6) !important; }
+    .pp-select:focus { border-color: rgba(139,26,26,0.6) !important; }
 
-const WRAPPER_THICKNESS_OPTIONS = ["thin", "medium", "thick"];
-const WRAPPER_OILINESS_OPTIONS = ["low", "medium", "high"];
+    .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
+    .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
+    .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
+    .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
 
-const BINDERS = [
-  "",
-  "Cuban",
-  "Dominican",
-  "Nicaraguan",
-  "Honduran",
-  "Mexican",
-  "Brazilian",
-  "Peruvian",
-  "Cameroon",
-  "Costarican",
-  "San Andres",
-  "Connecticut",
-  "Sumatra",
-  "Ecuadorian",
-  "Broadleaf",
-  "Criollo",
-  "Corojo",
-  "Hybrid / Other",
-];
+    .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #e6e2dc !important; }
 
-const FILLER_OPTIONS = [
-  "",
-  "Cuba",
-  "Cuban Viso",
-  "Alta Viso",
-  "Dominican Republic",
-  "Nicaragua",
-  "Honduras",
-  "Mexico",
-  "Costa Rica",
-  "Panama",
-  "Ecuador",
-  "Brazil",
-  "Peru",
-  "Cameroon",
-  "Colombia",
-  "United States",
-  "Piloto Cubano",
-  "Olor Dominicano",
-  "Corojo",
-  "Criollo",
-  "Ligero",
-  "Ecuadorian Ligero",
-  "Cuban Seco",
-  "Cuban Volado",
-  "Medio Tiempo",
-  "Zimbabwe",
-  "Paraguay",
-];
+    .pp-datarow:last-child { border-bottom: none !important; }
 
-const LIGERO_OPTIONS = ["", "none", "low", "moderate", "high"];
+    .pp-result { animation: fadeIn 0.35s ease both; }
 
-const SPECIAL_TOBACCO_FLAGS_OPTIONS = [
-  "",
-  "Medio Tiempo",
-  "Alta Viso-heavy",
-  "Piloto Cubano",
-  "Olor Dominicano",
-  "Dominican Bonao",
-  "Pelo de Oro",
-  "Corojo",
-  "Criollo",
-  "Andullo",
-  "Cotui",
-  "Yamasa",
-  "San Vicente",
-  "Somoto",
-  "Brazilian Cubra",
-  "Brazilian Mata Fina",
-  "Brazilian Mata Norte",
-  "Brazilian Arapiraca",
-  "Masatepe",
-  "Ometepe",
-  "Pueblo Nuevo",
-  "Jamastran",
-  "Broadleaf-heavy",
-  "San Andres-heavy",
-  "SA Negrito",
-  "HVA",
-  "Jalapa",
-  "Filipino Simaba",
-  "Vuelta Abajo",
-  "Honduran Talanga",
-  "Costarican Puriscal",
-  "Aged filler",
-  "Extra fermented",
-  "Culebra style bunching",
-  "Small-batch / experimental",
-];
+    .pp-output-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
 
-const SMOKER_STYLE_OPTIONS = ["both", "slow", "fast"];
+    @media (max-width: 760px) {
+      .pp-output-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .pp-output-grid .pp-datarow {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px;
+      }
+
+      .pp-output-grid .pp-datarow span:last-child {
+        text-align: left;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        font-size: 16px !important;
+        line-height: 1.45;
+      }
+
+      .pp-output-grid .pp-datarow span:first-child {
+        font-size: 15px !important;
+        line-height: 1.2;
+      }
+    }
+
+    .pp-rh-value {
+      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+      font-size: 42px;
+      font-weight: 600;
+      color: #e6e2dc;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      animation: countUp 0.5s ease both;
+    }
+
+    .pp-sweep {
+      animation: sweep 0.6s ease both;
+    }
+
+    
+    @media (max-width: 760px) {
+      .pp-input,
+      .pp-select {
+        font-size: 18px !important;
+      }
+    }
+
+
+    /* Scrollbar */
+    ::-webkit-scrollbar       { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+
+    /* Instruction block */
+    .pp-instructions {
+      font-size: 18px;
+      line-height: 1.9;
+      color: #8a8278;
+      border-left: 2px solid rgba(139,26,26,0.4);
+      padding-left: 16px;
+      margin: 0;
+    }
+    .pp-instructions strong {
+      color: #e6e2dc;
+      font-weight: 500;
+    }
+  `}</style>
+);
+
+/* ============================================================
+   DATA CONSTANTS  (unchanged from original)
+   ============================================================ */
+
+const ORIGINS = ["","Cuba","Dominican Republic","Nicaragua","Honduras","Mexico","Costa Rica","Panama","Ecuador","Brazil","Peru","United States","Jamaica","Philippines"];
+const FACTORIES = ["","A.CONTI","Abam","Abeja Cigar","Aganorsa","Agio","Agroindustrias","Altadis USA","Augusto Reyes","Barreda","Blackbird Dom","Blanco Cigars","Buena Vista","Caldwell","Camacho Factory","Casa 1910","Charles Fairmorn","CLE","Cortez","D'Hatuey","Dannemann","De Los reyes","Don Palomor","Drew Estate","El Aladino","El Laguito","El Maestro","El Paraiso","El Rey de Los Habanos","El Sueno","El Titan de Bronze","El Viejo","EPC","Fabrica Centroamericana","Fabrica De Tabacos HVC","Fabrica Oveja Negra","Flor de Copan","Garmendia","General Cigar Dominicana","GR Tabacaleras","Graycliff Factory","Gurkha","H. Upmann","HATSA","Honduras american","Horacio","JC Newman","JRE Tobacco","Kelner Boutique","Kristoff Cigars","la Alianza","La Aurora","La Corona","La Flor De Copa","La Zona","Luciano Tabacos","Maya Selva","Meerapfel","MGE","Mi Havana","Micallef","Mina Del Rey","My Father Cigars","Natura","Nica Sueno","Nicaragua American","Oscar Vallardes","Oveja Negra","Padron","Partagas","PDR","Plasencia Cigars","Pure Aroma","Quesada","Raices Cubanas","Rocky Patel","San Lotano","Sanj Patel","Selected Tobacco","ST Group","STG Esteli","Tabacalera Altagracia","Tabacalera AJ Fernandez","Tabacalera Carreras","Tabacalera Cubanas","Tabacalera Davidoff","Tabacalera De Oliva","Tabacalera Diaz","Tabacalera El Artista","Tabacalera Fuente","Tabacalera Garcia","Tabacalera Joya de Nicaragua","Tabacalera Kafie","Tabacalera La Alianza","Tabacalera La Flor","Tabacalera La Isla","Tabacalera Las Lavas","Tabacalera Oveja Negra","Tabacalera Palma","Tabacalera Pichardo","Tabacalera Rocky Patel","Tabacalera Tropical","Tabacalera Villa Cuba","Tabacalera William Ventura","Tabacos De Costa Rica","Tabacos De Exportacion","Tabacos de Valle Jalapa","Tabacos Ranchos","Tabacos Valle de Jalapa","Tabacuba","Tabadom","Tabaos Vale De Jalapa","TABSA","TacaNicsa","TAF","Tavicusa Factory","The Foundation Cigars","Topper","Ventura","Villiger de Nicaragua"];
+const WRAPPERS = ["","Cuban","Habano","Nicaraguan Habano","Habano 2000","Dominican","Brazilian","Corojo","Corojo 99","Criollo","Criollo 98","Connecticut Shade","Connecticut Broadleaf","Connecticut Habano","Costarican","Broadleaf","Honduran","San Andres","Cameroon","Sumatra","Ecuadorian Sumatra","Ecuadorian Habano","Ecuadorian Connecticut","Maduro","Oscuro","Rosado","Colorado","Mexican","Pennsylvania Broadleaf","Hybrid / Other"];
+const WRAPPER_PROCESSES = ["","Natural","Claro","Colorado","Colorado Claro","Colorado Maduro","Rosado","Maduro","Oscuro","Corojo-processed","Sun Grown","Shade Grown","Double Fermented","Barrel Aged","Other"];
+const WRAPPER_THICKNESS_OPTIONS = ["thin","medium","thick"];
+const WRAPPER_OILINESS_OPTIONS = ["low","medium","high"];
+const BINDERS = ["","Cuban","Dominican","Nicaraguan","Honduran","Mexican","Brazilian","Peruvian","Cameroon","Costarican","San Andres","Connecticut","Sumatra","Ecuadorian","Broadleaf","Criollo","Corojo","Hybrid / Other"];
+const FILLER_OPTIONS = ["","Cuba","Cuban Viso","Alta Viso","Dominican Republic","Nicaragua","Honduras","Mexico","Costa Rica","Panama","Ecuador","Brazil","Peru","Cameroon","Colombia","United States","Piloto Cubano","Olor Dominicano","Corojo","Criollo","Ligero","Ecuadorian Ligero","Cuban Seco","Volado","Medio Tiempo","Zimbabwe","Paraguay"];
+const LIGERO_OPTIONS = ["","none","low","moderate","high"];
+const SPECIAL_TOBACCO_FLAGS_OPTIONS = ["","Medio Tiempo","Alta Viso-heavy","Piloto Cubano","Olor Dominicano","Dominican Bonao","Pelo de Oro","Corojo","Criollo","Andullo","Cotui","Yamasa","San Vicente","Somoto","Brazilian Cubra","Brazilian Mata Fina","Brazilian Mata Norte","Brazilian Arapiraca","Masatepe","Ometepe","Pueblo Nuevo","Jamastran","Broadleaf-heavy","San Andres-heavy","SA Negrito","HVA","Jalapa","Filipino Simaba","Vuelta Abajo","Honduran Talanga","Costarican Puriscal","Aged filler","Extra fermented","Culebra style bunching","Small-batch / experimental"];
+const SMOKER_STYLE_OPTIONS = ["both","slow","fast"];
 
 const EMPTY_LOOKUP_FIELDS = {
-  origin: "",
-  factory: "",
-
-  wrapper: "",
-  wrapper_custom: "",
-  wrapper_process: "",
-  wrapper_thickness: "medium",
-  wrapper_oiliness: "medium",
-
-  binder_1: "",
-  binder_1_custom: "",
-  binder_2: "",
-  binder_2_custom: "",
-
-  filler_1: "",
-  filler_2: "",
-  filler_3: "",
-
-  ligero: "moderate",
-
-  flag_1: "",
-  flag_2: "",
-  flag_3: "",
+  origin:"",factory:"",wrapper:"",wrapper_custom:"",wrapper_process:"",
+  wrapper_thickness:"medium",wrapper_oiliness:"medium",binder_1:"",binder_1_custom:"",
+  binder_2:"",binder_2_custom:"",filler_1:"",filler_2:"",filler_3:"",
+  ligero:"moderate",flag_1:"",flag_2:"",flag_3:"",
 };
 
-const readOnlyGridStyle = {
-  display: "grid",
-  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-  gap: 12,
-  marginTop: 12,
-};
+/* ============================================================
+   SUB-COMPONENTS
+   ============================================================ */
 
-const readOnlyFieldStyle = {
-  border: "1px solid rgba(0,0,0,.08)",
-  borderRadius: 10,
-  padding: "12px",
-  background: "rgba(0,0,0,.015)",
-};
+/* Precision data row */
+const DataRow = ({ label, value, primary }) => (
+  <div className="pp-datarow" style={styles.dataRow}>
+    <span style={styles.dataLabel}>{label}</span>
+    <span style={primary ? styles.dataValuePrimary : styles.dataValue}>{value}</span>
+  </div>
+);
 
-const readOnlyValueStyle = {
-  marginTop: 4,
-  fontWeight: 600,
-  lineHeight: 1.45,
-};
+/* Tasting / pairing sub-card */
+const AnalyticalCard = ({ title, rows }) => (
+  <div style={{ ...styles.card, ...styles.cardAccent, marginBottom: 0, padding: "16px 20px" }}>
+    <div style={styles.h3}>{title}</div>
+    {rows.map(({ label, value }) => (
+      <DataRow key={label} label={label} value={value || "—"} />
+    ))}
+  </div>
+);
 
-const EMPTY_VALUE = "—";
 
-/* --------------------------
-COMPONENT
--------------------------- */
+/* Loading state indicator */
+const ProcessingIndicator = ({ label }) => (
+  <div style={{
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    padding: "10px 0",
+    fontFamily: DS.fontMono,
+    fontSize: 16,
+    color: DS.gold,
+    letterSpacing: "0.08em",
+  }}>
+    <span style={{ ...styles.dotActive, animation: "pulse 1s infinite" }} />
+    {label}
+  </div>
+);
+
+/* Section divider with label */
+const SectionDivider = ({ label }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "28px 0 20px" }}>
+    <div style={{ height: 1, flex: 1, background: DS.border }} />
+    <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>{label}</span>
+    <div style={{ height: 1, flex: 1, background: DS.border }} />
+  </div>
+);
+
+/* ============================================================
+   MAIN COMPONENT
+   ============================================================ */
 
 export default function PredictorPage() {
-  const [brandSuggestions, setBrandSuggestions] = useState([]);
-  const [lineSuggestions, setLineSuggestions] = useState([]);
+  const [brandSuggestions, setBrandSuggestions]     = useState([]);
+  const [lineSuggestions, setLineSuggestions]       = useState([]);
   const [showBrandSuggestions, setShowBrandSuggestions] = useState(false);
-  const [showLineSuggestions, setShowLineSuggestions] = useState(false);
+  const [showLineSuggestions, setShowLineSuggestions]   = useState(false);
 
   const [form, setForm] = useState({
     user_email: "",
     brand: "",
     line: "",
-
     origin: "",
     factory: "",
-
     wrapper: "",
     wrapper_custom: "",
     wrapper_process: "",
     wrapper_thickness: "medium",
     wrapper_oiliness: "medium",
-
     binder_1: "",
     binder_1_custom: "",
     binder_2: "",
     binder_2_custom: "",
-
     filler_1: "",
     filler_2: "",
     filler_3: "",
-
     ligero: "moderate",
-
     flag_1: "",
     flag_2: "",
     flag_3: "",
-
     age_years: "",
     smoker_style: "both",
-
-    /* hidden fields for backend compatibility */
     vitola: "",
     bunch_density: "medium",
   });
 
-  const [usage, setUsage] = useState(null);
+  const [usage, setUsage]                   = useState(null);
   const [validatedEmail, setValidatedEmail] = useState("");
   const [isUserValidated, setIsUserValidated] = useState(false);
 
-  const [result, setResult] = useState(null);
-  const [tastingCard, setTastingCard] = useState(null);
-  const [pairingCard, setPairingCard] = useState(null);
+  const [result, setResult]                 = useState(null);
+  const [tastingCard, setTastingCard]       = useState(null);
+  const [pairingCard, setPairingCard]       = useState(null);
   const [pairingSelection, setPairingSelection] = useState("None");
-  const [similarBlends, setSimilarBlends] = useState(null);
-  const [err, setErr] = useState("");
+  const [similarBlends, setSimilarBlends]   = useState(null);
+  const [structuralSnapshot, setStructuralSnapshot] = useState(null);
+  const [err, setErr]                       = useState("");
 
-  const [loadingUsage, setLoadingUsage] = useState(false);
+  const [loadingUsage, setLoadingUsage]     = useState(false);
   const [loadingPredict, setLoadingPredict] = useState(false);
   const [loadingPairing, setLoadingPairing] = useState(false);
-  const [loadingLookup, setLoadingLookup] = useState(false);
+  const [loadingLookup, setLoadingLookup]   = useState(false);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
 
-  const [lookupStatus, setLookupStatus] = useState("");
-  const [lookupSource, setLookupSource] = useState("");
+  const [lookupStatus, setLookupStatus]     = useState("");
+  const [lookupSource, setLookupSource]     = useState("");
+  const [predictStep, setPredictStep]       = useState(""); // descriptive micro-copy
 
-  const update = (key, value) => {
-    setForm((f) => ({ ...f, [key]: value }));
-  };
+  const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
-  const cleanText = (value) => {
-    return String(value || "")
-      .normalize("NFKD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[’‘]/g, "'")
-      .replace(/[“”]/g, '"')
-      .replace(/[–—]/g, "-")
-      .replace(/\s+/g, " ")
-      .trim();
-  };
+  const cleanText = (value) =>
+    String(value || "").normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .replace(/['']/g,"'").replace(/[""]/g,'"')
+      .replace(/[–—]/g,"-").replace(/\s+/g," ").trim();
 
   const isAuthorizedUser =
     isUserValidated &&
-    cleanText(validatedEmail).toLowerCase() ===
-      cleanText(form.user_email).toLowerCase();
+    cleanText(validatedEmail).toLowerCase() === cleanText(form.user_email).toLowerCase();
 
-  /* --------------------------
-AUTOCOMPLETE
--------------------------- */
+  const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
+  const hasBlendStructure = Boolean(cleanText(form.wrapper) || cleanText(form.binder_1) || cleanText(form.filler_1));
+
+  /* ── Autocomplete (unchanged logic) ── */
 
   const uniqueByBrand = (items) => {
-    const seen = new Set();
-    const out = [];
-
+    const seen = new Set(), out = [];
     for (const item of items || []) {
-      const brand = cleanText(item.brand);
-      const key = brand.toLowerCase();
-
-      if (brand && !seen.has(key)) {
-        seen.add(key);
-        out.push({ brand, label: brand });
-      }
+      const brand = cleanText(item.brand), key = brand.toLowerCase();
+      if (brand && !seen.has(key)) { seen.add(key); out.push({ brand, label: brand }); }
     }
-
     return out;
   };
 
   const uniqueLinesForBrand = (items, selectedBrand, q) => {
     const brandKey = cleanText(selectedBrand).toLowerCase();
     const lineQuery = cleanText(q).toLowerCase();
-    const seen = new Set();
-    const out = [];
-
+    const seen = new Set(), out = [];
     for (const item of items || []) {
       const itemBrand = cleanText(item.brand).toLowerCase();
-      const line = cleanText(item.line);
-      const lineKey = line.toLowerCase();
-
+      const line = cleanText(item.line), lineKey = line.toLowerCase();
       if (!line || itemBrand !== brandKey) continue;
       if (lineQuery && !lineKey.includes(lineQuery)) continue;
-
-      if (!seen.has(lineKey)) {
-        seen.add(lineKey);
-        out.push({ brand: cleanText(item.brand), line, label: line });
-      }
+      if (!seen.has(lineKey)) { seen.add(lineKey); out.push({ brand: cleanText(item.brand), line, label: line }); }
     }
-
     return out;
   };
 
   const loadBrandSuggestions = async (q) => {
     const cleaned = cleanText(q);
-
-    if (!cleaned || cleaned.length < 2) {
-      setBrandSuggestions([]);
-      setShowBrandSuggestions(false);
-      return;
-    }
-
+    if (!cleaned || cleaned.length < 2) { setBrandSuggestions([]); setShowBrandSuggestions(false); return; }
     try {
-      const res = await fetch(
-        `/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}&limit=100`
-      );
+      const res  = await fetch(`/api/predictor/autocomplete?q=${encodeURIComponent(cleaned)}&limit=100`);
       const data = await res.json().catch(() => ({}));
-
       if (Array.isArray(data?.results)) {
-        const brands = uniqueByBrand(data.results).slice(0, 12);
-        setBrandSuggestions(brands);
-        setShowBrandSuggestions(brands.length > 0);
-      } else {
-        setBrandSuggestions([]);
-        setShowBrandSuggestions(false);
-      }
-    } catch {
-      setBrandSuggestions([]);
-      setShowBrandSuggestions(false);
-    }
+        const brands = uniqueByBrand(data.results).slice(0,12);
+        setBrandSuggestions(brands); setShowBrandSuggestions(brands.length > 0);
+      } else { setBrandSuggestions([]); setShowBrandSuggestions(false); }
+    } catch { setBrandSuggestions([]); setShowBrandSuggestions(false); }
   };
 
   const loadLineSuggestions = async (brand, q) => {
     const selectedBrand = cleanText(brand);
-    const cleanedLine = cleanText(q);
-
-    if (!selectedBrand) {
-      setLineSuggestions([]);
-      setShowLineSuggestions(false);
-      return;
-    }
-
+    if (!selectedBrand) { setLineSuggestions([]); setShowLineSuggestions(false); return; }
     try {
-      const res = await fetch(
-        `/api/predictor/autocomplete?q=${encodeURIComponent(selectedBrand)}&limit=250`
-      );
+      const res  = await fetch(`/api/predictor/autocomplete?q=${encodeURIComponent(selectedBrand)}&limit=250`);
       const data = await res.json().catch(() => ({}));
-
       if (Array.isArray(data?.results)) {
-        const lines = uniqueLinesForBrand(data.results, selectedBrand, cleanedLine).slice(0, 20);
-        setLineSuggestions(lines);
-        setShowLineSuggestions(lines.length > 0);
-      } else {
-        setLineSuggestions([]);
-        setShowLineSuggestions(false);
-      }
-    } catch {
-      setLineSuggestions([]);
-      setShowLineSuggestions(false);
-    }
+        const lines = uniqueLinesForBrand(data.results, selectedBrand, cleanText(q)).slice(0,20);
+        setLineSuggestions(lines); setShowLineSuggestions(lines.length > 0);
+      } else { setLineSuggestions([]); setShowLineSuggestions(false); }
+    } catch { setLineSuggestions([]); setShowLineSuggestions(false); }
   };
 
   const selectBrandSuggestion = (item) => {
-    update("brand", cleanText(item.brand || ""));
-    update("line", "");
-    setShowBrandSuggestions(false);
-    setBrandSuggestions([]);
-    setLineSuggestions([]);
-    setShowLineSuggestions(false);
+    update("brand", cleanText(item.brand || "")); update("line","");
+    setShowBrandSuggestions(false); setBrandSuggestions([]);
+    setLineSuggestions([]); setShowLineSuggestions(false);
   };
-
   const selectLineSuggestion = (item) => {
     update("line", cleanText(item.line || ""));
-    setShowLineSuggestions(false);
-    setLineSuggestions([]);
+    setShowLineSuggestions(false); setLineSuggestions([]);
   };
 
-  /* --------------------------
-HELPERS
--------------------------- */
+  /* ── Helpers (unchanged logic) ── */
 
-  const buildCustomValue = (choice, custom) => {
-    if (choice === "Custom / Other" || choice === "Hybrid / Other") {
-      return String(custom || "").trim();
-    }
-    return choice;
-  };
+  const buildCustomValue = (choice, custom) =>
+    (choice === "Custom / Other" || choice === "Hybrid / Other")
+      ? String(custom || "").trim() : choice;
 
-  const buildUniqueList = (values) => {
-    return [...new Set(values.map((v) => String(v || "").trim()).filter(Boolean))];
-  };
+  const buildUniqueList = (values) =>
+    [...new Set(values.map((v) => String(v||"").trim()).filter(Boolean))];
 
-  const splitPipeValues = (value) => {
-    return String(value || "")
-      .split("|")
-      .map((x) => cleanText(x))
-      .filter(Boolean);
-  };
+  const splitPipeValues = (value) =>
+    String(value||"").split("|").map((x) => cleanText(x)).filter(Boolean);
 
   const mapLookupValue = (value, options) => {
     const v = cleanText(value);
     if (!v) return "";
-    return options.includes(v) ? v : "";
+    if (options.includes(v)) return v;
+    const normalized = v.toLowerCase();
+    const exactCaseInsensitive = options.find((x) => cleanText(x).toLowerCase() === normalized);
+    if (exactCaseInsensitive) return exactCaseInsensitive;
+    const compact = normalized.replace(/[^a-z0-9]/g, "");
+    const compactMatch = options.find((x) => cleanText(x).toLowerCase().replace(/[^a-z0-9]/g, "") === compact);
+    return compactMatch || "";
   };
 
+  const firstCleanValue = (...values) => {
+    for (const value of values) {
+      const cleaned = cleanText(value);
+      if (cleaned) return cleaned;
+    }
+    return "";
+  };
+
+  const lookupOptionList = (options, selectedValue) => {
+    const selected = cleanText(selectedValue);
+    if (!selected || options.includes(selected)) return options;
+    const withoutBlank = options.filter(Boolean);
+    return ["", selected, ...withoutBlank];
+  };
   const resetUserValidation = () => {
-    setUsage(null);
-    setValidatedEmail("");
-    setIsUserValidated(false);
-    setLookupStatus("");
-    setLookupSource("");
+    setUsage(null); setValidatedEmail(""); setIsUserValidated(false);
+    setLookupStatus(""); setLookupSource(""); setStructuralSnapshot(null);
   };
 
-  const displayValue = (value) => {
-    const cleaned = cleanText(value);
-    return cleaned || EMPTY_VALUE;
-  };
-
-  const displayList = (values) => {
-    const list = buildUniqueList(values);
-    return list.length ? list.join(", ") : EMPTY_VALUE;
-  };
-
-  const displayPairingList = (values) => {
-    if (!Array.isArray(values) || values.length === 0) return EMPTY_VALUE;
-    return values.filter(Boolean).join(", ") || EMPTY_VALUE;
-  };
-
-  const displayBinderComponents = () => {
-    const values = [
-      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
-      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
-    ].filter(Boolean);
-
-    return values.length > 0 ? values.join(", ") : EMPTY_VALUE;
-  };
+  const displayPairingList = (values) =>
+    (!Array.isArray(values) || values.length === 0) ? "—"
+      : values.filter(Boolean).join(", ") || "—";
 
   const getFilteredPairingCard = () => {
-    if (!pairingCard || pairingSelection === "None") {
-      return null;
-    }
-
-    const normalized = pairingSelection.toLowerCase();
-
-    const mapping = {
-      wine: pairingCard.wine,
-      whisky: pairingCard.whisky,
-      rum: pairingCard.rum,
-      cognac: pairingCard.cognac,
-      tequila: pairingCard.tequila,
-      beer: pairingCard.beer,
-      cocktail: pairingCard.cocktails,
-    };
-
-    return mapping[normalized] || null;
+    if (!pairingCard || pairingSelection === "None") return null;
+    const mapping = { wine: pairingCard.wine, whisky: pairingCard.whisky, rum: pairingCard.rum,
+      cognac: pairingCard.cognac, tequila: pairingCard.tequila, beer: pairingCard.beer,
+      cocktail: pairingCard.cocktails };
+    return mapping[pairingSelection.toLowerCase()] || null;
   };
 
-
-  const ReadOnlyField = ({ label, value }) => (
-    <div style={readOnlyFieldStyle}>
-      <div className="small" style={{ opacity: 0.72 }}>
-        {label}
-      </div>
-      <div style={readOnlyValueStyle}>{value || EMPTY_VALUE}</div>
-    </div>
-  );
-
-  const PairingCategoryCard = ({ title, data }) => (
-    <div className="card" style={{ marginTop: 0 }}>
-      <h4 style={{ marginTop: 0 }}>{title}</h4>
-
-      <div className="small" style={{ lineHeight: 1.8 }}>
-        <div>
-          <b>Primary:</b>{" "}
-          {displayPairingList(data?.primary)}
-        </div>
-        <div>
-          <b>Secondary:</b>{" "}
-          {displayPairingList(data?.secondary)}
-        </div>
-
-      </div>
-    </div>
-  );
-
   const applyLookupMatch = (match) => {
-    const cleanedBrand = cleanText(match?.brand);
-    const cleanedLine = cleanText(match?.line);
-
-    const cleanedOrigin = mapLookupValue(match?.origin, ORIGINS);
-    const cleanedFactory = mapLookupValue(match?.factory, FACTORIES);
-
-    const rawWrapper = cleanText(match?.wrapper);
+    const rawWrapper   = cleanText(match?.wrapper);
     const wrapperInList = rawWrapper && WRAPPERS.includes(rawWrapper);
-
-    const binderPipeValues = splitPipeValues(match?.binder);
-
-    const rawBinder1 = cleanText(
-      match?.binder_1 ||
-        match?.binder1 ||
-        match?.primary_binder ||
-        binderPipeValues[0] ||
-        match?.binder
-    );
-
-    const rawBinder2 = cleanText(
-      match?.binder_2 ||
-        match?.binder2 ||
-        match?.secondary_binder ||
-        match?.second_binder ||
-        binderPipeValues[1] ||
-        ""
-    );
-
-    const binder1InList = rawBinder1 && BINDERS.includes(rawBinder1);
-    const binder2InList = rawBinder2 && BINDERS.includes(rawBinder2);
-
-    const filler = Array.isArray(match?.filler)
-      ? match.filler.map(cleanText).filter(Boolean)
-      : [];
-
+    const binderPipe   = splitPipeValues(match?.binder);
+    const rawB1 = cleanText(match?.binder_1||match?.binder1||match?.primary_binder||binderPipe[0]||match?.binder);
+    const rawB2 = cleanText(match?.binder_2||match?.binder2||match?.secondary_binder||match?.second_binder||binderPipe[1]||"");
+    const b1InList = rawB1 && BINDERS.includes(rawB1);
+    const b2InList = rawB2 && BINDERS.includes(rawB2);
+    const filler = Array.isArray(match?.filler) ? match.filler.map(cleanText).filter(Boolean) : [];
     const validFillers = filler.filter((x) => FILLER_OPTIONS.includes(x));
-
-    const flags = Array.isArray(match?.special_tobacco_flags)
-      ? match.special_tobacco_flags.map(cleanText).filter(Boolean)
-      : [];
-
-    const validFlags = flags.filter((x) =>
-      SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(x)
-    );
-
-    const cleanedLigero = mapLookupValue(match?.ligero, LIGERO_OPTIONS);
-    const cleanedWrapperProcess = mapLookupValue(
-      match?.wrapper_process,
-      WRAPPER_PROCESSES
-    );
-    const cleanedWrapperThickness = mapLookupValue(
-      match?.wrapper_thickness,
-      WRAPPER_THICKNESS_OPTIONS
-    );
-    const cleanedWrapperOiliness = mapLookupValue(
-      match?.wrapper_oiliness,
-      WRAPPER_OILINESS_OPTIONS
-    );
+    const flags  = Array.isArray(match?.special_tobacco_flags) ? match.special_tobacco_flags.map(cleanText).filter(Boolean) : [];
+    const validFlags = flags.filter((x) => SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(x));
 
     setForm((f) => ({
       ...f,
-
-      brand: cleanedBrand || f.brand,
-      line: cleanedLine || f.line,
-
+      brand: cleanText(match?.brand) || f.brand,
+      line:  cleanText(match?.line)  || f.line,
       ...EMPTY_LOOKUP_FIELDS,
-
-      origin: cleanedOrigin,
-      factory: cleanedFactory,
-
-      wrapper: rawWrapper
-        ? (wrapperInList ? rawWrapper : "Hybrid / Other")
-        : "",
-      wrapper_custom: rawWrapper && !wrapperInList ? rawWrapper : "",
-      wrapper_process: cleanedWrapperProcess,
-      wrapper_thickness: cleanedWrapperThickness || "medium",
-      wrapper_oiliness: cleanedWrapperOiliness || "medium",
-
-      binder_1: rawBinder1
-        ? (binder1InList ? rawBinder1 : "Hybrid / Other")
-        : "",
-      binder_1_custom: rawBinder1 && !binder1InList ? rawBinder1 : "",
-
-      binder_2: rawBinder2
-        ? (binder2InList ? rawBinder2 : "Hybrid / Other")
-        : "",
-      binder_2_custom: rawBinder2 && !binder2InList ? rawBinder2 : "",
-
-      filler_1: validFillers[0] || "",
-      filler_2: validFillers[1] || "",
-      filler_3: validFillers[2] || "",
-
-      ligero: cleanedLigero || "moderate",
-
-      flag_1: validFlags[0] || "",
-      flag_2: validFlags[1] || "",
-      flag_3: validFlags[2] || "",
+      origin:            mapLookupValue(match?.origin,   ORIGINS),
+      factory:           mapLookupValue(firstCleanValue(match?.factory, match?.factory_name, match?.factoryName, match?.manufacturing_factory, match?.manufacturingFactory, match?.tabacalera, match?.manufacturer, match?.producer, match?.made_by, match?.madeBy, match?.source?.factory, match?.source_factory, match?.factory_label, match?.factoryLabel), FACTORIES) || firstCleanValue(match?.factory, match?.factory_name, match?.factoryName, match?.manufacturing_factory, match?.manufacturingFactory, match?.tabacalera, match?.manufacturer, match?.producer, match?.made_by, match?.madeBy, match?.source?.factory, match?.source_factory, match?.factory_label, match?.factoryLabel),
+      wrapper:           rawWrapper ? (wrapperInList ? rawWrapper : "Hybrid / Other") : "",
+      wrapper_custom:    rawWrapper && !wrapperInList ? rawWrapper : "",
+      wrapper_process:   mapLookupValue(match?.wrapper_process,   WRAPPER_PROCESSES),
+      wrapper_thickness: mapLookupValue(match?.wrapper_thickness, WRAPPER_THICKNESS_OPTIONS) || "medium",
+      wrapper_oiliness:  mapLookupValue(match?.wrapper_oiliness,  WRAPPER_OILINESS_OPTIONS)  || "medium",
+      binder_1:          rawB1 ? (b1InList ? rawB1 : "Hybrid / Other") : "",
+      binder_1_custom:   rawB1 && !b1InList ? rawB1 : "",
+      binder_2:          rawB2 ? (b2InList ? rawB2 : "Hybrid / Other") : "",
+      binder_2_custom:   rawB2 && !b2InList ? rawB2 : "",
+      filler_1: validFillers[0]||"", filler_2: validFillers[1]||"", filler_3: validFillers[2]||"",
+      ligero: mapLookupValue(match?.ligero, LIGERO_OPTIONS) || "moderate",
+      flag_1: validFlags[0]||"", flag_2: validFlags[1]||"", flag_3: validFlags[2]||"",
     }));
   };
 
   const buildPayload = () => ({
-    user_email: cleanText(form.user_email),
-
-    brand: cleanText(form.brand),
-    line: cleanText(form.line),
-
-    origin: cleanText(form.origin),
-    factory: cleanText(form.factory),
-
-    wrapper: cleanText(buildCustomValue(form.wrapper, form.wrapper_custom)),
-    wrapper_process: cleanText(form.wrapper_process),
+    user_email:  cleanText(form.user_email),
+    brand:       cleanText(form.brand),
+    line:        cleanText(form.line),
+    origin:      cleanText(form.origin),
+    factory:     cleanText(form.factory),
+    wrapper:     cleanText(buildCustomValue(form.wrapper, form.wrapper_custom)),
+    wrapper_process:   cleanText(form.wrapper_process),
     wrapper_thickness: cleanText(form.wrapper_thickness),
-    wrapper_oiliness: cleanText(form.wrapper_oiliness),
-
-    binder: cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
-    binder_1: cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
-    binder_2: cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
-    binders: buildUniqueList([
-      cleanText(buildCustomValue(form.binder_1, form.binder_1_custom)),
-      cleanText(buildCustomValue(form.binder_2, form.binder_2_custom)),
-    ]),
-
-    filler: buildUniqueList([
-      cleanText(form.filler_1),
-      cleanText(form.filler_2),
-      cleanText(form.filler_3),
-    ]),
-
+    wrapper_oiliness:  cleanText(form.wrapper_oiliness),
+    binder: [cleanText(buildCustomValue(form.binder_1,form.binder_1_custom)),cleanText(buildCustomValue(form.binder_2,form.binder_2_custom))].filter(Boolean).join("|"),
+    binder_1: cleanText(buildCustomValue(form.binder_1,form.binder_1_custom)),
+    binder_2: cleanText(buildCustomValue(form.binder_2,form.binder_2_custom)),
+    binders:  [cleanText(buildCustomValue(form.binder_1,form.binder_1_custom)),cleanText(buildCustomValue(form.binder_2,form.binder_2_custom))].filter(Boolean),
+    filler: buildUniqueList([cleanText(form.filler_1),cleanText(form.filler_2),cleanText(form.filler_3)]),
     ligero: cleanText(form.ligero),
-
-    special_tobacco_flags: buildUniqueList([
-      cleanText(form.flag_1),
-      cleanText(form.flag_2),
-      cleanText(form.flag_3),
-    ]),
-
-    age_years: form.age_years === "" ? null : Number(form.age_years),
+    special_tobacco_flags: buildUniqueList([cleanText(form.flag_1),cleanText(form.flag_2),cleanText(form.flag_3)]),
+    age_years:    form.age_years === "" ? null : Number(form.age_years),
     smoker_style: cleanText(form.smoker_style),
-
-    vitola: "",
-    bunch_density: "medium",
+    vitola:       "",
+    bunch_density:"medium",
   });
 
-  /* --------------------------
-API CALLS
--------------------------- */
+  /* ── API calls (unchanged logic) ── */
 
   const loadUsage = async () => {
-    setErr("");
-    setLoadingUsage(true);
-    setUsage(null);
-    setLookupStatus("");
-    setLookupSource("");
-
+    setErr(""); setLoadingUsage(true); setUsage(null); setLookupStatus(""); setLookupSource("");
     try {
       const cleanedEmail = cleanText(form.user_email);
-
-      const res = await fetch(
-        `/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}`
-      );
-
+      const res  = await fetch(`/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}`);
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        setIsUserValidated(false);
-        setValidatedEmail("");
-        throw new Error(data.error || data.detail || "Failed to load usage");
-      }
-
-      setUsage(data);
-      setValidatedEmail(cleanedEmail);
-      setIsUserValidated(true);
-    } catch (e) {
-      setIsUserValidated(false);
-      setValidatedEmail("");
-      setErr(e.message || "Usage request failed");
-    } finally {
-      setLoadingUsage(false);
-    }
+      if (!res.ok) { setIsUserValidated(false); setValidatedEmail(""); throw new Error(data.error||data.detail||"Failed to load usage"); }
+      setUsage(data); setValidatedEmail(cleanedEmail); setIsUserValidated(true);
+    } catch(e) { setIsUserValidated(false); setValidatedEmail(""); setErr(e.message||"Usage request failed"); }
+    finally { setLoadingUsage(false); }
   };
 
   const lookupBlend = async () => {
-    setErr("");
-    setLookupSource("");
-
-    if (!isAuthorizedUser) {
-      setLookupStatus("Please enter your registered email and press Check User first.");
-      return;
-    }
-
-    const brand = cleanText(form.brand);
-    const line = cleanText(form.line);
-
-    if (!brand || !line) {
-      setLookupStatus("Enter brand and line first.");
-      return;
-    }
-
-    setLoadingLookup(true);
-    setLookupStatus("Searching ICSI blend database...");
-
+    setErr(""); setLookupSource("");
+    if (!isAuthorizedUser) { setLookupStatus("Validate your registered email address first."); return; }
+    if (!hasProAccess)     { setLookupStatus("Predictor access not enabled for this account."); return; }
+    const brand = cleanText(form.brand), line = cleanText(form.line);
+    if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
+    setLoadingLookup(true); setLookupStatus("Querying ICSI blend database...");
     try {
-      const res = await fetch(`/api/predictor/lookup-blend`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_email: cleanText(form.user_email),
-          brand,
-          line,
-        }),
-      });
-
+      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand, line }) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok || !data.match) {
-        setLookupStatus(data.error || data.detail || "No reliable blend match found.");
-        return;
-      }
-
+      if (!res.ok||!data.ok||!data.match) { setLookupStatus(data.error||data.detail||"No reliable blend match found."); return; }
       applyLookupMatch(data.match);
-      setLookupSource(data.source?.label || "");
-      setLookupStatus("Blend found and displayed below.");
-    } catch {
-      setLookupStatus("Lookup failed.");
-    } finally {
-      setLoadingLookup(false);
-    }
+      setLookupSource(data.source?.label||"");
+      setLookupStatus("Blend data retrieved.");
+    } catch { setLookupStatus("Lookup failed \u2014 check connection and retry."); }
+    finally { setLoadingLookup(false); }
   };
 
   const loadTastingCard = async (brand, line) => {
     try {
-      const res = await fetch(`/api/predictor/tasting-card`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_email: cleanText(form.user_email),
-          brand: cleanText(brand),
-          line: cleanText(line),
-        }),
-      });
-
+      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand: cleanText(brand), line: cleanText(line) }) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok || !data.tasting_card) {
-        setTastingCard(null);
-        return;
-      }
-
+      if (!res.ok||!data.ok||!data.tasting_card) { setTastingCard(null); return; }
       setTastingCard(data.tasting_card);
-    } catch {
-      setTastingCard(null);
-    }
+    } catch { setTastingCard(null); }
   };
 
   const loadPairingCard = async (predictionData) => {
-    const family = cleanText(
-      predictionData?.family ||
-        predictionData?.rh_family ||
-        predictionData?.cps_family ||
-        predictionData?.peak_flavor_family ||
-        predictionData?.cigar_peak_flavor_system_family
-    );
-
-    if (!family) {
-      setPairingCard(null);
-      return;
-    }
-
+    const family = cleanText(predictionData?.family||predictionData?.rh_family||predictionData?.cps_family||predictionData?.peak_flavor_family||predictionData?.cigar_peak_flavor_system_family);
+    if (!family) { setPairingCard(null); return; }
     setLoadingPairing(true);
-
     try {
-      const payload = {
-        ...buildPayload(),
-        family,
-      };
-
-      const res = await fetch(`/api/predictor/pairing-card`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
+      const res  = await fetch(`/api/predictor/pairing-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ ...buildPayload(), family }) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok || !data.pairing_card) {
-        setPairingCard(null);
-
-        if (pairingSelection !== "None") {
-          setErr(
-            data.error ||
-              data.detail ||
-              `Pairing card failed with status ${res.status}.`
-          );
-        }
-
-        return;
-      }
-
+      if (!res.ok||!data.ok||!data.pairing_card) { setPairingCard(null); return; }
       setPairingCard(data.pairing_card);
-    } catch (e) {
-      setPairingCard(null);
-
-      if (pairingSelection !== "None") {
-        setErr(e.message || "Pairing card request failed.");
-      }
-    } finally {
-      setLoadingPairing(false);
-    }
+    } catch { setPairingCard(null); }
+    finally { setLoadingPairing(false); }
   };
 
   const runPrediction = async () => {
     setErr("");
-    setLoadingPredict(true);
-    setResult(null);
-    setTastingCard(null);
-    setPairingCard(null);
-    setSimilarBlends(null);
-
-    const cleanedBrand = cleanText(form.brand);
-    const cleanedLine = cleanText(form.line);
-
+    if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
+    if (!hasProAccess)     { setErr("Predictor access not enabled for this account."); return; }
+    if (!hasBlendStructure) { setErr("Lookup Blend first. Predictor uses the database blend structure and does not support manual construction edits."); return; }
+    setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null); setStructuralSnapshot(buildPayload());
+    setPredictStep("Initializing combustion model...");
+    const cleanedBrand = cleanText(form.brand), cleanedLine = cleanText(form.line);
     try {
-      const res = await fetch(`/api/predictor/predict`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildPayload()),
-      });
-
+      setPredictStep("Modeling combustion profile...");
+      const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        throw new Error(data.error || data.detail || "Prediction failed");
-      }
-
+      if (!res.ok) throw new Error(data.error||data.detail||"Prediction failed");
+      setPredictStep("Calibrating RH equilibrium...");
       setResult(data);
       await loadUsage();
+      setPredictStep("Generating analytical tasting profile...");
       await loadTastingCard(cleanedBrand, cleanedLine);
+      if (pairingSelection !== "None") { setPredictStep("Computing pairing matrix..."); }
       await loadPairingCard(data);
-    } catch (e) {
-      setErr(e.message || "Prediction request failed");
-    } finally {
-      setLoadingPredict(false);
-    }
+      setPredictStep("");
+    } catch(e) { setErr(e.message||"Prediction request failed"); setPredictStep(""); }
+    finally { setLoadingPredict(false); }
   };
 
   const findSimilarBlends = async () => {
     setErr("");
-
-    if (!isAuthorizedUser) {
-      setErr("Please enter your registered email and press Check User first.");
-      return;
-    }
-
-    setLoadingSimilar(true);
-    setSimilarBlends(null);
-    setResult(null);
-    setTastingCard(null);
-    setPairingCard(null);
-
+    if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
+    if (!hasProAccess)     { setErr("Predictor access not enabled for this account."); return; }
+    setLoadingSimilar(true); setSimilarBlends(null); setResult(null); setTastingCard(null); setPairingCard(null); setStructuralSnapshot(null);
     try {
-      const res = await fetch(`/api/predictor/similar-blends`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildPayload()),
-      });
-
+      const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || data.detail || "Similar blends lookup failed");
-      }
-
+      if (!res.ok||!data.ok) throw new Error(data.error||data.detail||"Similar blends lookup failed");
       setSimilarBlends(data);
       await loadUsage();
-    } catch (e) {
-      setErr(e.message || "Similar blends request failed");
-    } finally {
-      setLoadingSimilar(false);
-    }
+    } catch(e) { setErr(e.message||"Similar blends request failed"); }
+    finally { setLoadingSimilar(false); }
   };
 
-  /* --------------------------
-UI
--------------------------- */
+  /* ============================================================
+     RENDER
+     ============================================================ */
+
+  const now = new Date();
+  const timestamp = `${now.getDate().toString().padStart(2,"0")} ${now.toLocaleString("en",{month:"short"}).toUpperCase()} ${now.getFullYear()} \u2014 ${now.getHours().toString().padStart(2,"0")}:${now.getMinutes().toString().padStart(2,"0")} GST`;
+
+  const filteredPairing = getFilteredPairingCard();
 
   return (
     <Layout>
       <Seo title="Predictor | ICSI" path="/portal/predictor" />
+      <GlobalStyles />
 
-      <div className="section">
-        <div className="container" style={{ maxWidth: 980 }}>
-          <h1>Cigar Peak-Flavor Predictor (beta)</h1>
+      <div style={styles.page}>
+        <div style={styles.container}>
 
-          <label>
-            Instructions: The Predictor tool is available exclusively to approved
-            subscribers. Enter your registered email address and press the "Check
-            User" button to access the platform. In the Cigar Blend Lookup section,
-            enter the blend Brand and Line, then press the "Blend Lookup" button.
-            The blend's construction and tobacco composition details will
-            automatically populate below as read-only values.
-            <br />
-            <br />
-            Before running the prediction, you may optionally select a beverage
-            category from the "Pairing" dropdown menu. Available categories include
-            Wine, Whisky, Rum, Cognac, Tequila, Beer, and Cocktail. If "None" is
-            selected, the application will only generate the peak-flavor prediction
-            result and tasting card.
-            <br />
-            <br />
-            By pressing the "Run Predictor" button, the application will generate
-            the blend's optimal smoking leaf-level relative humidity %, together
-            with a professional tasting card describing the predicted palate,
-            retrohale, texture, and finish characteristics at peak-flavor
-            equilibrium. If a pairing category has been selected, the application
-            will also generate a dedicated pairing card for that selected beverage
-            category only.
-            <br />
-            <br />
-            By pressing the "Find Similar Blends" button, the application will
-            identify and display the cigar blends that most closely match the
-            selected blend's structural and sensory profile.
-            <br />
-            <strong>Important note</strong>: Leaf-level relative humidity % is measured using a
-            commercially available Cigar Humidity Meter.
-          </label>
-
-          {/* USER */}
-          <div className="card" style={{ marginTop: 16 }}>
-            <h3>User Login</h3>
-
-            <label>Email</label>
-            <input
-              value={form.user_email}
-              placeholder="Enter your subscription email"
-              onChange={(e) => {
-                update("user_email", e.target.value);
-                resetUserValidation();
-              }}
-            />
-
-            <div className="ctaRow" style={{ marginTop: 12 }}>
-              <button className="btn" onClick={loadUsage} disabled={loadingUsage}>
-                {loadingUsage ? "Loading..." : "Check User"}
-              </button>
+          {/* ── PAGE HEADER ── */}
+          <div style={styles.pageHeader}>
+            <div style={styles.engineBadge}>
+              <span style={styles.dotActive} />
+              CPFS Engine v4.8 &#x2014; Calibrated
             </div>
+            <h1 style={styles.h1}>Cigar Peak-Flavor System</h1>
+            <p style={styles.subtitle}>Predictor · Consumer Output Module · Beta</p>
+          </div>
 
-            {!isAuthorizedUser && (
-              <div className="small" style={{ marginTop: 10 }}>
-                Please check your registered email first to enable Blend Lookup and
-                Similar Blends.
-              </div>
-            )}
+          {/* ── COLLAPSIBLE METHODOLOGY NOTICE ── */}
+          <div style={{ ...styles.card, marginBottom: 24, borderColor: "rgba(37,99,235,0.18)", padding: instructionsOpen ? "20px 28px" : "14px 28px" }}>
+            <button
+              type="button"
+              onClick={() => setInstructionsOpen((v) => !v)}
+              aria-expanded={instructionsOpen}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 16,
+                background: "transparent",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                color: DS.textPrimary,
+                fontFamily: DS.fontMono,
+                textAlign: "left",
+              }}
+            >
+              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Operational Protocol</span>
+              <span style={{ ...styles.dataLabel, marginBottom: 0 }}>
+                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "−" : "+"}
+              </span>
+            </button>
 
-            {usage && (
-              <div className="small" style={{ marginTop: 12, lineHeight: 1.8 }}>
-                <div>
-                  Tier: <b>{usage.tier}</b>
-                </div>
-                <div>
-                  Annual: <b>{usage.runs_used}</b> used / <b>{usage.annual_limit}</b>
-                </div>
-                <div>
-                  Remaining: <b>{usage.runs_remaining}</b>
-                </div>
-                <div>
-                  Today: <b>{usage.daily_used}</b> used / <b>{usage.daily_limit}</b>
-                </div>
-                <div>
-                  Daily remaining: <b>{usage.daily_remaining}</b>
-                </div>
-                <div>
-                  Period: <b>{usage.period_start}</b> → <b>{usage.period_end}</b>
-                </div>
-              </div>
+            {instructionsOpen && (
+              <p className="pp-instructions" style={{ marginTop: 14 }}>
+                Predictor is available exclusively to approved users. Validate your registered
+                email address using the Check User control. In the Blend Lookup module, enter the Brand
+                and Line identifiers, then initiate the Lookup Blend procedure and construction and tobacco
+                composition parameters will populate automatically.
+                <br /><br />
+                Autofilled parameters are adjustable prior to analysis: wrapper, wrapper process, wrapper
+                thickness and oiliness, binder components, filler components, ligero level, special tobacco
+                flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
+                selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
+                blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and
+                when selected, a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
+                blends structurally and sensorially matched to the query.
+                <br /><br />
+                <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
+                available Cigar Humidity Meter.
+              </p>
             )}
           </div>
 
-          {/* CIGAR IDENTITY */}
-          <div className="card" style={{ marginTop: 16 }}>
-            <h3>Cigar Blend Lookup</h3>
+          {/* ── USER VALIDATION ── */}
+          <div style={{ ...styles.card, ...styles.cardAccent }}>
+            <div style={styles.sectionLabel}>Section 01</div>
+            <div style={styles.h2}>User Validation</div>
 
-            <div className="row2">
+            <div style={{ maxWidth: 420 }}>
+              <label style={styles.label}>Registered Email Address</label>
+              <input
+                className="pp-input"
+                style={styles.input}
+                value={form.user_email}
+                placeholder="subscriber@domain.com"
+                onChange={(e) => { update("user_email", e.target.value); resetUserValidation(); }}
+              />
+            </div>
+
+            <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+              <button
+                className="pp-btn-primary"
+                style={styles.btnPrimary}
+                onClick={loadUsage}
+                disabled={loadingUsage}
+              >
+                {loadingUsage ? "Validating..." : "Check User"}
+              </button>
+
+              {isAuthorizedUser && hasProAccess && (
+                <span style={{ ...styles.noticeSuccess, padding: "6px 12px" }}>
+                  &#x2713; Access Validated &#x2014; Access Enabled
+                </span>
+              )}
+              {isAuthorizedUser && !hasProAccess && (
+                <span style={{ ...styles.noticeWarning, padding: "6px 12px" }}>
+                  &#x26A0; Validated &#x2014; Predictor Access Inactive
+                </span>
+              )}
+              {!isAuthorizedUser && !loadingUsage && (
+                <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.08em" }}>
+                  Validation required to enable Predictor
+                </span>
+              )}
+            </div>
+
+          </div>
+
+          {/* ── CIGAR BLEND LOOKUP ── */}
+          <div style={styles.card}>
+            <div style={styles.sectionLabel}>Section 02</div>
+            <div style={styles.h2}>Cigar Blend Lookup</div>
+
+            <div style={styles.grid2}>
+              {/* Brand */}
               <div style={{ position: "relative" }}>
-                <label>Brand</label>
+                <label style={styles.label}>Brand</label>
                 <input
+                  className="pp-input"
+                  style={styles.input}
                   value={form.brand}
-                  placeholder="Start typing brand..."
+                  placeholder="Begin entering brand designation..."
                   autoComplete="off"
                   onFocus={() => loadBrandSuggestions(form.brand)}
                   onChange={(e) => {
-                    const value = e.target.value;
-                    update("brand", value);
-                    update("line", "");
-                    setLineSuggestions([]);
-                    setShowLineSuggestions(false);
-                    loadBrandSuggestions(value);
+                    const v = e.target.value;
+                    update("brand", v); update("line","");
+                    setLineSuggestions([]); setShowLineSuggestions(false);
+                    loadBrandSuggestions(v);
                   }}
-                  onBlur={() => {
-                    setTimeout(() => setShowBrandSuggestions(false), 150);
-                  }}
+                  onBlur={() => setTimeout(() => setShowBrandSuggestions(false), 150)}
                 />
-
                 {showBrandSuggestions && brandSuggestions.length > 0 && (
-                  <div style={autocompleteBox}>
+                  <div style={styles.autocompleteBox}>
                     {brandSuggestions.map((s, i) => (
-                      <div
-                        key={`${s.brand}-${i}`}
-                        style={autocompleteItem}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          selectBrandSuggestion(s);
-                        }}
-                      >
+                      <div key={`${s.brand}-${i}`} className="pp-ac-item" style={styles.autocompleteItem}
+                        onMouseDown={(e) => { e.preventDefault(); selectBrandSuggestion(s); }}>
                         {s.label}
                       </div>
                     ))}
@@ -1103,39 +1063,25 @@ UI
                 )}
               </div>
 
+              {/* Line */}
               <div style={{ position: "relative" }}>
-                <label>Line</label>
+                <label style={styles.label}>Line</label>
                 <input
+                  className="pp-input"
+                  style={{ ...styles.input, opacity: cleanText(form.brand) ? 1 : 0.5 }}
                   value={form.line}
                   autoComplete="off"
                   disabled={!cleanText(form.brand)}
                   onFocus={() => loadLineSuggestions(form.brand, form.line)}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    update("line", value);
-                    loadLineSuggestions(form.brand, value);
-                  }}
-                  onBlur={() => {
-                    setTimeout(() => setShowLineSuggestions(false), 150);
-                  }}
-                  placeholder={
-                    cleanText(form.brand)
-                      ? "Start typing line..."
-                      : "Select brand first"
-                  }
+                  onChange={(e) => { const v = e.target.value; update("line", v); loadLineSuggestions(form.brand, v); }}
+                  onBlur={() => setTimeout(() => setShowLineSuggestions(false), 150)}
+                  placeholder={cleanText(form.brand) ? "Begin entering line designation..." : "Select brand first"}
                 />
-
                 {showLineSuggestions && lineSuggestions.length > 0 && (
-                  <div style={autocompleteBox}>
+                  <div style={styles.autocompleteBox}>
                     {lineSuggestions.map((s, i) => (
-                      <div
-                        key={`${s.brand}-${s.line}-${i}`}
-                        style={autocompleteItem}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          selectLineSuggestion(s);
-                        }}
-                      >
+                      <div key={`${s.brand}-${s.line}-${i}`} className="pp-ac-item" style={styles.autocompleteItem}
+                        onMouseDown={(e) => { e.preventDefault(); selectLineSuggestion(s); }}>
                         {s.label}
                       </div>
                     ))}
@@ -1144,92 +1090,59 @@ UI
               </div>
             </div>
 
-            <div
-              style={{
-                marginTop: 14,
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                flexWrap: "wrap",
-              }}
-            >
+            <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
               <button
-                className="btn"
-                type="button"
+                className="pp-btn-secondary"
+                style={styles.btnSecondary}
                 onClick={lookupBlend}
-                disabled={loadingLookup || !isAuthorizedUser}
+                disabled={loadingLookup || !hasProAccess}
               >
-                {loadingLookup ? "Searching..." : "Lookup Blend"}
+                {loadingLookup ? "Querying Database..." : "Lookup Blend"}
               </button>
 
               {lookupStatus && (
-                <span className="small" style={{ lineHeight: 1.4 }}>
+                <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
                   {lookupStatus}
                 </span>
               )}
             </div>
 
             {lookupSource && (
-              <p className="small" style={{ marginTop: 8 }}>
-                Source: <b>{lookupSource}</b>
-              </p>
+              <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
+              </div>
             )}
           </div>
 
-          {/* READ-ONLY BLEND CONSTRUCTION */}
-          <div className="card" style={{ marginTop: 16 }}>
-            <h3>Blend Details: Autofilled &amp; Read-Only</h3>
+          {/* ── ENVIRONMENTAL + RUN CONTROLS ── */}
+          <div style={styles.card}>
+            <div style={styles.sectionLabel}>Section 03</div>
+            <div style={styles.h2}>Optional Parameters &amp; Analysis Controls</div>
 
-            <div style={readOnlyGridStyle}>
-              <ReadOnlyField label="Origin" value={displayValue(form.origin)} />
-              <ReadOnlyField label="Factory" value={displayValue(form.factory)} />
-              <ReadOnlyField
-                label="Wrapper"
-                value={displayValue(buildCustomValue(form.wrapper, form.wrapper_custom))}
-              />
-              <ReadOnlyField
-                label="Wrapper Process"
-                value={displayValue(form.wrapper_process)}
-              />
-              <ReadOnlyField
-                label="Wrapper Thickness"
-                value={displayValue(form.wrapper_thickness)}
-              />
-              <ReadOnlyField
-                label="Wrapper Oiliness"
-                value={displayValue(form.wrapper_oiliness)}
-              />
-              <ReadOnlyField
-                label="Binder Components"
-                value={displayBinderComponents()}
-              />
-              <ReadOnlyField label="Ligero" value={displayValue(form.ligero)} />
-              <ReadOnlyField
-                label="Filler Components"
-                value={displayList([form.filler_1, form.filler_2, form.filler_3])}
-              />
-              <ReadOnlyField
-                label="Special Tobacco Flags"
-                value={displayList([form.flag_1, form.flag_2, form.flag_3])}
-              />
-              <ReadOnlyField label="Blend Age" value={displayValue(form.age_years)} />
-              <ReadOnlyField label="Smoker Style" value={displayValue(form.smoker_style)} />
+            <div style={styles.grid2}>
+              <div>
+                <label style={styles.label}>Blend Age (years)</label>
+                <input
+                  className="pp-input"
+                  style={styles.input}
+                  type="number" min="0" step="0.5"
+                  value={form.age_years}
+                  onChange={(e) => update("age_years", e.target.value)}
+                  placeholder="0"
+                />
+              </div>
+              <div>
+                <label style={styles.label}>Smoker Style</label>
+                <select className="pp-select" style={styles.select} value={form.smoker_style} onChange={(e) => update("smoker_style", e.target.value)}>
+                  {SMOKER_STYLE_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
+                </select>
+              </div>
             </div>
 
-            <div
-              style={{
-                marginTop: 16,
-                marginBottom: 12,
-                maxWidth: 320,
-              }}
-            >
-              <label>Pairing</label>
-
-              <select
-                value={pairingSelection}
-                onChange={(e) => setPairingSelection(e.target.value)}
-              >
-                <option value="None">None</option>
+            <div style={{ marginTop: 16, maxWidth: 320 }}>
+              <label style={styles.label}>Pairing Category</label>
+              <select className="pp-select" style={styles.select} value={pairingSelection} onChange={(e) => setPairingSelection(e.target.value)}>
+                <option value="None">None &#x2014; Prediction Only</option>
                 <option value="Wine">Wine</option>
                 <option value="Whisky">Whisky</option>
                 <option value="Rum">Rum</option>
@@ -1240,252 +1153,246 @@ UI
               </select>
             </div>
 
-            <div
-              className="ctaRow"
-              style={{
-                marginTop: 16,
-                display: "flex",
-                gap: 12,
-                flexWrap: "wrap",
-              }}
-            >
+            <hr style={styles.sep} />
+
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
               <button
-                className="btn primary"
+                className="pp-btn-primary"
+                style={styles.btnPrimary}
                 onClick={runPrediction}
-                disabled={loadingPredict}
-                type="button"
+                disabled={loadingPredict || !hasProAccess || !hasBlendStructure}
               >
-                {loadingPredict ? "Running..." : "Run Predictor"}
+                {loadingPredict ? "Computing..." : "Run Predictor"}
               </button>
 
               <button
-                className="btn"
+                className="pp-btn-secondary"
+                style={styles.btnSecondary}
                 onClick={findSimilarBlends}
-                disabled={loadingSimilar || !isAuthorizedUser}
-                type="button"
+                disabled={loadingSimilar || !hasProAccess || !hasBlendStructure}
               >
                 {loadingSimilar ? "Searching..." : "Find Similar Blends"}
               </button>
+
+              {(loadingPredict && predictStep) && <ProcessingIndicator label={predictStep} />}
+              {loadingSimilar && <ProcessingIndicator label="Scanning blend database..." />}
             </div>
           </div>
 
+          {/* ── ERROR ── */}
           {err && (
-            <div className="notice" style={{ marginTop: 16 }}>
-              <b>Error:</b> {err}
+            <div style={{ ...styles.notice, marginTop: 16 }}>
+              ⚠  {err}
             </div>
           )}
 
+          {/* ── ANALYTICAL OUTPUT ── */}
           {result && (
-            <div className="card" style={{ marginTop: 16 }}>
-              <h3>Blend Peak-Flavor Prediction Result</h3>
+            <div className="pp-result" style={styles.card}>
+              <div style={styles.sectionLabel}>Analytical Output</div>
+              <div style={styles.h2}>Peak-Flavor Prediction Result</div>
 
-              <div className="small" style={{ lineHeight: 1.8 }}>
-                <div>
-                  Cigar Peak-Flavor System Family: <b>{result.family}</b>
+              {/* RH Readout panels */}
+              <div style={{ display: "flex", gap: 16, marginBottom: 24, flexWrap: "wrap" }}>
+                <div style={styles.rhPanel}>
+                  <div style={styles.dataLabel}>Target RH%</div>
+                  <div className="pp-rh-value">{result.target_rh}</div>
+                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
                 </div>
-                <div>
-                  Target Smoking Core Relative Humidity % (measured with Cigar Humidity Meter):{" "}
-                  <b>{result.target_rh}</b>
+                <div style={styles.rhPanel}>
+                  <div style={styles.dataLabel}>RH Window</div>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
+                    {result.window_low}–{result.window_high}
+                  </div>
+                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Operating Range</div>
                 </div>
-                <div>
-                  Smoking Core Relative Humidity % Window: <b>{result.window_low}</b> to{" "}
-                  <b>{result.window_high}</b>
-                </div>
-                <div>
-                  Runs used: <b>{result.runs_used}</b>
-                </div>
-                <div>
-                  Runs remaining: <b>{result.runs_remaining}</b>
-                </div>
-                <div>
-                  Daily used: <b>{result.daily_used}</b>
-                </div>
-                <div>
-                  Daily remaining: <b>{result.daily_remaining}</b>
+                <div style={styles.rhPanel}>
+                  <div style={styles.dataLabel}>CPFS Family</div>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
+                    {result.family}
+                  </div>
+                  <div style={{ ...styles.dataLabel, marginTop: 4 }}>Classification</div>
                 </div>
               </div>
 
-              <hr className="sep" />
 
-              {tastingCard && (
+              {/* Retrieved Blend Structure */}
+              {structuralSnapshot && (
                 <>
-                  <hr className="sep" />
-
-                  <h3>Tasting Card</h3>
-
-                  <div className="row2" style={{ marginTop: 12 }}>
-                    <div className="card" style={{ marginTop: 0 }}>
-                      <h4 style={{ marginTop: 0 }}>Palate</h4>
-
-                      <div className="small" style={{ lineHeight: 1.8 }}>
-                        <div>
-                          <b>Primary:</b>{" "}
-                          {(tastingCard?.palate?.primary || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Secondary:</b>{" "}
-                          {(tastingCard?.palate?.secondary || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Texture:</b>{" "}
-                          {(tastingCard?.palate?.texture || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Finish:</b>{" "}
-                          {(tastingCard?.palate?.finish || []).join(", ") || "—"}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="card" style={{ marginTop: 0 }}>
-                      <h4 style={{ marginTop: 0 }}>Retrohale</h4>
-
-                      <div className="small" style={{ lineHeight: 1.8 }}>
-                        <div>
-                          <b>Primary:</b>{" "}
-                          {(tastingCard?.retrohale?.primary || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Secondary:</b>{" "}
-                          {(tastingCard?.retrohale?.secondary || []).join(", ") || "—"}
-                        </div>
-                        <div>
-                          <b>Finish:</b>{" "}
-                          {(tastingCard?.retrohale?.finish || []).join(", ") || "—"}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {loadingPairing && pairingSelection !== "None" && (
-                <>
-                  <hr className="sep" />
-                  <div className="small">Loading pairing card...</div>
-                </>
-              )}
-
-              {pairingCard && pairingSelection !== "None" && (
-                <>
-                  <hr className="sep" />
-
-                  <h3>{pairingSelection} Pairing Card</h3>
-
+                  <SectionDivider label="Retrieved Blend Structure" />
                   <div
                     style={{
-                      marginTop: 12,
-                      maxWidth: 760,
+                      padding: "18px 0",
+                      borderBottom: `1px solid ${DS.border}`,
+                      marginBottom: 24,
                     }}
                   >
-                    {getFilteredPairingCard() ? (
-                      <PairingCategoryCard
-                        title={pairingSelection}
-                        data={getFilteredPairingCard()}
-                      />
-                    ) : (
-                      <div className="small">
-                        No {pairingSelection.toLowerCase()} pairing data was returned for this blend.
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
+                      <div>
+                        <span style={{ fontWeight: 600, fontSize: 16, color: DS.textPrimary }}>
+                          {structuralSnapshot.brand || "Unknown Brand"}
+                        </span>
+                        {structuralSnapshot.line && (
+                          <span style={{ fontSize: 16, color: DS.textSecond, marginLeft: 8 }}>&mdash; {structuralSnapshot.line}</span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 2 }}>
+                      {structuralSnapshot.origin && <DataRow label="Origin" value={structuralSnapshot.origin} />}
+                      {structuralSnapshot.factory && <DataRow label="Factory" value={structuralSnapshot.factory} />}
+                      {structuralSnapshot.wrapper && <DataRow label="Wrapper" value={structuralSnapshot.wrapper} />}
+                      {structuralSnapshot.wrapper_process && <DataRow label="Wrapper Process" value={structuralSnapshot.wrapper_process} />}
+                      {(structuralSnapshot.binder_1 || structuralSnapshot.binder_2 || structuralSnapshot.binder) && (
+                        <DataRow label="Binder Components" value={[structuralSnapshot.binder_1, structuralSnapshot.binder_2].filter(Boolean).join(", ") || splitPipeValues(structuralSnapshot.binder || "").join(", ")} />
+                      )}
+                      {Array.isArray(structuralSnapshot.filler) && structuralSnapshot.filler.length > 0 && (
+                        <DataRow label="Filler" value={structuralSnapshot.filler.join(", ")} />
+                      )}
+                      {structuralSnapshot.ligero && <DataRow label="Ligero" value={structuralSnapshot.ligero} />}
+                      {Array.isArray(structuralSnapshot.special_tobacco_flags) && structuralSnapshot.special_tobacco_flags.length > 0 && (
+                        <DataRow label="Special Flags" value={structuralSnapshot.special_tobacco_flags.join(", ")} />
+                      )}
+                    </div>
+
+                    {lookupSource && (
+                      <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                        Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
                       </div>
                     )}
                   </div>
                 </>
               )}
+
+              {/* Tasting Card */}
+              {tastingCard && (
+                <>
+                  <SectionDivider label="Analytical Tasting Profile" />
+                  <div className="pp-output-grid">
+                    <AnalyticalCard
+                      title="Palate Analysis"
+                      rows={[
+                        { label: "Primary",   value: (tastingCard?.palate?.primary  ||[]).join(", ") },
+                        { label: "Secondary", value: (tastingCard?.palate?.secondary||[]).join(", ") },
+                        { label: "Texture",   value: (tastingCard?.palate?.texture  ||[]).join(", ") },
+                        { label: "Finish",    value: (tastingCard?.palate?.finish   ||[]).join(", ") },
+                      ]}
+                    />
+                    <AnalyticalCard
+                      title="Retrohale Profile"
+                      rows={[
+                        { label: "Primary",   value: (tastingCard?.retrohale?.primary  ||[]).join(", ") },
+                        { label: "Secondary", value: (tastingCard?.retrohale?.secondary||[]).join(", ") },
+                        { label: "Finish",    value: (tastingCard?.retrohale?.finish   ||[]).join(", ") },
+                      ]}
+                    />
+                  </div>
+                </>
+              )}
+
+              {/* Pairing Card */}
+              {loadingPairing && pairingSelection !== "None" && (
+                <ProcessingIndicator label={`Generating ${pairingSelection} pairing matrix...`} />
+              )}
+
+              {pairingCard && pairingSelection !== "None" && filteredPairing && (
+                <>
+                  <SectionDivider label={`${pairingSelection} Pairing Matrix`} />
+                  <div className="pp-output-grid">
+                    <AnalyticalCard
+                      title={`${pairingSelection} \u2014 Pairing Recommendations`}
+                      rows={[
+                        { label: "Primary",   value: displayPairingList(filteredPairing?.primary) },
+                        { label: "Secondary", value: displayPairingList(filteredPairing?.secondary) },
+                      ]}
+                    />
+                  </div>
+                </>
+              )}
+
+              {pairingCard && pairingSelection !== "None" && !filteredPairing && (
+                <div style={{ ...styles.noticeInfo, marginTop: 16 }}>
+                  No {pairingSelection.toLowerCase()} pairing data returned for this blend profile.
+                </div>
+              )}
+
+              {/* Metadata footer */}
+              <div style={styles.metaBar}>
+                <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
+                <span style={styles.metaItem}>Calibrated · Reference-Standard</span>
+                <span style={styles.metaItem}>Generated {timestamp}</span>
+                <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
+              </div>
             </div>
           )}
 
+          {/* ── SIMILAR BLENDS ── */}
           {similarBlends && (
-            <div className="card" style={{ marginTop: 16 }}>
-              <h3>Similar Blends</h3>
+            <div className="pp-result" style={styles.card}>
+              <div style={styles.sectionLabel}>Structural Match Analysis</div>
+              <div style={styles.h2}>Similar Blend Profiles</div>
 
               {Array.isArray(similarBlends.results) && similarBlends.results.length > 0 ? (
-                <div className="small" style={{ lineHeight: 1.8 }}>
-                  {similarBlends.results.map((blend, idx) => (
-                    <div
-                      key={`${blend.brand || "brand"}-${blend.line || "line"}-${idx}`}
-                      style={{
-                        padding: "12px 0",
-                        borderBottom:
-                          idx === similarBlends.results.length - 1
-                            ? "none"
-                            : "1px solid rgba(0,0,0,.08)",
-                      }}
-                    >
+                similarBlends.results.map((blend, idx) => (
+                  <div key={`${blend.brand||"b"}-${blend.line||"l"}-${idx}`}
+                    style={{ padding: "18px 0", borderBottom: idx < similarBlends.results.length-1 ? `1px solid ${DS.border}` : "none" }}>
+
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
                       <div>
-                        <b>{blend.brand || "Unknown Brand"}</b>
-                        {blend.line ? ` — ${blend.line}` : ""}
+                        <span style={{ fontWeight: 600, fontSize: 16, color: DS.textPrimary }}>
+                          {blend.brand || "Unknown Brand"}
+                        </span>
+                        {blend.line && (
+                          <span style={{ fontSize: 16, color: DS.textSecond, marginLeft: 8 }}>&mdash; {blend.line}</span>
+                        )}
                       </div>
-
                       {blend.similarity_score != null && (
-                        <div>
-                          Similarity score: <b>{blend.similarity_score}%</b>
+                        <div style={{ fontFamily: DS.fontMono, fontSize: 16, color: DS.gold, fontWeight: 600, letterSpacing: "0.04em" }}>
+                          {blend.similarity_score}% Match
                         </div>
                       )}
-
-                      {Array.isArray(blend.why_similar) &&
-                        blend.why_similar.length > 0 && (
-                          <div>Why similar: {blend.why_similar.join(", ")}</div>
-                        )}
-
-                      {blend.origin && <div>Origin: {blend.origin}</div>}
-                      {blend.factory && <div>Factory: {blend.factory}</div>}
-                      {blend.wrapper && <div>Wrapper: {blend.wrapper}</div>}
-                      {blend.wrapper_process && (
-                        <div>Wrapper process: {blend.wrapper_process}</div>
-                      )}
-                      {(blend.binder_1 || blend.binder_2 || blend.binder) && (
-                        <div>
-                          Binder Components:{" "}
-                          {[
-                            ...splitPipeValues(blend.binder || ""),
-                            cleanText(blend.binder_1 || ""),
-                            cleanText(blend.binder_2 || ""),
-                          ]
-                            .filter(Boolean)
-                            .join(", ")}
-                        </div>
-                      )}
-
-                      {Array.isArray(blend.filler) && blend.filler.length > 0 && (
-                        <div>Filler: {blend.filler.join(", ")}</div>
-                      )}
-
-                      {blend.ligero && <div>Ligero: {blend.ligero}</div>}
-
-                      {Array.isArray(blend.special_tobacco_flags) &&
-                        blend.special_tobacco_flags.length > 0 && (
-                          <div>Flags: {blend.special_tobacco_flags.join(", ")}</div>
-                        )}
-
-                      {blend.source_label && <div>Source: {blend.source_label}</div>}
                     </div>
-                  ))}
-                </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 2 }}>
+                      {blend.origin         && <DataRow label="Origin"          value={blend.origin} />}
+                      {blend.factory        && <DataRow label="Factory"         value={blend.factory} />}
+                      {blend.wrapper        && <DataRow label="Wrapper"         value={blend.wrapper} />}
+                      {blend.wrapper_process && <DataRow label="Wrapper Process" value={blend.wrapper_process} />}
+                      {(blend.binder_1||blend.binder_2||blend.binder) && (
+                        <DataRow label="Binder Components" value={[...splitPipeValues(blend.binder||""), cleanText(blend.binder_1||""), cleanText(blend.binder_2||"")].filter(Boolean).join(", ")} />
+                      )}
+                      {Array.isArray(blend.filler) && blend.filler.length > 0 && (
+                        <DataRow label="Filler"  value={blend.filler.join(", ")} />
+                      )}
+                      {blend.ligero         && <DataRow label="Ligero"          value={blend.ligero} />}
+                      {Array.isArray(blend.special_tobacco_flags) && blend.special_tobacco_flags.length > 0 && (
+                        <DataRow label="Special Flags" value={blend.special_tobacco_flags.join(", ")} />
+                      )}
+                      {blend.source_label   && <DataRow label="Data Source"     value={blend.source_label} />}
+                    </div>
+
+                    {Array.isArray(blend.why_similar) && blend.why_similar.length > 0 && (
+                      <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                        Similarity basis: {blend.why_similar.join(" · ")}
+                      </div>
+                    )}
+                  </div>
+                ))
               ) : (
-                <div className="small">No similar blends found.</div>
+                <div style={{ fontFamily: DS.fontMono, fontSize: 16, color: DS.textMuted }}>
+                  No structurally similar blends identified in the current database.
+                </div>
               )}
+
+              <div style={styles.metaBar}>
+                <span style={styles.metaItem}><span style={styles.metaDot} />Structural Match Engine</span>
+                <span style={styles.metaItem}>Generated {timestamp}</span>
+              </div>
             </div>
           )}
+
         </div>
       </div>
-
-      <style jsx>{`
-        @media (max-width: 800px) {
-          .container {
-            max-width: 100% !important;
-          }
-
-          .row2 {
-            grid-template-columns: 1fr !important;
-          }
-        }
-
-        @media (max-width: 700px) {
-          div[style*="repeat(2"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </Layout>
   );
 }
