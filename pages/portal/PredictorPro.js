@@ -962,15 +962,15 @@ export default function PredictorPage() {
               <p className="pp-instructions" style={{ marginTop: 14 }}>
                 Predictor Pro is available exclusively to approved subscribers. Validate your registered
                 email address using the Check User control. In the Blend Lookup module, enter the Brand
-                and Line identifiers, then initiate the Lookup Blend procedure &#x2014; construction and tobacco
+                and Line identifiers, then initiate the Lookup Blend procedure and construction and tobacco
                 composition parameters will populate automatically.
                 <br /><br />
                 Autofilled parameters are adjustable prior to analysis: wrapper, wrapper process, wrapper
                 thickness and oiliness, binder components, filler components, ligero level, special tobacco
                 flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
                 selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
-                blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and &#x2014;
-                if selected &#x2014; a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
+                blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and
+                when selected, a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
                 blends structurally and sensorially matched to the query.
                 <br /><br />
                 <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
@@ -1131,7 +1131,7 @@ export default function PredictorPage() {
           {/* ── BLEND CONSTRUCTION ── */}
           <div style={styles.card}>
             <div style={styles.sectionLabel}>Section 03</div>
-            <div style={styles.h2}>Blend Construction &#x2014; Autofilled &amp; Adjustable</div>
+            <div style={styles.h2}>Blend Construction: Autofilled &amp; Adjustable</div>
 
             <SectionDivider label="Wrapper" />
             <div style={styles.grid2}>
