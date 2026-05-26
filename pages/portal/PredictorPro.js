@@ -933,10 +933,10 @@ export default function PredictorPage() {
           <div style={styles.pageHeader}>
             <div style={styles.engineBadge}>
               <span style={styles.dotActive} />
-              CPFS Engine v4.8 &#x2014; Calibrated
+              CPFS Engine v4.8 Calibrated
             </div>
-            <h1 style={styles.h1}>Cigar Peak-Flavor System</h1>
-            <p style={styles.subtitle}>Predictor Pro · Analytical Output Module · Beta</p>
+            <h1 style={styles.h1}>PredictorPro Enterprise Application</h1>
+            <p style={styles.subtitle}>Cigar Peak-Flavor System</p>
           </div>
 
           {/* ── COLLAPSIBLE METHODOLOGY NOTICE ── */}
