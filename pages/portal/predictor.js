@@ -876,10 +876,10 @@ export default function PredictorPage() {
           <div style={styles.pageHeader}>
             <div style={styles.engineBadge}>
               <span style={styles.dotActive} />
-              CPFS Engine v4.8 &#x2014; Calibrated
+              CPFS Engine v4.8 Calibrated
             </div>
-            <h1 style={styles.h1}>Cigar Peak-Flavor System</h1>
-            <p style={styles.subtitle}>Predictor Â· Consumer Output Module Â· Beta</p>
+            <h1 style={styles.h1}>Predictor</h1>
+            <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
           </div>
 
           {/* â”€â”€ COLLAPSIBLE METHODOLOGY NOTICE â”€â”€ */}
