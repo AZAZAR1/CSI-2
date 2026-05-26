@@ -878,7 +878,7 @@ export default function PredictorPage() {
               <span style={styles.dotActive} />
               CPFS Engine v4.8 Calibrated
             </div>
-            <h1 style={styles.h1}>Predictor</h1>
+            <h1 style={styles.h1}>Predictor Application</h1>
             <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
           </div>
 
