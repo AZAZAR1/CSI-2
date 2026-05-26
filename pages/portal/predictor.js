@@ -750,9 +750,17 @@ export default function PredictorPage() {
 
   const getFilteredPairingCard = () => {
     if (!pairingCard || pairingSelection === "None") return null;
-    const mapping = { wine: pairingCard.wine, whisky: pairingCard.whisky, rum: pairingCard.rum,
-      cognac: pairingCard.cognac, tequila: pairingCard.tequila, beer: pairingCard.beer,
-      cocktail: pairingCard.cocktails };
+    const mapping = {
+     wine: pairingCard.wine,
+     whisky: pairingCard.whisky,
+     rum: pairingCard.rum,
+     cognac: pairingCard.cognac,
+     tequila: pairingCard.tequila,
+     beer: pairingCard.beer,
+     cocktail: pairingCard.cocktails,
+     "non-alcoholic": pairingCard.non_alcoholic,
+     non_alcoholic: pairingCard.non_alcoholic,
+      };
     return mapping[pairingSelection.toLowerCase()] || null;
   };
 
@@ -1151,6 +1159,7 @@ export default function PredictorPage() {
                 <option value="Tequila">Tequila</option>
                 <option value="Beer">Beer</option>
                 <option value="Cocktail">Cocktail</option>
+                <option value="Non-Alcoholic">Non-Alcoholic</option>
               </select>
             </div>
 
