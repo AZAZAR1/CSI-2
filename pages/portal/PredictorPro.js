@@ -1264,6 +1264,7 @@ export default function PredictorPage() {
                 <option value="Tequila">Tequila</option>
                 <option value="Beer">Beer</option>
                 <option value="Cocktail">Cocktail</option>
+                  <option value="Non-Alcoholic">Non-Alcoholic</option>
               </select>
             </div>
 
