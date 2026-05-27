@@ -1327,7 +1327,6 @@ export default function PredictorPage() {
                   <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
                     {result.window_low}–{result.window_high}
                   </div>
-                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Operating Range</div>
                 </div>
                 <div style={styles.rhPanel}>
                   <div style={styles.dataLabel}>CPFS Family</div>
