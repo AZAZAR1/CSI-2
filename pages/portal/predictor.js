@@ -1135,6 +1135,7 @@ export default function PredictorPage() {
                   <div style={styles.dataLabel}>RH% Window</div>
                   <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
                     {result.window_low}-{result.window_high}
+                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
                   </div>
                 </div>
                 <div style={styles.rhPanel}>
