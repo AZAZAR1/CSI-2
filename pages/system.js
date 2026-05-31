@@ -17,7 +17,7 @@ export default function System() {
 
       settlingTitle: "Settling & Aging Science",
       settlingIntro:
-        "A premium cigar is not fully conditioned when the humidor stabilizes. It is fully conditioned when internal leaf-to-leaf moisture equilibrium stabilizes across the cigar’s axial structure. This is achieved when there is:",
+        "A premium cigar is not fully conditioned when the humidor stabilizes. It is fully conditioned when internal leaf-to-leaf moisture equilibrium stabilizes across the cigar's axial structure. This is achieved when there is:",
       settlingBullets: [
         "Axial moisture coherence",
         "Ammonia dissipation",
@@ -61,7 +61,7 @@ export default function System() {
 
       pairingTitle: "Pairing Science",
       pairingIntro:
-        "The best pairing is the one that either extends the cigar’s intended combustion profile or buffers its failure mode:",
+        "The best pairing is the one that either extends the cigar's intended combustion profile or buffers its failure mode:",
       pairingBullets: [
         "Cigar smoke chemistry: combustion temperature, volatility of aromatic compounds, smoke density, oil/aerosol load, nicotine delivery, bitterness, pepper, mineral, sweetness, and resin",
         "Beverage structure: acidity, tannin, alcohol heat, residual sugar, oak lactones, aldehydes, esters, phenolics, glycerol texture, barrel-derived vanillin, caramel, spice, smoke, and oxidation notes",
@@ -69,7 +69,7 @@ export default function System() {
 
       applicationsTitle: "Program Applications",
       applicationsText:
-        "The Cigar Peak-Flavor System® is deployed across ICSI’s professional and elite pathways:",
+        "The Cigar Peak-Flavor System® is deployed across ICSI's professional and elite pathways:",
 
       seoTitle:
         "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
@@ -81,31 +81,31 @@ export default function System() {
       kicker: "Cadre scientifique",
       title: "Cigar Peak-Flavor System®",
       lead:
-        "La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du blender. Nous traitons le cigare comme un système dynamique combinant différentes semences de tabac, l’origine du tabac et du sol, ainsi que des techniques de construction. Cela nous permet de libérer tout le potentiel aromatique, de combustion et d’accord des cigares premium dans le monde entier.",
+        "La plupart des cigares sont évalués de manière émotionnelle ou sur la base de ce que nous entendons ou voyons. Très peu sont évalués selon des critères scientifiques, en tenant compte de la philosophie et de l'intention du blender. Nous traitons le cigare comme un système dynamique combinant différentes semences de tabac, l'origine du tabac et du sol, ainsi que des techniques de construction. Cela nous permet de libérer tout le potentiel aromatique, de combustion et d'accord des cigares premium dans le monde entier.",
 
       settlingTitle: "Science du repos et du vieillissement",
       settlingIntro:
-        "Un cigare premium n’est pas pleinement conditionné lorsque l’humidor se stabilise. Il est pleinement conditionné lorsque l’équilibre interne d’humidité feuille à feuille se stabilise sur toute la structure axiale du cigare. Cela est atteint lorsqu’il existe :",
+        "Un cigare premium n'est pas pleinement conditionné lorsque l'humidor se stabilise. Il est pleinement conditionné lorsque l'équilibre interne d'humidité feuille à feuille se stabilise sur toute la structure axiale du cigare. Cela est atteint lorsqu'il existe :",
       settlingBullets: [
-        "Cohérence axiale de l’humidité",
-        "Dissipation de l’ammoniac",
+        "Cohérence axiale de l'humidité",
+        "Dissipation de l'ammoniac",
         "Mariage du blend / maturation sensorielle",
         "Récupération après choc thermique",
-        "Équilibre radial de l’humidité",
+        "Équilibre radial de l'humidité",
       ],
 
       peakTitle: "Fenêtre Peak-Flavor",
       p2:
-        "Le pic aromatique apparaît dans une fenêtre d’activation hygrométrique spécifique à chaque famille de blends.",
+        "Le pic aromatique apparaît dans une fenêtre d'activation hygrométrique spécifique à chaque famille de blends.",
       p3:
-        "Le système permet une mise en condition reproductible, un diagnostic avant allumage et un chemin contrôlé vers l’expression aromatique maximale.",
+        "Le système permet une mise en condition reproductible, un diagnostic avant allumage et un chemin contrôlé vers l'expression aromatique maximale.",
       furtherReadingLabel: "Lecture complémentaire :",
       furtherReadingTitle:
         "Humidité idéale du cigare & timing du pic aromatique",
 
       tastingScienceTitle: "Base scientifique de la carte de dégustation",
       tastingScienceIntro:
-        "La carte de dégustation ICSI repose sur l’agronomie de la feuille, l’architecture du blend et la chimie sensorielle plutôt que sur de simples descripteurs de force. Deux intrants fondamentaux définissent la trajectoire sensorielle attendue :",
+        "La carte de dégustation ICSI repose sur l'agronomie de la feuille, l'architecture du blend et la chimie sensorielle plutôt que sur de simples descripteurs de force. Deux intrants fondamentaux définissent la trajectoire sensorielle attendue :",
       seedTitle: "1. Génétique des semences",
       seedIntro: "Les différentes familles de semences produisent des différences de :",
       seedBullets: [
@@ -117,14 +117,14 @@ export default function System() {
         "Composés précurseurs aromatiques",
       ],
       terroirTitle: "2. Terroir",
-      terroirIntro: "L’origine modifie une même semence par :",
+      terroirIntro: "L'origine modifie une même semence par :",
       terroirBullets: [
         "Teneur minérale du sol",
         "Influence volcanique",
         "Teneur en argile",
         "Drainage",
         "Pluviométrie",
-        "Intensité d’ensoleillement",
+        "Intensité d'ensoleillement",
         "Durée de la saison de croissance",
       ],
 
@@ -138,7 +138,7 @@ export default function System() {
 
       applicationsTitle: "Applications du programme",
       applicationsText:
-        "Le Cigar Peak-Flavor System® est utilisé dans les parcours professionnels et élite de l’ICSI :",
+        "Le Cigar Peak-Flavor System® est utilisé dans les parcours professionnels et élite de l'ICSI :",
 
       seoTitle:
         "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
@@ -222,51 +222,57 @@ export default function System() {
     <Layout>
       <Seo title={c.seoTitle} description={c.seoDescription} path="/system" />
 
-      <div className="hero homeHero">
+      {/* ── HERO ────────────────────────────────────────────────── */}
+      <section className="hero">
         <div className="container">
-          <div className="systemHeroStack">
-            <div className="kicker">{c.kicker}</div>
+          <div className="heroInner">
+            <div className="heroText">
+              <span className="kicker">{c.kicker}</span>
+              <h1 className="heroTitle">{c.title}</h1>
+              <p className="heroLead">{c.lead}</p>
+            </div>
 
-            <h1 className="heroTitle">{c.title}</h1>
-
-            <p className="lead heroLead">{c.lead}</p>
-
-            <div className="heroMediaRect">
+            <div className="heroMedia">
               <Image
                 src="/img/cigar-peak-flavor-system-science.png"
                 alt="Cigar Peak Flavor System"
                 fill
                 priority
-                sizes="(max-width: 900px) 92vw, 1180px"
+                sizes="(max-width: 900px) 92vw, 58vw"
                 style={{ objectFit: "contain" }}
               />
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ── DIVIDER ─────────────────────────────────────────────── */}
+      <div className="container">
+        <hr className="ruleFull" />
       </div>
 
-      <div className="section">
+      {/* ── SCIENCE GRID ────────────────────────────────────────── */}
+      <section className="section">
         <div className="container">
-          <div className="grid3 systemCardsGrid">
-            <div className="card systemInfoCard">
-              <h3>{c.settlingTitle}</h3>
 
-              <p>{c.settlingIntro}</p>
-
-              <ul>
+          {/* Row 1 — Settling + Peak side by side */}
+          <div className="scienceRow">
+            <article className="scienceCell borderRight">
+              <span className="cellIndex">01</span>
+              <h2 className="cellTitle">{c.settlingTitle}</h2>
+              <p className="cellBody">{c.settlingIntro}</p>
+              <ul className="cellList">
                 {c.settlingBullets.map((b) => (
                   <li key={b}>{b}</li>
                 ))}
               </ul>
-            </div>
+            </article>
 
-            <div className="card systemInfoCard">
-              <h3>{c.peakTitle}</h3>
-
-              <p>{c.p2}</p>
-
-              <p>{c.p3}</p>
-
+            <article className="scienceCell">
+              <span className="cellIndex">02</span>
+              <h2 className="cellTitle">{c.peakTitle}</h2>
+              <p className="cellBody">{c.p2}</p>
+              <p className="cellBody">{c.p3}</p>
               <div className="furtherReading">
                 <small>
                   {c.furtherReadingLabel}{" "}
@@ -275,227 +281,458 @@ export default function System() {
                   </Link>
                 </small>
               </div>
+            </article>
+          </div>
+
+          <hr className="ruleSection" />
+
+          {/* Row 2 — Tasting Card full-width editorial layout */}
+          <div className="tastingRow">
+            <div className="tastingLeft">
+              <span className="cellIndex">03</span>
+              <h2 className="cellTitle">{c.tastingScienceTitle}</h2>
+              <p className="cellBody tastingIntro">{c.tastingScienceIntro}</p>
             </div>
 
-            <div className="card systemInfoCard tastingScienceCard">
-              <h3>{c.tastingScienceTitle}</h3>
+            <div className="tastingRight">
+              <div className="tastingSubcell">
+                <h3 className="subLabel">{c.seedTitle}</h3>
+                <p className="cellBody">{c.seedIntro}</p>
+                <ul className="cellList inlineList">
+                  {c.seedBullets.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
+              </div>
 
-              <p>{c.tastingScienceIntro}</p>
+              <div className="tastingSubcell">
+                <h3 className="subLabel">{c.terroirTitle}</h3>
+                <p className="cellBody">{c.terroirIntro}</p>
+                <ul className="cellList inlineList">
+                  {c.terroirBullets.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
 
-              <h4>{c.seedTitle}</h4>
-              <p>{c.seedIntro}</p>
-              <ul>
-                {c.seedBullets.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
+          <hr className="ruleSection" />
 
-              <h4>{c.terroirTitle}</h4>
-              <p>{c.terroirIntro}</p>
-              <ul>
-                {c.terroirBullets.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
+          {/* Row 3 — Pairing Science */}
+          <div className="scienceRow">
+            <div className="pairingIntroCol borderRight">
+              <span className="cellIndex">04</span>
+              <h2 className="cellTitle">{c.pairingTitle}</h2>
+              <p className="cellBody">{c.pairingIntro}</p>
             </div>
 
-            <div className="card systemInfoCard">
-              <h3>{c.pairingTitle}</h3>
-
-              <p>{c.pairingIntro}</p>
-
-              <ol>
-                {c.pairingBullets.map((b) => (
-                  <li key={b}>{b}</li>
+            <div className="pairingListCol">
+              <ol className="pairingOl">
+                {c.pairingBullets.map((b, i) => (
+                  <li key={b}>
+                    <span className="pairingNum">0{i + 1}</span>
+                    <span>{b}</span>
+                  </li>
                 ))}
               </ol>
             </div>
           </div>
 
-          <div className="systemApplications">
-            <h3>{c.applicationsTitle}</h3>
+          <hr className="ruleSection" />
 
-            <p>{c.applicationsText}</p>
+          {/* Row 4 — Program Applications */}
+          <div className="applicationsRow">
+            <div className="applicationsLeft">
+              <span className="cellIndex">05</span>
+              <h2 className="cellTitle">{c.applicationsTitle}</h2>
+              <p className="cellBody">{c.applicationsText}</p>
+            </div>
 
-            <ul>
-              <li>
-                <Link href="/ccs" locale={lang}>
-                  Certified Cigar Sommelier (CCS®)
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/acs" locale={lang}>
-                  Advanced Cigar Sommelier (ACS®)
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/amc" locale={lang}>
-                  Aficionado Master Class (AMC®)
-                </Link>
-              </li>
-            </ul>
+            <nav className="applicationsLinks">
+              <Link href="/ccs" locale={lang} className="programLink">
+                <span className="programLinkLabel">Certified Cigar Sommelier</span>
+                <span className="programLinkBadge">CCS®</span>
+              </Link>
+              <Link href="/acs" locale={lang} className="programLink">
+                <span className="programLinkLabel">Advanced Cigar Sommelier</span>
+                <span className="programLinkBadge">ACS®</span>
+              </Link>
+              <Link href="/amc" locale={lang} className="programLink">
+                <span className="programLinkLabel">Aficionado Master Class</span>
+                <span className="programLinkBadge">AMC®</span>
+              </Link>
+            </nav>
           </div>
+
         </div>
-      </div>
+      </section>
 
       <style jsx>{`
-        .homeHero {
-          padding-top: 44px;
-          padding-bottom: 54px;
+        /* ── TOKENS ──────────────────────────────────────────── */
+        :root {
+          --gap: 64px;
+          --gap-sm: 40px;
+          --rule: 1px solid currentColor;
+          --opacity-rule: rgba(0,0,0,0.12);
         }
 
-        .systemHeroStack {
-          max-width: none;
-          width: 100%;
+        /* ── HERO ────────────────────────────────────────────── */
+        .hero {
+          padding-top: 52px;
+          padding-bottom: 64px;
+        }
+
+        .heroInner {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: var(--gap);
+          align-items: center;
+        }
+
+        .heroText {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .kicker {
+          display: block;
+          font-size: 0.7rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          opacity: 0.5;
+          font-weight: 500;
         }
 
         .heroTitle {
-          font-size: clamp(3.8rem, 6vw, 5.8rem);
-          line-height: 0.96;
+          font-size: clamp(3.2rem, 5vw, 5.2rem);
+          line-height: 0.95;
           letter-spacing: -0.04em;
-          margin-bottom: 20px;
-          max-width: none;
-          width: 100%;
+          margin: 0;
         }
 
         .heroLead {
-          max-width: none;
-          width: 100%;
-          font-size: clamp(1.12rem, 1.55vw, 1.45rem);
-          line-height: 1.62;
-          margin-bottom: 0;
+          font-size: clamp(1rem, 1.3vw, 1.2rem);
+          line-height: 1.7;
+          opacity: 0.72;
+          max-width: 52ch;
+          margin: 0;
         }
 
-        .heroMediaRect {
+        .heroMedia {
           position: relative;
           width: 100%;
-          max-width: 1180px;
-          height: 720px;
-          border-radius: 26px;
+          aspect-ratio: 4 / 3;
+          border-radius: 4px;
           overflow: hidden;
-          margin-top: 34px;
-          background: transparent;
         }
 
-        .systemCardsGrid {
-          margin-top: 10px;
-          align-items: stretch;
+        /* ── RULES ───────────────────────────────────────────── */
+        .ruleFull {
+          border: none;
+          border-top: 1px solid var(--opacity-rule, rgba(0,0,0,0.12));
+          margin: 0;
         }
 
-        .systemInfoCard {
-          padding: 34px 34px 38px;
+        .ruleSection {
+          border: none;
+          border-top: 1px solid var(--opacity-rule, rgba(0,0,0,0.12));
+          margin: 0;
         }
 
-        .systemInfoCard h3 {
-          font-size: 1.65rem;
-          line-height: 1.15;
+        /* ── SECTION SHELL ───────────────────────────────────── */
+        .section {
+          padding-top: 0;
+          padding-bottom: 80px;
+        }
+
+        /* ── SHARED CELL TYPOGRAPHY ──────────────────────────── */
+        .cellIndex {
+          display: block;
+          font-size: 0.65rem;
+          letter-spacing: 0.2em;
+          opacity: 0.35;
+          font-weight: 600;
+          margin-bottom: 20px;
+          margin-top: 44px;
+        }
+
+        .cellTitle {
+          font-size: clamp(1.4rem, 2vw, 2rem);
+          line-height: 1.1;
           letter-spacing: -0.025em;
-          margin-bottom: 18px;
+          margin: 0 0 20px;
+          font-weight: 600;
         }
 
-        .systemInfoCard h4 {
-          font-size: 1.05rem;
-          line-height: 1.25;
-          letter-spacing: 0.02em;
-          margin: 20px 0 8px;
+        .cellBody {
+          font-size: 0.975rem;
+          line-height: 1.72;
+          opacity: 0.78;
+          margin: 0 0 14px;
+        }
+
+        .cellList {
+          list-style: none;
+          padding: 0;
+          margin: 16px 0 0;
+        }
+
+        .cellList li {
+          font-size: 0.925rem;
+          line-height: 1.6;
+          opacity: 0.72;
+          padding: 8px 0;
+          border-bottom: 1px solid var(--opacity-rule, rgba(0,0,0,0.08));
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .cellList li::before {
+          content: "—";
+          opacity: 0.3;
+          flex-shrink: 0;
+          font-size: 0.8rem;
+        }
+
+        /* ── ROW 1 & 3: TWO-COLUMN ───────────────────────────── */
+        .scienceRow {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .borderRight {
+          border-right: 1px solid var(--opacity-rule, rgba(0,0,0,0.12));
+          padding-right: var(--gap);
+        }
+
+        .scienceRow > *:last-child {
+          padding-left: var(--gap);
+        }
+
+        /* ── ROW 2: TASTING EDITORIAL ────────────────────────── */
+        .tastingRow {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .tastingLeft {
+          border-right: 1px solid var(--opacity-rule, rgba(0,0,0,0.12));
+          padding-right: var(--gap);
+        }
+
+        .tastingIntro {
+          max-width: 46ch;
+        }
+
+        .tastingRight {
+          padding-left: var(--gap);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: var(--gap-sm);
+          align-content: start;
+          padding-top: 44px;
+        }
+
+        .tastingSubcell {
+          /* no additional styles needed */
+        }
+
+        .subLabel {
+          font-size: 0.7rem;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
+          font-weight: 600;
+          opacity: 0.5;
+          margin: 0 0 14px;
         }
 
-        .systemInfoCard p,
-        .systemInfoCard li,
-        .systemInfoCard small {
+        .inlineList li {
+          font-size: 0.875rem;
+          padding: 6px 0;
+        }
+
+        /* ── ROW 3: PAIRING ──────────────────────────────────── */
+        .pairingIntroCol {
+          padding-right: var(--gap);
+        }
+
+        .pairingListCol {
+          padding-left: var(--gap);
+        }
+
+        .pairingOl {
+          list-style: none;
+          padding: 0;
+          margin: 44px 0 0;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+        }
+
+        .pairingOl li {
+          display: grid;
+          grid-template-columns: 28px 1fr;
+          gap: 18px;
+          font-size: 0.95rem;
+          line-height: 1.7;
+          opacity: 0.78;
+        }
+
+        .pairingNum {
+          font-size: 0.65rem;
+          letter-spacing: 0.12em;
+          opacity: 0.4;
+          font-weight: 700;
+          padding-top: 4px;
+        }
+
+        /* ── ROW 4: APPLICATIONS ─────────────────────────────── */
+        .applicationsRow {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          padding-bottom: 20px;
+        }
+
+        .applicationsLeft {
+          border-right: 1px solid var(--opacity-rule, rgba(0,0,0,0.12));
+          padding-right: var(--gap);
+        }
+
+        .applicationsLinks {
+          padding-left: var(--gap);
+          padding-top: 44px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 0;
+        }
+
+        .programLink {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 20px 0;
+          border-bottom: 1px solid var(--opacity-rule, rgba(0,0,0,0.1));
+          text-decoration: none;
+          transition: opacity 0.15s ease;
+        }
+
+        .programLink:first-child {
+          border-top: 1px solid var(--opacity-rule, rgba(0,0,0,0.1));
+        }
+
+        .programLink:hover {
+          opacity: 0.55;
+        }
+
+        .programLinkLabel {
           font-size: 1rem;
-          line-height: 1.68;
+          font-weight: 500;
+          letter-spacing: -0.01em;
         }
 
-        .systemInfoCard p {
-          margin: 0 0 16px;
-        }
-
-        .systemInfoCard ul,
-        .systemInfoCard ol {
-          margin-top: 18px;
-          padding-left: 24px;
-        }
-
-        .systemInfoCard li {
-          margin-bottom: 10px;
-        }
-
-        .tastingScienceCard ul {
-          margin-top: 10px;
+        .programLinkBadge {
+          font-size: 0.7rem;
+          letter-spacing: 0.14em;
+          font-weight: 700;
+          opacity: 0.45;
         }
 
         .furtherReading {
-          margin-top: 18px;
+          margin-top: 24px;
+          padding-top: 20px;
+          border-top: 1px solid var(--opacity-rule, rgba(0,0,0,0.1));
+        }
+
+        .furtherReading small {
+          font-size: 0.82rem;
+          opacity: 0.6;
+          line-height: 1.6;
         }
 
         .furtherReading a {
           font-weight: 600;
-          border-bottom: 1px solid currentColor;
-          padding-bottom: 1px;
-          text-decoration: none;
+          opacity: 1;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          text-decoration-thickness: 1px;
         }
 
-        .systemApplications {
-          margin-top: 54px;
+        /* ── RESPONSIVE ──────────────────────────────────────── */
+        @media (max-width: 1024px) {
+          :root {
+            --gap: 44px;
+          }
         }
 
-        .systemApplications ul {
-          margin-top: 14px;
-        }
-
-        @media (max-width: 900px) {
-          .homeHero {
-            padding-top: 24px;
-            padding-bottom: 34px;
+        @media (max-width: 860px) {
+          .heroInner {
+            grid-template-columns: 1fr;
+            gap: 32px;
           }
 
-          .heroTitle {
-            font-size: clamp(2.8rem, 11vw, 4.2rem);
-            max-width: none;
-            margin-bottom: 16px;
+          .heroMedia {
+            aspect-ratio: 16 / 9;
           }
 
           .heroLead {
             max-width: none;
-            font-size: 1.26rem;
-            line-height: 1.6;
           }
 
-          .heroMediaRect {
-            height: 520px;
+          .scienceRow,
+          .tastingRow,
+          .applicationsRow {
+            grid-template-columns: 1fr;
+          }
+
+          .borderRight,
+          .tastingLeft,
+          .applicationsLeft {
+            border-right: none;
+            border-bottom: 1px solid var(--opacity-rule, rgba(0,0,0,0.12));
+            padding-right: 0;
+            padding-bottom: 4px;
+          }
+
+          .scienceRow > *:last-child,
+          .tastingRight,
+          .applicationsLinks {
+            padding-left: 0;
+          }
+
+          .tastingRight {
+            padding-top: 0;
+            grid-template-columns: 1fr 1fr;
+          }
+
+          .pairingListCol {
+            padding-left: 0;
+          }
+
+          .pairingOl {
             margin-top: 28px;
           }
         }
 
-        @media (max-width: 640px) {
-          .homeHero {
-            padding-top: 18px;
-            padding-bottom: 26px;
+        @media (max-width: 540px) {
+          .hero {
+            padding-top: 28px;
+            padding-bottom: 40px;
           }
 
           .heroTitle {
-            font-size: clamp(2.45rem, 12vw, 3.5rem);
+            font-size: clamp(2.6rem, 12vw, 3.6rem);
           }
 
-          .heroLead {
-            font-size: 1.18rem;
+          .tastingRight {
+            grid-template-columns: 1fr;
           }
 
-          .heroMediaRect {
-            height: 360px;
-            border-radius: 20px;
-          }
-
-          .systemInfoCard {
-            padding: 28px 26px 30px;
-          }
-
-          .systemInfoCard h3 {
-            font-size: 1.45rem;
+          .cellIndex {
+            margin-top: 32px;
           }
         }
       `}</style>
