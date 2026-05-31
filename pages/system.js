@@ -34,6 +34,31 @@ export default function System() {
       furtherReadingLabel: "Further reading:",
       furtherReadingTitle: "Ideal Cigar Humidity & Peak Flavor Timing",
 
+      tastingScienceTitle: "Tasting Card Science Basis",
+      tastingScienceIntro:
+        "The ICSI tasting card is built from leaf-level agronomy, blend architecture, and sensory chemistry rather than generic strength descriptors. Two core inputs define the expected sensory pathway:",
+      seedTitle: "1. Seed Genetics",
+      seedIntro: "Different seed families produce different:",
+      seedBullets: [
+        "Leaf thickness",
+        "Oil content",
+        "Sugar content",
+        "Nicotine levels",
+        "Combustion behavior",
+        "Aromatic precursor compounds",
+      ],
+      terroirTitle: "2. Terroir",
+      terroirIntro: "Origin modifies the same seed through:",
+      terroirBullets: [
+        "Soil mineral content",
+        "Volcanic influence",
+        "Clay content",
+        "Drainage",
+        "Rainfall",
+        "Sunlight intensity",
+        "Growing season length",
+      ],
+
       pairingTitle: "Pairing Science",
       pairingIntro:
         "The best pairing is the one that either extends the cigar’s intended combustion profile or buffers its failure mode:",
@@ -49,7 +74,7 @@ export default function System() {
       seoTitle:
         "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
       seoDescription:
-        "The proprietary Cigar Peak-Flavor System® applies thermodynamics, combustion science, and blend architecture modeling to achieve repeatable cigar excellence.",
+        "The proprietary Cigar Peak-Flavor System® applies thermodynamics, combustion science, blend architecture modeling, seed genetics, and terroir analysis to achieve repeatable cigar excellence.",
     },
 
     fr: {
@@ -78,6 +103,31 @@ export default function System() {
       furtherReadingTitle:
         "Humidité idéale du cigare & timing du pic aromatique",
 
+      tastingScienceTitle: "Base scientifique de la carte de dégustation",
+      tastingScienceIntro:
+        "La carte de dégustation ICSI repose sur l’agronomie de la feuille, l’architecture du blend et la chimie sensorielle plutôt que sur de simples descripteurs de force. Deux intrants fondamentaux définissent la trajectoire sensorielle attendue :",
+      seedTitle: "1. Génétique des semences",
+      seedIntro: "Les différentes familles de semences produisent des différences de :",
+      seedBullets: [
+        "Épaisseur de feuille",
+        "Teneur en huiles",
+        "Teneur en sucres",
+        "Niveaux de nicotine",
+        "Comportement de combustion",
+        "Composés précurseurs aromatiques",
+      ],
+      terroirTitle: "2. Terroir",
+      terroirIntro: "L’origine modifie une même semence par :",
+      terroirBullets: [
+        "Teneur minérale du sol",
+        "Influence volcanique",
+        "Teneur en argile",
+        "Drainage",
+        "Pluviométrie",
+        "Intensité d’ensoleillement",
+        "Durée de la saison de croissance",
+      ],
+
       pairingTitle: "Science des accords",
       pairingIntro:
         "Le meilleur accord est celui qui prolonge le profil de combustion du cigare ou compense son mode de défaillance :",
@@ -93,7 +143,7 @@ export default function System() {
       seoTitle:
         "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
       seoDescription:
-        "Le système propriétaire Cigar Peak-Flavor System® applique thermodynamique, science de combustion et modélisation des blends pour atteindre une excellence reproductible.",
+        "Le système propriétaire Cigar Peak-Flavor System® applique thermodynamique, science de combustion, génétique des semences, terroir et modélisation des blends pour atteindre une excellence reproductible.",
     },
 
     de: {
@@ -122,6 +172,31 @@ export default function System() {
       furtherReadingTitle:
         "Ideale Zigarrenfeuchtigkeit & Peak-Flavor Timing",
 
+      tastingScienceTitle: "Wissenschaftliche Grundlage der Tasting Card",
+      tastingScienceIntro:
+        "Die ICSI Tasting Card basiert auf Blattanbau, Blend-Architektur und sensorischer Chemie statt auf generischen Stärke-Beschreibungen. Zwei zentrale Einflussgrößen bestimmen den erwarteten sensorischen Verlauf:",
+      seedTitle: "1. Saatgutgenetik",
+      seedIntro: "Unterschiedliche Saatgutfamilien erzeugen Unterschiede bei:",
+      seedBullets: [
+        "Blattdicke",
+        "Ölgehalt",
+        "Zuckergehalt",
+        "Nikotinniveau",
+        "Verbrennungsverhalten",
+        "Aromatische Vorläuferverbindungen",
+      ],
+      terroirTitle: "2. Terroir",
+      terroirIntro: "Die Herkunft verändert denselben Samen durch:",
+      terroirBullets: [
+        "Mineralgehalt des Bodens",
+        "Vulkanischen Einfluss",
+        "Tonanteil",
+        "Drainage",
+        "Niederschlag",
+        "Sonnenlichtintensität",
+        "Länge der Wachstumsperiode",
+      ],
+
       pairingTitle: "Pairing-Wissenschaft",
       pairingIntro:
         "Das beste Pairing ist jenes, das entweder das gewünschte Verbrennungsprofil der Zigarre verlängert oder ihren Fehlermodus abfedert:",
@@ -137,7 +212,7 @@ export default function System() {
       seoTitle:
         "Cigar Peak-Flavor System® | International Cigar Sommelier Institute",
       seoDescription:
-        "Das proprietäre Cigar Peak-Flavor System® verbindet Thermodynamik, Verbrennungswissenschaft und Blend-Architektur für reproduzierbare Zigarren-Exzellenz.",
+        "Das proprietäre Cigar Peak-Flavor System® verbindet Thermodynamik, Verbrennungswissenschaft, Saatgutgenetik, Terroir und Blend-Architektur für reproduzierbare Zigarren-Exzellenz.",
     },
   };
 
@@ -200,6 +275,28 @@ export default function System() {
                   </Link>
                 </small>
               </div>
+            </div>
+
+            <div className="card systemInfoCard tastingScienceCard">
+              <h3>{c.tastingScienceTitle}</h3>
+
+              <p>{c.tastingScienceIntro}</p>
+
+              <h4>{c.seedTitle}</h4>
+              <p>{c.seedIntro}</p>
+              <ul>
+                {c.seedBullets.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
+
+              <h4>{c.terroirTitle}</h4>
+              <p>{c.terroirIntro}</p>
+              <ul>
+                {c.terroirBullets.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
             </div>
 
             <div className="card systemInfoCard">
@@ -298,6 +395,14 @@ export default function System() {
           margin-bottom: 18px;
         }
 
+        .systemInfoCard h4 {
+          font-size: 1.05rem;
+          line-height: 1.25;
+          letter-spacing: 0.02em;
+          margin: 20px 0 8px;
+          text-transform: uppercase;
+        }
+
         .systemInfoCard p,
         .systemInfoCard li,
         .systemInfoCard small {
@@ -317,6 +422,10 @@ export default function System() {
 
         .systemInfoCard li {
           margin-bottom: 10px;
+        }
+
+        .tastingScienceCard ul {
+          margin-top: 10px;
         }
 
         .furtherReading {
