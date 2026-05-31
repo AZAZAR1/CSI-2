@@ -117,7 +117,7 @@ export default function System() {
             fill
             priority
             sizes="100vw"
-            style={{ objectFit: "cover", objectPosition: "center" }}
+            style={{ objectFit: "cover", objectPosition: "top center" }}
           />
           <div className="heroImageOverlay" />
         </div>
@@ -261,10 +261,10 @@ export default function System() {
 
         .heroTitle {
           font-size: clamp(2.8rem, 4.2vw, 4.8rem);
-          line-height: 0.96;
-          letter-spacing: -0.035em;
-          font-weight: 300;
-          margin: 0 0 48px;
+          line-height: 1.0;
+          letter-spacing: -0.02em;
+          font-weight: 700;
+          margin: 0 0 40px;
           max-width: none;
           white-space: nowrap;
         }
