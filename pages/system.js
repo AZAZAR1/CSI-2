@@ -260,18 +260,19 @@ export default function System() {
         }
 
         .heroTitle {
-          font-size: clamp(3.6rem, 7vw, 7rem);
-          line-height: 0.92;
-          letter-spacing: -0.04em;
+          font-size: clamp(2.8rem, 4.2vw, 4.8rem);
+          line-height: 0.96;
+          letter-spacing: -0.035em;
           font-weight: 300;
           margin: 0 0 48px;
-          max-width: 14ch;
+          max-width: none;
+          white-space: nowrap;
         }
 
         .heroImageWrap {
           position: relative;
           width: 100%;
-          height: clamp(320px, 50vw, 680px);
+          height: clamp(300px, 46vw, 620px);
           overflow: hidden;
           margin-bottom: 52px;
         }
@@ -506,8 +507,8 @@ export default function System() {
 
         @media (max-width: 720px) {
           .heroTitle {
-            font-size: clamp(3rem, 13vw, 4.8rem);
-            max-width: none;
+            font-size: clamp(2.2rem, 7vw, 3.4rem);
+            white-space: normal;
           }
 
           .block {
@@ -532,7 +533,7 @@ export default function System() {
 
         @media (max-width: 480px) {
           .heroTitle {
-            font-size: clamp(2.6rem, 14vw, 3.8rem);
+            font-size: clamp(1.9rem, 8vw, 2.8rem);
           }
 
           .heroImageWrap {
