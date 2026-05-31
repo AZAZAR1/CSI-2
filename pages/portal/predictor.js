@@ -931,7 +931,6 @@ export default function PredictorPage() {
 
           {/* â”€â”€ USER VALIDATION â”€â”€ */}
           <div style={{ ...styles.card, ...styles.cardAccent }}>
-            <div style={styles.sectionLabel}>Section 01</div>
             <div style={styles.h2}>User Validation</div>
             <div style={{ maxWidth: 420 }}>
               <label style={styles.label}>Registered Email Address</label>
@@ -972,7 +971,6 @@ export default function PredictorPage() {
 
           {/* â”€â”€ CIGAR BLEND LOOKUP â”€â”€ */}
           <div style={styles.card}>
-            <div style={styles.sectionLabel}>Section 02</div>
             <div style={styles.h2}>Cigar Blend Lookup</div>
             <div style={styles.grid2}>
               {/* Brand */}
@@ -1054,7 +1052,6 @@ export default function PredictorPage() {
 
           {/* â”€â”€ ENVIRONMENTAL + RUN CONTROLS â”€â”€ */}
           <div style={styles.card}>
-            <div style={styles.sectionLabel}>Section 03</div>
             <div style={styles.h2}>Optional Parameters &amp; Analysis Controls</div>
             <div style={styles.grid2}>
               <div>
@@ -1122,28 +1119,20 @@ export default function PredictorPage() {
           {/* â”€â”€ ANALYTICAL OUTPUT â”€â”€ */}
           {result && (
             <div className="pp-result" style={styles.card}>
-              <div style={styles.sectionLabel}>Analytical Output</div>
               <div style={styles.h2}>Peak-Flavor Prediction Result</div>
               {/* RH Readout panels */}
-              <div style={{ display: "flex", gap: 16, marginBottom: 24, flexWrap: "wrap" }}>
-                <div style={styles.rhPanel}>
+              <div style={{ display: "flex", gap: 16, margin: "0 auto 24px", flexWrap: "wrap", justifyContent: "center", maxWidth: 720 }}>
+                <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
                   <div style={styles.dataLabel}>Target RH%</div>
                   <div className="pp-rh-value">{result.target_rh}</div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
                 </div>
-                <div style={styles.rhPanel}>
+                <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
                   <div style={styles.dataLabel}>RH% Window</div>
                   <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
                     {result.window_low}-{result.window_high}
+                  </div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
-                  </div>
-                </div>
-                <div style={styles.rhPanel}>
-                  <div style={styles.dataLabel}>CPFS Humidor Family</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
-                    {result.family}
-                  </div>
-                  <div style={{ ...styles.dataLabel, marginTop: 4 }}>Classification</div>
                 </div>
               </div>
               {/* Retrieved Blend Structure */}
