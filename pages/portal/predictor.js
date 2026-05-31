@@ -929,7 +929,7 @@ export default function PredictorPage() {
               CPFS Engine v4.8 &#x2014; Calibrated
             </div>
             <h1 style={styles.h1}>Cigar Peak-Flavor System</h1>
-            <p style={styles.subtitle}>Predictor Pro · Analytical Output Module · Beta</p>
+            <p style={styles.subtitle}>Predictor · Beta Testing</p>
           </div>
 
           {/* ── COLLAPSIBLE METHODOLOGY NOTICE ── */}
@@ -953,7 +953,7 @@ export default function PredictorPage() {
                 textAlign: "left",
               }}
             >
-              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Operational Protocol</span>
+              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Instructions</span>
               <span style={{ ...styles.dataLabel, marginBottom: 0 }}>
                 {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "−" : "+"}
               </span>
@@ -961,21 +961,19 @@ export default function PredictorPage() {
 
             {instructionsOpen && (
               <p className="pp-instructions" style={{ marginTop: 14 }}>
-                Predictor Pro is available exclusively to approved subscribers. Validate your registered
+                The Predictor application is available exclusively to approved subscribers. Validate your registered
                 email address using the Check User control. In the Blend Lookup module, enter the Brand
                 and Line identifiers, then initiate the Lookup Blend procedure and construction and tobacco
                 composition parameters will populate automatically.
                 <br /><br />
-                Autofilled parameters are adjustable prior to analysis: wrapper, wrapper process, wrapper
-                thickness and oiliness, binder components, filler components, ligero level, special tobacco
-                flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
+                Optionally select a beverage category from the Pairing
                 selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
-                blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and
+                blend's optimal leaf-level relative humidity %, the blend's tasting card, and
                 when selected, a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
-                blends structurally and sensorially matched to the query.
+                blends structurally and sensorially matched to the selected blend.
                 <br /><br />
                 <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
-                available Cigar Humidity Meter.
+                available Cigar Humidimeter.
               </p>
             )}
           </div>
@@ -1322,7 +1320,7 @@ export default function PredictorPage() {
                 </div>
                 <div style={styles.rhPanel}>
                   <div style={styles.dataLabel}>RH Window</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 32, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
                     {result.window_low}-{result.window_high}
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Operating Range</div>
@@ -1332,10 +1330,10 @@ export default function PredictorPage() {
               {/* Tasting Card */}
               {tastingCard && (
                 <>
-                  <SectionDivider label="Analytical Tasting Profile" />
+                  <SectionDivider label="Taste Profile" />
                   <div className="pp-output-grid">
                     <AnalyticalCard
-                      title="Palate Analysis"
+                      title="Palate"
                       rows={[
                         { label: "Primary",   value: (tastingCard?.palate?.primary  ||[]).join(", ") },
                         { label: "Secondary", value: (tastingCard?.palate?.secondary||[]).join(", ") },
@@ -1344,7 +1342,7 @@ export default function PredictorPage() {
                       ]}
                     />
                     <AnalyticalCard
-                      title="Retrohale Profile"
+                      title="Retrohale"
                       rows={[
                         { label: "Primary",   value: (tastingCard?.retrohale?.primary  ||[]).join(", ") },
                         { label: "Secondary", value: (tastingCard?.retrohale?.secondary||[]).join(", ") },
@@ -1367,8 +1365,8 @@ export default function PredictorPage() {
                     <AnalyticalCard
                       title={`${pairingSelection} \u2014 Pairing Recommendations`}
                       rows={[
-                        { label: "Primary",   value: displayPairingList(filteredPairing?.primary) },
-                        { label: "Secondary", value: displayPairingList(filteredPairing?.secondary) },
+                        { label: "Exceptional Pairing",   value: displayPairingList(filteredPairing?.primary) },
+                        { label: "Strong Pairing", value: displayPairingList(filteredPairing?.secondary) },
                       ]}
                     />
                   </div>
