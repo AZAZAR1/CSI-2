@@ -1139,7 +1139,7 @@ export default function PredictorPage() {
                   </div>
                 </div>
                 <div style={styles.rhPanel}>
-                  <div style={styles.dataLabel}>CPFS Family</div>
+                  <div style={styles.dataLabel}>CPFS Humidor Family</div>
                   <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
                     {result.family}
                   </div>
