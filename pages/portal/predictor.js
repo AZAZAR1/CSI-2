@@ -878,7 +878,7 @@ export default function PredictorPage() {
               <span style={styles.dotActive} />
               CPFS Engine v4.8 Calibrated
             </div>
-            <h1 style={styles.h1}>Predictor Application</h1>
+            <h1 style={styles.h1}>e-Sommelier</h1>
             <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
           </div>
 
@@ -903,9 +903,9 @@ export default function PredictorPage() {
                 textAlign: "left",
               }}
             >
-              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Operational Protocol</span>
+              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Instructions</span>
               <span style={{ ...styles.dataLabel, marginBottom: 0 }}>
-                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "âˆ’" : "+"}
+                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "-" : "+"}
               </span>
             </button>
             {instructionsOpen && (
@@ -1129,7 +1129,7 @@ export default function PredictorPage() {
                 </div>
                 <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
                   <div style={styles.dataLabel}>RH% Window</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 32, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
                     {result.window_low}-{result.window_high}
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
@@ -1177,22 +1177,22 @@ export default function PredictorPage() {
               {/* Tasting Card */}
               {tastingCard && (
                 <>
-                  <SectionDivider label="Analytical Tasting Profile" />
+                  <SectionDivider label="Taste Profile" />
                   <div className="pp-output-grid">
                     <AnalyticalCard
-                      title="Palate Analysis"
+                      title="On The Palate"
                       rows={[
-                        { label: "Primary",   value: (tastingCard?.palate?.primary  ||[]).join(", ") },
-                        { label: "Secondary", value: (tastingCard?.palate?.secondary||[]).join(", ") },
+                        { label: "Primary Notes",   value: (tastingCard?.palate?.primary  ||[]).join(", ") },
+                        { label: "Secondary Notes", value: (tastingCard?.palate?.secondary||[]).join(", ") },
                         { label: "Texture",   value: (tastingCard?.palate?.texture  ||[]).join(", ") },
                         { label: "Finish",    value: (tastingCard?.palate?.finish   ||[]).join(", ") },
                       ]}
                     />
                     <AnalyticalCard
-                      title="Retrohale Profile"
+                      title="Retrohale"
                       rows={[
-                        { label: "Primary",   value: (tastingCard?.retrohale?.primary  ||[]).join(", ") },
-                        { label: "Secondary", value: (tastingCard?.retrohale?.secondary||[]).join(", ") },
+                        { label: "Primary Notes",   value: (tastingCard?.retrohale?.primary  ||[]).join(", ") },
+                        { label: "Secondary Notes", value: (tastingCard?.retrohale?.secondary||[]).join(", ") },
                         { label: "Finish",    value: (tastingCard?.retrohale?.finish   ||[]).join(", ") },
                       ]}
                     />
@@ -1205,13 +1205,13 @@ export default function PredictorPage() {
               )}
               {pairingCard && pairingSelection !== "None" && filteredPairing && (
                 <>
-                  <SectionDivider label={`${pairingSelection} Pairing Matrix`} />
+                  <SectionDivider label={`${pairingSelection} Pairing Card`} />
                   <div className="pp-output-grid">
                     <AnalyticalCard
                       title={`${pairingSelection} \u2014 Pairing Recommendations`}
                       rows={[
-                        { label: "Primary",   value: displayPairingList(filteredPairing?.primary) },
-                        { label: "Secondary", value: displayPairingList(filteredPairing?.secondary) },
+                        { label: "Exceptional Pairing",   value: displayPairingList(filteredPairing?.primary) },
+                        { label: "Strong Pairing", value: displayPairingList(filteredPairing?.secondary) },
                       ]}
                     />
                   </div>
@@ -1225,9 +1225,8 @@ export default function PredictorPage() {
               {/* Metadata footer */}
               <div style={styles.metaBar}>
                 <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
-                <span style={styles.metaItem}>Calibrated Â· Reference-Standard</span>
+                <span style={styles.metaItem}>Calibrated · Reference-Standard</span>
                 <span style={styles.metaItem}>Generated {timestamp}</span>
-                <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
               </div>
             </div>
           )}
