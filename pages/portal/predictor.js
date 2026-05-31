@@ -89,6 +89,97 @@ const styles = {
     color: DS.textPrimary,
     margin: "0 0 8px",
     lineHeight: 1.2,
+  },import { useState } from "react";
+import Layout from "../../components/Layout";
+import Seo from "../../components/Seo";
+/* ============================================================
+   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR
+   Color palette: Carbon / ICSI Crimson / warm gold
+   Typography: Cormorant Garamond (sections) + IBM Plex Mono (data)
+   Spacing: 8pt grid throughout
+   ============================================================ */
+const DS = {
+  // Color tokens
+  bg:           "#0d0f11",
+  bgCard:       "#131416",
+  bgPanel:      "#1a1c1f",
+  bgInput:      "#0f1113",
+  border:       "rgba(255,255,255,0.07)",
+  borderStrong: "rgba(255,255,255,0.12)",
+  // ICSI institutional crimson
+  accent:       "#8b1a1a",
+  accentLight:  "#a52020",
+  accentDim:    "rgba(139,26,26,0.18)",
+  accentGlow:   "rgba(139,26,26,0.07)",
+  // Warm gold
+  gold:         "#b8922a",
+  goldDim:      "rgba(184,146,42,0.15)",
+  success:      "#b8922a",
+  successDim:   "rgba(184,146,42,0.14)",
+  warning:      "#b07d2a",
+  warningDim:   "rgba(176,125,42,0.14)",
+  danger:       "#8b1a1a",
+  dangerDim:    "rgba(139,26,26,0.14)",
+  // FIXED: raised contrast across the board
+  textPrimary:  "#f0ece6",        // brighter warm white (was #e6e2dc)
+  textSecond:   "#b8b0a6",        // raised significantly (was #8a8278)
+  textMuted:    "#9e968e",        // raised for on-screen legibility (was #8a8278)
+  textMono:     "#f0ece6",        // matches new textPrimary
+  fontSerif:    "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
+  fontSans:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
+  fontMono:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
+};
+/* ---- Inline style objects ---- */
+const styles = {
+  page: {
+    background: DS.bg,
+    minHeight: "100vh",
+    fontFamily: DS.fontSans,
+    color: DS.textPrimary,
+    WebkitFontSmoothing: "antialiased",
+  },
+  container: {
+    maxWidth: 1040,
+    margin: "0 auto",
+    padding: "0 24px 80px",
+  },
+  /* â”€â”€ PAGE HEADER â”€â”€ */
+  pageHeader: {
+    padding: "48px 0 40px",
+    borderBottom: `1px solid ${DS.border}`,
+    marginBottom: 32,
+  },
+  engineBadge: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 6,
+    background: DS.accentDim,
+    border: `1px solid rgba(139,26,26,0.35)`,
+    borderRadius: 2,
+    padding: "3px 10px",
+    fontSize: 15,
+    fontFamily: DS.fontMono,
+    letterSpacing: "0.12em",
+    color: DS.gold,
+    marginBottom: 16,
+    textTransform: "uppercase",
+  },
+  dotActive: {
+    width: 5,
+    height: 5,
+    borderRadius: "50%",
+    background: DS.gold,
+    boxShadow: `0 0 6px ${DS.gold}`,
+    animation: "pulse 2s infinite",
+  },
+  h1: {
+    fontFamily: DS.fontSans,
+    fontSize: 28,
+    fontWeight: 600,
+    letterSpacing: "-0.02em",
+    color: DS.textPrimary,
+    margin: "0 0 8px",
+    lineHeight: 1.2,
   },
   subtitle: {
     fontFamily: DS.fontMono,
@@ -301,7 +392,86 @@ const styles = {
     borderRadius: 4,
     padding: "20px 24px",
     textAlign: "center",
-    flex: 1,
+    flex: "0 1 320px",
+  },
+  rhPanelRow: {
+    display: "flex",
+    gap: 16,
+    marginBottom: 28,
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "stretch",
+  },
+  outputSection: {
+    marginTop: 34,
+  },
+  outputSectionDivider: {
+    display: "grid",
+    gridTemplateColumns: "1fr auto 1fr",
+    alignItems: "center",
+    gap: 16,
+    margin: "34px 0 22px",
+  },
+  outputSectionLine: {
+    height: 1,
+    background: `linear-gradient(90deg, transparent, ${DS.borderStrong})`,
+  },
+  outputSectionLineRight: {
+    height: 1,
+    background: `linear-gradient(90deg, ${DS.borderStrong}, transparent)`,
+  },
+  outputSectionTitle: {
+    fontFamily: DS.fontMono,
+    fontSize: 15,
+    letterSpacing: "0.28em",
+    textTransform: "uppercase",
+    color: "#b8b0a6",
+    whiteSpace: "nowrap",
+  },
+  analyticalCard: {
+    background: "linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.005))",
+    border: `1px solid ${DS.borderStrong}`,
+    borderLeft: `3px solid ${DS.accentLight}`,
+    borderRadius: 6,
+    padding: "24px 28px",
+    marginBottom: 0,
+    minWidth: 0,
+  },
+  analyticalTitle: {
+    fontFamily: DS.fontSerif,
+    fontSize: 25,
+    fontWeight: 600,
+    letterSpacing: "0.08em",
+    color: "#d7d0c8",
+    margin: "0 0 20px",
+    lineHeight: 1.2,
+  },
+  analyticalRow: {
+    display: "grid",
+    gridTemplateColumns: "172px minmax(0, 1fr)",
+    columnGap: 28,
+    alignItems: "start",
+    padding: "13px 0",
+    borderBottom: `1px solid ${DS.border}`,
+  },
+  analyticalLabel: {
+    fontFamily: DS.fontMono,
+    fontSize: 15,
+    letterSpacing: "0.16em",
+    textTransform: "uppercase",
+    color: "#9e968e",
+    lineHeight: 1.35,
+    paddingRight: 18,
+    borderRight: `1px solid ${DS.borderStrong}`,
+    minHeight: 24,
+  },
+  analyticalValue: {
+    fontFamily: DS.fontSans,
+    fontSize: 18,
+    lineHeight: 1.55,
+    color: DS.textPrimary,
+    overflowWrap: "anywhere",
+    wordBreak: "normal",
   },
   /* â”€â”€ SEPARATOR â”€â”€ */
   sep: {
@@ -392,28 +562,42 @@ const GlobalStyles = () => (
     .pp-output-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+      gap: 18px;
+      align-items: stretch;
     }
+    .pp-output-grid.pp-single {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 720px;
+    }
+    .pp-analytical-row:last-child { border-bottom: none !important; }
     @media (max-width: 760px) {
-      .pp-output-grid {
+      .pp-output-grid,
+      .pp-output-grid.pp-single {
         grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        max-width: none !important;
       }
-      .pp-output-grid .pp-datarow {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 6px;
+      .pp-analytical-card {
+        padding: 18px 20px !important;
       }
-      .pp-output-grid .pp-datarow span:last-child {
-        text-align: left;
-        overflow-wrap: anywhere;
-        word-break: normal;
-        font-size: 16px !important;
-        line-height: 1.45;
+      .pp-analytical-title {
+        font-size: 22px !important;
+        margin-bottom: 14px !important;
       }
-      .pp-output-grid .pp-datarow span:first-child {
-        font-size: 15px !important;
-        line-height: 1.2;
+      .pp-analytical-row {
+        grid-template-columns: 1fr !important;
+        row-gap: 7px !important;
+        padding: 12px 0 !important;
+      }
+      .pp-analytical-label {
+        border-right: none !important;
+        padding-right: 0 !important;
+        font-size: 13px !important;
+        letter-spacing: 0.14em !important;
+      }
+      .pp-analytical-value {
+        font-size: 17px !important;
+        line-height: 1.45 !important;
       }
     }
     .pp-rh-value {
@@ -484,10 +668,13 @@ const DataRow = ({ label, value, primary }) => (
 );
 
 const AnalyticalCard = ({ title, rows }) => (
-  <div style={{ ...styles.card, ...styles.cardAccent, marginBottom: 0, padding: "16px 20px" }}>
-    <div style={styles.h3}>{title}</div>
+  <div className="pp-analytical-card" style={styles.analyticalCard}>
+    <div className="pp-analytical-title" style={styles.analyticalTitle}>{title}</div>
     {rows.map(({ label, value }) => (
-      <DataRow key={label} label={label} value={value || "â€”"} />
+      <div key={label} className="pp-analytical-row" style={styles.analyticalRow}>
+        <div className="pp-analytical-label" style={styles.analyticalLabel}>{label}</div>
+        <div className="pp-analytical-value" style={styles.analyticalValue}>{value || "—"}</div>
+      </div>
     ))}
   </div>
 );
@@ -509,10 +696,10 @@ const ProcessingIndicator = ({ label }) => (
 );
 
 const SectionDivider = ({ label }) => (
-  <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "28px 0 20px" }}>
-    <div style={{ height: 1, flex: 1, background: DS.border }} />
-    <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>{label}</span>
-    <div style={{ height: 1, flex: 1, background: DS.border }} />
+  <div style={styles.outputSectionDivider}>
+    <div style={styles.outputSectionLine} />
+    <span style={styles.outputSectionTitle}>{label}</span>
+    <div style={styles.outputSectionLineRight} />
   </div>
 );
 /* ============================================================
@@ -878,7 +1065,7 @@ export default function PredictorPage() {
               <span style={styles.dotActive} />
               CPFS Engine v4.8 Calibrated
             </div>
-            <h1 style={styles.h1}>e-Sommelier</h1>
+            <h1 style={styles.h1}>Predictor Application</h1>
             <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
           </div>
 
@@ -903,9 +1090,9 @@ export default function PredictorPage() {
                 textAlign: "left",
               }}
             >
-              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Instructions</span>
+              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Operational Protocol</span>
               <span style={{ ...styles.dataLabel, marginBottom: 0 }}>
-                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "-" : "+"}
+                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "âˆ’" : "+"}
               </span>
             </button>
             {instructionsOpen && (
@@ -1121,15 +1308,15 @@ export default function PredictorPage() {
             <div className="pp-result" style={styles.card}>
               <div style={styles.h2}>Peak-Flavor Prediction Result</div>
               {/* RH Readout panels */}
-              <div style={{ display: "flex", gap: 16, margin: "0 auto 24px", flexWrap: "wrap", justifyContent: "center", maxWidth: 720 }}>
-                <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
+              <div style={styles.rhPanelRow}>
+                <div style={styles.rhPanel}>
                   <div style={styles.dataLabel}>Target RH%</div>
                   <div className="pp-rh-value">{result.target_rh}</div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
                 </div>
-                <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
+                <div style={styles.rhPanel}>
                   <div style={styles.dataLabel}>RH% Window</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 32, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em", marginTop: 8 }}>
                     {result.window_low}-{result.window_high}
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
@@ -1184,16 +1371,16 @@ export default function PredictorPage() {
                       rows={[
                         { label: "Primary Notes",   value: (tastingCard?.palate?.primary  ||[]).join(", ") },
                         { label: "Secondary Notes", value: (tastingCard?.palate?.secondary||[]).join(", ") },
-                        { label: "Texture",   value: (tastingCard?.palate?.texture  ||[]).join(", ") },
-                        { label: "Finish",    value: (tastingCard?.palate?.finish   ||[]).join(", ") },
+                        { label: "Texture",         value: (tastingCard?.palate?.texture  ||[]).join(", ") },
+                        { label: "Finish",          value: (tastingCard?.palate?.finish   ||[]).join(", ") },
                       ]}
                     />
                     <AnalyticalCard
-                      title="Retrohale"
+                      title="Retrohale Profile"
                       rows={[
                         { label: "Primary Notes",   value: (tastingCard?.retrohale?.primary  ||[]).join(", ") },
                         { label: "Secondary Notes", value: (tastingCard?.retrohale?.secondary||[]).join(", ") },
-                        { label: "Finish",    value: (tastingCard?.retrohale?.finish   ||[]).join(", ") },
+                        { label: "Finish",          value: (tastingCard?.retrohale?.finish   ||[]).join(", ") },
                       ]}
                     />
                   </div>
@@ -1205,13 +1392,13 @@ export default function PredictorPage() {
               )}
               {pairingCard && pairingSelection !== "None" && filteredPairing && (
                 <>
-                  <SectionDivider label={`${pairingSelection} Pairing Card`} />
-                  <div className="pp-output-grid">
+                  <SectionDivider label={`${pairingSelection} Pairing Matrix`} />
+                  <div className="pp-output-grid pp-single">
                     <AnalyticalCard
                       title={`${pairingSelection} \u2014 Pairing Recommendations`}
                       rows={[
-                        { label: "Exceptional Pairing",   value: displayPairingList(filteredPairing?.primary) },
-                        { label: "Strong Pairing", value: displayPairingList(filteredPairing?.secondary) },
+                        { label: "Exceptional Pairing", value: displayPairingList(filteredPairing?.primary) },
+                        { label: "Strong Pairing",      value: displayPairingList(filteredPairing?.secondary) },
                       ]}
                     />
                   </div>
@@ -1225,8 +1412,9 @@ export default function PredictorPage() {
               {/* Metadata footer */}
               <div style={styles.metaBar}>
                 <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
-                <span style={styles.metaItem}>Calibrated · Reference-Standard</span>
+                <span style={styles.metaItem}>Calibrated Â· Reference-Standard</span>
                 <span style={styles.metaItem}>Generated {timestamp}</span>
+                <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
               </div>
             </div>
           )}
