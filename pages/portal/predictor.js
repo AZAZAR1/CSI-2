@@ -1432,7 +1432,7 @@ export default function PredictorPage() {
                     </div>
                     {Array.isArray(blend.why_similar) && blend.why_similar.length > 0 && (
                       <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
-                        Similarity basis: {blend.why_similar.join(" Â· ")}
+                        Similarity basis: {blend.why_similar.join(" · ")}
                       </div>
                     )}
                   </div>
