@@ -860,8 +860,8 @@ export default function PredictorPage() {
       tequila: pairingCard.tequila,
       beer: pairingCard.beer,
       cocktail: pairingCard.cocktails,
-      "non-alcoholic": pairingCard.non_alcoholic,
-      non_alcoholic: pairingCard.non_alcoholic,
+      coffee: pairingCard.coffee,
+      tea: pairingCard.tea,
     };
     return mapping[pairingSelection.toLowerCase()] || null;
   };
@@ -1240,7 +1240,8 @@ export default function PredictorPage() {
                 <option value="Tequila">Tequila</option>
                 <option value="Beer">Beer</option>
                 <option value="Cocktail">Cocktail</option>
-                <option value="Non-Alcoholic">Non-Alcoholic</option>
+                <option value="Coffee">Coffee</option>
+                <option value="Tea">Tea</option>
               </select>
             </div>
             <hr style={styles.sep} />
