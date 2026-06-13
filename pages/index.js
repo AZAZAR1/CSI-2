@@ -172,7 +172,7 @@ export default function Home() {
     <Layout>
       <Seo title={s.title} description={s.description} path={s.path} />
 
-      <div className="homePage">
+      <div className={`homePage lang-${lang}`}>
         <section className="homeHero">
           <div className="homeHeroImageWrap">
             <Image
@@ -359,6 +359,40 @@ export default function Home() {
           font-weight: 300;
         }
 
+        /* Language-specific hero corrections.
+           EN remains unchanged. FR and DE copy is longer, so it needs
+           controlled type scale and line-height rather than relying on
+           the EN dimensions. */
+
+        .homePage.lang-fr .homeHeroTitle,
+        .homePage.lang-de .homeHeroTitle {
+          font-size: clamp(2.45rem, 3.55vw, 3.95rem);
+          line-height: 0.98;
+          max-width: 13.8ch;
+          margin-bottom: 20px;
+          letter-spacing: -0.052em;
+        }
+
+        .homePage.lang-fr .homeHeroLead,
+        .homePage.lang-de .homeHeroLead {
+          max-width: 72ch;
+          font-size: 0.92rem;
+          line-height: 1.52;
+          margin-bottom: 22px;
+        }
+
+        .homePage.lang-fr .homeHeroKicker,
+        .homePage.lang-de .homeHeroKicker {
+          font-size: 0.66rem;
+          margin-bottom: 16px;
+        }
+
+        .homePage.lang-fr .homeHeroCta,
+        .homePage.lang-de .homeHeroCta {
+          font-size: 0.66rem;
+          padding-bottom: 6px;
+        }
+
         .homePage .homeMain {
           padding-top: 0;
           padding-bottom: 42px;
@@ -472,6 +506,19 @@ export default function Home() {
           .homePage .homeSectionTitle {
             max-width: 24ch;
           }
+
+          .homePage.lang-fr .homeHeroTitle,
+          .homePage.lang-de .homeHeroTitle {
+            font-size: clamp(2.25rem, 3.25vw, 3.45rem);
+            max-width: 14.5ch;
+          }
+
+          .homePage.lang-fr .homeHeroLead,
+          .homePage.lang-de .homeHeroLead {
+            font-size: 0.88rem;
+            line-height: 1.46;
+            max-width: 70ch;
+          }
         }
 
         @media (max-width: 820px) {
@@ -487,6 +534,19 @@ export default function Home() {
           .homePage .homeHeroLead {
             font-size: 0.96rem;
             max-width: 52ch;
+          }
+
+          .homePage.lang-fr .homeHeroTitle,
+          .homePage.lang-de .homeHeroTitle {
+            font-size: clamp(2.05rem, 7.3vw, 3.1rem);
+            max-width: 13.5ch;
+          }
+
+          .homePage.lang-fr .homeHeroLead,
+          .homePage.lang-de .homeHeroLead {
+            font-size: 0.86rem;
+            line-height: 1.44;
+            max-width: 58ch;
           }
 
           .homePage .homeEditorialSection {
@@ -536,11 +596,44 @@ export default function Home() {
             line-height: 1.58;
           }
 
+          .homePage.lang-fr .homeHeroImageWrap,
+          .homePage.lang-de .homeHeroImageWrap {
+            height: 625px;
+          }
+
+          .homePage.lang-fr .homeHeroTitle,
+          .homePage.lang-de .homeHeroTitle {
+            font-size: clamp(1.72rem, 8.8vw, 2.34rem);
+            line-height: 1.01;
+            max-width: 14ch;
+            margin-bottom: 16px;
+          }
+
+          .homePage.lang-fr .homeHeroLead,
+          .homePage.lang-de .homeHeroLead {
+            font-size: 0.8rem;
+            line-height: 1.42;
+            max-width: 100%;
+            margin-bottom: 18px;
+          }
+
+          .homePage.lang-fr .homeHeroKicker,
+          .homePage.lang-de .homeHeroKicker {
+            font-size: 0.54rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 13px;
+          }
+
           .homePage .homeHeroCta,
           .homePage .homeTextCta {
             font-size: 0.64rem;
             letter-spacing: 0.15em;
             gap: 16px;
+          }
+
+          .homePage.lang-fr .homeHeroCta,
+          .homePage.lang-de .homeHeroCta {
+            font-size: 0.58rem;
           }
 
           .homePage .homeSectionTitle {
