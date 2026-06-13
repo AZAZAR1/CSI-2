@@ -237,7 +237,7 @@ export default function Home() {
         .homePage .homeHeroImageWrap {
           position: relative;
           width: 100%;
-          height: 635px;
+          height: 540px;
           overflow: hidden;
           background: #16110d;
         }
@@ -278,23 +278,23 @@ export default function Home() {
 
         .homePage .homeHeroKicker {
           display: block;
-          margin: 0 0 25px;
+          margin: 0 0 20px;
           color: #fff;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.74rem;
+          font-size: 0.72rem;
           line-height: 1;
-          letter-spacing: 0.32em;
+          letter-spacing: 0.3em;
           text-transform: uppercase;
           font-weight: 700;
           opacity: 0.86;
         }
 
         .homePage .homeHeroTitle {
-          margin: 0 0 30px;
-          max-width: 11.7ch;
+          margin: 0 0 24px;
+          max-width: 12.5ch;
           color: #fff;
           font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(3.5rem, 5.3vw, 5.85rem);
+          font-size: clamp(3rem, 4.6vw, 4.85rem);
           line-height: 0.98;
           letter-spacing: -0.052em;
           font-weight: 400;
@@ -302,12 +302,12 @@ export default function Home() {
         }
 
         .homePage .homeHeroLead {
-          margin: 0 0 31px;
-          max-width: 55ch;
+          margin: 0 0 27px;
+          max-width: 62ch;
           color: #fff;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 1.05rem;
-          line-height: 1.68;
+          font-size: 1rem;
+          line-height: 1.62;
           font-weight: 300;
           opacity: 0.94;
           text-shadow: 0 2px 18px rgba(0, 0, 0, 0.24);
@@ -317,18 +317,18 @@ export default function Home() {
         .homePage .homeTextCta {
           display: inline-flex;
           align-items: center;
-          gap: 26px;
+          gap: 24px;
           width: fit-content;
           min-height: 0;
-          padding: 0 0 8px;
+          padding: 0 0 7px;
           border-radius: 0;
           background: transparent;
           box-shadow: none;
           text-decoration: none;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.74rem;
+          font-size: 0.7rem;
           line-height: 1;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
           font-weight: 700;
           transition: opacity 0.2s ease;
@@ -353,7 +353,7 @@ export default function Home() {
         }
 
         .homePage .homeCtaArrow {
-          font-size: 1.45rem;
+          font-size: 1.34rem;
           line-height: 0.7;
           letter-spacing: 0;
           font-weight: 300;
@@ -366,9 +366,9 @@ export default function Home() {
 
         .homePage .homeEditorialSection {
           display: grid;
-          grid-template-columns: 230px 1px minmax(0, 1fr);
-          column-gap: 78px;
-          padding: 58px 0;
+          grid-template-columns: 220px 1px minmax(0, 1fr);
+          column-gap: 72px;
+          padding: 48px 0;
           border-bottom: 1px solid rgba(0, 0, 0, 0.18);
         }
 
@@ -378,10 +378,10 @@ export default function Home() {
 
         .homePage .homeSectionNum {
           display: block;
-          margin: 0 0 28px;
+          margin: 0 0 24px;
           color: #121214;
           font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(2rem, 2.7vw, 2.65rem);
+          font-size: clamp(1.85rem, 2.4vw, 2.35rem);
           line-height: 1;
           letter-spacing: -0.04em;
           font-weight: 300;
@@ -393,7 +393,7 @@ export default function Home() {
           max-width: 24ch;
           color: #121214;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.68rem;
+          font-size: 0.64rem;
           line-height: 1.45;
           letter-spacing: 0.22em;
           text-transform: uppercase;
@@ -403,33 +403,33 @@ export default function Home() {
 
         .homePage .homeSectionDivider {
           width: 1px;
-          min-height: 265px;
+          min-height: 230px;
           background: rgba(0, 0, 0, 0.08);
         }
 
         .homePage .homeSectionBody {
-          max-width: 620px;
+          max-width: 760px;
           padding-top: 1px;
         }
 
         .homePage .homeSectionTitle {
-          margin: 0 0 29px;
-          max-width: 14ch;
+          margin: 0 0 22px;
+          max-width: 22ch;
           color: #121214;
           font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(2rem, 3vw, 3.05rem);
-          line-height: 1.06;
-          letter-spacing: -0.055em;
+          font-size: clamp(1.85rem, 2.35vw, 2.55rem);
+          line-height: 1.08;
+          letter-spacing: -0.052em;
           font-weight: 400;
         }
 
         .homePage .homeSectionText {
-          margin: 0 0 36px;
-          max-width: 68ch;
+          margin: 0 0 28px;
+          max-width: 74ch;
           color: #121214;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.98rem;
-          line-height: 1.82;
+          font-size: 0.95rem;
+          line-height: 1.72;
           font-weight: 300;
           opacity: 0.76;
         }
@@ -461,34 +461,38 @@ export default function Home() {
 
         @media (max-width: 1100px) {
           .homePage .homeHeroImageWrap {
-            height: 600px;
+            height: 520px;
           }
 
           .homePage .homeEditorialSection {
-            grid-template-columns: 190px 1px minmax(0, 1fr);
-            column-gap: 54px;
+            grid-template-columns: 180px 1px minmax(0, 1fr);
+            column-gap: 48px;
+          }
+
+          .homePage .homeSectionTitle {
+            max-width: 24ch;
           }
         }
 
         @media (max-width: 820px) {
           .homePage .homeHeroImageWrap {
-            height: 590px;
+            height: 540px;
           }
 
           .homePage .homeHeroTitle {
-            font-size: clamp(2.8rem, 10vw, 4.25rem);
-            max-width: 11ch;
+            font-size: clamp(2.55rem, 9vw, 3.85rem);
+            max-width: 12ch;
           }
 
           .homePage .homeHeroLead {
-            font-size: 1rem;
-            max-width: 48ch;
+            font-size: 0.96rem;
+            max-width: 52ch;
           }
 
           .homePage .homeEditorialSection {
             grid-template-columns: 1fr;
-            row-gap: 26px;
-            padding: 44px 0;
+            row-gap: 22px;
+            padding: 42px 0;
           }
 
           .homePage .homeSectionDivider {
@@ -496,7 +500,7 @@ export default function Home() {
           }
 
           .homePage .homeSectionNum {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
           }
 
           .homePage .homeSectionBody {
@@ -510,41 +514,42 @@ export default function Home() {
 
         @media (max-width: 520px) {
           .homePage .homeHeroImageWrap {
-            height: 560px;
+            height: 555px;
           }
 
           .homePage .homeHeroContent {
             justify-content: flex-end;
-            padding-bottom: 46px;
+            padding-bottom: 42px;
           }
 
           .homePage .homeHeroKicker {
-            font-size: 0.62rem;
-            letter-spacing: 0.24em;
+            font-size: 0.6rem;
+            letter-spacing: 0.22em;
           }
 
           .homePage .homeHeroTitle {
-            font-size: clamp(2.35rem, 12vw, 3.15rem);
+            font-size: clamp(2.1rem, 11vw, 2.85rem);
           }
 
           .homePage .homeHeroLead {
-            font-size: 0.94rem;
-            line-height: 1.62;
+            font-size: 0.9rem;
+            line-height: 1.58;
           }
 
           .homePage .homeHeroCta,
           .homePage .homeTextCta {
-            font-size: 0.66rem;
-            letter-spacing: 0.16em;
-            gap: 18px;
+            font-size: 0.64rem;
+            letter-spacing: 0.15em;
+            gap: 16px;
           }
 
           .homePage .homeSectionTitle {
-            font-size: clamp(1.7rem, 8vw, 2.3rem);
+            font-size: clamp(1.65rem, 7vw, 2.15rem);
           }
 
           .homePage .homeSectionText {
-            font-size: 0.94rem;
+            font-size: 0.92rem;
+            line-height: 1.68;
           }
 
           .homePage .homeQualityKicker {
