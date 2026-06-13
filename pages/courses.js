@@ -192,7 +192,6 @@ export default function Courses() {
         <main className="container coursesMain">
           <section className="coursesStatement">
             <div className="coursesStatementMeta">
-              <span className="coursesStatementNum">00</span>
               <span className="coursesSectionEyebrow">ICSI Framework</span>
             </div>
 
