@@ -30,7 +30,7 @@ function HomeHero() {
 
           <Link href="/courses" locale={lang} className="heroCta">
             <span>{c.cta_courses}</span>
-            <span className="ctaArrow">→</span>
+            <span className="ctaArrow">â†’</span>
           </Link>
         </div>
       </div>
@@ -49,18 +49,18 @@ const sectionCopy = {
       href: "/partners",
     },
     fr: {
-      eyebrow: "Autonomisation numérique",
-      title: "Autonomisation numérique pour le monde moderne du cigare",
+      eyebrow: "Autonomisation numÃ©rique",
+      title: "Autonomisation numÃ©rique pour le monde moderne du cigare",
       lead:
-        "L'ICSI développe une nouvelle génération d'applications prédictives dédiées au cigare, conçues pour accompagner les professionnels, lounges, détaillants et aficionados avertis dans un univers de mélanges devenu toujours plus complexe. De la calibration Peak-Flavor à l'intelligence hygrométrique, en passant par la découverte structurée de mélanges et l'analyse comparative, ces outils sont conçus pour apporter davantage de précision, de constance et de confiance à la communauté mondiale du cigare.",
+        "L'ICSI dÃ©veloppe une nouvelle gÃ©nÃ©ration d'applications prÃ©dictives dÃ©diÃ©es au cigare, conÃ§ues pour accompagner les professionnels, lounges, dÃ©taillants et aficionados avertis dans un univers de mÃ©langes devenu toujours plus complexe. De la calibration Peak-Flavor Ã  l'intelligence hygromÃ©trique, en passant par la dÃ©couverte structurÃ©e de mÃ©langes et l'analyse comparative, ces outils sont conÃ§us pour apporter davantage de prÃ©cision, de constance et de confiance Ã  la communautÃ© mondiale du cigare.",
       cta: "Explorer les applications ICSI",
       href: "/partners",
     },
     de: {
-      eyebrow: "Digitale Stärkung",
-      title: "Digitale Stärkung für die moderne Zigarrenwelt",
+      eyebrow: "Digitale StÃ¤rkung",
+      title: "Digitale StÃ¤rkung fÃ¼r die moderne Zigarrenwelt",
       lead:
-        "ICSI entwickelt eine neue Generation prädiktiver Zigarrenanwendungen, die Fachleute, Lounges, Händler und anspruchsvolle Aficionados dabei unterstützen sollen, sich in der heutigen zunehmend komplexen Blend-Landschaft sicher zu orientieren. Von der Peak-Flavor-Kalibrierung und Feuchtigkeitsintelligenz bis hin zur strukturierten Blend-Entdeckung und vergleichenden Analyse werden diese Tools entwickelt, um der globalen Zigarrengemeinschaft mehr Präzision, Konsistenz und Sicherheit zu bieten.",
+        "ICSI entwickelt eine neue Generation prÃ¤diktiver Zigarrenanwendungen, die Fachleute, Lounges, HÃ¤ndler und anspruchsvolle Aficionados dabei unterstÃ¼tzen sollen, sich in der heutigen zunehmend komplexen Blend-Landschaft sicher zu orientieren. Von der Peak-Flavor-Kalibrierung und Feuchtigkeitsintelligenz bis hin zur strukturierten Blend-Entdeckung und vergleichenden Analyse werden diese Tools entwickelt, um der globalen Zigarrengemeinschaft mehr PrÃ¤zision, Konsistenz und Sicherheit zu bieten.",
       cta: "ICSI Anwendungen entdecken",
       href: "/partners",
     },
@@ -75,10 +75,10 @@ const sectionCopy = {
       href: "/courses",
     },
     fr: {
-      eyebrow: "Excellence pédagogique",
+      eyebrow: "Excellence pÃ©dagogique",
       title: "Formation et certification de niveau international",
       lead:
-        "L'ICSI propose des programmes de certification à portée internationale pour les professionnels du cigare et les passionnés. Le programme associe rigueur scientifique et entraînement sensoriel afin de développer une véritable expertise du cigare.",
+        "L'ICSI propose des programmes de certification Ã  portÃ©e internationale pour les professionnels du cigare et les passionnÃ©s. Le programme associe rigueur scientifique et entraÃ®nement sensoriel afin de dÃ©velopper une vÃ©ritable expertise du cigare.",
       cta: "Explorer les formations",
       href: "/courses",
     },
@@ -86,7 +86,7 @@ const sectionCopy = {
       eyebrow: "Ausbildungsexzellenz",
       title: "Weltklasse-Ausbildung & Zertifizierung",
       lead:
-        "ICSI bietet international relevante Zertifizierungsprogramme für Zigarrenprofis und Enthusiasten. Das Curriculum verbindet wissenschaftliche Strenge mit sensorischem Training, um echte Zigarrenexpertise zu entwickeln.",
+        "ICSI bietet international relevante Zertifizierungsprogramme fÃ¼r Zigarrenprofis und Enthusiasten. Das Curriculum verbindet wissenschaftliche Strenge mit sensorischem Training, um echte Zigarrenexpertise zu entwickeln.",
       cta: "Kurse entdecken",
       href: "/courses",
     },
@@ -94,7 +94,7 @@ const sectionCopy = {
   science: {
     en: {
       eyebrow: "Scientific Framework",
-      title: "The Cigar Peak-Flavor System®",
+      title: "The Cigar Peak-Flavor SystemÂ®",
       lead:
         "Our proprietary scientific framework applies thermodynamics, combustion science, blend architecture modeling, seed genetics, and terroir analysis to achieve repeatable cigar excellence.",
       cta: "Discover the System",
@@ -102,17 +102,17 @@ const sectionCopy = {
     },
     fr: {
       eyebrow: "Cadre scientifique",
-      title: "Le Cigar Peak-Flavor System®",
+      title: "Le Cigar Peak-Flavor SystemÂ®",
       lead:
-        "Notre cadre scientifique propriétaire applique la thermodynamique, la science de combustion, la modélisation de l'architecture des blends, la génétique des semences et l'analyse du terroir afin d'atteindre une excellence reproductible du cigare.",
-      cta: "Découvrir le système",
+        "Notre cadre scientifique propriÃ©taire applique la thermodynamique, la science de combustion, la modÃ©lisation de l'architecture des blends, la gÃ©nÃ©tique des semences et l'analyse du terroir afin d'atteindre une excellence reproductible du cigare.",
+      cta: "DÃ©couvrir le systÃ¨me",
       href: "/system",
     },
     de: {
       eyebrow: "Wissenschaftliches Framework",
-      title: "Das Cigar Peak-Flavor System®",
+      title: "Das Cigar Peak-Flavor SystemÂ®",
       lead:
-        "Unser proprietäres wissenschaftliches Framework verbindet Thermodynamik, Verbrennungswissenschaft, Blend-Architekturmodellierung, Saatgutgenetik und Terroiranalyse, um reproduzierbare Zigarrenexzellenz zu erreichen.",
+        "Unser proprietÃ¤res wissenschaftliches Framework verbindet Thermodynamik, Verbrennungswissenschaft, Blend-Architekturmodellierung, Saatgutgenetik und Terroiranalyse, um reproduzierbare Zigarrenexzellenz zu erreichen.",
       cta: "Das System entdecken",
       href: "/system",
     },
@@ -130,15 +130,15 @@ const sectionCopy = {
       eyebrow: "Partenariats sectoriels",
       title: "Construire une industrie du cigare plus forte",
       lead:
-        "L'ICSI collabore avec des marques, fabricants et organisations de référence afin d'élever les standards, stimuler l'innovation et contribuer à l'avenir du monde du cigare.",
+        "L'ICSI collabore avec des marques, fabricants et organisations de rÃ©fÃ©rence afin d'Ã©lever les standards, stimuler l'innovation et contribuer Ã  l'avenir du monde du cigare.",
       cta: "Devenir partenaire",
       href: "/partners",
     },
     de: {
       eyebrow: "Branchenpartnerschaften",
-      title: "Partnerschaft für eine stärkere Zigarrenbranche",
+      title: "Partnerschaft fÃ¼r eine stÃ¤rkere Zigarrenbranche",
       lead:
-        "ICSI arbeitet mit führenden Marken, Herstellern und Branchenorganisationen zusammen, um Standards zu erhöhen, Innovation voranzutreiben und die Zukunft der Zigarrenwelt mitzugestalten.",
+        "ICSI arbeitet mit fÃ¼hrenden Marken, Herstellern und Branchenorganisationen zusammen, um Standards zu erhÃ¶hen, Innovation voranzutreiben und die Zukunft der Zigarrenwelt mitzugestalten.",
       cta: "Partner werden",
       href: "/partners",
     },
@@ -163,7 +163,7 @@ function EditorialSection({ num, copyKey, locale }) {
         <p className="sectionText">{c.lead}</p>
         <Link href={c.href} locale={lang} className="textCta">
           <span>{c.cta}</span>
-          <span className="ctaArrow">→</span>
+          <span className="ctaArrow">â†’</span>
         </Link>
       </div>
     </section>
@@ -175,7 +175,7 @@ function QualityNote() {
     <section className="qualityNote">
       <p className="qualityKicker">ISO/IEC 17024 Quality System Framework</p>
       <p className="qualitySub">
-        <i>Powered by the scientific Cigar Peak-Flavor System®</i>
+        <i>Powered by the scientific Cigar Peak-Flavor SystemÂ®</i>
       </p>
     </section>
   );
@@ -195,13 +195,13 @@ export default function Home() {
     fr: {
       title: "International Cigar Sommelier Institute",
       description:
-        "Luxe suisse. Autorité scientifique. ICSI prépare les candidats, lounges et aficionados à une performance aromatique reproductible.",
+        "Luxe suisse. AutoritÃ© scientifique. ICSI prÃ©pare les candidats, lounges et aficionados Ã  une performance aromatique reproductible.",
       path: "/",
     },
     de: {
       title: "International Cigar Sommelier Institute",
       description:
-        "Schweizer Luxus. Wissenschaftliche Autorität. ICSI befähigt Kandidaten, Lounges und Sammler zu reproduzierbarer Peak-Flavor-Performance.",
+        "Schweizer Luxus. Wissenschaftliche AutoritÃ¤t. ICSI befÃ¤higt Kandidaten, Lounges und Sammler zu reproduzierbarer Peak-Flavor-Performance.",
       path: "/",
     },
   };
@@ -223,7 +223,7 @@ export default function Home() {
       </main>
 
       <style jsx>{`
-        /* ─── HERO ─────────────────────────────────────────────── */
+        /* --- HERO ----------------------------------------------- */
 
         .homeHero {
           margin: 0;
@@ -338,14 +338,14 @@ export default function Home() {
           font-weight: 300;
         }
 
-        /* ─── PAGE BODY ───────────────────────────────────────── */
+        /* --- PAGE BODY ----------------------------------------- */
 
         .pageBody {
           padding-top: 0;
           padding-bottom: 42px;
         }
 
-        /* ─── EDITORIAL SECTIONS (aligned to system.js .block pattern) ── */
+        /* --- EDITORIAL SECTIONS (aligned to system.js .block pattern) -- */
 
         .editorialSection {
           display: grid;
@@ -418,7 +418,7 @@ export default function Home() {
           border-bottom: 1px solid rgba(0, 0, 0, 0.42);
         }
 
-        /* ─── QUALITY NOTE ────────────────────────────────────── */
+        /* --- QUALITY NOTE -------------------------------------- */
 
         .qualityNote {
           text-align: center;
@@ -443,7 +443,7 @@ export default function Home() {
           margin: 0;
         }
 
-        /* ─── RESPONSIVE ──────────────────────────────────────── */
+        /* --- RESPONSIVE ---------------------------------------- */
 
         @media (max-width: 1100px) {
           .homeHeroImageWrap {
