@@ -11,8 +11,8 @@ function HomeHero() {
   const c = COPY[lang] || COPY.en;
 
   return (
-    <section className="hero">
-      <div className="heroImageWrap">
+    <section className="homeHero">
+      <div className="homeHeroImageWrap">
         <Image
           src="/img/hero.png"
           alt="Tobacco leaf macro"
@@ -38,24 +38,23 @@ function HomeHero() {
   );
 }
 
-function DigitalEmpowermentSection() {
-  const { locale } = useRouter();
-  const lang = (locale || "en").toLowerCase();
-
-  const copy = {
+const sectionCopy = {
+  digital: {
     en: {
       eyebrow: "Digital Empowerment",
       title: "Digital Empowerment for the Modern Cigar World",
       lead:
-        "ICSI is developing a new generation of predictive cigar applications designed to support professionals, lounges, retailers, and serious aficionados in navigating today’s increasingly complex blend landscape. From peak-flavor calibration and humidity intelligence to structured blend discovery and comparative analysis, these tools are being built to bring greater precision, consistency, and confidence to the global cigar community.",
+        "ICSI is developing a new generation of predictive cigar applications designed to support professionals, lounges, retailers, and serious aficionados in navigating today's increasingly complex blend landscape. From peak-flavor calibration and humidity intelligence to structured blend discovery and comparative analysis, these tools are being built to bring greater precision, consistency, and confidence to the global cigar community.",
       cta: "Explore ICSI Applications",
+      href: "/partners",
     },
     fr: {
       eyebrow: "Autonomisation numérique",
       title: "Autonomisation numérique pour le monde moderne du cigare",
       lead:
-        "L’ICSI développe une nouvelle génération d’applications prédictives dédiées au cigare, conçues pour accompagner les professionnels, lounges, détaillants et aficionados avertis dans un univers de mélanges devenu toujours plus complexe. De la calibration Peak-Flavor à l’intelligence hygrométrique, en passant par la découverte structurée de mélanges et l’analyse comparative, ces outils sont conçus pour apporter davantage de précision, de constance et de confiance à la communauté mondiale du cigare.",
+        "L'ICSI développe une nouvelle génération d'applications prédictives dédiées au cigare, conçues pour accompagner les professionnels, lounges, détaillants et aficionados avertis dans un univers de mélanges devenu toujours plus complexe. De la calibration Peak-Flavor à l'intelligence hygrométrique, en passant par la découverte structurée de mélanges et l'analyse comparative, ces outils sont conçus pour apporter davantage de précision, de constance et de confiance à la communauté mondiale du cigare.",
       cta: "Explorer les applications ICSI",
+      href: "/partners",
     },
     de: {
       eyebrow: "Digitale Stärkung",
@@ -63,50 +62,25 @@ function DigitalEmpowermentSection() {
       lead:
         "ICSI entwickelt eine neue Generation prädiktiver Zigarrenanwendungen, die Fachleute, Lounges, Händler und anspruchsvolle Aficionados dabei unterstützen sollen, sich in der heutigen zunehmend komplexen Blend-Landschaft sicher zu orientieren. Von der Peak-Flavor-Kalibrierung und Feuchtigkeitsintelligenz bis hin zur strukturierten Blend-Entdeckung und vergleichenden Analyse werden diese Tools entwickelt, um der globalen Zigarrengemeinschaft mehr Präzision, Konsistenz und Sicherheit zu bieten.",
       cta: "ICSI Anwendungen entdecken",
+      href: "/partners",
     },
-  };
-
-  const c = copy[lang] || copy.en;
-
-  return (
-    <section className="editorialSection">
-      <div className="sectionMeta">
-        <span className="sectionNum">01</span>
-        <span className="sectionEyebrow">{c.eyebrow}</span>
-      </div>
-
-      <div className="sectionRule" />
-
-      <div className="sectionBody">
-        <h2 className="sectionTitle">{c.title}</h2>
-        <p className="sectionText">{c.lead}</p>
-        <Link href="/partners" locale={lang} className="textCta">
-          <span>{c.cta}</span>
-          <span className="ctaArrow">→</span>
-        </Link>
-      </div>
-    </section>
-  );
-}
-
-function EducationSection() {
-  const { locale } = useRouter();
-  const lang = (locale || "en").toLowerCase();
-
-  const copy = {
+  },
+  education: {
     en: {
       eyebrow: "Educational Excellence",
       title: "World-Class Education & Certification",
       lead:
         "ICSI offers globally relevant certification programs for cigar professionals and enthusiasts. The curriculum combines scientific rigor with sensory training to develop true cigar expertise.",
       cta: "Explore Courses",
+      href: "/courses",
     },
     fr: {
       eyebrow: "Excellence pédagogique",
       title: "Formation et certification de niveau international",
       lead:
-        "L’ICSI propose des programmes de certification à portée internationale pour les professionnels du cigare et les passionnés. Le programme associe rigueur scientifique et entraînement sensoriel afin de développer une véritable expertise du cigare.",
+        "L'ICSI propose des programmes de certification à portée internationale pour les professionnels du cigare et les passionnés. Le programme associe rigueur scientifique et entraînement sensoriel afin de développer une véritable expertise du cigare.",
       cta: "Explorer les formations",
+      href: "/courses",
     },
     de: {
       eyebrow: "Ausbildungsexzellenz",
@@ -114,50 +88,25 @@ function EducationSection() {
       lead:
         "ICSI bietet international relevante Zertifizierungsprogramme für Zigarrenprofis und Enthusiasten. Das Curriculum verbindet wissenschaftliche Strenge mit sensorischem Training, um echte Zigarrenexpertise zu entwickeln.",
       cta: "Kurse entdecken",
+      href: "/courses",
     },
-  };
-
-  const c = copy[lang] || copy.en;
-
-  return (
-    <section className="editorialSection">
-      <div className="sectionMeta">
-        <span className="sectionNum">02</span>
-        <span className="sectionEyebrow">{c.eyebrow}</span>
-      </div>
-
-      <div className="sectionRule" />
-
-      <div className="sectionBody">
-        <h2 className="sectionTitle">{c.title}</h2>
-        <p className="sectionText">{c.lead}</p>
-        <Link href="/courses" locale={lang} className="textCta">
-          <span>{c.cta}</span>
-          <span className="ctaArrow">→</span>
-        </Link>
-      </div>
-    </section>
-  );
-}
-
-function ScientificFrameworkSection() {
-  const { locale } = useRouter();
-  const lang = (locale || "en").toLowerCase();
-
-  const copy = {
+  },
+  science: {
     en: {
       eyebrow: "Scientific Framework",
       title: "The Cigar Peak-Flavor System®",
       lead:
         "Our proprietary scientific framework applies thermodynamics, combustion science, blend architecture modeling, seed genetics, and terroir analysis to achieve repeatable cigar excellence.",
       cta: "Discover the System",
+      href: "/system",
     },
     fr: {
       eyebrow: "Cadre scientifique",
       title: "Le Cigar Peak-Flavor System®",
       lead:
-        "Notre cadre scientifique propriétaire applique la thermodynamique, la science de combustion, la modélisation de l’architecture des blends, la génétique des semences et l’analyse du terroir afin d’atteindre une excellence reproductible du cigare.",
+        "Notre cadre scientifique propriétaire applique la thermodynamique, la science de combustion, la modélisation de l'architecture des blends, la génétique des semences et l'analyse du terroir afin d'atteindre une excellence reproductible du cigare.",
       cta: "Découvrir le système",
+      href: "/system",
     },
     de: {
       eyebrow: "Wissenschaftliches Framework",
@@ -165,66 +114,45 @@ function ScientificFrameworkSection() {
       lead:
         "Unser proprietäres wissenschaftliches Framework verbindet Thermodynamik, Verbrennungswissenschaft, Blend-Architekturmodellierung, Saatgutgenetik und Terroiranalyse, um reproduzierbare Zigarrenexzellenz zu erreichen.",
       cta: "Das System entdecken",
+      href: "/system",
     },
-  };
-
-  const c = copy[lang] || copy.en;
-
-  return (
-    <section className="editorialSection">
-      <div className="sectionMeta">
-        <span className="sectionNum">03</span>
-        <span className="sectionEyebrow">{c.eyebrow}</span>
-      </div>
-
-      <div className="sectionRule" />
-
-      <div className="sectionBody">
-        <h2 className="sectionTitle">{c.title}</h2>
-        <p className="sectionText">{c.lead}</p>
-        <Link href="/system" locale={lang} className="textCta">
-          <span>{c.cta}</span>
-          <span className="ctaArrow">→</span>
-        </Link>
-      </div>
-    </section>
-  );
-}
-
-function PartnershipSection() {
-  const { locale } = useRouter();
-  const lang = (locale || "en").toLowerCase();
-
-  const copy = {
+  },
+  partnership: {
     en: {
       eyebrow: "Industry Partnerships",
       title: "Partnering for a Stronger Cigar Industry",
       lead:
-        "ICSI collaborates with leading lounges, retailers, educators, and industry organizations to advance standards, drive innovation, and shape the future of the cigar world.",
+        "ICSI collaborates with leading brands, manufacturers, and organizations to advance standards, drive innovation, and shape the future of the cigar world.",
       cta: "Become a Partner",
+      href: "/partners",
     },
     fr: {
       eyebrow: "Partenariats sectoriels",
       title: "Construire une industrie du cigare plus forte",
       lead:
-        "L’ICSI collabore avec des lounges, détaillants, formateurs et organisations de référence afin d’élever les standards, stimuler l’innovation et contribuer à l’avenir du monde du cigare.",
+        "L'ICSI collabore avec des marques, fabricants et organisations de référence afin d'élever les standards, stimuler l'innovation et contribuer à l'avenir du monde du cigare.",
       cta: "Devenir partenaire",
+      href: "/partners",
     },
     de: {
       eyebrow: "Branchenpartnerschaften",
       title: "Partnerschaft für eine stärkere Zigarrenbranche",
       lead:
-        "ICSI arbeitet mit führenden Lounges, Händlern, Ausbildern und Branchenorganisationen zusammen, um Standards zu erhöhen, Innovation voranzutreiben und die Zukunft der Zigarrenwelt mitzugestalten.",
+        "ICSI arbeitet mit führenden Marken, Herstellern und Branchenorganisationen zusammen, um Standards zu erhöhen, Innovation voranzutreiben und die Zukunft der Zigarrenwelt mitzugestalten.",
       cta: "Partner werden",
+      href: "/partners",
     },
-  };
+  },
+};
 
-  const c = copy[lang] || copy.en;
+function EditorialSection({ num, copyKey, locale }) {
+  const lang = (locale || "en").toLowerCase();
+  const c = sectionCopy[copyKey][lang] || sectionCopy[copyKey].en;
 
   return (
     <section className="editorialSection">
       <div className="sectionMeta">
-        <span className="sectionNum">04</span>
+        <span className="sectionNum">{num}</span>
         <span className="sectionEyebrow">{c.eyebrow}</span>
       </div>
 
@@ -233,7 +161,7 @@ function PartnershipSection() {
       <div className="sectionBody">
         <h2 className="sectionTitle">{c.title}</h2>
         <p className="sectionText">{c.lead}</p>
-        <Link href="/partners" locale={lang} className="textCta">
+        <Link href={c.href} locale={lang} className="textCta">
           <span>{c.cta}</span>
           <span className="ctaArrow">→</span>
         </Link>
@@ -287,26 +215,31 @@ export default function Home() {
       <HomeHero />
 
       <main className="container pageBody">
-        <DigitalEmpowermentSection />
-        <EducationSection />
-        <ScientificFrameworkSection />
-        <PartnershipSection />
+        <EditorialSection num="01" copyKey="digital" locale={lang} />
+        <EditorialSection num="02" copyKey="education" locale={lang} />
+        <EditorialSection num="03" copyKey="science" locale={lang} />
+        <EditorialSection num="04" copyKey="partnership" locale={lang} />
         <QualityNote />
       </main>
 
       <style jsx>{`
         /* ─── HERO ─────────────────────────────────────────────── */
 
-        .hero {
+        .homeHero {
           margin: 0;
           padding: 0;
+          position: relative;
+          display: block;
+          width: 100%;
         }
 
-        .heroImageWrap {
+        .homeHeroImageWrap {
           position: relative;
+          display: block;
           width: 100%;
           height: 635px;
           overflow: hidden;
+          isolation: isolate;
         }
 
         .heroShade {
@@ -395,7 +328,7 @@ export default function Home() {
 
         .heroCta:hover,
         .textCta:hover {
-          opacity: 0.48;
+          opacity: 0.45;
         }
 
         .ctaArrow {
@@ -412,18 +345,22 @@ export default function Home() {
           padding-bottom: 42px;
         }
 
-        /* ─── EDITORIAL SECTIONS ──────────────────────────────── */
+        /* ─── EDITORIAL SECTIONS (aligned to system.js .block pattern) ── */
 
         .editorialSection {
           display: grid;
           grid-template-columns: 230px 1px minmax(0, 1fr);
           column-gap: 78px;
-          padding: 58px 0 58px;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+          padding: 64px 0;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .editorialSection:first-child {
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .sectionMeta {
-          padding-top: 2px;
+          padding-top: 4px;
         }
 
         .sectionNum {
@@ -432,8 +369,8 @@ export default function Home() {
           line-height: 1;
           letter-spacing: -0.04em;
           font-weight: 300;
-          opacity: 0.9;
-          margin-bottom: 28px;
+          opacity: 0.3;
+          margin-bottom: 16px;
         }
 
         .sectionEyebrow {
@@ -443,13 +380,13 @@ export default function Home() {
           letter-spacing: 0.22em;
           text-transform: uppercase;
           font-weight: 600;
-          opacity: 0.58;
+          opacity: 0.42;
         }
 
         .sectionRule {
           width: 1px;
-          min-height: 265px;
-          background: rgba(0, 0, 0, 0.08);
+          min-height: 1px;
+          background: transparent;
         }
 
         .sectionBody {
@@ -458,20 +395,21 @@ export default function Home() {
         }
 
         .sectionTitle {
-          font-size: clamp(2rem, 3vw, 3.05rem);
-          line-height: 1.06;
-          letter-spacing: -0.055em;
+          font-size: clamp(1.3rem, 1.8vw, 1.7rem);
           font-weight: 400;
-          margin: 0 0 29px;
-          max-width: 14ch;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
+          margin: 0 0 18px;
+          position: sticky;
+          top: 24px;
         }
 
         .sectionText {
-          font-size: 0.98rem;
-          line-height: 1.82;
+          font-size: 1rem;
+          line-height: 1.78;
           font-weight: 300;
-          opacity: 0.76;
-          margin: 0 0 36px;
+          opacity: 0.75;
+          margin: 0 0 32px;
           max-width: 68ch;
         }
 
@@ -484,7 +422,9 @@ export default function Home() {
 
         .qualityNote {
           text-align: center;
-          padding: 28px 0 0;
+          padding: 48px 0 0;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          margin-top: 16px;
         }
 
         .qualityKicker {
@@ -492,7 +432,7 @@ export default function Home() {
           letter-spacing: 0.3em;
           text-transform: uppercase;
           font-weight: 600;
-          opacity: 0.62;
+          opacity: 0.5;
           margin: 0 0 13px;
         }
 
@@ -506,7 +446,7 @@ export default function Home() {
         /* ─── RESPONSIVE ──────────────────────────────────────── */
 
         @media (max-width: 1100px) {
-          .heroImageWrap {
+          .homeHeroImageWrap {
             height: 600px;
           }
 
@@ -516,8 +456,19 @@ export default function Home() {
           }
         }
 
+        @media (max-width: 960px) {
+          .editorialSection {
+            grid-template-columns: 1fr 1.6fr;
+            column-gap: 48px;
+          }
+
+          .sectionRule {
+            display: none;
+          }
+        }
+
         @media (max-width: 820px) {
-          .heroImageWrap {
+          .homeHeroImageWrap {
             height: 590px;
           }
 
@@ -530,32 +481,22 @@ export default function Home() {
             font-size: 1rem;
             max-width: 48ch;
           }
+        }
 
+        @media (max-width: 720px) {
           .editorialSection {
             grid-template-columns: 1fr;
             row-gap: 26px;
-            padding: 44px 0;
-          }
-
-          .sectionRule {
-            display: none;
-          }
-
-          .sectionNum {
-            margin-bottom: 14px;
-          }
-
-          .sectionBody {
-            max-width: none;
+            padding: 48px 0;
           }
 
           .sectionTitle {
-            max-width: none;
+            position: static;
           }
         }
 
         @media (max-width: 520px) {
-          .heroImageWrap {
+          .homeHeroImageWrap {
             height: 560px;
           }
 
