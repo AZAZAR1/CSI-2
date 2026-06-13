@@ -17,7 +17,7 @@ const pageCopy = {
     individualsTitle: "For Aspiring Cigar Professionals",
     individualsEyebrow: "Professional Formation",
     individualsBody:
-      "Build a career grounded in precision, structure, and credibility. ICSI’s certification programs develop a rigorous understanding of cigar construction, combustion dynamics, humidity behavior, and flavor evolution—preparing candidates for roles in premium lounges, retail environments, and luxury hospitality.",
+      "Build a career grounded in precision, structure, and credibility. ICSI’s certification programs develop a rigorous understanding of cigar construction, combustion dynamics, humidity behavior, and flavor evolution. Preparing candidates for roles in premium lounges, retail environments, and luxury hospitality.",
     businessTitle: "For Retailers, Lounges & Hospitality Groups",
     businessEyebrow: "Business Modernization",
     businessBody:
@@ -50,7 +50,7 @@ const pageCopy = {
     individualsTitle: "Pour les futurs professionnels du cigare",
     individualsEyebrow: "Formation professionnelle",
     individualsBody:
-      "Construisez une carrière fondée sur la précision, la structure et la crédibilité. Les programmes de certification ICSI développent une compréhension rigoureuse de la construction du cigare, de la dynamique de combustion, du comportement hygrométrique et de l’évolution aromatique—préparant les candidats à des fonctions en lounges premium, en distribution spécialisée et dans l’hôtellerie de luxe.",
+      "Construisez une carrière fondée sur la précision, la structure et la crédibilité. Les programmes de certification ICSI développent une compréhension rigoureuse de la construction du cigare, de la dynamique de combustion, du comportement hygrométrique et de l’évolution aromatique; préparant les candidats à des fonctions en lounges premium, en distribution spécialisée et dans l’hôtellerie de luxe.",
     businessTitle: "Pour les détaillants, lounges & groupes hôteliers",
     businessEyebrow: "Modernisation business",
     businessBody:
@@ -83,7 +83,7 @@ const pageCopy = {
     individualsTitle: "Für angehende Zigarrenprofis",
     individualsEyebrow: "Professionelle Ausbildung",
     individualsBody:
-      "Bauen Sie eine Karriere auf, die auf Präzision, Struktur und Glaubwürdigkeit basiert. Die Zertifizierungsprogramme von ICSI vermitteln ein fundiertes Verständnis von Zigarrenkonstruktion, Verbrennungsdynamik, Feuchtigkeitsverhalten und Aromenentwicklung—und bereiten Kandidaten auf Aufgaben in Premium-Lounges, im Fachhandel und in der Luxushotellerie vor.",
+      "Bauen Sie eine Karriere auf, die auf Präzision, Struktur und Glaubwürdigkeit basiert. Die Zertifizierungsprogramme von ICSI vermitteln ein fundiertes Verständnis von Zigarrenkonstruktion, Verbrennungsdynamik, Feuchtigkeitsverhalten und Aromenentwicklung; und bereiten Kandidaten auf Aufgaben in Premium-Lounges, im Fachhandel und in der Luxushotellerie vor.",
     businessTitle: "Für Fachhändler, Lounges & Hotelgruppen",
     businessEyebrow: "Business Modernisierung",
     businessBody:
