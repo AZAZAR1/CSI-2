@@ -962,8 +962,15 @@ export default function PredictorPage() {
   });
 
   /* â”€â”€ API calls â”€â”€ */
-  const loadUsageForEmail = async (emailOverride) => {
-    setErr(""); setLoadingUsage(true); setUsage(null); setLookupStatus(""); setLookupSource("");
+  const loadUsageForEmail = async (emailOverride, options = {}) => {
+    const quiet = options?.quiet === true;
+    if (!quiet) setErr("");
+    setLoadingUsage(true);
+    if (!quiet) setUsage(null);
+    if (!quiet) {
+      setLookupStatus("");
+      setLookupSource("");
+    }
     try {
       const cleanedEmail = cleanText(emailOverride || form.user_email).toLowerCase();
       const storedToken = getStoredDeviceToken();
@@ -971,32 +978,53 @@ export default function PredictorPage() {
       const res  = await fetch(`/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}${tokenQuery}`);
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setIsUserValidated(false);
-        setValidatedEmail("");
-        // Do not delete the stored device token automatically. A 403 may be caused by
-        // expiry, inactive account, or a temporary backend state. Keeping the token
-        // avoids locking a legitimate registered device out unnecessarily.
-        throw new Error(data.error || data.detail || "Failed to load usage");
+        if (!quiet) {
+          setIsUserValidated(false);
+          setValidatedEmail("");
+          throw new Error(data.error || data.detail || "Failed to load usage");
+        }
+        return null;
       }
       if (data.device_token) storeDeviceSession(cleanedEmail, data.device_token);
       else storeDeviceSession(cleanedEmail, storedToken);
       setUsage(data); setValidatedEmail(cleanedEmail); setIsUserValidated(true);
       setForm((f) => ({ ...f, user_email: cleanedEmail }));
       setDeviceStatus(data.device_registered_now ? "Device registered for this account." : "Device validated for this account.");
+      return data;
     } catch(e) {
-      setIsUserValidated(false); setValidatedEmail(""); setErr(e.message||"Usage request failed"); setDeviceStatus("");
+      if (!quiet) {
+        setIsUserValidated(false);
+        setValidatedEmail("");
+        setErr(e.message || "Usage request failed");
+        setDeviceStatus("");
+      }
+      return null;
     }
     finally { setLoadingUsage(false); }
   };
 
-  const loadUsage = async () => loadUsageForEmail(form.user_email);
+  const loadUsage = async (options = {}) => loadUsageForEmail(form.user_email, options);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const savedEmail = window.localStorage.getItem(DEVICE_EMAIL_KEY);
-    const savedToken = window.localStorage.getItem(DEVICE_TOKEN_KEY);
+
+    const savedEmail =
+      window.localStorage.getItem("icsi_device_email") ||
+      window.localStorage.getItem("icsi_predictorpro_email") ||
+      window.localStorage.getItem("icsi_predictor_email") ||
+      "";
+
+    const savedToken = getStoredDeviceToken();
+
     if (savedEmail && savedToken) {
-      setForm((f) => ({ ...f, user_email: savedEmail }));
+      window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanText(savedEmail).toLowerCase());
+      window.localStorage.setItem(DEVICE_TOKEN_KEY, savedToken);
+      window.localStorage.removeItem("icsi_predictorpro_email");
+      window.localStorage.removeItem("icsi_predictor_email");
+      window.localStorage.removeItem("icsi_predictorpro_device_token");
+      window.localStorage.removeItem("icsi_predictor_device_token");
+
+      setForm((f) => ({ ...f, user_email: cleanText(savedEmail).toLowerCase() }));
       loadUsageForEmail(savedEmail);
     }
   }, []);
@@ -1009,7 +1037,7 @@ export default function PredictorPage() {
     if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
     setLoadingLookup(true); setLookupStatus("Querying ICSI blend database...");
     try {
-      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand, line }) });
+      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand, line }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.match) { setLookupStatus(data.error||data.detail||"No reliable blend match found."); return; }
       applyLookupMatch(data.match);
@@ -1021,7 +1049,7 @@ export default function PredictorPage() {
 
   const loadTastingCard = async (brand, line) => {
     try {
-      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand: cleanText(brand), line: cleanText(line) }) });
+      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand: cleanText(brand), line: cleanText(line) }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.tasting_card) { setTastingCard(null); return; }
       setTastingCard(data.tasting_card);
@@ -1033,7 +1061,7 @@ export default function PredictorPage() {
     if (!family) { setPairingCard(null); return; }
     setLoadingPairing(true);
     try {
-      const res  = await fetch(`/api/predictor/pairing-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ ...buildPayload(), family }) });
+      const res  = await fetch(`/api/predictor/pairing-card`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ ...buildPayload(), family }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.pairing_card) { setPairingCard(null); return; }
       setPairingCard(data.pairing_card);
@@ -1051,12 +1079,12 @@ export default function PredictorPage() {
     const cleanedBrand = cleanText(form.brand), cleanedLine = cleanText(form.line);
     try {
       setPredictStep("Modeling combustion profile...");
-      const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
+      const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error||data.detail||"Prediction failed");
       setPredictStep("Calibrating RH equilibrium...");
       setResult(data);
-      await loadUsage();
+      await loadUsage({ quiet: true });
       setPredictStep("Generating analytical tasting profile...");
       await loadTastingCard(cleanedBrand, cleanedLine);
       if (pairingSelection !== "None") { setPredictStep("Computing pairing matrix..."); }
@@ -1072,11 +1100,11 @@ export default function PredictorPage() {
     if (!hasProAccess) { setErr("Pro access not enabled for this account."); return; }
     setLoadingSimilar(true); setSimilarBlends(null); setResult(null); setTastingCard(null); setPairingCard(null); setStructuralSnapshot(null);
     try {
-      const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
+      const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok) throw new Error(data.error||data.detail||"Similar blends lookup failed");
       setSimilarBlends(data);
-      await loadUsage();
+      await loadUsage({ quiet: true });
     } catch(e) { setErr(e.message||"Similar blends request failed"); }
     finally { setLoadingSimilar(false); }
   };
@@ -1168,7 +1196,7 @@ export default function PredictorPage() {
               <button
                 className="pp-btn-primary"
                 style={styles.btnPrimary}
-                onClick={loadUsage}
+                onClick={() => loadUsage()}
                 disabled={loadingUsage}
               >
                 {loadingUsage ? "Validating..." : "Check User"}
