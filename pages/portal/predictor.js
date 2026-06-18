@@ -1,44 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
+
 /* ============================================================
-   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR
+   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR PRO
    Color palette: Carbon / ICSI Crimson / warm gold
    Typography: Cormorant Garamond (sections) + IBM Plex Mono (data)
    Spacing: 8pt grid throughout
    ============================================================ */
+
 const DS = {
   // Color tokens
-  bg:           "#0d0f11",
-  bgCard:       "#131416",
-  bgPanel:      "#1a1c1f",
-  bgInput:      "#0f1113",
+  bg:           "#0d0f11",        // near-black carbon
+  bgCard:       "#131416",        // card surface
+  bgPanel:      "#1a1c1f",        // raised panel
+  bgInput:      "#0f1113",        // input surface
   border:       "rgba(255,255,255,0.07)",
   borderStrong: "rgba(255,255,255,0.12)",
-  // ICSI institutional crimson
+  // ICSI institutional crimson -- matches logo seal
   accent:       "#8b1a1a",
   accentLight:  "#a52020",
   accentDim:    "rgba(139,26,26,0.18)",
   accentGlow:   "rgba(139,26,26,0.07)",
-  // Warm gold
+  // Warm gold -- complements the ICSI crest
   gold:         "#b8922a",
   goldDim:      "rgba(184,146,42,0.15)",
-  success:      "#b8922a",
+  success:      "#b8922a",        // validated / warm institutional gold
   successDim:   "rgba(184,146,42,0.14)",
-  warning:      "#b07d2a",
+  warning:      "#b07d2a",        // caution / warm amber
   warningDim:   "rgba(176,125,42,0.14)",
-  danger:       "#8b1a1a",
+  danger:       "#8b1a1a",        // deviation / same as accent
   dangerDim:    "rgba(139,26,26,0.14)",
-  // FIXED: raised contrast across the board
-  textPrimary:  "#f0ece6",        // brighter warm white (was #e6e2dc)
-  textSecond:   "#b8b0a6",        // raised significantly (was #8a8278)
-  textMuted:    "#9e968e",        // raised for on-screen legibility (was #8a8278)
-  textMono:     "#f0ece6",        // matches new textPrimary
+  textPrimary:  "#e6e2dc",        // warm off-white, not cold blue-white
+  textSecond:   "#8a8278",        // warm mid-tone
+  textMuted:    "#8a8278",        // warm muted, raised for on-screen legibility
+  textMono:     "#e6e2dc",        // off-white for output readouts
   fontSerif:    "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
   fontSans:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
   fontMono:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
 };
+
 /* ---- Inline style objects ---- */
+
 const styles = {
   page: {
     background: DS.bg,
@@ -47,12 +50,14 @@ const styles = {
     color: DS.textPrimary,
     WebkitFontSmoothing: "antialiased",
   },
+
   container: {
     maxWidth: 1040,
     margin: "0 auto",
     padding: "0 24px 80px",
   },
-  /* â”€â”€ PAGE HEADER â”€â”€ */
+
+  /* ── PAGE HEADER ── */
   pageHeader: {
     padding: "48px 0 40px",
     borderBottom: `1px solid ${DS.border}`,
@@ -93,12 +98,13 @@ const styles = {
   subtitle: {
     fontFamily: DS.fontMono,
     fontSize: 16,
-    color: DS.textMuted,         // FIXED: was DS.textMuted at old value
+    color: DS.textMuted,
     letterSpacing: "0.08em",
     textTransform: "uppercase",
     margin: 0,
   },
-  /* â”€â”€ CARDS â”€â”€ */
+
+  /* ── CARDS ── */
   card: {
     background: DS.bgCard,
     border: `1px solid ${DS.border}`,
@@ -110,12 +116,13 @@ const styles = {
   cardAccent: {
     borderLeft: `2px solid ${DS.accent}`,
   },
+
   sectionLabel: {
     fontFamily: DS.fontMono,
     fontSize: 14,
     letterSpacing: "0.16em",
     textTransform: "uppercase",
-    color: "#9e968e",            // FIXED: raised from #8a8278
+    color: DS.textMuted,
     marginBottom: 4,
   },
   h2: {
@@ -132,11 +139,12 @@ const styles = {
     fontSize: 22,
     fontWeight: 600,
     letterSpacing: "0.06em",
-    color: "#c8c0b6",            // FIXED: raised from DS.textSecond (#8a8278)
+    color: DS.textSecond,
     margin: "0 0 10px",
     textTransform: "none",
   },
-  /* â”€â”€ FORM ELEMENTS â”€â”€ */
+
+  /* ── FORM ELEMENTS ── */
   fieldGroup: {
     display: "flex",
     flexDirection: "column",
@@ -147,7 +155,7 @@ const styles = {
     fontSize: 14,
     letterSpacing: "0.12em",
     textTransform: "uppercase",
-    color: "#9e968e",            // FIXED: raised from #8a8278
+    color: DS.textMuted,
     marginBottom: 4,
     display: "block",
   },
@@ -185,7 +193,8 @@ const styles = {
     cursor: "pointer",
     transition: "border-color 0.15s",
   },
-  /* â”€â”€ GRID LAYOUTS â”€â”€ */
+
+  /* ── GRID LAYOUTS ── */
   grid2: {
     display: "grid",
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
@@ -196,7 +205,8 @@ const styles = {
     gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
     gap: 12,
   },
-  /* â”€â”€ BUTTONS â”€â”€ */
+
+  /* ── BUTTONS ── */
   btnPrimary: {
     background: DS.accent,
     border: "1px solid transparent",
@@ -229,7 +239,8 @@ const styles = {
     outline: "none",
     whiteSpace: "nowrap",
   },
-  /* â”€â”€ STATUS / NOTICE â”€â”€ */
+
+  /* ── STATUS / NOTICE ── */
   notice: {
     background: DS.dangerDim,
     border: `1px solid rgba(139,26,26,0.3)`,
@@ -266,7 +277,8 @@ const styles = {
     color: "#c9a96e",
     fontFamily: DS.fontMono,
   },
-  /* â”€â”€ DATA READOUTS (monospaced) â”€â”€ */
+
+  /* ── DATA READOUTS (monospaced) ── */
   dataRow: {
     display: "flex",
     justifyContent: "space-between",
@@ -279,7 +291,7 @@ const styles = {
     fontSize: 15,
     letterSpacing: "0.08em",
     textTransform: "uppercase",
-    color: "#9e968e",            // FIXED: raised from DS.textMuted (#8a8278)
+    color: DS.textMuted,
   },
   dataValue: {
     fontFamily: DS.fontMono,
@@ -294,7 +306,8 @@ const styles = {
     fontWeight: 600,
     letterSpacing: "0.04em",
   },
-  /* â”€â”€ RH DISPLAY â”€â”€ */
+
+  /* ── RH DISPLAY ── */
   rhPanel: {
     background: DS.bgPanel,
     border: `1px solid ${DS.border}`,
@@ -303,13 +316,15 @@ const styles = {
     textAlign: "center",
     flex: 1,
   },
-  /* â”€â”€ SEPARATOR â”€â”€ */
+
+  /* ── SEPARATOR ── */
   sep: {
     border: "none",
     borderTop: `1px solid ${DS.border}`,
     margin: "24px 0",
   },
-  /* â”€â”€ AUTOCOMPLETE â”€â”€ */
+
+  /* ── AUTOCOMPLETE ── */
   autocompleteBox: {
     position: "absolute",
     background: DS.bgPanel,
@@ -331,7 +346,8 @@ const styles = {
     color: DS.textSecond,
     transition: "background 0.1s",
   },
-  /* â”€â”€ METADATA FOOTER â”€â”€ */
+
+  /* ── METADATA FOOTER ── */
   metaBar: {
     display: "flex",
     gap: 24,
@@ -357,13 +373,17 @@ const styles = {
     verticalAlign: "middle",
   },
 };
+
 /* ============================================================
    INLINE KEYFRAMES  (injected once)
    ============================================================ */
+
 const GlobalStyles = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
     *, *::before, *::after { box-sizing: border-box; }
+
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50%       { opacity: 0.35; }
@@ -380,231 +400,101 @@ const GlobalStyles = () => (
       from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
     .pp-input:focus  { border-color: rgba(139,26,26,0.6) !important; }
     .pp-select:focus { border-color: rgba(139,26,26,0.6) !important; }
+
     .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
     .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
     .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
     .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
-    .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #f0ece6 !important; }
+
+    .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #e6e2dc !important; }
+
     .pp-datarow:last-child { border-bottom: none !important; }
+
     .pp-result { animation: fadeIn 0.35s ease both; }
-    .pp-section-divider {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 16px;
-      margin: 36px 0 24px;
-    }
-    .pp-section-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(184,146,42,0.48), rgba(255,255,255,0.08));
-    }
-    .pp-section-line:last-child {
-      background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(184,146,42,0.48), transparent);
-    }
-    .pp-section-label-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      min-width: max-content;
-    }
-    .pp-section-label {
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
-      font-size: 17px;
-      font-weight: 600;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: #d6c28c;
-      line-height: 1;
-    }
-    .pp-section-diamond {
-      width: 7px;
-      height: 7px;
-      background: #b8922a;
-      transform: rotate(45deg);
-      box-shadow: 0 0 12px rgba(184,146,42,0.35);
-    }
+
     .pp-output-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-      align-items: start;
+      gap: 16px;
     }
-    .pp-output-grid-single {
-      grid-template-columns: minmax(0, 1fr);
-      max-width: 840px;
-    }
-    .pp-output-card {
-      position: relative;
-      background:
-        radial-gradient(circle at 18% 0%, rgba(184,146,42,0.055), transparent 38%),
-        linear-gradient(145deg, rgba(24,27,30,0.98), rgba(15,17,19,0.98));
-      border: 1px solid rgba(255,255,255,0.12);
-      border-left: 3px solid #a52020;
-      border-radius: 8px;
-      padding: 26px 28px 22px;
-      min-height: 100%;
-      box-shadow: 0 18px 44px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.03);
-      overflow: hidden;
-    }
-    .pp-output-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(90deg, rgba(165,32,32,0.13), transparent 14%);
-      opacity: 0.65;
-    }
-    .pp-output-card-title {
-      position: relative;
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
-      font-size: 27px;
-      font-weight: 600;
-      letter-spacing: 0.055em;
-      color: #efe8dc;
-      line-height: 1.15;
-      margin: 0 0 22px;
-    }
-    .pp-output-card-body {
-      position: relative;
-    }
-    .pp-output-row {
-      display: grid;
-      grid-template-columns: minmax(142px, 0.72fr) minmax(0, 1.58fr);
-      column-gap: 30px;
-      align-items: start;
-      padding: 13px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.095);
-    }
-    .pp-output-row:first-child {
-      padding-top: 0;
-    }
-    .pp-output-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-    .pp-output-row-label {
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
-      font-size: 16px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #a9a098;
-      line-height: 1.28;
-      overflow-wrap: normal;
-    }
-    .pp-output-row-value {
-      border-left: 1px solid rgba(255,255,255,0.12);
-      padding-left: 26px;
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
-      font-size: 18px;
-      font-weight: 500;
-      color: #e9e2d8;
-      line-height: 1.45;
-      text-align: left;
-      overflow-wrap: anywhere;
-      word-break: normal;
-    }
-    .pp-output-card-wide .pp-output-row {
-      grid-template-columns: minmax(160px, 0.42fr) minmax(0, 1.58fr);
-      max-width: 680px;
-    }
-    @media (max-width: 860px) {
-      .pp-output-grid,
-      .pp-output-grid-single {
+
+    @media (max-width: 760px) {
+      .pp-output-grid {
         grid-template-columns: 1fr !important;
-        gap: 16px;
       }
-      .pp-section-divider {
-        gap: 12px;
-        margin: 30px 0 18px;
+
+      .pp-output-grid .pp-datarow {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px;
       }
-      .pp-section-label {
-        font-size: 15px;
-        letter-spacing: 0.18em;
+
+      .pp-output-grid .pp-datarow span:last-child {
+        text-align: left;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        font-size: 16px !important;
+        line-height: 1.45;
       }
-      .pp-output-card {
-        padding: 20px 20px 18px;
-        border-radius: 7px;
-      }
-      .pp-output-card-title {
-        font-size: 24px;
-        letter-spacing: 0.035em;
-        margin-bottom: 16px;
-      }
-      .pp-output-row,
-      .pp-output-card-wide .pp-output-row {
-        grid-template-columns: minmax(118px, 0.9fr) minmax(0, 1.4fr);
-        column-gap: 14px;
-        padding: 11px 0;
-      }
-      .pp-output-row-label {
-        font-size: 13px;
-        letter-spacing: 0.095em;
-        line-height: 1.25;
-      }
-      .pp-output-row-value {
-        font-size: 15px;
-        line-height: 1.35;
-        padding-left: 14px;
+
+      .pp-output-grid .pp-datarow span:first-child {
+        font-size: 15px !important;
+        line-height: 1.2;
       }
     }
-    @media (max-width: 390px) {
-      .pp-output-card {
-        padding: 18px 16px 16px;
-      }
-      .pp-output-row,
-      .pp-output-card-wide .pp-output-row {
-        grid-template-columns: 1fr;
-        row-gap: 5px;
-      }
-      .pp-output-row-value {
-        border-left: none;
-        padding-left: 0;
-      }
-    }
+
     .pp-rh-value {
       font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
       font-size: 42px;
       font-weight: 600;
-      color: #f0ece6;
+      color: #e6e2dc;
       letter-spacing: -0.02em;
       line-height: 1;
       animation: countUp 0.5s ease both;
     }
+
     .pp-sweep {
       animation: sweep 0.6s ease both;
     }
+
+    
     @media (max-width: 760px) {
       .pp-input,
       .pp-select {
         font-size: 18px !important;
       }
     }
+
+
     /* Scrollbar */
     ::-webkit-scrollbar       { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+
     /* Instruction block */
     .pp-instructions {
       font-size: 18px;
       line-height: 1.9;
-      color: #9e968e;             /* FIXED: raised from #8a8278 */
+      color: #8a8278;
       border-left: 2px solid rgba(139,26,26,0.4);
       padding-left: 16px;
       margin: 0;
     }
     .pp-instructions strong {
-      color: #f0ece6;             /* FIXED: matches new textPrimary */
+      color: #e6e2dc;
       font-weight: 500;
     }
   `}</style>
 );
+
 /* ============================================================
-   DATA CONSTANTS
+   DATA CONSTANTS  (unchanged from original)
    ============================================================ */
+
 const ORIGINS = ["","Cuba","Dominican Republic","Nicaragua","Honduras","Mexico","Costa Rica","Panama","Ecuador","Brazil","Peru","United States","Jamaica","Philippines"];
 const FACTORIES = ["","A.CONTI","Abam","Abeja Cigar","Aganorsa","Agio","Agroindustrias","Altadis USA","Augusto Reyes","Barreda","Blackbird Dom","Blanco Cigars","Buena Vista","Caldwell","Camacho Factory","Casa 1910","Charles Fairmorn","CLE","Cortez","D'Hatuey","Dannemann","De Los reyes","Don Palomor","Drew Estate","El Aladino","El Laguito","El Maestro","El Paraiso","El Rey de Los Habanos","El Sueno","El Titan de Bronze","El Viejo","EPC","Fabrica Centroamericana","Fabrica De Tabacos HVC","Fabrica Oveja Negra","Flor de Copan","Garmendia","General Cigar Dominicana","GR Tabacaleras","Graycliff Factory","Gurkha","H. Upmann","HATSA","Honduras american","Horacio","JC Newman","JRE Tobacco","Kelner Boutique","Kristoff Cigars","la Alianza","La Aurora","La Corona","La Flor De Copa","La Zona","Luciano Tabacos","Maya Selva","Meerapfel","MGE","Mi Havana","Micallef","Mina Del Rey","My Father Cigars","Natura","Nica Sueno","Nicaragua American","Oscar Vallardes","Oveja Negra","Padron","Partagas","PDR","Plasencia Cigars","Pure Aroma","Quesada","Raices Cubanas","Rocky Patel","San Lotano","Sanj Patel","Selected Tobacco","ST Group","STG Esteli","Tabacalera Altagracia","Tabacalera AJ Fernandez","Tabacalera Carreras","Tabacalera Cubanas","Tabacalera Davidoff","Tabacalera De Oliva","Tabacalera Diaz","Tabacalera El Artista","Tabacalera Fuente","Tabacalera Garcia","Tabacalera Joya de Nicaragua","Tabacalera Kafie","Tabacalera La Alianza","Tabacalera La Flor","Tabacalera La Isla","Tabacalera Las Lavas","Tabacalera Oveja Negra","Tabacalera Palma","Tabacalera Pichardo","Tabacalera Rocky Patel","Tabacalera Tropical","Tabacalera Villa Cuba","Tabacalera William Ventura","Tabacos De Costa Rica","Tabacos De Exportacion","Tabacos de Valle Jalapa","Tabacos Ranchos","Tabacos Valle de Jalapa","Tabacuba","Tabadom","Tabaos Vale De Jalapa","TABSA","TacaNicsa","TAF","Tavicusa Factory","The Foundation Cigars","Topper","Ventura","Villiger de Nicaragua"];
 const WRAPPERS = ["","Cuban","Nicaraguan Habano","Habano 2000","Dominican Corojo","Dominican Criollo","Brazilian","Nicaraguan Corojo","Nicaraguan Criollo","Ecuadorian Corojo","Ecuadorian Criollo","Honduran Corojo","Honduran Criollo","Connecticut Shade","Connecticut Broadleaf","Connecticut Habano","Costarican","Broadleaf","San Andres","Cameroon","Ecuadorian Sumatra","Ecuadorian Habano","Ecuadorian Connecticut","Pennsylvania Broadleaf","Yamasa","Peruvian","Indonesian Sumatra","Hybrid / Other"];
@@ -616,15 +506,19 @@ const FILLER_OPTIONS = ["","Cuba","Cuban Viso","Alta Viso","Dominican Republic",
 const LIGERO_OPTIONS = ["","none","low","moderate","high"];
 const SPECIAL_TOBACCO_FLAGS_OPTIONS = ["","Medio Tiempo","Alta Viso-heavy","Piloto Cubano","Olor Dominicano","Dominican Bonao","Pelo de Oro","Corojo","Criollo","Andullo","Cotui","Yamasa","San Vicente","Somoto","Brazilian Cubra","Brazilian Mata Fina","Brazilian Mata Norte","Brazilian Arapiraca","Masatepe","Ometepe","Pueblo Nuevo","Jamastran","Broadleaf-heavy","San Andres-heavy","SA Negrito","HVA","Jalapa","Filipino Simaba","Vuelta Abajo","Honduran Talanga","Costarican Puriscal","Aged filler","Extra fermented","Culebra style bunching","Small-batch / experimental"];
 const SMOKER_STYLE_OPTIONS = ["both","slow","fast"];
+
 const EMPTY_LOOKUP_FIELDS = {
   origin:"",factory:"",wrapper:"",wrapper_custom:"",wrapper_process:"",
   wrapper_thickness:"medium",wrapper_oiliness:"medium",binder_1:"",binder_1_custom:"",
   binder_2:"",binder_2_custom:"",filler_1:"",filler_2:"",filler_3:"",
   ligero:"moderate",flag_1:"",flag_2:"",flag_3:"",
 };
+
 /* ============================================================
    SUB-COMPONENTS
    ============================================================ */
+
+/* Precision data row */
 const DataRow = ({ label, value, primary }) => (
   <div className="pp-datarow" style={styles.dataRow}>
     <span style={styles.dataLabel}>{label}</span>
@@ -632,20 +526,18 @@ const DataRow = ({ label, value, primary }) => (
   </div>
 );
 
-const AnalyticalCard = ({ title, rows, wide = false }) => (
-  <div className={`pp-output-card${wide ? " pp-output-card-wide" : ""}`}>
-    <div className="pp-output-card-title">{title}</div>
-    <div className="pp-output-card-body">
-      {rows.map(({ label, value }) => (
-        <div key={label} className="pp-output-row">
-          <div className="pp-output-row-label">{label}</div>
-          <div className="pp-output-row-value">{value || "—"}</div>
-        </div>
-      ))}
-    </div>
+/* Tasting / pairing sub-card */
+const AnalyticalCard = ({ title, rows }) => (
+  <div style={{ ...styles.card, ...styles.cardAccent, marginBottom: 0, padding: "16px 20px" }}>
+    <div style={styles.h3}>{title}</div>
+    {rows.map(({ label, value }) => (
+      <DataRow key={label} label={label} value={value || "—"} />
+    ))}
   </div>
 );
 
+
+/* Loading state indicator */
 const ProcessingIndicator = ({ label }) => (
   <div style={{
     display: "flex",
@@ -662,24 +554,57 @@ const ProcessingIndicator = ({ label }) => (
   </div>
 );
 
+/* Section divider with label */
 const SectionDivider = ({ label }) => (
-  <div className="pp-section-divider">
-    <div className="pp-section-line" />
-    <div className="pp-section-label-wrap">
-      <span className="pp-section-label">{label}</span>
-      <span className="pp-section-diamond" />
-    </div>
-    <div className="pp-section-line" />
+  <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "28px 0 20px" }}>
+    <div style={{ height: 1, flex: 1, background: DS.border }} />
+    <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>{label}</span>
+    <div style={{ height: 1, flex: 1, background: DS.border }} />
   </div>
 );
+
+
+const DEVICE_EMAIL_KEY = "icsi_predictor_email";
+const DEVICE_TOKEN_KEY = "icsi_predictor_device_token";
+
+const readStoredDeviceSession = () => {
+  if (typeof window === "undefined") {
+    return { email: "", deviceToken: "" };
+  }
+  return {
+    email: window.localStorage.getItem(DEVICE_EMAIL_KEY) || "",
+    deviceToken: window.localStorage.getItem(DEVICE_TOKEN_KEY) || "",
+  };
+};
+
+const saveStoredDeviceSession = (email, deviceToken) => {
+  if (typeof window === "undefined") return;
+  const cleanEmail = String(email || "").trim().toLowerCase();
+  const cleanToken = String(deviceToken || "").trim();
+  if (cleanEmail) {
+    window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanEmail);
+  }
+  if (cleanToken) {
+    window.localStorage.setItem(DEVICE_TOKEN_KEY, cleanToken);
+  }
+};
+
+const clearStoredDeviceSession = () => {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(DEVICE_EMAIL_KEY);
+  window.localStorage.removeItem(DEVICE_TOKEN_KEY);
+};
+
 /* ============================================================
    MAIN COMPONENT
    ============================================================ */
+
 export default function PredictorPage() {
   const [brandSuggestions, setBrandSuggestions]     = useState([]);
   const [lineSuggestions, setLineSuggestions]       = useState([]);
   const [showBrandSuggestions, setShowBrandSuggestions] = useState(false);
   const [showLineSuggestions, setShowLineSuggestions]   = useState(false);
+
   const [form, setForm] = useState({
     user_email: "",
     brand: "",
@@ -707,25 +632,29 @@ export default function PredictorPage() {
     vitola: "",
     bunch_density: "medium",
   });
+
   const [usage, setUsage]                   = useState(null);
   const [validatedEmail, setValidatedEmail] = useState("");
   const [isUserValidated, setIsUserValidated] = useState(false);
+  const [deviceToken, setDeviceToken]       = useState("");
+
   const [result, setResult]                 = useState(null);
   const [tastingCard, setTastingCard]       = useState(null);
   const [pairingCard, setPairingCard]       = useState(null);
   const [pairingSelection, setPairingSelection] = useState("None");
   const [similarBlends, setSimilarBlends]   = useState(null);
-  const [structuralSnapshot, setStructuralSnapshot] = useState(null);
   const [err, setErr]                       = useState("");
+
   const [loadingUsage, setLoadingUsage]     = useState(false);
   const [loadingPredict, setLoadingPredict] = useState(false);
   const [loadingPairing, setLoadingPairing] = useState(false);
   const [loadingLookup, setLoadingLookup]   = useState(false);
   const [loadingSimilar, setLoadingSimilar] = useState(false);
   const [instructionsOpen, setInstructionsOpen] = useState(false);
+
   const [lookupStatus, setLookupStatus]     = useState("");
   const [lookupSource, setLookupSource]     = useState("");
-  const [predictStep, setPredictStep]       = useState("");
+  const [predictStep, setPredictStep]       = useState(""); // descriptive micro-copy
 
   const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
@@ -733,16 +662,16 @@ export default function PredictorPage() {
     String(value || "").normalize("NFKD")
       .replace(/[\u0300-\u036f]/g,"")
       .replace(/['']/g,"'").replace(/[""]/g,'"')
-      .replace(/[â€“â€”]/g,"-").replace(/\s+/g," ").trim();
+      .replace(/[–—]/g,"-").replace(/\s+/g," ").trim();
 
   const isAuthorizedUser =
     isUserValidated &&
     cleanText(validatedEmail).toLowerCase() === cleanText(form.user_email).toLowerCase();
-  const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
-  const hasPredictorAccess = isAuthorizedUser && usage?.pro_access !== true;
-  const hasBlendStructure = Boolean(cleanText(form.wrapper) || cleanText(form.binder_1) || cleanText(form.filler_1));
 
-  /* â”€â”€ Autocomplete â”€â”€ */
+  const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
+
+  /* ── Autocomplete (unchanged logic) ── */
+
   const uniqueByBrand = (items) => {
     const seen = new Set(), out = [];
     for (const item of items || []) {
@@ -797,13 +726,13 @@ export default function PredictorPage() {
     setShowBrandSuggestions(false); setBrandSuggestions([]);
     setLineSuggestions([]); setShowLineSuggestions(false);
   };
-
   const selectLineSuggestion = (item) => {
     update("line", cleanText(item.line || ""));
     setShowLineSuggestions(false); setLineSuggestions([]);
   };
 
-  /* â”€â”€ Helpers â”€â”€ */
+  /* ── Helpers (unchanged logic) ── */
+
   const buildCustomValue = (choice, custom) =>
     (choice === "Custom / Other" || choice === "Hybrid / Other")
       ? String(custom || "").trim() : choice;
@@ -840,19 +769,18 @@ export default function PredictorPage() {
     const withoutBlank = options.filter(Boolean);
     return ["", selected, ...withoutBlank];
   };
-
   const resetUserValidation = () => {
     setUsage(null); setValidatedEmail(""); setIsUserValidated(false);
-    setLookupStatus(""); setLookupSource(""); setStructuralSnapshot(null);
+    setLookupStatus(""); setLookupSource("");
   };
 
   const displayPairingList = (values) =>
-    (!Array.isArray(values) || values.length === 0) ? "â€”"
-      : values.filter(Boolean).join(", ") || "â€”";
+    (!Array.isArray(values) || values.length === 0) ? "—"
+      : values.filter(Boolean).join(", ") || "—";
 
   const getFilteredPairingCard = () => {
     if (!pairingCard || pairingSelection === "None") return null;
-    const mapping = {
+   const mapping = {
       wine: pairingCard.wine,
       whisky: pairingCard.whisky,
       rum: pairingCard.rum,
@@ -862,7 +790,7 @@ export default function PredictorPage() {
       cocktail: pairingCard.cocktails,
       coffee: pairingCard.coffee,
       tea: pairingCard.tea,
-    };
+   };
     return mapping[pairingSelection.toLowerCase()] || null;
   };
 
@@ -878,6 +806,7 @@ export default function PredictorPage() {
     const validFillers = filler.filter((x) => FILLER_OPTIONS.includes(x));
     const flags  = Array.isArray(match?.special_tobacco_flags) ? match.special_tobacco_flags.map(cleanText).filter(Boolean) : [];
     const validFlags = flags.filter((x) => SPECIAL_TOBACCO_FLAGS_OPTIONS.includes(x));
+
     setForm((f) => ({
       ...f,
       brand: cleanText(match?.brand) || f.brand,
@@ -902,6 +831,7 @@ export default function PredictorPage() {
 
   const buildPayload = () => ({
     user_email:  cleanText(form.user_email),
+    device_token: cleanText(deviceToken),
     brand:       cleanText(form.brand),
     line:        cleanText(form.line),
     origin:      cleanText(form.origin),
@@ -923,7 +853,8 @@ export default function PredictorPage() {
     bunch_density:"medium",
   });
 
-  /* â”€â”€ API calls â”€â”€ */
+  /* ── API calls (unchanged logic) ── */
+
   const loadUsage = async () => {
     setErr(""); setLoadingUsage(true); setUsage(null); setLookupStatus(""); setLookupSource("");
     try {
@@ -939,24 +870,24 @@ export default function PredictorPage() {
   const lookupBlend = async () => {
     setErr(""); setLookupSource("");
     if (!isAuthorizedUser) { setLookupStatus("Validate your registered email address first."); return; }
-    if (!hasPredictorAccess) { setLookupStatus("Predictor access is only available to Standard users."); return; }
+    if (!hasProAccess)     { setLookupStatus("Pro access not enabled for this account."); return; }
     const brand = cleanText(form.brand), line = cleanText(form.line);
     if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
     setLoadingLookup(true); setLookupStatus("Querying ICSI blend database...");
     try {
-      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand, line }) });
+      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: cleanText(deviceToken), brand, line }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.match) { setLookupStatus(data.error||data.detail||"No reliable blend match found."); return; }
       applyLookupMatch(data.match);
       setLookupSource(data.source?.label||"");
-      setLookupStatus("Blend data retrieved.");
+      setLookupStatus("Blend data retrieved and applied.");
     } catch { setLookupStatus("Lookup failed \u2014 check connection and retry."); }
     finally { setLoadingLookup(false); }
   };
 
   const loadTastingCard = async (brand, line) => {
     try {
-      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand: cleanText(brand), line: cleanText(line) }) });
+      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: cleanText(deviceToken), brand: cleanText(brand), line: cleanText(line) }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.tasting_card) { setTastingCard(null); return; }
       setTastingCard(data.tasting_card);
@@ -979,9 +910,8 @@ export default function PredictorPage() {
   const runPrediction = async () => {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
-    if (!hasPredictorAccess) { setErr("Predictor access is only available to Standard users."); return; }
-    if (!hasBlendStructure) { setErr("Lookup Blend first. Predictor uses the database blend structure and does not support manual construction edits."); return; }
-    setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null); setStructuralSnapshot(buildPayload());
+    if (!hasProAccess)     { setErr("Pro access not enabled for this account."); return; }
+    setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null);
     setPredictStep("Initializing combustion model...");
     const cleanedBrand = cleanText(form.brand), cleanedLine = cleanText(form.line);
     try {
@@ -1004,8 +934,8 @@ export default function PredictorPage() {
   const findSimilarBlends = async () => {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
-    if (!hasPredictorAccess) { setErr("Predictor access is only available to Standard users."); return; }
-    setLoadingSimilar(true); setSimilarBlends(null); setResult(null); setTastingCard(null); setPairingCard(null); setStructuralSnapshot(null);
+    if (!hasProAccess)     { setErr("Pro access not enabled for this account."); return; }
+    setLoadingSimilar(true); setSimilarBlends(null); setResult(null); setTastingCard(null); setPairingCard(null);
     try {
       const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
@@ -1019,27 +949,31 @@ export default function PredictorPage() {
   /* ============================================================
      RENDER
      ============================================================ */
+
   const now = new Date();
   const timestamp = `${now.getDate().toString().padStart(2,"0")} ${now.toLocaleString("en",{month:"short"}).toUpperCase()} ${now.getFullYear()} \u2014 ${now.getHours().toString().padStart(2,"0")}:${now.getMinutes().toString().padStart(2,"0")} GST`;
+
   const filteredPairing = getFilteredPairingCard();
 
   return (
     <Layout>
-      <Seo title="Predictor | ICSI" path="/portal/predictor" />
+      <Seo title="Predictor Pro | ICSI" path="/portal/predictorpro" />
       <GlobalStyles />
+
       <div style={styles.page}>
         <div style={styles.container}>
-          {/* â”€â”€ PAGE HEADER â”€â”€ */}
+
+          {/* ── PAGE HEADER ── */}
           <div style={styles.pageHeader}>
             <div style={styles.engineBadge}>
               <span style={styles.dotActive} />
               CPFS Engine v4.8 Calibrated
             </div>
-            <h1 style={styles.h1}>e-Sommelier</h1>
-            <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
+            <h1 style={styles.h1}>PredictorPro Enterprise Application</h1>
+            <p style={styles.subtitle}>Cigar Peak-Flavor System</p>
           </div>
 
-          {/* â”€â”€ COLLAPSIBLE METHODOLOGY NOTICE â”€â”€ */}
+          {/* ── COLLAPSIBLE METHODOLOGY NOTICE ── */}
           <div style={{ ...styles.card, marginBottom: 24, borderColor: "rgba(37,99,235,0.18)", padding: instructionsOpen ? "20px 28px" : "14px 28px" }}>
             <button
               type="button"
@@ -1060,14 +994,15 @@ export default function PredictorPage() {
                 textAlign: "left",
               }}
             >
-              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Instructions</span>
+              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Operational Protocol</span>
               <span style={{ ...styles.dataLabel, marginBottom: 0 }}>
-                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "-" : "+"}
+                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "−" : "+"}
               </span>
             </button>
+
             {instructionsOpen && (
               <p className="pp-instructions" style={{ marginTop: 14 }}>
-                Predictor is available exclusively to approved users. Validate your registered
+                Predictor Pro is available exclusively to approved subscribers. Validate your registered
                 email address using the Check User control. In the Blend Lookup module, enter the Brand
                 and Line identifiers, then initiate the Lookup Blend procedure and construction and tobacco
                 composition parameters will populate automatically.
@@ -1086,9 +1021,11 @@ export default function PredictorPage() {
             )}
           </div>
 
-          {/* â”€â”€ USER VALIDATION â”€â”€ */}
+          {/* ── USER VALIDATION ── */}
           <div style={{ ...styles.card, ...styles.cardAccent }}>
+            <div style={styles.sectionLabel}>Section 01</div>
             <div style={styles.h2}>User Validation</div>
+
             <div style={{ maxWidth: 420 }}>
               <label style={styles.label}>Registered Email Address</label>
               <input
@@ -1096,9 +1033,10 @@ export default function PredictorPage() {
                 style={styles.input}
                 value={form.user_email}
                 placeholder="subscriber@domain.com"
-                onChange={(e) => { update("user_email", e.target.value); resetUserValidation(); }}
+                onChange={(e) => { update("user_email", e.target.value); resetStoredDeviceValidation(); }}
               />
             </div>
+
             <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
               <button
                 className="pp-btn-primary"
@@ -1108,27 +1046,31 @@ export default function PredictorPage() {
               >
                 {loadingUsage ? "Validating..." : "Check User"}
               </button>
-              {isAuthorizedUser && hasPredictorAccess && (
+
+              {isAuthorizedUser && hasProAccess && (
                 <span style={{ ...styles.noticeSuccess, padding: "6px 12px" }}>
-                  &#x2713; Access Validated &#x2014; Predictor Enabled
+                  &#x2713; Access Validated &#x2014; Pro Enabled
                 </span>
               )}
-              {isAuthorizedUser && !hasPredictorAccess && (
+              {isAuthorizedUser && !hasProAccess && (
                 <span style={{ ...styles.noticeWarning, padding: "6px 12px" }}>
-                  &#x26A0; Validated &#x2014; PredictorPro account detected
+                  &#x26A0; Validated &#x2014; Pro Access Inactive
                 </span>
               )}
               {!isAuthorizedUser && !loadingUsage && (
                 <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.08em" }}>
-                  Validation required to enable Predictor
+                  Validation required to enable Predictor Pro
                 </span>
               )}
             </div>
+
           </div>
 
-          {/* â”€â”€ CIGAR BLEND LOOKUP â”€â”€ */}
+          {/* ── CIGAR BLEND LOOKUP ── */}
           <div style={styles.card}>
+            <div style={styles.sectionLabel}>Section 02</div>
             <div style={styles.h2}>Cigar Blend Lookup</div>
+
             <div style={styles.grid2}>
               {/* Brand */}
               <div style={{ position: "relative" }}>
@@ -1159,6 +1101,7 @@ export default function PredictorPage() {
                   </div>
                 )}
               </div>
+
               {/* Line */}
               <div style={{ position: "relative" }}>
                 <label style={styles.label}>Line</label>
@@ -1185,31 +1128,153 @@ export default function PredictorPage() {
                 )}
               </div>
             </div>
+
             <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
               <button
                 className="pp-btn-secondary"
                 style={styles.btnSecondary}
                 onClick={lookupBlend}
-                disabled={loadingLookup || !hasPredictorAccess}
+                disabled={loadingLookup || !hasProAccess}
               >
                 {loadingLookup ? "Querying Database..." : "Lookup Blend"}
               </button>
+
               {lookupStatus && (
                 <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
                   {lookupStatus}
                 </span>
               )}
             </div>
+
             {lookupSource && (
               <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
                 Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
               </div>
             )}
+
+            <hr style={styles.sep} />
+
+            <div style={styles.grid2}>
+              <div>
+                <label style={styles.label}>Origin</label>
+                <select className="pp-select" style={styles.select} value={form.origin} onChange={(e) => update("origin", e.target.value)}>
+                  {ORIGINS.map((x) => <option key={x||"blank-origin"} value={x}>{x||"Select Origin"}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={styles.label}>Factory</label>
+                <select className="pp-select" style={styles.select} value={form.factory} onChange={(e) => update("factory", e.target.value)}>
+                  {lookupOptionList(FACTORIES, form.factory).map((x) => <option key={x||"blank-factory"} value={x}>{x||"Select Factory"}</option>)}
+                </select>
+              </div>
+            </div>
           </div>
 
-          {/* â”€â”€ ENVIRONMENTAL + RUN CONTROLS â”€â”€ */}
+          {/* ── BLEND CONSTRUCTION ── */}
           <div style={styles.card}>
+            <div style={styles.sectionLabel}>Section 03</div>
+            <div style={styles.h2}>Blend Construction: Autofilled &amp; Adjustable</div>
+
+            <SectionDivider label="Wrapper" />
+            <div style={styles.grid2}>
+              <div>
+                <label style={styles.label}>Wrapper Leaf</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper} onChange={(e) => update("wrapper", e.target.value)}>
+                  {WRAPPERS.map((x) => <option key={x||"blank-wrapper"} value={x}>{x||"Select Wrapper"}</option>)}
+                </select>
+                {form.wrapper === "Hybrid / Other" && (
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.wrapper_custom}
+                    onChange={(e) => update("wrapper_custom", e.target.value)}
+                    placeholder="Specify custom wrapper designation" />
+                )}
+              </div>
+              <div>
+                <label style={styles.label}>Wrapper Process</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_process} onChange={(e) => update("wrapper_process", e.target.value)}>
+                  {WRAPPER_PROCESSES.map((x) => <option key={x||"blank-wp"} value={x}>{x||"Select Process"}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div style={{ ...styles.grid2, marginTop: 14 }}>
+              <div>
+                <label style={styles.label}>Wrapper Thickness</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_thickness} onChange={(e) => update("wrapper_thickness", e.target.value)}>
+                  {WRAPPER_THICKNESS_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={styles.label}>Wrapper Oiliness</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_oiliness} onChange={(e) => update("wrapper_oiliness", e.target.value)}>
+                  {WRAPPER_OILINESS_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <SectionDivider label="Binder Components" />
+            <div style={styles.grid2}>
+              <div>
+                <label style={styles.label}>Binder 1</label>
+                <select className="pp-select" style={styles.select} value={form.binder_1} onChange={(e) => update("binder_1", e.target.value)}>
+                  {BINDERS.map((x) => <option key={x||"blank-b1"} value={x}>{x||"Select Binder"}</option>)}
+                </select>
+                {form.binder_1 === "Hybrid / Other" && (
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.binder_1_custom} onChange={(e) => update("binder_1_custom", e.target.value)}
+                    placeholder="Specify custom binder" />
+                )}
+              </div>
+              <div>
+                <label style={styles.label}>Binder 2</label>
+                <select className="pp-select" style={styles.select} value={form.binder_2} onChange={(e) => update("binder_2", e.target.value)}>
+                  {BINDERS.map((x) => <option key={x||"blank-b2"} value={x}>{x||"Select Binder"}</option>)}
+                </select>
+                {form.binder_2 === "Hybrid / Other" && (
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.binder_2_custom} onChange={(e) => update("binder_2_custom", e.target.value)}
+                    placeholder="Specify custom binder" />
+                )}
+              </div>
+            </div>
+
+            <div style={{ marginTop: 14, maxWidth: 320 }}>
+              <label style={styles.label}>Ligero Level</label>
+              <select className="pp-select" style={styles.select} value={form.ligero} onChange={(e) => update("ligero", e.target.value)}>
+                {LIGERO_OPTIONS.map((x) => <option key={x||"blank-lig"} value={x}>{x||"Select Level"}</option>)}
+              </select>
+            </div>
+
+            <SectionDivider label="Filler Components" />
+            <div style={styles.grid3}>
+              {["filler_1","filler_2","filler_3"].map((key, i) => (
+                <div key={key}>
+                  <label style={styles.label}>Filler {i+1}</label>
+                  <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
+                    {FILLER_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
+                  </select>
+                </div>
+              ))}
+            </div>
+
+            <SectionDivider label="Special Tobacco Flags" />
+            <div style={styles.grid3}>
+              {["flag_1","flag_2","flag_3"].map((key, i) => (
+                <div key={key}>
+                  <label style={styles.label}>Flag {i+1}</label>
+                  <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
+                  </select>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── ENVIRONMENTAL + RUN CONTROLS ── */}
+          <div style={styles.card}>
+            <div style={styles.sectionLabel}>Section 04</div>
             <div style={styles.h2}>Optional Parameters &amp; Analysis Controls</div>
+
             <div style={styles.grid2}>
               <div>
                 <label style={styles.label}>Blend Age (years)</label>
@@ -1229,6 +1294,7 @@ export default function PredictorPage() {
                 </select>
               </div>
             </div>
+
             <div style={{ marginTop: 16, maxWidth: 320 }}>
               <label style={styles.label}>Pairing Category</label>
               <select className="pp-select" style={styles.select} value={pairingSelection} onChange={(e) => setPairingSelection(e.target.value)}>
@@ -1244,161 +1310,141 @@ export default function PredictorPage() {
                 <option value="Tea">Tea</option>
               </select>
             </div>
+
             <hr style={styles.sep} />
+
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
               <button
                 className="pp-btn-primary"
                 style={styles.btnPrimary}
                 onClick={runPrediction}
-                disabled={loadingPredict || !hasPredictorAccess || !hasBlendStructure}
+                disabled={loadingPredict || !hasProAccess}
               >
                 {loadingPredict ? "Computing..." : "Run Predictor"}
               </button>
+
               <button
                 className="pp-btn-secondary"
                 style={styles.btnSecondary}
                 onClick={findSimilarBlends}
-                disabled={loadingSimilar || !hasPredictorAccess || !hasBlendStructure}
+                disabled={loadingSimilar || !hasProAccess}
               >
                 {loadingSimilar ? "Searching..." : "Find Similar Blends"}
               </button>
+
               {(loadingPredict && predictStep) && <ProcessingIndicator label={predictStep} />}
               {loadingSimilar && <ProcessingIndicator label="Scanning blend database..." />}
             </div>
           </div>
 
-          {/* â”€â”€ ERROR â”€â”€ */}
+          {/* ── ERROR ── */}
           {err && (
             <div style={{ ...styles.notice, marginTop: 16 }}>
-              âš   {err}
+              ⚠  {err}
             </div>
           )}
 
-          {/* â”€â”€ ANALYTICAL OUTPUT â”€â”€ */}
+          {/* ── ANALYTICAL OUTPUT ── */}
           {result && (
             <div className="pp-result" style={styles.card}>
+              <div style={styles.sectionLabel}>Analytical Output</div>
               <div style={styles.h2}>Peak-Flavor Prediction Result</div>
+
               {/* RH Readout panels */}
-              <div style={{ display: "flex", gap: 16, margin: "0 auto 24px", flexWrap: "wrap", justifyContent: "center", maxWidth: 720 }}>
-                <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
+              <div style={{ display: "flex", gap: 16, marginBottom: 24, flexWrap: "wrap" }}>
+                <div style={styles.rhPanel}>
                   <div style={styles.dataLabel}>Target RH%</div>
                   <div className="pp-rh-value">{result.target_rh}</div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
                 </div>
-                <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
-                  <div style={styles.dataLabel}>RH% Window</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 32, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
-                    {result.window_low}-{result.window_high}
+                <div style={styles.rhPanel}>
+                  <div style={styles.dataLabel}>RH Window</div>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 22, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
+                    {result.window_low}–{result.window_high}
                   </div>
-                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
+                </div>
+                <div style={styles.rhPanel}>
+                  <div style={styles.dataLabel}>CPFS Family</div>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
+                    {result.family}
+                  </div>
+                  <div style={{ ...styles.dataLabel, marginTop: 4 }}>Classification</div>
                 </div>
               </div>
-              {/* Retrieved Blend Structure */}
-              {structuralSnapshot && (
-                <>
-                  <SectionDivider label="Retrieved Blend Structure" />
-                  <div style={{ padding: "18px 0", borderBottom: `1px solid ${DS.border}`, marginBottom: 24 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
-                      <div>
-                        <span style={{ fontWeight: 600, fontSize: 16, color: DS.textPrimary }}>
-                          {structuralSnapshot.brand || "Unknown Brand"}
-                        </span>
-                        {structuralSnapshot.line && (
-                          <span style={{ fontSize: 16, color: DS.textSecond, marginLeft: 8 }}>&mdash; {structuralSnapshot.line}</span>
-                        )}
-                      </div>
-                    </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 2 }}>
-                      {structuralSnapshot.origin && <DataRow label="Origin" value={structuralSnapshot.origin} />}
-                      {structuralSnapshot.factory && <DataRow label="Factory" value={structuralSnapshot.factory} />}
-                      {structuralSnapshot.wrapper && <DataRow label="Wrapper" value={structuralSnapshot.wrapper} />}
-                      {structuralSnapshot.wrapper_process && <DataRow label="Wrapper Process" value={structuralSnapshot.wrapper_process} />}
-                      {(structuralSnapshot.binder_1 || structuralSnapshot.binder_2 || structuralSnapshot.binder) && (
-                        <DataRow label="Binder Components" value={[structuralSnapshot.binder_1, structuralSnapshot.binder_2].filter(Boolean).join(", ") || splitPipeValues(structuralSnapshot.binder || "").join(", ")} />
-                      )}
-                      {Array.isArray(structuralSnapshot.filler) && structuralSnapshot.filler.length > 0 && (
-                        <DataRow label="Filler" value={structuralSnapshot.filler.join(", ")} />
-                      )}
-                      {structuralSnapshot.ligero && <DataRow label="Ligero" value={structuralSnapshot.ligero} />}
-                      {Array.isArray(structuralSnapshot.special_tobacco_flags) && structuralSnapshot.special_tobacco_flags.length > 0 && (
-                        <DataRow label="Special Flags" value={structuralSnapshot.special_tobacco_flags.join(", ")} />
-                      )}
-                    </div>
-                    {lookupSource && (
-                      <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
-                        Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
+
               {/* Tasting Card */}
               {tastingCard && (
                 <>
-                  <SectionDivider label="Taste Profile" />
+                  <SectionDivider label="Analytical Tasting Profile" />
                   <div className="pp-output-grid">
                     <AnalyticalCard
-                      title="On The Palate"
+                      title="Palate Analysis"
                       rows={[
-                        { label: "Primary Notes",   value: (tastingCard?.palate?.primary  ||[]).join(", ") },
-                        { label: "Secondary Notes", value: (tastingCard?.palate?.secondary||[]).join(", ") },
+                        { label: "Primary",   value: (tastingCard?.palate?.primary  ||[]).join(", ") },
+                        { label: "Secondary", value: (tastingCard?.palate?.secondary||[]).join(", ") },
                         { label: "Texture",   value: (tastingCard?.palate?.texture  ||[]).join(", ") },
                         { label: "Finish",    value: (tastingCard?.palate?.finish   ||[]).join(", ") },
                       ]}
                     />
                     <AnalyticalCard
-                      title="Retrohale"
+                      title="Retrohale Profile"
                       rows={[
-                        { label: "Primary Notes",   value: (tastingCard?.retrohale?.primary  ||[]).join(", ") },
-                        { label: "Secondary Notes", value: (tastingCard?.retrohale?.secondary||[]).join(", ") },
+                        { label: "Primary",   value: (tastingCard?.retrohale?.primary  ||[]).join(", ") },
+                        { label: "Secondary", value: (tastingCard?.retrohale?.secondary||[]).join(", ") },
                         { label: "Finish",    value: (tastingCard?.retrohale?.finish   ||[]).join(", ") },
                       ]}
                     />
                   </div>
                 </>
               )}
+
               {/* Pairing Card */}
               {loadingPairing && pairingSelection !== "None" && (
                 <ProcessingIndicator label={`Generating ${pairingSelection} pairing matrix...`} />
               )}
+
               {pairingCard && pairingSelection !== "None" && filteredPairing && (
                 <>
-                  <SectionDivider label={`${pairingSelection} Pairing Card`} />
-                  <div className="pp-output-grid pp-output-grid-single">
+                  <SectionDivider label={`${pairingSelection} Pairing Matrix`} />
+                  <div className="pp-output-grid">
                     <AnalyticalCard
-                      wide
                       title={`${pairingSelection} \u2014 Pairing Recommendations`}
                       rows={[
-                        { label: "Exceptional Pairing",   value: displayPairingList(filteredPairing?.primary) },
-                        { label: "Strong Pairing", value: displayPairingList(filteredPairing?.secondary) },
+                        { label: "Primary",   value: displayPairingList(filteredPairing?.primary) },
+                        { label: "Secondary", value: displayPairingList(filteredPairing?.secondary) },
                       ]}
                     />
                   </div>
                 </>
               )}
+
               {pairingCard && pairingSelection !== "None" && !filteredPairing && (
                 <div style={{ ...styles.noticeInfo, marginTop: 16 }}>
                   No {pairingSelection.toLowerCase()} pairing data returned for this blend profile.
                 </div>
               )}
+
               {/* Metadata footer */}
               <div style={styles.metaBar}>
                 <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
                 <span style={styles.metaItem}>Calibrated · Reference-Standard</span>
                 <span style={styles.metaItem}>Generated {timestamp}</span>
+                <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
               </div>
             </div>
           )}
 
-          {/* â”€â”€ SIMILAR BLENDS â”€â”€ */}
+          {/* ── SIMILAR BLENDS ── */}
           {similarBlends && (
             <div className="pp-result" style={styles.card}>
               <div style={styles.sectionLabel}>Structural Match Analysis</div>
               <div style={styles.h2}>Similar Blend Profiles</div>
+
               {Array.isArray(similarBlends.results) && similarBlends.results.length > 0 ? (
                 similarBlends.results.map((blend, idx) => (
                   <div key={`${blend.brand||"b"}-${blend.line||"l"}-${idx}`}
                     style={{ padding: "18px 0", borderBottom: idx < similarBlends.results.length-1 ? `1px solid ${DS.border}` : "none" }}>
+
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
                       <div>
                         <span style={{ fontWeight: 600, fontSize: 16, color: DS.textPrimary }}>
@@ -1414,23 +1460,25 @@ export default function PredictorPage() {
                         </div>
                       )}
                     </div>
+
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 2 }}>
-                      {blend.origin          && <DataRow label="Origin"           value={blend.origin} />}
-                      {blend.factory         && <DataRow label="Factory"          value={blend.factory} />}
-                      {blend.wrapper         && <DataRow label="Wrapper"          value={blend.wrapper} />}
-                      {blend.wrapper_process && <DataRow label="Wrapper Process"  value={blend.wrapper_process} />}
+                      {blend.origin         && <DataRow label="Origin"          value={blend.origin} />}
+                      {blend.factory        && <DataRow label="Factory"         value={blend.factory} />}
+                      {blend.wrapper        && <DataRow label="Wrapper"         value={blend.wrapper} />}
+                      {blend.wrapper_process && <DataRow label="Wrapper Process" value={blend.wrapper_process} />}
                       {(blend.binder_1||blend.binder_2||blend.binder) && (
                         <DataRow label="Binder Components" value={[...splitPipeValues(blend.binder||""), cleanText(blend.binder_1||""), cleanText(blend.binder_2||"")].filter(Boolean).join(", ")} />
                       )}
                       {Array.isArray(blend.filler) && blend.filler.length > 0 && (
                         <DataRow label="Filler"  value={blend.filler.join(", ")} />
                       )}
-                      {blend.ligero          && <DataRow label="Ligero"           value={blend.ligero} />}
+                      {blend.ligero         && <DataRow label="Ligero"          value={blend.ligero} />}
                       {Array.isArray(blend.special_tobacco_flags) && blend.special_tobacco_flags.length > 0 && (
                         <DataRow label="Special Flags" value={blend.special_tobacco_flags.join(", ")} />
                       )}
-                      {blend.source_label    && <DataRow label="Data Source"      value={blend.source_label} />}
+                      {blend.source_label   && <DataRow label="Data Source"     value={blend.source_label} />}
                     </div>
+
                     {Array.isArray(blend.why_similar) && blend.why_similar.length > 0 && (
                       <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
                         Similarity basis: {blend.why_similar.join(" · ")}
@@ -1443,6 +1491,7 @@ export default function PredictorPage() {
                   No structurally similar blends identified in the current database.
                 </div>
               )}
+
               <div style={styles.metaBar}>
                 <span style={styles.metaItem}><span style={styles.metaDot} />Structural Match Engine</span>
                 <span style={styles.metaItem}>Generated {timestamp}</span>
