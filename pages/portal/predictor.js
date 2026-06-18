@@ -676,8 +676,8 @@ const SectionDivider = ({ label }) => (
 /* ============================================================
    DEVICE SESSION HELPERS
    ============================================================ */
-const DEVICE_EMAIL_KEY = "icsi_predictor_email";
-const DEVICE_TOKEN_KEY = "icsi_predictor_device_token";
+const DEVICE_EMAIL_KEY = "icsi_device_email";
+const DEVICE_TOKEN_KEY = "icsi_device_token";
 
 const getStoredDeviceSession = () => {
   if (typeof window === "undefined") return { email: "", device_token: "" };
