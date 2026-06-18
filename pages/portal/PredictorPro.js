@@ -728,8 +728,8 @@ export default function PredictorPage() {
   const [predictStep, setPredictStep]       = useState("");
   const [deviceStatus, setDeviceStatus]     = useState("");
 
-  const DEVICE_EMAIL_KEY = "icsi_predictorpro_email";
-  const DEVICE_TOKEN_KEY = "icsi_predictorpro_device_token";
+  const DEVICE_EMAIL_KEY = "icsi_device_email";
+  const DEVICE_TOKEN_KEY = "icsi_device_token";
 
   const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
@@ -741,13 +741,28 @@ export default function PredictorPage() {
 
   const getStoredDeviceToken = () => {
     if (typeof window === "undefined") return "";
-    return window.localStorage.getItem(DEVICE_TOKEN_KEY) || "";
+
+    return (
+      window.localStorage.getItem("icsi_device_token") ||
+      window.localStorage.getItem("icsi_predictorpro_device_token") ||
+      window.localStorage.getItem("icsi_predictor_device_token") ||
+      ""
+    );
   };
 
   const storeDeviceSession = (email, deviceToken) => {
     if (typeof window === "undefined") return;
-    window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanText(email).toLowerCase());
-    if (deviceToken) window.localStorage.setItem(DEVICE_TOKEN_KEY, deviceToken);
+
+    const cleanEmail = cleanText(email).toLowerCase();
+    const tokenToStore = deviceToken || getStoredDeviceToken();
+
+    window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanEmail);
+
+    if (tokenToStore) {
+      window.localStorage.setItem(DEVICE_TOKEN_KEY, tokenToStore);
+      window.localStorage.removeItem("icsi_predictorpro_device_token");
+      window.localStorage.removeItem("icsi_predictor_device_token");
+    }
   };
 
   const clearStoredEmailOnly = () => {
