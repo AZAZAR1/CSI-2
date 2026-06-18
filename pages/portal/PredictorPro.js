@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 /* ============================================================
@@ -726,6 +726,10 @@ export default function PredictorPage() {
   const [lookupStatus, setLookupStatus]     = useState("");
   const [lookupSource, setLookupSource]     = useState("");
   const [predictStep, setPredictStep]       = useState("");
+  const [deviceStatus, setDeviceStatus]     = useState("");
+
+  const DEVICE_EMAIL_KEY = "icsi_predictorpro_email";
+  const DEVICE_TOKEN_KEY = "icsi_predictorpro_device_token";
 
   const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
@@ -734,6 +738,23 @@ export default function PredictorPage() {
       .replace(/[\u0300-\u036f]/g,"")
       .replace(/['']/g,"'").replace(/[""]/g,'"')
       .replace(/[â€“â€”]/g,"-").replace(/\s+/g," ").trim();
+
+  const getStoredDeviceToken = () => {
+    if (typeof window === "undefined") return "";
+    return window.localStorage.getItem(DEVICE_TOKEN_KEY) || "";
+  };
+
+  const storeDeviceSession = (email, deviceToken) => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanText(email).toLowerCase());
+    if (deviceToken) window.localStorage.setItem(DEVICE_TOKEN_KEY, deviceToken);
+  };
+
+  const clearDeviceSession = () => {
+    if (typeof window === "undefined") return;
+    window.localStorage.removeItem(DEVICE_EMAIL_KEY);
+    window.localStorage.removeItem(DEVICE_TOKEN_KEY);
+  };
 
   const isAuthorizedUser =
     isUserValidated &&
@@ -843,6 +864,7 @@ export default function PredictorPage() {
   const resetUserValidation = () => {
     setUsage(null); setValidatedEmail(""); setIsUserValidated(false);
     setLookupStatus(""); setLookupSource(""); setStructuralSnapshot(null);
+    setDeviceStatus("");
   };
 
   const displayPairingList = (values) =>
@@ -901,6 +923,7 @@ export default function PredictorPage() {
 
   const buildPayload = () => ({
     user_email:  cleanText(form.user_email),
+    device_token: getStoredDeviceToken(),
     brand:       cleanText(form.brand),
     line:        cleanText(form.line),
     origin:      cleanText(form.origin),
@@ -923,17 +946,42 @@ export default function PredictorPage() {
   });
 
   /* â”€â”€ API calls â”€â”€ */
-  const loadUsage = async () => {
+  const loadUsageForEmail = async (emailOverride) => {
     setErr(""); setLoadingUsage(true); setUsage(null); setLookupStatus(""); setLookupSource("");
     try {
-      const cleanedEmail = cleanText(form.user_email);
-      const res  = await fetch(`/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}`);
+      const cleanedEmail = cleanText(emailOverride || form.user_email).toLowerCase();
+      const storedToken = getStoredDeviceToken();
+      const tokenQuery = storedToken ? `&device_token=${encodeURIComponent(storedToken)}` : "";
+      const res  = await fetch(`/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}${tokenQuery}`);
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) { setIsUserValidated(false); setValidatedEmail(""); throw new Error(data.error||data.detail||"Failed to load usage"); }
+      if (!res.ok) {
+        setIsUserValidated(false);
+        setValidatedEmail("");
+        if (res.status === 403) clearDeviceSession();
+        throw new Error(data.error || data.detail || "Failed to load usage");
+      }
+      if (data.device_token) storeDeviceSession(cleanedEmail, data.device_token);
+      else storeDeviceSession(cleanedEmail, storedToken);
       setUsage(data); setValidatedEmail(cleanedEmail); setIsUserValidated(true);
-    } catch(e) { setIsUserValidated(false); setValidatedEmail(""); setErr(e.message||"Usage request failed"); }
+      setForm((f) => ({ ...f, user_email: cleanedEmail }));
+      setDeviceStatus(data.device_registered_now ? "Device registered for this account." : "Device validated for this account.");
+    } catch(e) {
+      setIsUserValidated(false); setValidatedEmail(""); setErr(e.message||"Usage request failed"); setDeviceStatus("");
+    }
     finally { setLoadingUsage(false); }
   };
+
+  const loadUsage = async () => loadUsageForEmail(form.user_email);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const savedEmail = window.localStorage.getItem(DEVICE_EMAIL_KEY);
+    const savedToken = window.localStorage.getItem(DEVICE_TOKEN_KEY);
+    if (savedEmail && savedToken) {
+      setForm((f) => ({ ...f, user_email: savedEmail }));
+      loadUsageForEmail(savedEmail);
+    }
+  }, []);
 
   const lookupBlend = async () => {
     setErr(""); setLookupSource("");
@@ -943,7 +991,7 @@ export default function PredictorPage() {
     if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
     setLoadingLookup(true); setLookupStatus("Querying ICSI blend database...");
     try {
-      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand, line }) });
+      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand, line }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.match) { setLookupStatus(data.error||data.detail||"No reliable blend match found."); return; }
       applyLookupMatch(data.match);
@@ -955,7 +1003,7 @@ export default function PredictorPage() {
 
   const loadTastingCard = async (brand, line) => {
     try {
-      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), brand: cleanText(brand), line: cleanText(line) }) });
+      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand: cleanText(brand), line: cleanText(line) }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.tasting_card) { setTastingCard(null); return; }
       setTastingCard(data.tasting_card);
@@ -1122,7 +1170,22 @@ export default function PredictorPage() {
                   Validation required to enable Predictor Pro
                 </span>
               )}
+              {isAuthorizedUser && (
+                <button
+                  className="pp-btn-secondary"
+                  style={{ ...styles.btnSecondary, padding: "7px 14px", fontSize: 13 }}
+                  onClick={() => { clearDeviceSession(); resetUserValidation(); setDeviceStatus("Device session cleared on this browser."); }}
+                  type="button"
+                >
+                  Clear Device Session
+                </button>
+              )}
             </div>
+            {deviceStatus && (
+              <div style={{ marginTop: 10, fontFamily: DS.fontMono, fontSize: 14, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                {deviceStatus}
+              </div>
+            )}
           </div>
 
           {/* â”€â”€ CIGAR BLEND LOOKUP â”€â”€ */}
