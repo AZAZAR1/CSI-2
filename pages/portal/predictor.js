@@ -681,24 +681,49 @@ const DEVICE_TOKEN_KEY = "icsi_device_token";
 
 const getStoredDeviceSession = () => {
   if (typeof window === "undefined") return { email: "", device_token: "" };
+
   return {
-    email: window.localStorage.getItem(DEVICE_EMAIL_KEY) || "",
-    device_token: window.localStorage.getItem(DEVICE_TOKEN_KEY) || "",
+    email:
+      window.localStorage.getItem("icsi_device_email") ||
+      window.localStorage.getItem("icsi_predictor_email") ||
+      window.localStorage.getItem("icsi_predictorpro_email") ||
+      "",
+    device_token:
+      window.localStorage.getItem("icsi_device_token") ||
+      window.localStorage.getItem("icsi_predictor_device_token") ||
+      window.localStorage.getItem("icsi_predictorpro_device_token") ||
+      "",
   };
 };
 
 const storeDeviceSession = (email, deviceToken) => {
   if (typeof window === "undefined") return;
+
   const cleanEmail = String(email || "").trim().toLowerCase();
   const cleanToken = String(deviceToken || "").trim();
-  if (cleanEmail) window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanEmail);
-  if (cleanToken) window.localStorage.setItem(DEVICE_TOKEN_KEY, cleanToken);
+
+  if (cleanEmail) {
+    window.localStorage.setItem("icsi_device_email", cleanEmail);
+    window.localStorage.removeItem("icsi_predictor_email");
+    window.localStorage.removeItem("icsi_predictorpro_email");
+  }
+
+  if (cleanToken) {
+    window.localStorage.setItem("icsi_device_token", cleanToken);
+    window.localStorage.removeItem("icsi_predictor_device_token");
+    window.localStorage.removeItem("icsi_predictorpro_device_token");
+  }
 };
 
 const clearDeviceSession = () => {
   if (typeof window === "undefined") return;
-  window.localStorage.removeItem(DEVICE_EMAIL_KEY);
-  window.localStorage.removeItem(DEVICE_TOKEN_KEY);
+
+  window.localStorage.removeItem("icsi_device_email");
+  window.localStorage.removeItem("icsi_device_token");
+  window.localStorage.removeItem("icsi_predictor_email");
+  window.localStorage.removeItem("icsi_predictor_device_token");
+  window.localStorage.removeItem("icsi_predictorpro_email");
+  window.localStorage.removeItem("icsi_predictorpro_device_token");
 };
 
 /* ============================================================
@@ -887,9 +912,7 @@ export default function PredictorPage() {
     setUsage(null);
     setValidatedEmail("");
     setIsUserValidated(false);
-    setDeviceToken("");
     setDeviceSessionStatus("");
-    clearDeviceSession();
     setErr(message || "User validation failed");
   };
 
@@ -900,11 +923,16 @@ export default function PredictorPage() {
     clearDeviceSession();
   };
 
-  const buildAuthPayload = (extra = {}) => ({
-    ...extra,
-    user_email: cleanText(form.user_email),
-    device_token: cleanText(deviceToken),
-  });
+  const buildAuthPayload = (extra = {}) => {
+    const stored = getStoredDeviceSession();
+    const activeToken = cleanText(deviceToken) || cleanText(stored.device_token);
+
+    return {
+      ...extra,
+      user_email: cleanText(form.user_email),
+      device_token: activeToken,
+    };
+  };
 
   const buildUsageUrl = (email, token) => {
     const params = new URLSearchParams({ email: cleanText(email) });
@@ -1008,7 +1036,7 @@ export default function PredictorPage() {
 
   const buildPayload = () => ({
     user_email:  cleanText(form.user_email),
-    device_token: cleanText(deviceToken),
+    device_token: cleanText(deviceToken) || cleanText(getStoredDeviceSession().device_token),
     brand:       cleanText(form.brand),
     line:        cleanText(form.line),
     origin:      cleanText(form.origin),
@@ -1035,8 +1063,8 @@ export default function PredictorPage() {
     const cleanedEmail = cleanText(form.user_email).toLowerCase();
     const stored = getStoredDeviceSession();
     const tokenForEmail = cleanText(stored.email).toLowerCase() === cleanedEmail
-      ? cleanText(stored.device_token)
-      : cleanText(deviceToken);
+      ? (cleanText(stored.device_token) || cleanText(deviceToken))
+      : (cleanText(deviceToken) || cleanText(stored.device_token));
     if (tokenForEmail && tokenForEmail !== deviceToken) setDeviceToken(tokenForEmail);
     await loadUsageForEmail(cleanedEmail, tokenForEmail);
   };
