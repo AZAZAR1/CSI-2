@@ -750,10 +750,11 @@ export default function PredictorPage() {
     if (deviceToken) window.localStorage.setItem(DEVICE_TOKEN_KEY, deviceToken);
   };
 
-  const clearDeviceSession = () => {
+  const clearStoredEmailOnly = () => {
     if (typeof window === "undefined") return;
+    // Keep the device token. Removing it would lock this legitimate device out
+    // until an admin resets the registered device on the backend.
     window.localStorage.removeItem(DEVICE_EMAIL_KEY);
-    window.localStorage.removeItem(DEVICE_TOKEN_KEY);
   };
 
   const isAuthorizedUser =
@@ -957,7 +958,9 @@ export default function PredictorPage() {
       if (!res.ok) {
         setIsUserValidated(false);
         setValidatedEmail("");
-        if (res.status === 403) clearDeviceSession();
+        // Do not delete the stored device token automatically. A 403 may be caused by
+        // expiry, inactive account, or a temporary backend state. Keeping the token
+        // avoids locking a legitimate registered device out unnecessarily.
         throw new Error(data.error || data.detail || "Failed to load usage");
       }
       if (data.device_token) storeDeviceSession(cleanedEmail, data.device_token);
@@ -1174,10 +1177,10 @@ export default function PredictorPage() {
                 <button
                   className="pp-btn-secondary"
                   style={{ ...styles.btnSecondary, padding: "7px 14px", fontSize: 13 }}
-                  onClick={() => { clearDeviceSession(); resetUserValidation(); setDeviceStatus("Device session cleared on this browser."); }}
+                  onClick={() => { clearStoredEmailOnly(); resetUserValidation(); setDeviceStatus("Signed out on this browser. The registered device token was preserved."); }}
                   type="button"
                 >
-                  Clear Device Session
+                  Sign Out
                 </button>
               )}
             </div>
