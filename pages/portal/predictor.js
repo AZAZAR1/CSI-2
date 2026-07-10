@@ -158,12 +158,34 @@ const styles = {
     color: DS.textPrimary,
     fontFamily: DS.fontSans,
     fontSize: 15,
-    padding: "9px 12px",
+    padding: "9px 36px 9px 12px",
     width: "100%",
     boxSizing: "border-box",
     outline: "none",
     transition: "border-color 0.15s",
     WebkitAppearance: "none",
+  },
+  inputClearButton: {
+    position: "absolute",
+    right: 9,
+    top: 34,
+    width: 22,
+    height: 22,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "transparent",
+    border: "none",
+    borderRadius: "50%",
+    color: DS.textMuted,
+    cursor: "pointer",
+    fontFamily: DS.fontSans,
+    fontSize: 20,
+    lineHeight: 1,
+    padding: 0,
+    outline: "none",
+    zIndex: 2,
+    transition: "color 0.15s, background 0.15s",
   },
   select: {
     background: DS.bgInput,
@@ -382,6 +404,8 @@ const GlobalStyles = () => (
     }
     .pp-input:focus  { border-color: rgba(139,26,26,0.6) !important; }
     .pp-select:focus { border-color: rgba(139,26,26,0.6) !important; }
+    .pp-input-clear:hover { color: #f0ece6 !important; background: rgba(255,255,255,0.06) !important; }
+    .pp-input-clear:focus-visible { box-shadow: 0 0 0 2px rgba(184,146,42,0.35); }
     .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
     .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
     .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
@@ -785,6 +809,43 @@ export default function PredictorPage() {
 
   const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
+  const clearBlendOutputs = () => {
+    setLookupStatus("");
+    setLookupSource("");
+    setResult(null);
+    setTastingCard(null);
+    setPairingCard(null);
+    setSimilarBlends(null);
+    setStructuralSnapshot(null);
+    setErr("");
+    setPredictStep("");
+  };
+
+  const clearLineField = () => {
+    setForm((f) => ({
+      ...f,
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+    }));
+    setLineSuggestions([]);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
+  };
+
+  const clearBrandField = () => {
+    setForm((f) => ({
+      ...f,
+      brand: "",
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+    }));
+    setBrandSuggestions([]);
+    setLineSuggestions([]);
+    setShowBrandSuggestions(false);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
+  };
+
   const cleanText = (value) =>
     String(value || "").normalize("NFKD")
       .replace(/[\u0300-\u036f]/g,"")
@@ -860,14 +921,28 @@ export default function PredictorPage() {
   };
 
   const selectBrandSuggestion = (item) => {
-    update("brand", cleanText(item.brand || "")); update("line","");
-    setShowBrandSuggestions(false); setBrandSuggestions([]);
-    setLineSuggestions([]); setShowLineSuggestions(false);
+    setForm((f) => ({
+      ...f,
+      brand: cleanText(item.brand || ""),
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+    }));
+    setShowBrandSuggestions(false);
+    setBrandSuggestions([]);
+    setLineSuggestions([]);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
   };
 
   const selectLineSuggestion = (item) => {
-    update("line", cleanText(item.line || ""));
-    setShowLineSuggestions(false); setLineSuggestions([]);
+    setForm((f) => ({
+      ...f,
+      line: cleanText(item.line || ""),
+      ...EMPTY_LOOKUP_FIELDS,
+    }));
+    setShowLineSuggestions(false);
+    setLineSuggestions([]);
+    clearBlendOutputs();
   };
 
   /* â”€â”€ Helpers â”€â”€ */
@@ -1280,12 +1355,32 @@ export default function PredictorPage() {
                   onFocus={() => loadBrandSuggestions(form.brand)}
                   onChange={(e) => {
                     const v = e.target.value;
-                    update("brand", v); update("line","");
-                    setLineSuggestions([]); setShowLineSuggestions(false);
+                    setForm((f) => ({
+                      ...f,
+                      brand: v,
+                      line: "",
+                      ...EMPTY_LOOKUP_FIELDS,
+                    }));
+                    setLineSuggestions([]);
+                    setShowLineSuggestions(false);
+                    clearBlendOutputs();
                     loadBrandSuggestions(v);
                   }}
                   onBlur={() => setTimeout(() => setShowBrandSuggestions(false), 150)}
                 />
+                {cleanText(form.brand) && (
+                  <button
+                    type="button"
+                    className="pp-input-clear"
+                    style={styles.inputClearButton}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={clearBrandField}
+                    aria-label="Clear brand and blend selection"
+                    title="Clear brand"
+                  >
+                    &times;
+                  </button>
+                )}
                 {showBrandSuggestions && brandSuggestions.length > 0 && (
                   <div style={styles.autocompleteBox}>
                     {brandSuggestions.map((s, i) => (
@@ -1307,10 +1402,32 @@ export default function PredictorPage() {
                   autoComplete="off"
                   disabled={!cleanText(form.brand)}
                   onFocus={() => loadLineSuggestions(form.brand, form.line)}
-                  onChange={(e) => { const v = e.target.value; update("line", v); loadLineSuggestions(form.brand, v); }}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setForm((f) => ({
+                      ...f,
+                      line: v,
+                      ...EMPTY_LOOKUP_FIELDS,
+                    }));
+                    clearBlendOutputs();
+                    loadLineSuggestions(form.brand, v);
+                  }}
                   onBlur={() => setTimeout(() => setShowLineSuggestions(false), 150)}
                   placeholder={cleanText(form.brand) ? "Begin entering line designation..." : "Select brand first"}
                 />
+                {cleanText(form.line) && (
+                  <button
+                    type="button"
+                    className="pp-input-clear"
+                    style={styles.inputClearButton}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={clearLineField}
+                    aria-label="Clear line selection"
+                    title="Clear line"
+                  >
+                    &times;
+                  </button>
+                )}
                 {showLineSuggestions && lineSuggestions.length > 0 && (
                   <div style={styles.autocompleteBox}>
                     {lineSuggestions.map((s, i) => (
