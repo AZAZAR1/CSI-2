@@ -165,6 +165,27 @@ const styles = {
     transition: "border-color 0.15s",
     WebkitAppearance: "none",
   },
+  clearFieldButton: {
+    position: "absolute",
+    right: 10,
+    bottom: 9,
+    width: 24,
+    height: 24,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "transparent",
+    border: "none",
+    borderRadius: "50%",
+    color: DS.textMuted,
+    cursor: "pointer",
+    fontFamily: DS.fontSans,
+    fontSize: 20,
+    lineHeight: 1,
+    padding: 0,
+    outline: "none",
+    zIndex: 60,
+  },
   select: {
     background: DS.bgInput,
     border: `1px solid ${DS.borderStrong}`,
@@ -386,6 +407,8 @@ const GlobalStyles = () => (
     .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
     .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
     .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
+    .pp-clear-field:hover                   { color: #f0ece6 !important; background: rgba(255,255,255,0.06) !important; }
+    .pp-clear-field:focus-visible           { outline: 1px solid rgba(184,146,42,0.6) !important; outline-offset: 2px; }
     .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #f0ece6 !important; }
     .pp-datarow:last-child { border-bottom: none !important; }
     .pp-result { animation: fadeIn 0.35s ease both; }
@@ -828,15 +851,71 @@ export default function PredictorPage() {
     } catch { setLineSuggestions([]); setShowLineSuggestions(false); }
   };
 
+  const clearBlendOutputs = () => {
+    setLookupStatus("");
+    setLookupSource("");
+    setResult(null);
+    setTastingCard(null);
+    setPairingCard(null);
+    setSimilarBlends(null);
+    setStructuralSnapshot(null);
+    setErr("");
+    setPredictStep("");
+  };
+
+  const clearLineField = () => {
+    setForm((f) => ({
+      ...f,
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+      age_years: "",
+      smoker_style: "both",
+    }));
+    setLineSuggestions([]);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
+  };
+
+  const clearBrandField = () => {
+    setForm((f) => ({
+      ...f,
+      brand: "",
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+      age_years: "",
+      smoker_style: "both",
+    }));
+    setBrandSuggestions([]);
+    setLineSuggestions([]);
+    setShowBrandSuggestions(false);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
+  };
+
   const selectBrandSuggestion = (item) => {
-    update("brand", cleanText(item.brand || "")); update("line","");
+    setForm((f) => ({
+      ...f,
+      brand: cleanText(item.brand || ""),
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+      age_years: "",
+      smoker_style: "both",
+    }));
     setShowBrandSuggestions(false); setBrandSuggestions([]);
     setLineSuggestions([]); setShowLineSuggestions(false);
+    clearBlendOutputs();
   };
 
   const selectLineSuggestion = (item) => {
-    update("line", cleanText(item.line || ""));
+    setForm((f) => ({
+      ...f,
+      line: cleanText(item.line || ""),
+      ...EMPTY_LOOKUP_FIELDS,
+      age_years: "",
+      smoker_style: "both",
+    }));
     setShowLineSuggestions(false); setLineSuggestions([]);
+    clearBlendOutputs();
   };
 
   /* â”€â”€ Helpers â”€â”€ */
@@ -1243,19 +1322,40 @@ export default function PredictorPage() {
                 <label style={styles.label}>Brand</label>
                 <input
                   className="pp-input"
-                  style={styles.input}
+                  style={{ ...styles.input, paddingRight: cleanText(form.brand) ? 42 : 12 }}
                   value={form.brand}
                   placeholder="Begin entering brand designation..."
                   autoComplete="off"
                   onFocus={() => loadBrandSuggestions(form.brand)}
                   onChange={(e) => {
                     const v = e.target.value;
-                    update("brand", v); update("line","");
+                    setForm((f) => ({
+                      ...f,
+                      brand: v,
+                      line: "",
+                      ...EMPTY_LOOKUP_FIELDS,
+                      age_years: "",
+                      smoker_style: "both",
+                    }));
                     setLineSuggestions([]); setShowLineSuggestions(false);
+                    clearBlendOutputs();
                     loadBrandSuggestions(v);
                   }}
                   onBlur={() => setTimeout(() => setShowBrandSuggestions(false), 150)}
                 />
+                {cleanText(form.brand) && (
+                  <button
+                    type="button"
+                    className="pp-clear-field"
+                    style={styles.clearFieldButton}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={clearBrandField}
+                    aria-label="Clear brand and current blend"
+                    title="Clear brand"
+                  >
+                    &times;
+                  </button>
+                )}
                 {showBrandSuggestions && brandSuggestions.length > 0 && (
                   <div style={styles.autocompleteBox}>
                     {brandSuggestions.map((s, i) => (
@@ -1272,15 +1372,43 @@ export default function PredictorPage() {
                 <label style={styles.label}>Line</label>
                 <input
                   className="pp-input"
-                  style={{ ...styles.input, opacity: cleanText(form.brand) ? 1 : 0.5 }}
+                  style={{
+                    ...styles.input,
+                    opacity: cleanText(form.brand) ? 1 : 0.5,
+                    paddingRight: cleanText(form.line) ? 42 : 12,
+                  }}
                   value={form.line}
                   autoComplete="off"
                   disabled={!cleanText(form.brand)}
                   onFocus={() => loadLineSuggestions(form.brand, form.line)}
-                  onChange={(e) => { const v = e.target.value; update("line", v); loadLineSuggestions(form.brand, v); }}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setForm((f) => ({
+                      ...f,
+                      line: v,
+                      ...EMPTY_LOOKUP_FIELDS,
+                      age_years: "",
+                      smoker_style: "both",
+                    }));
+                    clearBlendOutputs();
+                    loadLineSuggestions(form.brand, v);
+                  }}
                   onBlur={() => setTimeout(() => setShowLineSuggestions(false), 150)}
                   placeholder={cleanText(form.brand) ? "Begin entering line designation..." : "Select brand first"}
                 />
+                {cleanText(form.line) && (
+                  <button
+                    type="button"
+                    className="pp-clear-field"
+                    style={styles.clearFieldButton}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={clearLineField}
+                    aria-label="Clear line and current blend"
+                    title="Clear line"
+                  >
+                    &times;
+                  </button>
+                )}
                 {showLineSuggestions && lineSuggestions.length > 0 && (
                   <div style={styles.autocompleteBox}>
                     {lineSuggestions.map((s, i) => (
