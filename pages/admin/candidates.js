@@ -16,9 +16,10 @@ export default function AdminCandidates() {
     name: "",
     email: "",
     course: "ccs",
+    language: "en",
     expiresAt: "2028-12-31T00:00:00.000Z",
     modulesText:
-      "module-1|Module 1 — Tobacco Science\nmodule-2|Module 2 — Water & RH",
+      "module-0|Module 0 - Scientific Foundations\nmodule-1|Module 1 - Combustion Science\nmodule-2|Module 2 - Water Activity & Relative Humidity\nmodule-3|Module 3 - Peak-Flavour Framework\nmodule-4|Module 4 - RH Families\nmodule-5|Module 5 - Cap-Foot Diagnostics\nmodule-6|Module 6 - Storage vs Smoking RH\nmodule-7|Module 7 - Customer Advisory & Professional Service\nmodule-8|Module 8 - Scientific Pairing Framework\nmodule-9|Module 9 - Settling Science, Thermodynamics & Peak-Flavour Methodology",
   });
 
   const portalBase = useMemo(() => {
@@ -107,9 +108,10 @@ export default function AdminCandidates() {
       name: "",
       email: "",
       course: "ccs",
+      language: "en",
       expiresAt: "2028-12-31T00:00:00.000Z",
       modulesText:
-        "module-1|Module 1 — Tobacco Science\nmodule-2|Module 2 — Water & RH",
+        "module-0|Module 0 - Scientific Foundations\nmodule-1|Module 1 - Combustion Science\nmodule-2|Module 2 - Water Activity & Relative Humidity\nmodule-3|Module 3 - Peak-Flavour Framework\nmodule-4|Module 4 - RH Families\nmodule-5|Module 5 - Cap-Foot Diagnostics\nmodule-6|Module 6 - Storage vs Smoking RH\nmodule-7|Module 7 - Customer Advisory & Professional Service\nmodule-8|Module 8 - Scientific Pairing Framework\nmodule-9|Module 9 - Settling Science, Thermodynamics & Peak-Flavour Methodology",
     });
   };
 
@@ -124,6 +126,7 @@ export default function AdminCandidates() {
           name: String(form.name || "").trim(),
           email: String(form.email || "").trim(),
           course: String(form.course || "").trim().toLowerCase(),
+          language: String(form.language || "en").trim().toLowerCase(),
           expiresAt: String(form.expiresAt || "").trim(),
           modules: parseModules(),
         },
@@ -207,6 +210,7 @@ export default function AdminCandidates() {
       name: x.name || "",
       email: x.email || "",
       course: x.course || "ccs",
+      language: x.language || "en",
       expiresAt: x.expiresAt || "2028-12-31T00:00:00.000Z",
       modulesText: Array.isArray(x.modules)
         ? x.modules.map((m) => `${m.slug}|${m.title}`).join("\n")
@@ -363,6 +367,20 @@ export default function AdminCandidates() {
               </div>
             </div>
 
+            <div style={{ marginTop: 10, maxWidth: 300 }}>
+              <label>Module Language</label>
+              <select
+                value={form.language}
+                onChange={(e) =>
+                  setForm({ ...form, language: e.target.value })
+                }
+                style={{ marginTop: 6 }}
+              >
+                <option value="en">English (EN)</option>
+                <option value="fr">Français (FR)</option>
+              </select>
+            </div>
+
             <div style={{ marginTop: 10 }}>
               <label>Modules (one per line: slug|Title)</label>
               <textarea
@@ -499,6 +517,9 @@ ICSI`
                         </div>
                         <div>
                           Course: <b>{String(x.course || "").toUpperCase()}</b>
+                        </div>
+                        <div>
+                          Language: <b>{String(x.language || "en").toUpperCase()}</b>
                         </div>
                         <div>
                           Email: {x.email || "—"}

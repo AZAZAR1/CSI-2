@@ -43,6 +43,7 @@ export default async function handler(req, res) {
       candidateId: candidate.candidateId,
       name: candidate.name,
       course: candidate.course,
+      language: candidate.language || "en",
       expiresAt: candidate.expiresAt,
       modules: candidate.modules,
       progress,

@@ -44,6 +44,7 @@ export default function PortalHome() {
                   <h1 style={{ marginBottom: 6 }}>Welcome</h1>
                   <p className="small">
                     Candidate: <b>{data.candidateId}</b> • Course: <b>{String(data.course).toUpperCase()}</b>
+                    {" "}• Language: <b>{String(data.language || "en").toUpperCase()}</b>
                   </p>
                 </div>
 

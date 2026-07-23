@@ -26,12 +26,17 @@ export default async function handler(req, res) {
       name: String(candidate.name || "").trim(),
       email: String(candidate.email || "").trim(),
       course: String(candidate.course || "").trim().toLowerCase(),
+      language: String(candidate.language || "en").trim().toLowerCase(),
       expiresAt: String(candidate.expiresAt || "").trim(),
       modules: Array.isArray(candidate.modules) ? candidate.modules : [],
     };
 
     if (!cleaned.candidateId || !cleaned.name || !cleaned.course || !cleaned.expiresAt) {
       return res.status(400).json({ ok: false, error: "Missing required fields" });
+    }
+
+    if (!["en", "fr"].includes(cleaned.language)) {
+      return res.status(400).json({ ok: false, error: "Language must be EN or FR" });
     }
 
     cleaned.modules = cleaned.modules

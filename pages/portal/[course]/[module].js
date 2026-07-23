@@ -1,164 +1,113 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import Layout from "../../../components/Layout";
 import Seo from "../../../components/Seo";
-import Link from "next/link";
 
 export default function PortalModule() {
   const router = useRouter();
   const { course, module } = router.query;
-
   const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState("");
+  const [error, setError] = useState("");
   const [candidate, setCandidate] = useState(null);
-  const [html, setHtml] = useState("");
 
   useEffect(() => {
     if (!course || !module) return;
 
-    const run = async () => {
+    const load = async () => {
       setLoading(true);
-      setErr("");
-      setCandidate(null);
-      setHtml("");
-
+      setError("");
       try {
-        const sRes = await fetch("/api/portal/session", { cache: "no-store" });
-        const sData = await sRes.json();
-
-        if (!sRes.ok || !sData?.ok) {
+        const response = await fetch("/api/portal/session", { cache: "no-store" });
+        const data = await response.json();
+        if (!response.ok || !data?.ok) {
           window.location.href = "/portal/login";
           return;
         }
 
-        const c = sData.candidate;
-        setCandidate(c);
-
-        const normalizedCourse = String(course || "").toLowerCase();
-        const candidateCourse = String(c.course || "").toLowerCase();
-
-        if (normalizedCourse !== candidateCourse) {
-          setErr("Not authorized for this course.");
-          setLoading(false);
-          return;
-        }
-
-        const modSlug = String(module || "");
-        const allowed = Array.isArray(c.modules)
-          ? c.modules.some((m) => (m.slug || m.path) === modSlug)
-          : false;
+        const currentCandidate = data.candidate;
+        const normalizedCourse = String(course).toLowerCase();
+        const moduleSlug = String(module);
+        const allowed =
+          normalizedCourse === String(currentCandidate.course || "").toLowerCase() &&
+          Array.isArray(currentCandidate.modules) &&
+          currentCandidate.modules.some(
+            (item) => (item.slug || item.path) === moduleSlug
+          );
 
         if (!allowed) {
-          setErr("Module not found or not assigned.");
-          setLoading(false);
+          setError("Module not found or not assigned.");
           return;
         }
 
-        const mRes = await fetch(
-          `/api/portal/module?course=${encodeURIComponent(
-            normalizedCourse
-          )}&module=${encodeURIComponent(modSlug)}`,
-          { cache: "no-store" }
-        );
-
-        const mData = await mRes.json();
-
-        if (!mRes.ok || !mData?.ok) {
-          setErr(mData?.error || "Could not load module.");
-          setLoading(false);
-          return;
-        }
-
-        setHtml(mData.html || "");
-
+        setCandidate(currentCandidate);
         await fetch("/api/portal/track", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            course: normalizedCourse,
-            module: modSlug,
-          }),
+          body: JSON.stringify({ course: normalizedCourse, module: moduleSlug }),
         });
       } catch {
-        setErr("Network error");
+        setError("Network error");
       } finally {
         setLoading(false);
       }
     };
 
-    run();
+    load();
   }, [course, module]);
 
   useEffect(() => {
-    const onContextMenu = (e) => e.preventDefault();
-    document.addEventListener("contextmenu", onContextMenu);
-    return () => {
-      document.removeEventListener("contextmenu", onContextMenu);
-    };
+    const blockContextMenu = (event) => event.preventDefault();
+    document.addEventListener("contextmenu", blockContextMenu);
+    return () => document.removeEventListener("contextmenu", blockContextMenu);
   }, []);
 
-  const title = candidate
-    ? `${candidate.course?.toUpperCase?.() || candidate.course} Module | ICSI`
-    : "Module | ICSI";
-
-  const watermarkText = candidate
+  const pdfUrl =
+    course && module
+      ? `/api/portal/module?course=${encodeURIComponent(
+          String(course)
+        )}&module=${encodeURIComponent(String(module))}#toolbar=0&navpanes=0`
+      : "";
+  const watermark = candidate
     ? `${candidate.candidateId} • ${candidate.name} • LICENSED ACCESS`
     : "";
 
   return (
     <Layout>
       <Seo
-        title={title}
-        description="Secure module."
+        title="CCS Module | ICSI"
+        description="Secure CCS course module."
         path={`/portal/${course || ""}/${module || ""}`}
       />
-
       <div className="section">
-        <div className="container" style={{ maxWidth: 980 }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: 12,
-              flexWrap: "wrap",
-            }}
-          >
+        <div className="container portalPdfContainer">
+          <div className="portalModuleHeader">
             <Link className="btn" href="/portal">
               ← Back to portal
             </Link>
-
             {candidate && (
-              <div className="small" style={{ alignSelf: "center" }}>
-                Candidate: <b>{candidate.candidateId}</b>
+              <div className="small">
+                Candidate: <b>{candidate.candidateId}</b> • Language:{" "}
+                <b>{String(candidate.language || "en").toUpperCase()}</b>
               </div>
             )}
           </div>
 
-          {loading && (
-            <p className="small" style={{ marginTop: 14 }}>
-              Loading module…
-            </p>
-          )}
-
-          {!loading && err && (
-            <div className="notice" style={{ marginTop: 14 }}>
-              <b>Error:</b> {err}
+          {loading && <p className="small">Loading module…</p>}
+          {!loading && error && (
+            <div className="notice">
+              <b>Error:</b> {error}
             </div>
           )}
-
-          {!loading && !err && (
-            <div className="portalModuleOuter" style={{ marginTop: 18 }}>
-              <div className="card articleProse portalArticleCard">
-                {candidate?.candidateId && (
-                  <div className="portalDiagonalWatermark" aria-hidden="true">
-                    {watermarkText}
-                  </div>
-                )}
-
-                <div
-                  className="portalArticleContent"
-                  dangerouslySetInnerHTML={{ __html: html }}
-                />
+          {!loading && !error && candidate && (
+            <div className="portalPdfShell">
+              <iframe
+                className="portalPdfFrame"
+                src={pdfUrl}
+                title={`${String(module)} course module`}
+              />
+              <div className="portalPdfWatermark" aria-hidden="true">
+                {watermark}
               </div>
             </div>
           )}
