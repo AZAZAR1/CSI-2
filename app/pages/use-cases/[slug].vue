@@ -1,0 +1,581 @@
+<script setup lang="ts">
+import { useRoute, useHead, createError } from '#imports'
+import type { z } from 'zod'
+
+const { data: usecases } = await useAsyncData('use-cases', () =>
+  queryCollection('usecase').all()
+)
+
+const route = useRoute()
+
+if (!usecases.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Use Cases Not Found' })
+}
+
+
+const study = usecases.value.find(cs => cs.slug === route.params.slug)
+
+if (!study) {
+  throw createError({ statusCode: 404, statusMessage: 'Use Case Not Found' })
+}
+
+useHead({
+  title: study.title,
+  meta: [
+    { name: 'description', content: study.excerpt },
+    { property: 'og:title', content: study.title },
+    { property: 'og:description', content: study.excerpt },
+    { property: 'og:type', content: 'article' },
+  ]
+})
+
+useSeoMeta({
+  title: study.title,
+  ogTitle: study.title,
+  twitterTitle: study.title,
+  description: study.excerpt,
+  ogDescription: study.excerpt,
+  twitterDescription: study.excerpt
+})
+</script>
+
+
+<template>
+  <div class="mx-auto max-w-3xl mt-12">
+    <NuxtLink to="/use-cases/">
+      <span
+        class="z-10 block w-fit rounded-lg border px-3 py-1.5 font-semibold uppercase leading-4 tracking-tighter sm:text-sm border-primary-800/30 bg-primary-900/20 mx-auto mb-4">
+        <span class="bg-gradient-to-b bg-clip-text text-transparent from-primary-300 to-primary-500">Case Study</span>
+      </span>
+    </NuxtLink>
+
+    <article>
+      <div class="mx-auto flex flex-col gap-4 text-center">
+        <h1 class="inline-block pt-2 text-[3rem] tracking-tighter leading-[116%] mb-4 text-primary-50 font-medium">
+          {{ study.title }}
+        </h1>
+        <p class="mx-auto max-w-[65ch] text-base md:text-[1.125rem] md:leading-[1.5] text-neutral-400 font-normal">
+          {{ study.excerpt }}
+        </p>
+        <div class="mx-auto flex items-center gap-1">
+          <time class="text-primary-400">{{ study.date }}</time>
+        </div>
+      </div>
+
+      <div class="slug slug-gray mx-auto mt-12">
+        <h2>The Challenge</h2>
+        <p>{{ study.challenge }}</p>
+
+        <blockquote class="my-6 border-l-4 pl-4 italic">
+          <p>{{ study.blockquote }}</p>
+        </blockquote>
+
+        <h2>The Solution</h2>
+        <ol>
+          <li v-for="(s, i) in study.solution" :key="i">{{ s }}</li>
+        </ol>
+
+        <h2>The Results</h2>
+        <ul>
+          <li v-for="(r, i) in study.results" :key="i">{{ r }}</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>{{ study.conclusion }}</p>
+      </div>
+    </article>
+  </div>
+
+  <GetStarted />
+</template>
+
+<style>
+.slug {
+    color: var(--tw-slug-body);
+}
+
+.slug :where(p):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 1.25em;
+    margin-top: 1.25em
+}
+
+.slug :where([class~=lead]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-lead);
+    font-size: 1.25em;
+    line-height: 1.6;
+    margin-bottom: 1.2em;
+    margin-top: 1.2em
+}
+
+.slug :where(a):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-links);
+    font-weight: 500;
+    text-decoration: underline
+}
+
+.slug :where(strong):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-bold);
+    font-weight: 600
+}
+
+.slug :where(a strong):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit
+}
+
+.slug :where(blockquote strong):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit
+}
+
+.slug :where(thead th strong):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit
+}
+
+.slug :where(ol):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: decimal;
+    margin-bottom: 1.25em;
+    margin-top: 1.25em;
+    padding-inline-start: 1.625em
+}
+
+.slug :where(ol[type=A]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: upper-alpha
+}
+
+.slug :where(ol[type=a]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: lower-alpha
+}
+
+.slug :where(ol[type=A s]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: upper-alpha
+}
+
+.slug :where(ol[type=a s]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: lower-alpha
+}
+
+.slug :where(ol[type=I]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: upper-roman
+}
+
+.slug :where(ol[type=i]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: lower-roman
+}
+
+.slug :where(ol[type=I s]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: upper-roman
+}
+
+.slug :where(ol[type=i s]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: lower-roman
+}
+
+.slug :where(ol[type="1"]):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: decimal
+}
+
+.slug :where(ul):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    list-style-type: disc;
+    margin-bottom: 1.25em;
+    margin-top: 1.25em;
+    padding-inline-start: 1.625em
+}
+
+.slug :where(ol>li):not(:where([class~=not-slug], [class~=not-slug] *))::marker {
+    color: var(--tw-slug-counters);
+    font-weight: 400
+}
+
+.slug :where(ul>li):not(:where([class~=not-slug], [class~=not-slug] *))::marker {
+    color: var(--tw-slug-bullets)
+}
+
+.slug :where(dt):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-headings);
+    font-weight: 600;
+    margin-top: 1.25em
+}
+
+.slug :where(hr):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    border-color: var(--tw-slug-hr);
+    border-top-width: 1px;
+    margin-bottom: 3em;
+    margin-top: 3em
+}
+
+.slug :where(blockquote):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    border-inline-start-color: var(--tw-slug-quote-borders);
+    border-inline-start-width: .25rem;
+    color: var(--tw-slug-quotes);
+    font-style: italic;
+    font-weight: 500;
+    margin-bottom: 1.6em;
+    margin-top: 1.6em;
+    padding-inline-start: 1em;
+    quotes: "\201C" "\201D" "\2018" "\2019"
+}
+
+.slug :where(blockquote p:first-of-type):not(:where([class~=not-slug], [class~=not-slug] *)):before {
+    content: open-quote
+}
+
+.slug :where(blockquote p:last-of-type):not(:where([class~=not-slug], [class~=not-slug] *)):after {
+    content: close-quote
+}
+
+.slug :where(h1):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-headings);
+    font-size: 2.25em;
+    font-weight: 800;
+    line-height: 1.1111111;
+    margin-bottom: .8888889em;
+    margin-top: 0
+}
+
+.slug :where(h1 strong):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit;
+    font-weight: 900
+}
+
+.slug :where(h2):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-headings);
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1.3333333;
+    margin-bottom: 1em;
+    margin-top: 2em
+}
+
+.slug :where(h2 strong):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit;
+    font-weight: 800
+}
+
+.slug :where(h3):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-headings);
+    font-size: 1.25em;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: .6em;
+    margin-top: 1.6em
+}
+
+.slug :where(h3 strong):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit;
+    font-weight: 700
+}
+
+.slug :where(h4):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-headings);
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: .5em;
+    margin-top: 1.5em
+}
+
+.slug :where(h4 strong):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit;
+    font-weight: 700
+}
+
+.slug :where(img):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 2em;
+    margin-top: 2em
+}
+
+.slug :where(picture):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    display: block;
+    margin-bottom: 2em;
+    margin-top: 2em
+}
+
+.slug :where(video):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 2em;
+    margin-top: 2em
+}
+
+.slug :where(kbd):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    border-radius: .3125rem;
+    box-shadow: 0 0 0 1px rgb(var(--tw-slug-kbd-shadows)/10%), 0 3px 0 rgb(var(--tw-slug-kbd-shadows)/10%);
+    color: var(--tw-slug-kbd);
+    font-family: inherit;
+    font-size: .875em;
+    font-weight: 500;
+    padding-inline-end: .375em;
+    padding-bottom: .1875em;
+    padding-top: .1875em;
+    padding-inline-start: .375em
+}
+
+.slug :where(code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-code);
+    font-size: .875em;
+    font-weight: 600
+}
+
+.slug :where(code):not(:where([class~=not-slug], [class~=not-slug] *)):before {
+    content: "`"
+}
+
+.slug :where(code):not(:where([class~=not-slug], [class~=not-slug] *)):after {
+    content: "`"
+}
+
+.slug :where(a code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit
+}
+
+.slug :where(h1 code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit
+}
+
+.slug :where(h2 code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit;
+    font-size: .875em
+}
+
+.slug :where(h3 code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit;
+    font-size: .9em
+}
+
+.slug :where(h4 code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit
+}
+
+.slug :where(blockquote code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit
+}
+
+.slug :where(thead th code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: inherit
+}
+
+.slug :where(pre):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    background-color: var(--tw-slug-pre-bg);
+    border-radius: .375rem;
+    color: var(--tw-slug-pre-code);
+    font-size: .875em;
+    font-weight: 400;
+    line-height: 1.7142857;
+    margin-bottom: 1.7142857em;
+    margin-top: 1.7142857em;
+    overflow-x: auto;
+    padding-inline-end: 1.1428571em;
+    padding-bottom: .8571429em;
+    padding-top: .8571429em;
+    padding-inline-start: 1.1428571em
+}
+
+.slug :where(pre code):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    background-color: transparent;
+    border-radius: 0;
+    border-width: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    padding: 0
+}
+
+.slug :where(pre code):not(:where([class~=not-slug], [class~=not-slug] *)):before {
+    content: none
+}
+
+.slug :where(pre code):not(:where([class~=not-slug], [class~=not-slug] *)):after {
+    content: none
+}
+
+.slug :where(table):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    font-size: .875em;
+    line-height: 1.7142857;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    table-layout: auto;
+    width: 100%
+}
+
+.slug :where(thead):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    border-bottom-color: var(--tw-slug-th-borders);
+    border-bottom-width: 1px
+}
+
+.slug :where(thead th):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-headings);
+    font-weight: 600;
+    padding-inline-end: .5714286em;
+    padding-bottom: .5714286em;
+    padding-inline-start: .5714286em;
+    vertical-align: bottom
+}
+
+.slug :where(tbody tr):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    border-bottom-color: var(--tw-slug-td-borders);
+    border-bottom-width: 1px
+}
+
+.slug :where(tbody tr:last-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    border-bottom-width: 0
+}
+
+.slug :where(tbody td):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    vertical-align: baseline
+}
+
+.slug :where(tfoot):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    border-top-color: var(--tw-slug-th-borders);
+    border-top-width: 1px
+}
+
+.slug :where(tfoot td):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    vertical-align: top
+}
+
+.slug :where(th, td):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    text-align: start
+}
+
+.slug :where(figure>*):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 0;
+    margin-top: 0
+}
+
+.slug :where(figcaption):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    color: var(--tw-slug-captions);
+    font-size: .875em;
+    line-height: 1.4285714;
+    margin-top: .8571429em
+}
+
+.slug {
+    font-size: 1rem;
+    line-height: 1.75
+}
+
+.slug :where(picture>img):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 0;
+    margin-top: 0
+}
+
+.slug :where(li):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: .5em;
+    margin-top: .5em
+}
+
+.slug :where(ol>li):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    padding-inline-start: .375em
+}
+
+.slug :where(ul>li):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    padding-inline-start: .375em
+}
+
+.slug :where(.slug>ul>li p):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: .75em;
+    margin-top: .75em
+}
+
+.slug :where(.slug>ul>li>p:first-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-top: 1.25em
+}
+
+.slug :where(.slug>ul>li>p:last-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 1.25em
+}
+
+.slug :where(.slug>ol>li>p:first-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-top: 1.25em
+}
+
+.slug :where(.slug>ol>li>p:last-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 1.25em
+}
+
+.slug :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: .75em;
+    margin-top: .75em
+}
+
+.slug :where(dl):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 1.25em;
+    margin-top: 1.25em
+}
+
+.slug :where(dd):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-top: .5em;
+    padding-inline-start: 1.625em
+}
+
+.slug :where(hr+*):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-top: 0
+}
+
+.slug :where(h2+*):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-top: 0
+}
+
+.slug :where(h3+*):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-top: 0
+}
+
+.slug :where(h4+*):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-top: 0
+}
+
+.slug :where(thead th:first-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    padding-inline-start: 0
+}
+
+.slug :where(thead th:last-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    padding-inline-end: 0
+}
+
+.slug :where(tbody td, tfoot td):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    padding-inline-end: .5714286em;
+    padding-bottom: .5714286em;
+    padding-top: .5714286em;
+    padding-inline-start: .5714286em
+}
+
+.slug :where(tbody td:first-child, tfoot td:first-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    padding-inline-start: 0
+}
+
+.slug :where(tbody td:last-child, tfoot td:last-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    padding-inline-end: 0
+}
+
+.slug :where(figure):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 2em;
+    margin-top: 2em
+}
+
+.slug :where(.slug>:first-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-top: 0
+}
+
+.slug :where(.slug>:last-child):not(:where([class~=not-slug], [class~=not-slug] *)) {
+    margin-bottom: 0
+}
+
+.slug-gray {
+    --tw-slug-body: var(--color-primary-200);
+    --tw-slug-headings: var(--color-primary-50);
+    --tw-slug-lead: #var(--color-primary-600)f;
+    --tw-slug-links: var(--color-primary-50);
+    --tw-slug-bold: var(--color-primary-50);
+    --tw-slug-counters: var(--color-primary-600);
+    --tw-slug-bullets: var(--color-primary-600);
+    --tw-slug-hr: #374151;
+    --tw-slug-quotes: var(--color-primary-50);
+    --tw-slug-quote-borders: var(--color-primary-600);
+    --tw-slug-captions: var(--color-primary-600);
+    --tw-slug-kbd: var(--color-primary-50);
+    --tw-slug-kbd-shadows: 255 255 255;
+    --tw-slug-code: var(--color-primary-50);
+    --tw-slug-pre-code: #d1d5db;
+    --tw-slug-pre-bg: rgba(0, 0, 0, .5);
+    --tw-slug-th-borders: var(--color-primary-600);
+    --tw-slug-td-borders: #374151
+}
+</style>
