@@ -1247,7 +1247,9 @@ export default function PredictorPage() {
 
     setLoadingSettling(true);
     try {
-      const payload = buildAuthPayload({
+      const payload = {
+        user_email: cleanText(form.user_email),
+        device_token: getStoredDeviceToken(),
         brand: cleanText(form.brand),
         line: cleanText(form.line),
         box_production_date: boxDate,
@@ -1270,7 +1272,7 @@ export default function PredictorPage() {
         rotation_frequency: settlingForm.rotation_frequency,
         post_roll_aging_status: settlingForm.post_roll_aging_status,
         temperature_shock_status: settlingForm.temperature_shock_status,
-      });
+      };
 
       const res = await fetch(`/api/predictor/settling-time`, {
         method: "POST",
