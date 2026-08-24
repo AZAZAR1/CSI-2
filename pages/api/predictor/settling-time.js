@@ -76,9 +76,9 @@ export default async function handler(req, res) {
       payload.device_token = deviceToken;
     }
 
-    const backendUrl =
-      PREDICTOR_BACKEND_URL.replace(/\/$/, "") +
-      "/settling-time";
+   const backendUrl =
+    PREDICTOR_BACKEND_URL.replace(/\/$/, "") +
+    "/api/predictor/settling-time";
 
     const backendResponse = await fetch(backendUrl, {
       method: "POST",
