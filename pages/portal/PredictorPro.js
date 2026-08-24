@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 /* ============================================================
-   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR
+   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR PRO
    Color palette: Carbon / ICSI Crimson / warm gold
    Typography: Cormorant Garamond (sections) + IBM Plex Mono (data)
    Spacing: 8pt grid throughout
@@ -158,19 +158,19 @@ const styles = {
     color: DS.textPrimary,
     fontFamily: DS.fontSans,
     fontSize: 15,
-    padding: "9px 36px 9px 12px",
+    padding: "9px 12px",
     width: "100%",
     boxSizing: "border-box",
     outline: "none",
     transition: "border-color 0.15s",
     WebkitAppearance: "none",
   },
-  inputClearButton: {
+  clearFieldButton: {
     position: "absolute",
-    right: 9,
-    top: 34,
-    width: 22,
-    height: 22,
+    right: 10,
+    bottom: 9,
+    width: 24,
+    height: 24,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -184,8 +184,7 @@ const styles = {
     lineHeight: 1,
     padding: 0,
     outline: "none",
-    zIndex: 2,
-    transition: "color 0.15s, background 0.15s",
+    zIndex: 60,
   },
   select: {
     background: DS.bgInput,
@@ -404,12 +403,12 @@ const GlobalStyles = () => (
     }
     .pp-input:focus  { border-color: rgba(139,26,26,0.6) !important; }
     .pp-select:focus { border-color: rgba(139,26,26,0.6) !important; }
-    .pp-input-clear:hover { color: #f0ece6 !important; background: rgba(255,255,255,0.06) !important; }
-    .pp-input-clear:focus-visible { box-shadow: 0 0 0 2px rgba(184,146,42,0.35); }
     .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
     .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
     .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
     .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
+    .pp-clear-field:hover                   { color: #f0ece6 !important; background: rgba(255,255,255,0.06) !important; }
+    .pp-clear-field:focus-visible           { outline: 1px solid rgba(184,146,42,0.6) !important; outline-offset: 2px; }
     .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #f0ece6 !important; }
     .pp-datarow:last-child { border-bottom: none !important; }
     .pp-result { animation: fadeIn 0.35s ease both; }
@@ -739,60 +738,6 @@ const SectionDivider = ({ label }) => (
     <div className="pp-section-line" />
   </div>
 );
-
-/* ============================================================
-   DEVICE SESSION HELPERS
-   ============================================================ */
-const DEVICE_EMAIL_KEY = "icsi_device_email";
-const DEVICE_TOKEN_KEY = "icsi_device_token";
-
-const getStoredDeviceSession = () => {
-  if (typeof window === "undefined") return { email: "", device_token: "" };
-
-  return {
-    email:
-      window.localStorage.getItem("icsi_device_email") ||
-      window.localStorage.getItem("icsi_predictor_email") ||
-      window.localStorage.getItem("icsi_predictorpro_email") ||
-      "",
-    device_token:
-      window.localStorage.getItem("icsi_device_token") ||
-      window.localStorage.getItem("icsi_predictor_device_token") ||
-      window.localStorage.getItem("icsi_predictorpro_device_token") ||
-      "",
-  };
-};
-
-const storeDeviceSession = (email, deviceToken) => {
-  if (typeof window === "undefined") return;
-
-  const cleanEmail = String(email || "").trim().toLowerCase();
-  const cleanToken = String(deviceToken || "").trim();
-
-  if (cleanEmail) {
-    window.localStorage.setItem("icsi_device_email", cleanEmail);
-    window.localStorage.removeItem("icsi_predictor_email");
-    window.localStorage.removeItem("icsi_predictorpro_email");
-  }
-
-  if (cleanToken) {
-    window.localStorage.setItem("icsi_device_token", cleanToken);
-    window.localStorage.removeItem("icsi_predictor_device_token");
-    window.localStorage.removeItem("icsi_predictorpro_device_token");
-  }
-};
-
-const clearDeviceSession = () => {
-  if (typeof window === "undefined") return;
-
-  window.localStorage.removeItem("icsi_device_email");
-  window.localStorage.removeItem("icsi_device_token");
-  window.localStorage.removeItem("icsi_predictor_email");
-  window.localStorage.removeItem("icsi_predictor_device_token");
-  window.localStorage.removeItem("icsi_predictorpro_email");
-  window.localStorage.removeItem("icsi_predictorpro_device_token");
-};
-
 /* ============================================================
    MAIN COMPONENT
    ============================================================ */
@@ -830,8 +775,6 @@ export default function PredictorPage() {
   });
   const [usage, setUsage]                   = useState(null);
   const [validatedEmail, setValidatedEmail] = useState("");
-  const [deviceToken, setDeviceToken] = useState("");
-  const [deviceSessionStatus, setDeviceSessionStatus] = useState("");
   const [isUserValidated, setIsUserValidated] = useState(false);
   const [result, setResult]                 = useState(null);
   const [tastingCard, setTastingCard]       = useState(null);
@@ -849,11 +792,15 @@ export default function PredictorPage() {
   const [lookupStatus, setLookupStatus]     = useState("");
   const [lookupSource, setLookupSource]     = useState("");
   const [predictStep, setPredictStep]       = useState("");
+  const [deviceStatus, setDeviceStatus]     = useState("");
   const [settlingOpen, setSettlingOpen] = useState(false);
   const [settlingForm, setSettlingForm] = useState(DEFAULT_SETTLING_FORM);
   const [settlingResult, setSettlingResult] = useState(null);
   const [settlingError, setSettlingError] = useState("");
   const [loadingSettling, setLoadingSettling] = useState(false);
+
+  const DEVICE_EMAIL_KEY = "icsi_device_email";
+  const DEVICE_TOKEN_KEY = "icsi_device_token";
 
   const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
@@ -870,68 +817,50 @@ export default function PredictorPage() {
     setSettlingError("");
   };
 
-  const clearBlendOutputs = () => {
-    setLookupStatus("");
-    setLookupSource("");
-    setResult(null);
-    setTastingCard(null);
-    setPairingCard(null);
-    setSimilarBlends(null);
-    setStructuralSnapshot(null);
-    setErr("");
-    setPredictStep("");
-    setSettlingResult(null);
-    setSettlingError("");
-  };
-
-  const clearLineField = () => {
-    setForm((f) => ({
-      ...f,
-      line: "",
-      ...EMPTY_LOOKUP_FIELDS,
-    }));
-    setLineSuggestions([]);
-    setShowLineSuggestions(false);
-    clearBlendOutputs();
-  };
-
-  const clearBrandField = () => {
-    setForm((f) => ({
-      ...f,
-      brand: "",
-      line: "",
-      ...EMPTY_LOOKUP_FIELDS,
-    }));
-    setBrandSuggestions([]);
-    setLineSuggestions([]);
-    setShowBrandSuggestions(false);
-    setShowLineSuggestions(false);
-    clearBlendOutputs();
-  };
-
   const cleanText = (value) =>
     String(value || "").normalize("NFKD")
       .replace(/[\u0300-\u036f]/g,"")
       .replace(/['']/g,"'").replace(/[""]/g,'"')
       .replace(/[â€“â€”]/g,"-").replace(/\s+/g," ").trim();
 
+  const getStoredDeviceToken = () => {
+    if (typeof window === "undefined") return "";
+
+    return (
+      window.localStorage.getItem("icsi_device_token") ||
+      window.localStorage.getItem("icsi_predictorpro_device_token") ||
+      window.localStorage.getItem("icsi_predictor_device_token") ||
+      ""
+    );
+  };
+
+  const storeDeviceSession = (email, deviceToken) => {
+    if (typeof window === "undefined") return;
+
+    const cleanEmail = cleanText(email).toLowerCase();
+    const tokenToStore = deviceToken || getStoredDeviceToken();
+
+    window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanEmail);
+
+    if (tokenToStore) {
+      window.localStorage.setItem(DEVICE_TOKEN_KEY, tokenToStore);
+      window.localStorage.removeItem("icsi_predictorpro_device_token");
+      window.localStorage.removeItem("icsi_predictor_device_token");
+    }
+  };
+
+  const clearStoredEmailOnly = () => {
+    if (typeof window === "undefined") return;
+    // Keep the device token. Removing it would lock this legitimate device out
+    // until an admin resets the registered device on the backend.
+    window.localStorage.removeItem(DEVICE_EMAIL_KEY);
+  };
+
   const isAuthorizedUser =
     isUserValidated &&
     cleanText(validatedEmail).toLowerCase() === cleanText(form.user_email).toLowerCase();
   const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
-  const hasPredictorAccess = isAuthorizedUser && usage?.pro_access !== true;
   const hasBlendStructure = Boolean(cleanText(form.wrapper) || cleanText(form.binder_1) || cleanText(form.filler_1));
-
-  useEffect(() => {
-    const stored = getStoredDeviceSession();
-    const savedEmail = cleanText(stored.email).toLowerCase();
-    const savedToken = cleanText(stored.device_token);
-    if (!savedEmail || !savedToken) return;
-    setDeviceToken(savedToken);
-    setForm((f) => ({ ...f, user_email: savedEmail }));
-    loadUsageForEmail(savedEmail, savedToken);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   /* â”€â”€ Autocomplete â”€â”€ */
   const uniqueByBrand = (items) => {
@@ -983,17 +912,60 @@ export default function PredictorPage() {
     } catch { setLineSuggestions([]); setShowLineSuggestions(false); }
   };
 
+  const clearBlendOutputs = () => {
+    setLookupStatus("");
+    setLookupSource("");
+    setResult(null);
+    setTastingCard(null);
+    setPairingCard(null);
+    setSimilarBlends(null);
+    setStructuralSnapshot(null);
+    setErr("");
+    setPredictStep("");
+    setSettlingResult(null);
+    setSettlingError("");
+  };
+
+  const clearLineField = () => {
+    setForm((f) => ({
+      ...f,
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+      age_years: "",
+      smoker_style: "both",
+    }));
+    setLineSuggestions([]);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
+  };
+
+  const clearBrandField = () => {
+    setForm((f) => ({
+      ...f,
+      brand: "",
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+      age_years: "",
+      smoker_style: "both",
+    }));
+    setBrandSuggestions([]);
+    setLineSuggestions([]);
+    setShowBrandSuggestions(false);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
+  };
+
   const selectBrandSuggestion = (item) => {
     setForm((f) => ({
       ...f,
       brand: cleanText(item.brand || ""),
       line: "",
       ...EMPTY_LOOKUP_FIELDS,
+      age_years: "",
+      smoker_style: "both",
     }));
-    setShowBrandSuggestions(false);
-    setBrandSuggestions([]);
-    setLineSuggestions([]);
-    setShowLineSuggestions(false);
+    setShowBrandSuggestions(false); setBrandSuggestions([]);
+    setLineSuggestions([]); setShowLineSuggestions(false);
     clearBlendOutputs();
   };
 
@@ -1002,9 +974,10 @@ export default function PredictorPage() {
       ...f,
       line: cleanText(item.line || ""),
       ...EMPTY_LOOKUP_FIELDS,
+      age_years: "",
+      smoker_style: "both",
     }));
-    setShowLineSuggestions(false);
-    setLineSuggestions([]);
+    setShowLineSuggestions(false); setLineSuggestions([]);
     clearBlendOutputs();
   };
 
@@ -1046,76 +1019,10 @@ export default function PredictorPage() {
     return ["", selected, ...withoutBlank];
   };
 
-  const handleAuthFailure = (message) => {
-    setUsage(null);
-    setValidatedEmail("");
-    setIsUserValidated(false);
-    setDeviceSessionStatus("");
-    setErr(message || "User validation failed");
-  };
-
   const resetUserValidation = () => {
     setUsage(null); setValidatedEmail(""); setIsUserValidated(false);
-    setDeviceToken(""); setDeviceSessionStatus("");
     setLookupStatus(""); setLookupSource(""); setStructuralSnapshot(null);
-    clearDeviceSession();
-  };
-
-  const buildAuthPayload = (extra = {}) => {
-    const stored = getStoredDeviceSession();
-    const activeToken = cleanText(deviceToken) || cleanText(stored.device_token);
-
-    return {
-      ...extra,
-      user_email: cleanText(form.user_email),
-      device_token: activeToken,
-    };
-  };
-
-  const buildUsageUrl = (email, token) => {
-    const params = new URLSearchParams({ email: cleanText(email) });
-    const cleanedToken = cleanText(token);
-    if (cleanedToken) params.set("device_token", cleanedToken);
-    return `/api/predictor/usage?${params.toString()}`;
-  };
-
-  const applyValidatedUsage = (email, data, fallbackToken = "") => {
-    const cleanedEmail = cleanText(email).toLowerCase();
-    const returnedToken = cleanText(data?.device_token || data?.deviceToken || data?.registered_device_token || "");
-    const activeToken = returnedToken || cleanText(fallbackToken) || cleanText(deviceToken);
-    if (activeToken) {
-      setDeviceToken(activeToken);
-      storeDeviceSession(cleanedEmail, activeToken);
-      setDeviceSessionStatus("Registered device recognized.");
-    } else {
-      setDeviceSessionStatus("Device session active.");
-    }
-    setUsage(data);
-    setValidatedEmail(cleanedEmail);
-    setIsUserValidated(true);
-  };
-
-  const loadUsageForEmail = async (email, token = "") => {
-    const cleanedEmail = cleanText(email).toLowerCase();
-    const cleanedToken = cleanText(token);
-    if (!cleanedEmail) return;
-    setErr("");
-    setLoadingUsage(true);
-    setUsage(null);
-    setLookupStatus("");
-    setLookupSource("");
-    try {
-      const res = await fetch(buildUsageUrl(cleanedEmail, cleanedToken));
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        throw new Error(data.error || data.detail || "Failed to load usage");
-      }
-      applyValidatedUsage(cleanedEmail, data, cleanedToken);
-    } catch (e) {
-      handleAuthFailure(e.message || "Usage request failed");
-    } finally {
-      setLoadingUsage(false);
-    }
+    setDeviceStatus("");
   };
 
   const displayPairingList = (values) =>
@@ -1174,7 +1081,7 @@ export default function PredictorPage() {
 
   const buildPayload = () => ({
     user_email:  cleanText(form.user_email),
-    device_token: cleanText(deviceToken) || cleanText(getStoredDeviceSession().device_token),
+    device_token: getStoredDeviceToken(),
     brand:       cleanText(form.brand),
     line:        cleanText(form.line),
     origin:      cleanText(form.origin),
@@ -1197,37 +1104,94 @@ export default function PredictorPage() {
   });
 
   /* â”€â”€ API calls â”€â”€ */
-  const loadUsage = async () => {
-    const cleanedEmail = cleanText(form.user_email).toLowerCase();
-    const stored = getStoredDeviceSession();
-    const tokenForEmail = cleanText(stored.email).toLowerCase() === cleanedEmail
-      ? (cleanText(stored.device_token) || cleanText(deviceToken))
-      : (cleanText(deviceToken) || cleanText(stored.device_token));
-    if (tokenForEmail && tokenForEmail !== deviceToken) setDeviceToken(tokenForEmail);
-    await loadUsageForEmail(cleanedEmail, tokenForEmail);
+  const loadUsageForEmail = async (emailOverride, options = {}) => {
+    const quiet = options?.quiet === true;
+    if (!quiet) setErr("");
+    setLoadingUsage(true);
+    if (!quiet) setUsage(null);
+    if (!quiet) {
+      setLookupStatus("");
+      setLookupSource("");
+    }
+    try {
+      const cleanedEmail = cleanText(emailOverride || form.user_email).toLowerCase();
+      const storedToken = getStoredDeviceToken();
+      const tokenQuery = storedToken ? `&device_token=${encodeURIComponent(storedToken)}` : "";
+      const res  = await fetch(`/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}${tokenQuery}`);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        if (!quiet) {
+          setIsUserValidated(false);
+          setValidatedEmail("");
+          throw new Error(data.error || data.detail || "Failed to load usage");
+        }
+        return null;
+      }
+      if (data.device_token) storeDeviceSession(cleanedEmail, data.device_token);
+      else storeDeviceSession(cleanedEmail, storedToken);
+      setUsage(data); setValidatedEmail(cleanedEmail); setIsUserValidated(true);
+      setForm((f) => ({ ...f, user_email: cleanedEmail }));
+      setDeviceStatus(data.device_registered_now ? "Device registered for this account." : "Device validated for this account.");
+      return data;
+    } catch(e) {
+      if (!quiet) {
+        setIsUserValidated(false);
+        setValidatedEmail("");
+        setErr(e.message || "Usage request failed");
+        setDeviceStatus("");
+      }
+      return null;
+    }
+    finally { setLoadingUsage(false); }
   };
+
+  const loadUsage = async (options = {}) => loadUsageForEmail(form.user_email, options);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const savedEmail =
+      window.localStorage.getItem("icsi_device_email") ||
+      window.localStorage.getItem("icsi_predictorpro_email") ||
+      window.localStorage.getItem("icsi_predictor_email") ||
+      "";
+
+    const savedToken = getStoredDeviceToken();
+
+    if (savedEmail && savedToken) {
+      window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanText(savedEmail).toLowerCase());
+      window.localStorage.setItem(DEVICE_TOKEN_KEY, savedToken);
+      window.localStorage.removeItem("icsi_predictorpro_email");
+      window.localStorage.removeItem("icsi_predictor_email");
+      window.localStorage.removeItem("icsi_predictorpro_device_token");
+      window.localStorage.removeItem("icsi_predictor_device_token");
+
+      setForm((f) => ({ ...f, user_email: cleanText(savedEmail).toLowerCase() }));
+      loadUsageForEmail(savedEmail);
+    }
+  }, []);
 
   const lookupBlend = async () => {
     setErr(""); setLookupSource("");
     if (!isAuthorizedUser) { setLookupStatus("Validate your registered email address first."); return; }
-    if (!hasPredictorAccess) { setLookupStatus("Predictor access is only available to Standard users."); return; }
+    if (!hasProAccess) { setLookupStatus("Pro access not enabled for this account."); return; }
     const brand = cleanText(form.brand), line = cleanText(form.line);
     if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
     setLoadingLookup(true); setLookupStatus("Querying ICSI blend database...");
     try {
-      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildAuthPayload({ brand, line })) });
+      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand, line }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.match) { setLookupStatus(data.error||data.detail||"No reliable blend match found."); return; }
       applyLookupMatch(data.match);
       setLookupSource(data.source?.label||"");
-      setLookupStatus("Blend data retrieved.");
+      setLookupStatus("Blend data retrieved and applied.");
     } catch { setLookupStatus("Lookup failed \u2014 check connection and retry."); }
     finally { setLoadingLookup(false); }
   };
 
   const loadTastingCard = async (brand, line) => {
     try {
-      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildAuthPayload({ brand: cleanText(brand), line: cleanText(line) })) });
+      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand: cleanText(brand), line: cleanText(line) }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.tasting_card) { setTastingCard(null); return; }
       setTastingCard(data.tasting_card);
@@ -1239,7 +1203,7 @@ export default function PredictorPage() {
     if (!family) { setPairingCard(null); return; }
     setLoadingPairing(true);
     try {
-      const res  = await fetch(`/api/predictor/pairing-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ ...buildPayload(), family }) });
+      const res  = await fetch(`/api/predictor/pairing-card`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ ...buildPayload(), family }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.pairing_card) { setPairingCard(null); return; }
       setPairingCard(data.pairing_card);
@@ -1253,6 +1217,10 @@ export default function PredictorPage() {
 
     if (!isAuthorizedUser) {
       setSettlingError("Validate your registered email address first.");
+      return;
+    }
+    if (!hasProAccess) {
+      setSettlingError("Pro access not enabled for this account.");
       return;
     }
     if (!cleanText(form.brand) || !cleanText(form.line) || !hasBlendStructure) {
@@ -1306,7 +1274,7 @@ export default function PredictorPage() {
 
       const res = await fetch(`/api/predictor/settling-time`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-device-token": getStoredDeviceToken() },
         body: JSON.stringify(payload),
       });
       const data = await res.json().catch(() => ({}));
@@ -1324,14 +1292,14 @@ export default function PredictorPage() {
   const runPrediction = async () => {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
-    if (!hasPredictorAccess) { setErr("Predictor access is only available to Standard users."); return; }
-    if (!hasBlendStructure) { setErr("Lookup Blend first. Predictor uses the database blend structure and does not support manual construction edits."); return; }
+    if (!hasProAccess) { setErr("Pro access not enabled for this account."); return; }
+    if (false) { setErr("Select or enter blend-structure parameters before running Predictor Pro."); return; }
     setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null); setStructuralSnapshot(buildPayload());
     setPredictStep("Initializing combustion model...");
     const cleanedBrand = cleanText(form.brand), cleanedLine = cleanText(form.line);
     try {
       setPredictStep("Modeling combustion profile...");
-      const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
+      const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error||data.detail||"Prediction failed");
       setPredictStep("Calibrating RH equilibrium...");
@@ -1343,7 +1311,7 @@ export default function PredictorPage() {
           target_foot_rh_pct: String(data.target_rh),
         }));
       }
-      await loadUsage();
+      await loadUsage({ quiet: true });
       setPredictStep("Generating analytical tasting profile...");
       await loadTastingCard(cleanedBrand, cleanedLine);
       if (pairingSelection !== "None") { setPredictStep("Computing pairing matrix..."); }
@@ -1356,14 +1324,14 @@ export default function PredictorPage() {
   const findSimilarBlends = async () => {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
-    if (!hasPredictorAccess) { setErr("Predictor access is only available to Standard users."); return; }
+    if (!hasProAccess) { setErr("Pro access not enabled for this account."); return; }
     setLoadingSimilar(true); setSimilarBlends(null); setResult(null); setTastingCard(null); setPairingCard(null); setStructuralSnapshot(null);
     try {
-      const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
+      const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok) throw new Error(data.error||data.detail||"Similar blends lookup failed");
       setSimilarBlends(data);
-      await loadUsage();
+      await loadUsage({ quiet: true });
     } catch(e) { setErr(e.message||"Similar blends request failed"); }
     finally { setLoadingSimilar(false); }
   };
@@ -1377,7 +1345,7 @@ export default function PredictorPage() {
 
   return (
     <Layout>
-      <Seo title="Predictor | ICSI" path="/portal/predictor" />
+      <Seo title="Predictor Pro | ICSI" path="/portal/predictorpro" />
       <GlobalStyles />
       <div style={styles.page}>
         <div style={styles.container}>
@@ -1387,7 +1355,7 @@ export default function PredictorPage() {
               <span style={styles.dotActive} />
               CPFS Engine v4.8 Calibrated
             </div>
-            <h1 style={styles.h1}>e-Sommelier</h1>
+            <h1 style={styles.h1}>PredictorPro Enterprise Application</h1>
             <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
           </div>
 
@@ -1419,7 +1387,7 @@ export default function PredictorPage() {
             </button>
             {instructionsOpen && (
               <p className="pp-instructions" style={{ marginTop: 14 }}>
-                Predictor is available exclusively to approved users. Validate your registered
+                Predictor Pro is available exclusively to approved subscribers. Validate your registered
                 email address using the Check User control. In the Blend Lookup module, enter the Brand
                 and Line identifiers, then initiate the Lookup Blend procedure and construction and tobacco
                 composition parameters will populate automatically.
@@ -1455,32 +1423,42 @@ export default function PredictorPage() {
               <button
                 className="pp-btn-primary"
                 style={styles.btnPrimary}
-                onClick={loadUsage}
+                onClick={() => loadUsage()}
                 disabled={loadingUsage}
               >
                 {loadingUsage ? "Validating..." : "Check User"}
               </button>
-              {isAuthorizedUser && hasPredictorAccess && (
+              {isAuthorizedUser && hasProAccess && (
                 <span style={{ ...styles.noticeSuccess, padding: "6px 12px" }}>
-                  &#x2713; Access Validated &#x2014; Predictor Enabled
+                  &#x2713; Access Validated &#x2014; Pro Enabled
                 </span>
               )}
-              {isAuthorizedUser && hasPredictorAccess && deviceSessionStatus && (
-                <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.08em" }}>
-                  {deviceSessionStatus}
-                </span>
-              )}
-              {isAuthorizedUser && !hasPredictorAccess && (
+              {isAuthorizedUser && !hasProAccess && (
                 <span style={{ ...styles.noticeWarning, padding: "6px 12px" }}>
-                  &#x26A0; Validated &#x2014; PredictorPro account detected
+                  &#x26A0; Validated &#x2014; Pro Access Inactive
                 </span>
               )}
               {!isAuthorizedUser && !loadingUsage && (
                 <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.08em" }}>
-                  Validation required to enable Predictor
+                  Validation required to enable Predictor Pro
                 </span>
               )}
+              {isAuthorizedUser && (
+                <button
+                  className="pp-btn-secondary"
+                  style={{ ...styles.btnSecondary, padding: "7px 14px", fontSize: 13 }}
+                  onClick={() => { clearStoredEmailOnly(); resetUserValidation(); setDeviceStatus("Signed out on this browser. The registered device token was preserved."); }}
+                  type="button"
+                >
+                  Sign Out
+                </button>
+              )}
             </div>
+            {deviceStatus && (
+              <div style={{ marginTop: 10, fontFamily: DS.fontMono, fontSize: 14, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                {deviceStatus}
+              </div>
+            )}
           </div>
 
           {/* â”€â”€ CIGAR BLEND LOOKUP â”€â”€ */}
@@ -1492,7 +1470,7 @@ export default function PredictorPage() {
                 <label style={styles.label}>Brand</label>
                 <input
                   className="pp-input"
-                  style={styles.input}
+                  style={{ ...styles.input, paddingRight: cleanText(form.brand) ? 42 : 12 }}
                   value={form.brand}
                   placeholder="Begin entering brand designation..."
                   autoComplete="off"
@@ -1504,9 +1482,10 @@ export default function PredictorPage() {
                       brand: v,
                       line: "",
                       ...EMPTY_LOOKUP_FIELDS,
+                      age_years: "",
+                      smoker_style: "both",
                     }));
-                    setLineSuggestions([]);
-                    setShowLineSuggestions(false);
+                    setLineSuggestions([]); setShowLineSuggestions(false);
                     clearBlendOutputs();
                     loadBrandSuggestions(v);
                   }}
@@ -1515,11 +1494,11 @@ export default function PredictorPage() {
                 {cleanText(form.brand) && (
                   <button
                     type="button"
-                    className="pp-input-clear"
-                    style={styles.inputClearButton}
+                    className="pp-clear-field"
+                    style={styles.clearFieldButton}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={clearBrandField}
-                    aria-label="Clear brand and blend selection"
+                    aria-label="Clear brand and current blend"
                     title="Clear brand"
                   >
                     &times;
@@ -1541,7 +1520,11 @@ export default function PredictorPage() {
                 <label style={styles.label}>Line</label>
                 <input
                   className="pp-input"
-                  style={{ ...styles.input, opacity: cleanText(form.brand) ? 1 : 0.5 }}
+                  style={{
+                    ...styles.input,
+                    opacity: cleanText(form.brand) ? 1 : 0.5,
+                    paddingRight: cleanText(form.line) ? 42 : 12,
+                  }}
                   value={form.line}
                   autoComplete="off"
                   disabled={!cleanText(form.brand)}
@@ -1552,6 +1535,8 @@ export default function PredictorPage() {
                       ...f,
                       line: v,
                       ...EMPTY_LOOKUP_FIELDS,
+                      age_years: "",
+                      smoker_style: "both",
                     }));
                     clearBlendOutputs();
                     loadLineSuggestions(form.brand, v);
@@ -1562,11 +1547,11 @@ export default function PredictorPage() {
                 {cleanText(form.line) && (
                   <button
                     type="button"
-                    className="pp-input-clear"
-                    style={styles.inputClearButton}
+                    className="pp-clear-field"
+                    style={styles.clearFieldButton}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={clearLineField}
-                    aria-label="Clear line selection"
+                    aria-label="Clear line and current blend"
                     title="Clear line"
                   >
                     &times;
@@ -1589,7 +1574,7 @@ export default function PredictorPage() {
                 className="pp-btn-secondary"
                 style={styles.btnSecondary}
                 onClick={lookupBlend}
-                disabled={loadingLookup || !hasPredictorAccess}
+                disabled={loadingLookup || !hasProAccess}
               >
                 {loadingLookup ? "Querying Database..." : "Lookup Blend"}
               </button>
@@ -1604,6 +1589,122 @@ export default function PredictorPage() {
                 Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
               </div>
             )}
+
+            <hr style={styles.sep} />
+
+            <div style={styles.grid2}>
+              <div>
+                <label style={styles.label}>Origin</label>
+                <select className="pp-select" style={styles.select} value={form.origin} onChange={(e) => update("origin", e.target.value)}>
+                  {ORIGINS.map((x) => <option key={x||"blank-origin"} value={x}>{x||"Select Origin"}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={styles.label}>Factory</label>
+                <select className="pp-select" style={styles.select} value={form.factory} onChange={(e) => update("factory", e.target.value)}>
+                  {lookupOptionList(FACTORIES, form.factory).map((x) => <option key={x||"blank-factory"} value={x}>{x||"Select Factory"}</option>)}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* â”€â”€ BLEND CONSTRUCTION â”€â”€ */}
+          <div style={styles.card}>
+            <div style={styles.h2}>Blend Construction: Autofilled &amp; Adjustable</div>
+
+            <SectionDivider label="Wrapper" />
+            <div style={styles.grid2}>
+              <div>
+                <label style={styles.label}>Wrapper Leaf</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper} onChange={(e) => update("wrapper", e.target.value)}>
+                  {WRAPPERS.map((x) => <option key={x||"blank-wrapper"} value={x}>{x||"Select Wrapper"}</option>)}
+                </select>
+                {form.wrapper === "Hybrid / Other" && (
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.wrapper_custom}
+                    onChange={(e) => update("wrapper_custom", e.target.value)}
+                    placeholder="Specify custom wrapper designation" />
+                )}
+              </div>
+              <div>
+                <label style={styles.label}>Wrapper Process</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_process} onChange={(e) => update("wrapper_process", e.target.value)}>
+                  {WRAPPER_PROCESSES.map((x) => <option key={x||"blank-wp"} value={x}>{x||"Select Process"}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div style={{ ...styles.grid2, marginTop: 14 }}>
+              <div>
+                <label style={styles.label}>Wrapper Thickness</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_thickness} onChange={(e) => update("wrapper_thickness", e.target.value)}>
+                  {WRAPPER_THICKNESS_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={styles.label}>Wrapper Oiliness</label>
+                <select className="pp-select" style={styles.select} value={form.wrapper_oiliness} onChange={(e) => update("wrapper_oiliness", e.target.value)}>
+                  {WRAPPER_OILINESS_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <SectionDivider label="Binder Components" />
+            <div style={styles.grid2}>
+              <div>
+                <label style={styles.label}>Binder 1</label>
+                <select className="pp-select" style={styles.select} value={form.binder_1} onChange={(e) => update("binder_1", e.target.value)}>
+                  {BINDERS.map((x) => <option key={x||"blank-b1"} value={x}>{x||"Select Binder"}</option>)}
+                </select>
+                {form.binder_1 === "Hybrid / Other" && (
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.binder_1_custom} onChange={(e) => update("binder_1_custom", e.target.value)}
+                    placeholder="Specify custom binder" />
+                )}
+              </div>
+              <div>
+                <label style={styles.label}>Binder 2</label>
+                <select className="pp-select" style={styles.select} value={form.binder_2} onChange={(e) => update("binder_2", e.target.value)}>
+                  {BINDERS.map((x) => <option key={x||"blank-b2"} value={x}>{x||"Select Binder"}</option>)}
+                </select>
+                {form.binder_2 === "Hybrid / Other" && (
+                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
+                    value={form.binder_2_custom} onChange={(e) => update("binder_2_custom", e.target.value)}
+                    placeholder="Specify custom binder" />
+                )}
+              </div>
+            </div>
+
+            <div style={{ marginTop: 14, maxWidth: 320 }}>
+              <label style={styles.label}>Ligero Level</label>
+              <select className="pp-select" style={styles.select} value={form.ligero} onChange={(e) => update("ligero", e.target.value)}>
+                {LIGERO_OPTIONS.map((x) => <option key={x||"blank-lig"} value={x}>{x||"Select Level"}</option>)}
+              </select>
+            </div>
+
+            <SectionDivider label="Filler Components" />
+            <div style={styles.grid3}>
+              {["filler_1","filler_2","filler_3"].map((key, i) => (
+                <div key={key}>
+                  <label style={styles.label}>Filler {i+1}</label>
+                  <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
+                    {FILLER_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
+                  </select>
+                </div>
+              ))}
+            </div>
+
+            <SectionDivider label="Special Tobacco Flags" />
+            <div style={styles.grid3}>
+              {["flag_1","flag_2","flag_3"].map((key, i) => (
+                <div key={key}>
+                  <label style={styles.label}>Flag {i+1}</label>
+                  <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
+                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
+                  </select>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* â”€â”€ ENVIRONMENTAL + RUN CONTROLS â”€â”€ */}
@@ -1649,7 +1750,7 @@ export default function PredictorPage() {
                 className="pp-btn-primary"
                 style={styles.btnPrimary}
                 onClick={runPrediction}
-                disabled={loadingPredict || !hasPredictorAccess || !hasBlendStructure}
+                disabled={loadingPredict || !hasProAccess}
               >
                 {loadingPredict ? "Computing..." : "Run Predictor"}
               </button>
@@ -1657,7 +1758,7 @@ export default function PredictorPage() {
                 className="pp-btn-secondary"
                 style={styles.btnSecondary}
                 onClick={findSimilarBlends}
-                disabled={loadingSimilar || !hasPredictorAccess || !hasBlendStructure}
+                disabled={loadingSimilar || !hasProAccess}
               >
                 {loadingSimilar ? "Searching..." : "Find Similar Blends"}
               </button>
@@ -1926,7 +2027,7 @@ export default function PredictorPage() {
                     style={styles.btnPrimary}
                     type="button"
                     onClick={runSettlingCalculator}
-                    disabled={loadingSettling || !isAuthorizedUser || !hasBlendStructure}
+                    disabled={loadingSettling || !hasProAccess || !hasBlendStructure}
                   >
                     {loadingSettling ? "Calculating..." : "Calculate Settling Time"}
                   </button>
@@ -2028,46 +2129,14 @@ export default function PredictorPage() {
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
                 </div>
-              </div>
-              {/* Retrieved Blend Structure */}
-              {structuralSnapshot && (
-                <>
-                  <SectionDivider label="Retrieved Blend Structure" />
-                  <div style={{ padding: "18px 0", borderBottom: `1px solid ${DS.border}`, marginBottom: 24 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
-                      <div>
-                        <span style={{ fontWeight: 600, fontSize: 16, color: DS.textPrimary }}>
-                          {structuralSnapshot.brand || "Unknown Brand"}
-                        </span>
-                        {structuralSnapshot.line && (
-                          <span style={{ fontSize: 16, color: DS.textSecond, marginLeft: 8 }}>&mdash; {structuralSnapshot.line}</span>
-                        )}
-                      </div>
-                    </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 2 }}>
-                      {structuralSnapshot.origin && <DataRow label="Origin" value={structuralSnapshot.origin} />}
-                      {structuralSnapshot.factory && <DataRow label="Factory" value={structuralSnapshot.factory} />}
-                      {structuralSnapshot.wrapper && <DataRow label="Wrapper" value={structuralSnapshot.wrapper} />}
-                      {structuralSnapshot.wrapper_process && <DataRow label="Wrapper Process" value={structuralSnapshot.wrapper_process} />}
-                      {(structuralSnapshot.binder_1 || structuralSnapshot.binder_2 || structuralSnapshot.binder) && (
-                        <DataRow label="Binder Components" value={[structuralSnapshot.binder_1, structuralSnapshot.binder_2].filter(Boolean).join(", ") || splitPipeValues(structuralSnapshot.binder || "").join(", ")} />
-                      )}
-                      {Array.isArray(structuralSnapshot.filler) && structuralSnapshot.filler.length > 0 && (
-                        <DataRow label="Filler" value={structuralSnapshot.filler.join(", ")} />
-                      )}
-                      {structuralSnapshot.ligero && <DataRow label="Ligero" value={structuralSnapshot.ligero} />}
-                      {Array.isArray(structuralSnapshot.special_tobacco_flags) && structuralSnapshot.special_tobacco_flags.length > 0 && (
-                        <DataRow label="Special Flags" value={structuralSnapshot.special_tobacco_flags.join(", ")} />
-                      )}
-                    </div>
-                    {lookupSource && (
-                      <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
-                        Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
-                      </div>
-                    )}
+                <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
+                  <div style={styles.dataLabel}>CPFS Family</div>
+                  <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
+                    {result.family}
                   </div>
-                </>
-              )}
+                  <div style={{ ...styles.dataLabel, marginTop: 4 }}>Classification</div>
+                </div>
+              </div>
               {/* Tasting Card */}
               {tastingCard && (
                 <>
@@ -2122,6 +2191,7 @@ export default function PredictorPage() {
                 <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
                 <span style={styles.metaItem}>Calibrated · Reference-Standard</span>
                 <span style={styles.metaItem}>Generated {timestamp}</span>
+                <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
               </div>
             </div>
           )}
