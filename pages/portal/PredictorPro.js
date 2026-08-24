@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 /* ============================================================
-   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR PRO
+   SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR
    Color palette: Carbon / ICSI Crimson / warm gold
    Typography: Cormorant Garamond (sections) + IBM Plex Mono (data)
    Spacing: 8pt grid throughout
@@ -158,19 +158,19 @@ const styles = {
     color: DS.textPrimary,
     fontFamily: DS.fontSans,
     fontSize: 15,
-    padding: "9px 12px",
+    padding: "9px 36px 9px 12px",
     width: "100%",
     boxSizing: "border-box",
     outline: "none",
     transition: "border-color 0.15s",
     WebkitAppearance: "none",
   },
-  clearFieldButton: {
+  inputClearButton: {
     position: "absolute",
-    right: 10,
-    bottom: 9,
-    width: 24,
-    height: 24,
+    right: 9,
+    top: 34,
+    width: 22,
+    height: 22,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -184,7 +184,8 @@ const styles = {
     lineHeight: 1,
     padding: 0,
     outline: "none",
-    zIndex: 60,
+    zIndex: 2,
+    transition: "color 0.15s, background 0.15s",
   },
   select: {
     background: DS.bgInput,
@@ -403,12 +404,12 @@ const GlobalStyles = () => (
     }
     .pp-input:focus  { border-color: rgba(139,26,26,0.6) !important; }
     .pp-select:focus { border-color: rgba(139,26,26,0.6) !important; }
+    .pp-input-clear:hover { color: #f0ece6 !important; background: rgba(255,255,255,0.06) !important; }
+    .pp-input-clear:focus-visible { box-shadow: 0 0 0 2px rgba(184,146,42,0.35); }
     .pp-btn-primary:hover:not(:disabled)   { opacity: 0.85; }
     .pp-btn-primary:disabled               { opacity: 0.38; cursor: not-allowed; }
     .pp-btn-secondary:hover:not(:disabled) { border-color: rgba(139,26,26,0.45); color: #c9a96e; }
     .pp-btn-secondary:disabled             { opacity: 0.38; cursor: not-allowed; }
-    .pp-clear-field:hover                   { color: #f0ece6 !important; background: rgba(255,255,255,0.06) !important; }
-    .pp-clear-field:focus-visible           { outline: 1px solid rgba(184,146,42,0.6) !important; outline-offset: 2px; }
     .pp-ac-item:hover { background: rgba(139,26,26,0.1) !important; color: #f0ece6 !important; }
     .pp-datarow:last-child { border-bottom: none !important; }
     .pp-result { animation: fadeIn 0.35s ease both; }
@@ -639,6 +640,49 @@ const FILLER_OPTIONS = ["","Cuba","Cuban Viso","Alta Viso","Dominican Republic",
 const LIGERO_OPTIONS = ["","none","low","moderate","high"];
 const SPECIAL_TOBACCO_FLAGS_OPTIONS = ["","Medio Tiempo","Alta Viso-heavy","Piloto Cubano","Olor Dominicano","Dominican Bonao","Pelo de Oro","Corojo","Criollo","Andullo","Cotui","Yamasa","San Vicente","Somoto","Brazilian Cubra","Brazilian Mata Fina","Brazilian Mata Norte","Brazilian Arapiraca","Masatepe","Ometepe","Pueblo Nuevo","Jamastran","Broadleaf-heavy","San Andres-heavy","SA Negrito","HVA","Jalapa","Filipino Simaba","Vuelta Abajo","Honduran Talanga","Costarican Puriscal","Aged filler","Extra fermented","Culebra style bunching","Small-batch / experimental"];
 const SMOKER_STYLE_OPTIONS = ["both","slow","fast"];
+const SETTLING_STARTING_CONDITIONS = [
+  "Recently shipped / unsettled",
+  "Recently purchased but stable",
+  "Already in stable humidor",
+  "Box-aged / previously rested",
+];
+const SETTLING_ROTATION_FREQUENCIES = ["Never","Monthly","Every 2 weeks","Weekly"];
+const SETTLING_POST_ROLL_AGING = [
+  "Unknown / not guaranteed",
+  "Not post-roll aged",
+  "90 days post-roll aged",
+  "120 days post-roll aged",
+  "2+ years post-roll aged",
+];
+const SETTLING_TEMPERATURE_SHOCK = ["None","Mild","Moderate","Severe"];
+
+const todayIso = () => {
+  const d = new Date();
+  const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0,10);
+};
+
+const DEFAULT_SETTLING_FORM = {
+  box_production_date: todayIso(),
+  stable_humidor_start_date: todayIso(),
+  evaluation_date: todayIso(),
+  length_inches: "6.0",
+  ring_gauge: "52",
+  ambient_temp_c: "21.0",
+  ambient_rh: "65.0",
+  target_peak_flavor_rh: "65.0",
+  starting_core_rh: "63.0",
+  radial_target_delta_rh: "0.5",
+  use_measured_foot_rh: "No",
+  foot_rh_pct: "65.0",
+  target_foot_rh_pct: "65.0",
+  target_axial_spread_rh: "1.0",
+  starting_condition: "Recently purchased but stable",
+  rotation_frequency: "Monthly",
+  post_roll_aging_status: "Unknown / not guaranteed",
+  temperature_shock_status: "None",
+};
+
 const EMPTY_LOOKUP_FIELDS = {
   origin:"",factory:"",wrapper:"",wrapper_custom:"",wrapper_process:"",
   wrapper_thickness:"medium",wrapper_oiliness:"medium",binder_1:"",binder_1_custom:"",
@@ -695,6 +739,60 @@ const SectionDivider = ({ label }) => (
     <div className="pp-section-line" />
   </div>
 );
+
+/* ============================================================
+   DEVICE SESSION HELPERS
+   ============================================================ */
+const DEVICE_EMAIL_KEY = "icsi_device_email";
+const DEVICE_TOKEN_KEY = "icsi_device_token";
+
+const getStoredDeviceSession = () => {
+  if (typeof window === "undefined") return { email: "", device_token: "" };
+
+  return {
+    email:
+      window.localStorage.getItem("icsi_device_email") ||
+      window.localStorage.getItem("icsi_predictor_email") ||
+      window.localStorage.getItem("icsi_predictorpro_email") ||
+      "",
+    device_token:
+      window.localStorage.getItem("icsi_device_token") ||
+      window.localStorage.getItem("icsi_predictor_device_token") ||
+      window.localStorage.getItem("icsi_predictorpro_device_token") ||
+      "",
+  };
+};
+
+const storeDeviceSession = (email, deviceToken) => {
+  if (typeof window === "undefined") return;
+
+  const cleanEmail = String(email || "").trim().toLowerCase();
+  const cleanToken = String(deviceToken || "").trim();
+
+  if (cleanEmail) {
+    window.localStorage.setItem("icsi_device_email", cleanEmail);
+    window.localStorage.removeItem("icsi_predictor_email");
+    window.localStorage.removeItem("icsi_predictorpro_email");
+  }
+
+  if (cleanToken) {
+    window.localStorage.setItem("icsi_device_token", cleanToken);
+    window.localStorage.removeItem("icsi_predictor_device_token");
+    window.localStorage.removeItem("icsi_predictorpro_device_token");
+  }
+};
+
+const clearDeviceSession = () => {
+  if (typeof window === "undefined") return;
+
+  window.localStorage.removeItem("icsi_device_email");
+  window.localStorage.removeItem("icsi_device_token");
+  window.localStorage.removeItem("icsi_predictor_email");
+  window.localStorage.removeItem("icsi_predictor_device_token");
+  window.localStorage.removeItem("icsi_predictorpro_email");
+  window.localStorage.removeItem("icsi_predictorpro_device_token");
+};
+
 /* ============================================================
    MAIN COMPONENT
    ============================================================ */
@@ -732,6 +830,8 @@ export default function PredictorPage() {
   });
   const [usage, setUsage]                   = useState(null);
   const [validatedEmail, setValidatedEmail] = useState("");
+  const [deviceToken, setDeviceToken] = useState("");
+  const [deviceSessionStatus, setDeviceSessionStatus] = useState("");
   const [isUserValidated, setIsUserValidated] = useState(false);
   const [result, setResult]                 = useState(null);
   const [tastingCard, setTastingCard]       = useState(null);
@@ -749,12 +849,65 @@ export default function PredictorPage() {
   const [lookupStatus, setLookupStatus]     = useState("");
   const [lookupSource, setLookupSource]     = useState("");
   const [predictStep, setPredictStep]       = useState("");
-  const [deviceStatus, setDeviceStatus]     = useState("");
-
-  const DEVICE_EMAIL_KEY = "icsi_device_email";
-  const DEVICE_TOKEN_KEY = "icsi_device_token";
+  const [settlingOpen, setSettlingOpen] = useState(false);
+  const [settlingForm, setSettlingForm] = useState(DEFAULT_SETTLING_FORM);
+  const [settlingResult, setSettlingResult] = useState(null);
+  const [settlingError, setSettlingError] = useState("");
+  const [loadingSettling, setLoadingSettling] = useState(false);
 
   const update = (key, value) => setForm((f) => ({ ...f, [key]: value }));
+
+  const updateSettling = (key, value) =>
+    setSettlingForm((f) => ({ ...f, [key]: value }));
+
+  const resetSettlingCalculator = () => {
+    setSettlingForm((f) => ({
+      ...DEFAULT_SETTLING_FORM,
+      target_peak_flavor_rh: result?.target_rh != null ? String(result.target_rh) : "65.0",
+      target_foot_rh_pct: result?.target_rh != null ? String(result.target_rh) : "65.0",
+    }));
+    setSettlingResult(null);
+    setSettlingError("");
+  };
+
+  const clearBlendOutputs = () => {
+    setLookupStatus("");
+    setLookupSource("");
+    setResult(null);
+    setTastingCard(null);
+    setPairingCard(null);
+    setSimilarBlends(null);
+    setStructuralSnapshot(null);
+    setErr("");
+    setPredictStep("");
+    setSettlingResult(null);
+    setSettlingError("");
+  };
+
+  const clearLineField = () => {
+    setForm((f) => ({
+      ...f,
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+    }));
+    setLineSuggestions([]);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
+  };
+
+  const clearBrandField = () => {
+    setForm((f) => ({
+      ...f,
+      brand: "",
+      line: "",
+      ...EMPTY_LOOKUP_FIELDS,
+    }));
+    setBrandSuggestions([]);
+    setLineSuggestions([]);
+    setShowBrandSuggestions(false);
+    setShowLineSuggestions(false);
+    clearBlendOutputs();
+  };
 
   const cleanText = (value) =>
     String(value || "").normalize("NFKD")
@@ -762,44 +915,23 @@ export default function PredictorPage() {
       .replace(/['']/g,"'").replace(/[""]/g,'"')
       .replace(/[â€“â€”]/g,"-").replace(/\s+/g," ").trim();
 
-  const getStoredDeviceToken = () => {
-    if (typeof window === "undefined") return "";
-
-    return (
-      window.localStorage.getItem("icsi_device_token") ||
-      window.localStorage.getItem("icsi_predictorpro_device_token") ||
-      window.localStorage.getItem("icsi_predictor_device_token") ||
-      ""
-    );
-  };
-
-  const storeDeviceSession = (email, deviceToken) => {
-    if (typeof window === "undefined") return;
-
-    const cleanEmail = cleanText(email).toLowerCase();
-    const tokenToStore = deviceToken || getStoredDeviceToken();
-
-    window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanEmail);
-
-    if (tokenToStore) {
-      window.localStorage.setItem(DEVICE_TOKEN_KEY, tokenToStore);
-      window.localStorage.removeItem("icsi_predictorpro_device_token");
-      window.localStorage.removeItem("icsi_predictor_device_token");
-    }
-  };
-
-  const clearStoredEmailOnly = () => {
-    if (typeof window === "undefined") return;
-    // Keep the device token. Removing it would lock this legitimate device out
-    // until an admin resets the registered device on the backend.
-    window.localStorage.removeItem(DEVICE_EMAIL_KEY);
-  };
-
   const isAuthorizedUser =
     isUserValidated &&
     cleanText(validatedEmail).toLowerCase() === cleanText(form.user_email).toLowerCase();
   const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
+  const hasPredictorAccess = isAuthorizedUser && usage?.pro_access !== true;
   const hasBlendStructure = Boolean(cleanText(form.wrapper) || cleanText(form.binder_1) || cleanText(form.filler_1));
+
+  useEffect(() => {
+    const stored = getStoredDeviceSession();
+    const savedEmail = cleanText(stored.email).toLowerCase();
+    const savedToken = cleanText(stored.device_token);
+    if (!savedEmail || !savedToken) return;
+    setDeviceToken(savedToken);
+    setForm((f) => ({ ...f, user_email: savedEmail }));
+    loadUsageForEmail(savedEmail, savedToken);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /* â”€â”€ Autocomplete â”€â”€ */
   const uniqueByBrand = (items) => {
@@ -851,58 +983,17 @@ export default function PredictorPage() {
     } catch { setLineSuggestions([]); setShowLineSuggestions(false); }
   };
 
-  const clearBlendOutputs = () => {
-    setLookupStatus("");
-    setLookupSource("");
-    setResult(null);
-    setTastingCard(null);
-    setPairingCard(null);
-    setSimilarBlends(null);
-    setStructuralSnapshot(null);
-    setErr("");
-    setPredictStep("");
-  };
-
-  const clearLineField = () => {
-    setForm((f) => ({
-      ...f,
-      line: "",
-      ...EMPTY_LOOKUP_FIELDS,
-      age_years: "",
-      smoker_style: "both",
-    }));
-    setLineSuggestions([]);
-    setShowLineSuggestions(false);
-    clearBlendOutputs();
-  };
-
-  const clearBrandField = () => {
-    setForm((f) => ({
-      ...f,
-      brand: "",
-      line: "",
-      ...EMPTY_LOOKUP_FIELDS,
-      age_years: "",
-      smoker_style: "both",
-    }));
-    setBrandSuggestions([]);
-    setLineSuggestions([]);
-    setShowBrandSuggestions(false);
-    setShowLineSuggestions(false);
-    clearBlendOutputs();
-  };
-
   const selectBrandSuggestion = (item) => {
     setForm((f) => ({
       ...f,
       brand: cleanText(item.brand || ""),
       line: "",
       ...EMPTY_LOOKUP_FIELDS,
-      age_years: "",
-      smoker_style: "both",
     }));
-    setShowBrandSuggestions(false); setBrandSuggestions([]);
-    setLineSuggestions([]); setShowLineSuggestions(false);
+    setShowBrandSuggestions(false);
+    setBrandSuggestions([]);
+    setLineSuggestions([]);
+    setShowLineSuggestions(false);
     clearBlendOutputs();
   };
 
@@ -911,10 +1002,9 @@ export default function PredictorPage() {
       ...f,
       line: cleanText(item.line || ""),
       ...EMPTY_LOOKUP_FIELDS,
-      age_years: "",
-      smoker_style: "both",
     }));
-    setShowLineSuggestions(false); setLineSuggestions([]);
+    setShowLineSuggestions(false);
+    setLineSuggestions([]);
     clearBlendOutputs();
   };
 
@@ -956,10 +1046,76 @@ export default function PredictorPage() {
     return ["", selected, ...withoutBlank];
   };
 
+  const handleAuthFailure = (message) => {
+    setUsage(null);
+    setValidatedEmail("");
+    setIsUserValidated(false);
+    setDeviceSessionStatus("");
+    setErr(message || "User validation failed");
+  };
+
   const resetUserValidation = () => {
     setUsage(null); setValidatedEmail(""); setIsUserValidated(false);
+    setDeviceToken(""); setDeviceSessionStatus("");
     setLookupStatus(""); setLookupSource(""); setStructuralSnapshot(null);
-    setDeviceStatus("");
+    clearDeviceSession();
+  };
+
+  const buildAuthPayload = (extra = {}) => {
+    const stored = getStoredDeviceSession();
+    const activeToken = cleanText(deviceToken) || cleanText(stored.device_token);
+
+    return {
+      ...extra,
+      user_email: cleanText(form.user_email),
+      device_token: activeToken,
+    };
+  };
+
+  const buildUsageUrl = (email, token) => {
+    const params = new URLSearchParams({ email: cleanText(email) });
+    const cleanedToken = cleanText(token);
+    if (cleanedToken) params.set("device_token", cleanedToken);
+    return `/api/predictor/usage?${params.toString()}`;
+  };
+
+  const applyValidatedUsage = (email, data, fallbackToken = "") => {
+    const cleanedEmail = cleanText(email).toLowerCase();
+    const returnedToken = cleanText(data?.device_token || data?.deviceToken || data?.registered_device_token || "");
+    const activeToken = returnedToken || cleanText(fallbackToken) || cleanText(deviceToken);
+    if (activeToken) {
+      setDeviceToken(activeToken);
+      storeDeviceSession(cleanedEmail, activeToken);
+      setDeviceSessionStatus("Registered device recognized.");
+    } else {
+      setDeviceSessionStatus("Device session active.");
+    }
+    setUsage(data);
+    setValidatedEmail(cleanedEmail);
+    setIsUserValidated(true);
+  };
+
+  const loadUsageForEmail = async (email, token = "") => {
+    const cleanedEmail = cleanText(email).toLowerCase();
+    const cleanedToken = cleanText(token);
+    if (!cleanedEmail) return;
+    setErr("");
+    setLoadingUsage(true);
+    setUsage(null);
+    setLookupStatus("");
+    setLookupSource("");
+    try {
+      const res = await fetch(buildUsageUrl(cleanedEmail, cleanedToken));
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data.error || data.detail || "Failed to load usage");
+      }
+      applyValidatedUsage(cleanedEmail, data, cleanedToken);
+    } catch (e) {
+      handleAuthFailure(e.message || "Usage request failed");
+    } finally {
+      setLoadingUsage(false);
+    }
   };
 
   const displayPairingList = (values) =>
@@ -1018,7 +1174,7 @@ export default function PredictorPage() {
 
   const buildPayload = () => ({
     user_email:  cleanText(form.user_email),
-    device_token: getStoredDeviceToken(),
+    device_token: cleanText(deviceToken) || cleanText(getStoredDeviceSession().device_token),
     brand:       cleanText(form.brand),
     line:        cleanText(form.line),
     origin:      cleanText(form.origin),
@@ -1041,94 +1197,37 @@ export default function PredictorPage() {
   });
 
   /* â”€â”€ API calls â”€â”€ */
-  const loadUsageForEmail = async (emailOverride, options = {}) => {
-    const quiet = options?.quiet === true;
-    if (!quiet) setErr("");
-    setLoadingUsage(true);
-    if (!quiet) setUsage(null);
-    if (!quiet) {
-      setLookupStatus("");
-      setLookupSource("");
-    }
-    try {
-      const cleanedEmail = cleanText(emailOverride || form.user_email).toLowerCase();
-      const storedToken = getStoredDeviceToken();
-      const tokenQuery = storedToken ? `&device_token=${encodeURIComponent(storedToken)}` : "";
-      const res  = await fetch(`/api/predictor/usage?email=${encodeURIComponent(cleanedEmail)}${tokenQuery}`);
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        if (!quiet) {
-          setIsUserValidated(false);
-          setValidatedEmail("");
-          throw new Error(data.error || data.detail || "Failed to load usage");
-        }
-        return null;
-      }
-      if (data.device_token) storeDeviceSession(cleanedEmail, data.device_token);
-      else storeDeviceSession(cleanedEmail, storedToken);
-      setUsage(data); setValidatedEmail(cleanedEmail); setIsUserValidated(true);
-      setForm((f) => ({ ...f, user_email: cleanedEmail }));
-      setDeviceStatus(data.device_registered_now ? "Device registered for this account." : "Device validated for this account.");
-      return data;
-    } catch(e) {
-      if (!quiet) {
-        setIsUserValidated(false);
-        setValidatedEmail("");
-        setErr(e.message || "Usage request failed");
-        setDeviceStatus("");
-      }
-      return null;
-    }
-    finally { setLoadingUsage(false); }
+  const loadUsage = async () => {
+    const cleanedEmail = cleanText(form.user_email).toLowerCase();
+    const stored = getStoredDeviceSession();
+    const tokenForEmail = cleanText(stored.email).toLowerCase() === cleanedEmail
+      ? (cleanText(stored.device_token) || cleanText(deviceToken))
+      : (cleanText(deviceToken) || cleanText(stored.device_token));
+    if (tokenForEmail && tokenForEmail !== deviceToken) setDeviceToken(tokenForEmail);
+    await loadUsageForEmail(cleanedEmail, tokenForEmail);
   };
-
-  const loadUsage = async (options = {}) => loadUsageForEmail(form.user_email, options);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const savedEmail =
-      window.localStorage.getItem("icsi_device_email") ||
-      window.localStorage.getItem("icsi_predictorpro_email") ||
-      window.localStorage.getItem("icsi_predictor_email") ||
-      "";
-
-    const savedToken = getStoredDeviceToken();
-
-    if (savedEmail && savedToken) {
-      window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanText(savedEmail).toLowerCase());
-      window.localStorage.setItem(DEVICE_TOKEN_KEY, savedToken);
-      window.localStorage.removeItem("icsi_predictorpro_email");
-      window.localStorage.removeItem("icsi_predictor_email");
-      window.localStorage.removeItem("icsi_predictorpro_device_token");
-      window.localStorage.removeItem("icsi_predictor_device_token");
-
-      setForm((f) => ({ ...f, user_email: cleanText(savedEmail).toLowerCase() }));
-      loadUsageForEmail(savedEmail);
-    }
-  }, []);
 
   const lookupBlend = async () => {
     setErr(""); setLookupSource("");
     if (!isAuthorizedUser) { setLookupStatus("Validate your registered email address first."); return; }
-    if (!hasProAccess) { setLookupStatus("Pro access not enabled for this account."); return; }
+    if (!hasPredictorAccess) { setLookupStatus("Predictor access is only available to Standard users."); return; }
     const brand = cleanText(form.brand), line = cleanText(form.line);
     if (!brand || !line) { setLookupStatus("Enter Brand and Line before initiating lookup."); return; }
     setLoadingLookup(true); setLookupStatus("Querying ICSI blend database...");
     try {
-      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand, line }) });
+      const res  = await fetch(`/api/predictor/lookup-blend`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildAuthPayload({ brand, line })) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.match) { setLookupStatus(data.error||data.detail||"No reliable blend match found."); return; }
       applyLookupMatch(data.match);
       setLookupSource(data.source?.label||"");
-      setLookupStatus("Blend data retrieved and applied.");
+      setLookupStatus("Blend data retrieved.");
     } catch { setLookupStatus("Lookup failed \u2014 check connection and retry."); }
     finally { setLoadingLookup(false); }
   };
 
   const loadTastingCard = async (brand, line) => {
     try {
-      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ user_email: cleanText(form.user_email), device_token: getStoredDeviceToken(), brand: cleanText(brand), line: cleanText(line) }) });
+      const res  = await fetch(`/api/predictor/tasting-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildAuthPayload({ brand: cleanText(brand), line: cleanText(line) })) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.tasting_card) { setTastingCard(null); return; }
       setTastingCard(data.tasting_card);
@@ -1140,7 +1239,7 @@ export default function PredictorPage() {
     if (!family) { setPairingCard(null); return; }
     setLoadingPairing(true);
     try {
-      const res  = await fetch(`/api/predictor/pairing-card`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify({ ...buildPayload(), family }) });
+      const res  = await fetch(`/api/predictor/pairing-card`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ ...buildPayload(), family }) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok||!data.pairing_card) { setPairingCard(null); return; }
       setPairingCard(data.pairing_card);
@@ -1148,22 +1247,103 @@ export default function PredictorPage() {
     finally { setLoadingPairing(false); }
   };
 
+  const runSettlingCalculator = async () => {
+    setSettlingError("");
+    setSettlingResult(null);
+
+    if (!isAuthorizedUser) {
+      setSettlingError("Validate your registered email address first.");
+      return;
+    }
+    if (!cleanText(form.brand) || !cleanText(form.line) || !hasBlendStructure) {
+      setSettlingError("Lookup Blend first. The settling model uses the selected blend record from the ICSI database.");
+      return;
+    }
+
+    const boxDate = settlingForm.box_production_date;
+    const stableDate = settlingForm.stable_humidor_start_date;
+    const evaluationDate = settlingForm.evaluation_date;
+
+    if (!boxDate || !stableDate || !evaluationDate) {
+      setSettlingError("Complete all three date fields.");
+      return;
+    }
+    if (stableDate < boxDate) {
+      setSettlingError("Stable humidor rest start date cannot be earlier than box production date.");
+      return;
+    }
+    if (evaluationDate < stableDate) {
+      setSettlingError("Evaluation date cannot be earlier than stable humidor rest start date.");
+      return;
+    }
+
+    setLoadingSettling(true);
+    try {
+      const payload = buildAuthPayload({
+        brand: cleanText(form.brand),
+        line: cleanText(form.line),
+        box_production_date: boxDate,
+        stable_humidor_start_date: stableDate,
+        evaluation_date: evaluationDate,
+        length_inches: Number(settlingForm.length_inches),
+        ring_gauge: Number(settlingForm.ring_gauge),
+        ambient_temp_c: Number(settlingForm.ambient_temp_c),
+        ambient_rh: Number(settlingForm.ambient_rh),
+        target_peak_flavor_rh: Number(settlingForm.target_peak_flavor_rh),
+        starting_core_rh: Number(settlingForm.starting_core_rh),
+        radial_target_delta_rh: Number(settlingForm.radial_target_delta_rh),
+        use_measured_foot_rh: settlingForm.use_measured_foot_rh === "Yes",
+        foot_rh_pct: settlingForm.use_measured_foot_rh === "Yes"
+          ? Number(settlingForm.foot_rh_pct)
+          : null,
+        target_foot_rh_pct: Number(settlingForm.target_foot_rh_pct),
+        target_axial_spread_rh: Number(settlingForm.target_axial_spread_rh),
+        starting_condition: settlingForm.starting_condition,
+        rotation_frequency: settlingForm.rotation_frequency,
+        post_roll_aging_status: settlingForm.post_roll_aging_status,
+        temperature_shock_status: settlingForm.temperature_shock_status,
+      });
+
+      const res = await fetch(`/api/predictor/settling-time`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data?.ok === false) {
+        throw new Error(data.error || data.detail || "Settling calculation failed");
+      }
+      setSettlingResult(data);
+    } catch (e) {
+      setSettlingError(e.message || "Settling calculation failed");
+    } finally {
+      setLoadingSettling(false);
+    }
+  };
+
   const runPrediction = async () => {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
-    if (!hasProAccess) { setErr("Pro access not enabled for this account."); return; }
-    if (false) { setErr("Select or enter blend-structure parameters before running Predictor Pro."); return; }
+    if (!hasPredictorAccess) { setErr("Predictor access is only available to Standard users."); return; }
+    if (!hasBlendStructure) { setErr("Lookup Blend first. Predictor uses the database blend structure and does not support manual construction edits."); return; }
     setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null); setStructuralSnapshot(buildPayload());
     setPredictStep("Initializing combustion model...");
     const cleanedBrand = cleanText(form.brand), cleanedLine = cleanText(form.line);
     try {
       setPredictStep("Modeling combustion profile...");
-      const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify(buildPayload()) });
+      const res  = await fetch(`/api/predictor/predict`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error||data.detail||"Prediction failed");
       setPredictStep("Calibrating RH equilibrium...");
       setResult(data);
-      await loadUsage({ quiet: true });
+      if (data?.target_rh != null) {
+        setSettlingForm((f) => ({
+          ...f,
+          target_peak_flavor_rh: String(data.target_rh),
+          target_foot_rh_pct: String(data.target_rh),
+        }));
+      }
+      await loadUsage();
       setPredictStep("Generating analytical tasting profile...");
       await loadTastingCard(cleanedBrand, cleanedLine);
       if (pairingSelection !== "None") { setPredictStep("Computing pairing matrix..."); }
@@ -1176,14 +1356,14 @@ export default function PredictorPage() {
   const findSimilarBlends = async () => {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
-    if (!hasProAccess) { setErr("Pro access not enabled for this account."); return; }
+    if (!hasPredictorAccess) { setErr("Predictor access is only available to Standard users."); return; }
     setLoadingSimilar(true); setSimilarBlends(null); setResult(null); setTastingCard(null); setPairingCard(null); setStructuralSnapshot(null);
     try {
-      const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json", "x-device-token": getStoredDeviceToken()}, body: JSON.stringify(buildPayload()) });
+      const res  = await fetch(`/api/predictor/similar-blends`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(buildPayload()) });
       const data = await res.json().catch(() => ({}));
       if (!res.ok||!data.ok) throw new Error(data.error||data.detail||"Similar blends lookup failed");
       setSimilarBlends(data);
-      await loadUsage({ quiet: true });
+      await loadUsage();
     } catch(e) { setErr(e.message||"Similar blends request failed"); }
     finally { setLoadingSimilar(false); }
   };
@@ -1197,7 +1377,7 @@ export default function PredictorPage() {
 
   return (
     <Layout>
-      <Seo title="Predictor Pro | ICSI" path="/portal/predictorpro" />
+      <Seo title="Predictor | ICSI" path="/portal/predictor" />
       <GlobalStyles />
       <div style={styles.page}>
         <div style={styles.container}>
@@ -1207,7 +1387,7 @@ export default function PredictorPage() {
               <span style={styles.dotActive} />
               CPFS Engine v4.8 Calibrated
             </div>
-            <h1 style={styles.h1}>PredictorPro Enterprise Application</h1>
+            <h1 style={styles.h1}>e-Sommelier</h1>
             <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
           </div>
 
@@ -1239,7 +1419,7 @@ export default function PredictorPage() {
             </button>
             {instructionsOpen && (
               <p className="pp-instructions" style={{ marginTop: 14 }}>
-                Predictor Pro is available exclusively to approved subscribers. Validate your registered
+                Predictor is available exclusively to approved users. Validate your registered
                 email address using the Check User control. In the Blend Lookup module, enter the Brand
                 and Line identifiers, then initiate the Lookup Blend procedure and construction and tobacco
                 composition parameters will populate automatically.
@@ -1275,42 +1455,32 @@ export default function PredictorPage() {
               <button
                 className="pp-btn-primary"
                 style={styles.btnPrimary}
-                onClick={() => loadUsage()}
+                onClick={loadUsage}
                 disabled={loadingUsage}
               >
                 {loadingUsage ? "Validating..." : "Check User"}
               </button>
-              {isAuthorizedUser && hasProAccess && (
+              {isAuthorizedUser && hasPredictorAccess && (
                 <span style={{ ...styles.noticeSuccess, padding: "6px 12px" }}>
-                  &#x2713; Access Validated &#x2014; Pro Enabled
+                  &#x2713; Access Validated &#x2014; Predictor Enabled
                 </span>
               )}
-              {isAuthorizedUser && !hasProAccess && (
+              {isAuthorizedUser && hasPredictorAccess && deviceSessionStatus && (
+                <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.08em" }}>
+                  {deviceSessionStatus}
+                </span>
+              )}
+              {isAuthorizedUser && !hasPredictorAccess && (
                 <span style={{ ...styles.noticeWarning, padding: "6px 12px" }}>
-                  &#x26A0; Validated &#x2014; Pro Access Inactive
+                  &#x26A0; Validated &#x2014; PredictorPro account detected
                 </span>
               )}
               {!isAuthorizedUser && !loadingUsage && (
                 <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.08em" }}>
-                  Validation required to enable Predictor Pro
+                  Validation required to enable Predictor
                 </span>
               )}
-              {isAuthorizedUser && (
-                <button
-                  className="pp-btn-secondary"
-                  style={{ ...styles.btnSecondary, padding: "7px 14px", fontSize: 13 }}
-                  onClick={() => { clearStoredEmailOnly(); resetUserValidation(); setDeviceStatus("Signed out on this browser. The registered device token was preserved."); }}
-                  type="button"
-                >
-                  Sign Out
-                </button>
-              )}
             </div>
-            {deviceStatus && (
-              <div style={{ marginTop: 10, fontFamily: DS.fontMono, fontSize: 14, color: DS.textMuted, letterSpacing: "0.07em" }}>
-                {deviceStatus}
-              </div>
-            )}
           </div>
 
           {/* â”€â”€ CIGAR BLEND LOOKUP â”€â”€ */}
@@ -1322,7 +1492,7 @@ export default function PredictorPage() {
                 <label style={styles.label}>Brand</label>
                 <input
                   className="pp-input"
-                  style={{ ...styles.input, paddingRight: cleanText(form.brand) ? 42 : 12 }}
+                  style={styles.input}
                   value={form.brand}
                   placeholder="Begin entering brand designation..."
                   autoComplete="off"
@@ -1334,10 +1504,9 @@ export default function PredictorPage() {
                       brand: v,
                       line: "",
                       ...EMPTY_LOOKUP_FIELDS,
-                      age_years: "",
-                      smoker_style: "both",
                     }));
-                    setLineSuggestions([]); setShowLineSuggestions(false);
+                    setLineSuggestions([]);
+                    setShowLineSuggestions(false);
                     clearBlendOutputs();
                     loadBrandSuggestions(v);
                   }}
@@ -1346,11 +1515,11 @@ export default function PredictorPage() {
                 {cleanText(form.brand) && (
                   <button
                     type="button"
-                    className="pp-clear-field"
-                    style={styles.clearFieldButton}
+                    className="pp-input-clear"
+                    style={styles.inputClearButton}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={clearBrandField}
-                    aria-label="Clear brand and current blend"
+                    aria-label="Clear brand and blend selection"
                     title="Clear brand"
                   >
                     &times;
@@ -1372,11 +1541,7 @@ export default function PredictorPage() {
                 <label style={styles.label}>Line</label>
                 <input
                   className="pp-input"
-                  style={{
-                    ...styles.input,
-                    opacity: cleanText(form.brand) ? 1 : 0.5,
-                    paddingRight: cleanText(form.line) ? 42 : 12,
-                  }}
+                  style={{ ...styles.input, opacity: cleanText(form.brand) ? 1 : 0.5 }}
                   value={form.line}
                   autoComplete="off"
                   disabled={!cleanText(form.brand)}
@@ -1387,8 +1552,6 @@ export default function PredictorPage() {
                       ...f,
                       line: v,
                       ...EMPTY_LOOKUP_FIELDS,
-                      age_years: "",
-                      smoker_style: "both",
                     }));
                     clearBlendOutputs();
                     loadLineSuggestions(form.brand, v);
@@ -1399,11 +1562,11 @@ export default function PredictorPage() {
                 {cleanText(form.line) && (
                   <button
                     type="button"
-                    className="pp-clear-field"
-                    style={styles.clearFieldButton}
+                    className="pp-input-clear"
+                    style={styles.inputClearButton}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={clearLineField}
-                    aria-label="Clear line and current blend"
+                    aria-label="Clear line selection"
                     title="Clear line"
                   >
                     &times;
@@ -1426,7 +1589,7 @@ export default function PredictorPage() {
                 className="pp-btn-secondary"
                 style={styles.btnSecondary}
                 onClick={lookupBlend}
-                disabled={loadingLookup || !hasProAccess}
+                disabled={loadingLookup || !hasPredictorAccess}
               >
                 {loadingLookup ? "Querying Database..." : "Lookup Blend"}
               </button>
@@ -1441,122 +1604,6 @@ export default function PredictorPage() {
                 Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
               </div>
             )}
-
-            <hr style={styles.sep} />
-
-            <div style={styles.grid2}>
-              <div>
-                <label style={styles.label}>Origin</label>
-                <select className="pp-select" style={styles.select} value={form.origin} onChange={(e) => update("origin", e.target.value)}>
-                  {ORIGINS.map((x) => <option key={x||"blank-origin"} value={x}>{x||"Select Origin"}</option>)}
-                </select>
-              </div>
-              <div>
-                <label style={styles.label}>Factory</label>
-                <select className="pp-select" style={styles.select} value={form.factory} onChange={(e) => update("factory", e.target.value)}>
-                  {lookupOptionList(FACTORIES, form.factory).map((x) => <option key={x||"blank-factory"} value={x}>{x||"Select Factory"}</option>)}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* â”€â”€ BLEND CONSTRUCTION â”€â”€ */}
-          <div style={styles.card}>
-            <div style={styles.h2}>Blend Construction: Autofilled &amp; Adjustable</div>
-
-            <SectionDivider label="Wrapper" />
-            <div style={styles.grid2}>
-              <div>
-                <label style={styles.label}>Wrapper Leaf</label>
-                <select className="pp-select" style={styles.select} value={form.wrapper} onChange={(e) => update("wrapper", e.target.value)}>
-                  {WRAPPERS.map((x) => <option key={x||"blank-wrapper"} value={x}>{x||"Select Wrapper"}</option>)}
-                </select>
-                {form.wrapper === "Hybrid / Other" && (
-                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
-                    value={form.wrapper_custom}
-                    onChange={(e) => update("wrapper_custom", e.target.value)}
-                    placeholder="Specify custom wrapper designation" />
-                )}
-              </div>
-              <div>
-                <label style={styles.label}>Wrapper Process</label>
-                <select className="pp-select" style={styles.select} value={form.wrapper_process} onChange={(e) => update("wrapper_process", e.target.value)}>
-                  {WRAPPER_PROCESSES.map((x) => <option key={x||"blank-wp"} value={x}>{x||"Select Process"}</option>)}
-                </select>
-              </div>
-            </div>
-
-            <div style={{ ...styles.grid2, marginTop: 14 }}>
-              <div>
-                <label style={styles.label}>Wrapper Thickness</label>
-                <select className="pp-select" style={styles.select} value={form.wrapper_thickness} onChange={(e) => update("wrapper_thickness", e.target.value)}>
-                  {WRAPPER_THICKNESS_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
-                </select>
-              </div>
-              <div>
-                <label style={styles.label}>Wrapper Oiliness</label>
-                <select className="pp-select" style={styles.select} value={form.wrapper_oiliness} onChange={(e) => update("wrapper_oiliness", e.target.value)}>
-                  {WRAPPER_OILINESS_OPTIONS.map((x) => <option key={x} value={x}>{x}</option>)}
-                </select>
-              </div>
-            </div>
-
-            <SectionDivider label="Binder Components" />
-            <div style={styles.grid2}>
-              <div>
-                <label style={styles.label}>Binder 1</label>
-                <select className="pp-select" style={styles.select} value={form.binder_1} onChange={(e) => update("binder_1", e.target.value)}>
-                  {BINDERS.map((x) => <option key={x||"blank-b1"} value={x}>{x||"Select Binder"}</option>)}
-                </select>
-                {form.binder_1 === "Hybrid / Other" && (
-                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
-                    value={form.binder_1_custom} onChange={(e) => update("binder_1_custom", e.target.value)}
-                    placeholder="Specify custom binder" />
-                )}
-              </div>
-              <div>
-                <label style={styles.label}>Binder 2</label>
-                <select className="pp-select" style={styles.select} value={form.binder_2} onChange={(e) => update("binder_2", e.target.value)}>
-                  {BINDERS.map((x) => <option key={x||"blank-b2"} value={x}>{x||"Select Binder"}</option>)}
-                </select>
-                {form.binder_2 === "Hybrid / Other" && (
-                  <input className="pp-input" style={{ ...styles.input, marginTop: 8 }}
-                    value={form.binder_2_custom} onChange={(e) => update("binder_2_custom", e.target.value)}
-                    placeholder="Specify custom binder" />
-                )}
-              </div>
-            </div>
-
-            <div style={{ marginTop: 14, maxWidth: 320 }}>
-              <label style={styles.label}>Ligero Level</label>
-              <select className="pp-select" style={styles.select} value={form.ligero} onChange={(e) => update("ligero", e.target.value)}>
-                {LIGERO_OPTIONS.map((x) => <option key={x||"blank-lig"} value={x}>{x||"Select Level"}</option>)}
-              </select>
-            </div>
-
-            <SectionDivider label="Filler Components" />
-            <div style={styles.grid3}>
-              {["filler_1","filler_2","filler_3"].map((key, i) => (
-                <div key={key}>
-                  <label style={styles.label}>Filler {i+1}</label>
-                  <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
-                    {FILLER_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
-                  </select>
-                </div>
-              ))}
-            </div>
-
-            <SectionDivider label="Special Tobacco Flags" />
-            <div style={styles.grid3}>
-              {["flag_1","flag_2","flag_3"].map((key, i) => (
-                <div key={key}>
-                  <label style={styles.label}>Flag {i+1}</label>
-                  <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
-                    {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
-                  </select>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* â”€â”€ ENVIRONMENTAL + RUN CONTROLS â”€â”€ */}
@@ -1602,7 +1649,7 @@ export default function PredictorPage() {
                 className="pp-btn-primary"
                 style={styles.btnPrimary}
                 onClick={runPrediction}
-                disabled={loadingPredict || !hasProAccess}
+                disabled={loadingPredict || !hasPredictorAccess || !hasBlendStructure}
               >
                 {loadingPredict ? "Computing..." : "Run Predictor"}
               </button>
@@ -1610,13 +1657,350 @@ export default function PredictorPage() {
                 className="pp-btn-secondary"
                 style={styles.btnSecondary}
                 onClick={findSimilarBlends}
-                disabled={loadingSimilar || !hasProAccess}
+                disabled={loadingSimilar || !hasPredictorAccess || !hasBlendStructure}
               >
                 {loadingSimilar ? "Searching..." : "Find Similar Blends"}
               </button>
               {(loadingPredict && predictStep) && <ProcessingIndicator label={predictStep} />}
               {loadingSimilar && <ProcessingIndicator label="Scanning blend database..." />}
             </div>
+          </div>
+
+          {/* SETTLING TIME CALCULATOR */}
+          <div style={{ ...styles.card, padding: settlingOpen ? "24px 28px" : "16px 28px" }}>
+            <button
+              type="button"
+              onClick={() => setSettlingOpen((v) => !v)}
+              aria-expanded={settlingOpen}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 16,
+                background: "transparent",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                color: DS.textPrimary,
+                fontFamily: DS.fontMono,
+                textAlign: "left",
+              }}
+            >
+              <div>
+                <div style={{ ...styles.h2, marginBottom: 4 }}>Settling Time Calculator</div>
+                <div style={{ ...styles.sectionLabel, marginBottom: 0 }}>
+                  Axial · Radial · Ammonia · Humidor Reconditioning · Thermal Shock
+                </div>
+              </div>
+              <span style={{ ...styles.dataLabel, whiteSpace: "nowrap" }}>
+                {settlingOpen ? "Collapse -" : "Calculate Settling +"}
+              </span>
+            </button>
+
+            {settlingOpen && (
+              <div style={{ marginTop: 24 }}>
+                <div style={{ ...styles.noticeInfo, marginBottom: 20 }}>
+                  The calculator uses the currently retrieved {cleanText(form.brand) && cleanText(form.line)
+                    ? `${cleanText(form.brand)} — ${cleanText(form.line)}`
+                    : "blend"} record from the ICSI blend database. Blend architecture and thermodynamic bias values are derived server-side from blends_template.csv.
+                </div>
+
+                <SectionDivider label="Dates & Vitola" />
+                <div style={styles.grid3}>
+                  <div>
+                    <label style={styles.label}>Box Production Date</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="date"
+                      value={settlingForm.box_production_date}
+                      onChange={(e) => updateSettling("box_production_date", e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label style={styles.label}>Stable Humidor Rest Start</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="date"
+                      value={settlingForm.stable_humidor_start_date}
+                      onChange={(e) => updateSettling("stable_humidor_start_date", e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label style={styles.label}>Evaluation Date</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="date"
+                      value={settlingForm.evaluation_date}
+                      onChange={(e) => updateSettling("evaluation_date", e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ ...styles.grid2, marginTop: 14 }}>
+                  <div>
+                    <label style={styles.label}>Length (inches)</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="3" max="10" step="0.1"
+                      value={settlingForm.length_inches}
+                      onChange={(e) => updateSettling("length_inches", e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label style={styles.label}>Ring Gauge</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="30" max="70" step="1"
+                      value={settlingForm.ring_gauge}
+                      onChange={(e) => updateSettling("ring_gauge", e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <SectionDivider label="Humidity Conditions" />
+                <div style={styles.grid3}>
+                  <div>
+                    <label style={styles.label}>Temperature °C</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="16" max="26" step="0.1"
+                      value={settlingForm.ambient_temp_c}
+                      onChange={(e) => updateSettling("ambient_temp_c", e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label style={styles.label}>Ambient Humidor RH%</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="55" max="75" step="0.5"
+                      value={settlingForm.ambient_rh}
+                      onChange={(e) => updateSettling("ambient_rh", e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label style={styles.label}>Peak-Flavor Target RH%</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="55" max="75" step="0.1"
+                      value={settlingForm.target_peak_flavor_rh}
+                      onChange={(e) => updateSettling("target_peak_flavor_rh", e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ ...styles.grid2, marginTop: 14 }}>
+                  <div>
+                    <label style={styles.label}>Starting Core CigarMedic RH%</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="55" max="75" step="0.1"
+                      value={settlingForm.starting_core_rh}
+                      onChange={(e) => updateSettling("starting_core_rh", e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label style={styles.label}>Radial Equilibrium Tolerance RH%</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="0.25" max="2" step="0.05"
+                      value={settlingForm.radial_target_delta_rh}
+                      onChange={(e) => updateSettling("radial_target_delta_rh", e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <SectionDivider label="Starting Moisture Assumption" />
+                <div style={styles.grid3}>
+                  <div>
+                    <label style={styles.label}>Starting Foot RH Available?</label>
+                    <select
+                      className="pp-select"
+                      style={styles.select}
+                      value={settlingForm.use_measured_foot_rh}
+                      onChange={(e) => updateSettling("use_measured_foot_rh", e.target.value)}
+                    >
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                    </select>
+                  </div>
+                  {settlingForm.use_measured_foot_rh === "Yes" && (
+                    <div>
+                      <label style={styles.label}>Measured Starting Foot RH%</label>
+                      <input
+                        className="pp-input"
+                        style={styles.input}
+                        type="number" min="55" max="75" step="0.1"
+                        value={settlingForm.foot_rh_pct}
+                        onChange={(e) => updateSettling("foot_rh_pct", e.target.value)}
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <label style={styles.label}>Target Foot RH%</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="60" max="70" step="0.1"
+                      value={settlingForm.target_foot_rh_pct}
+                      onChange={(e) => updateSettling("target_foot_rh_pct", e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ ...styles.grid2, marginTop: 14 }}>
+                  <div>
+                    <label style={styles.label}>Target Final Axial RH Spread</label>
+                    <input
+                      className="pp-input"
+                      style={styles.input}
+                      type="number" min="0.25" max="2.5" step="0.05"
+                      value={settlingForm.target_axial_spread_rh}
+                      onChange={(e) => updateSettling("target_axial_spread_rh", e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label style={styles.label}>Starting Condition</label>
+                    <select
+                      className="pp-select"
+                      style={styles.select}
+                      value={settlingForm.starting_condition}
+                      onChange={(e) => updateSettling("starting_condition", e.target.value)}
+                    >
+                      {SETTLING_STARTING_CONDITIONS.map((x) => <option key={x} value={x}>{x}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div style={{ ...styles.grid3, marginTop: 14 }}>
+                  <div>
+                    <label style={styles.label}>Rotation Frequency</label>
+                    <select
+                      className="pp-select"
+                      style={styles.select}
+                      value={settlingForm.rotation_frequency}
+                      onChange={(e) => updateSettling("rotation_frequency", e.target.value)}
+                    >
+                      {SETTLING_ROTATION_FREQUENCIES.map((x) => <option key={x} value={x}>{x}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label style={styles.label}>Post-Roll Aging / Ammonia Status</label>
+                    <select
+                      className="pp-select"
+                      style={styles.select}
+                      value={settlingForm.post_roll_aging_status}
+                      onChange={(e) => updateSettling("post_roll_aging_status", e.target.value)}
+                    >
+                      {SETTLING_POST_ROLL_AGING.map((x) => <option key={x} value={x}>{x}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label style={styles.label}>Temperature Shock Exposure</label>
+                    <select
+                      className="pp-select"
+                      style={styles.select}
+                      value={settlingForm.temperature_shock_status}
+                      onChange={(e) => updateSettling("temperature_shock_status", e.target.value)}
+                    >
+                      {SETTLING_TEMPERATURE_SHOCK.map((x) => <option key={x} value={x}>{x}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <hr style={styles.sep} />
+
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+                  <button
+                    className="pp-btn-primary"
+                    style={styles.btnPrimary}
+                    type="button"
+                    onClick={runSettlingCalculator}
+                    disabled={loadingSettling || !isAuthorizedUser || !hasBlendStructure}
+                  >
+                    {loadingSettling ? "Calculating..." : "Calculate Settling Time"}
+                  </button>
+                  <button
+                    className="pp-btn-secondary"
+                    style={styles.btnSecondary}
+                    type="button"
+                    onClick={resetSettlingCalculator}
+                    disabled={loadingSettling}
+                  >
+                    Reset
+                  </button>
+                  {loadingSettling && <ProcessingIndicator label="Running five-system settling model..." />}
+                </div>
+
+                {settlingError && (
+                  <div style={{ ...styles.notice, marginTop: 16 }}>{settlingError}</div>
+                )}
+
+                {settlingResult && (
+                  <div className="pp-result" style={{ marginTop: 24 }}>
+                    <SectionDivider label="Settling Readiness" />
+
+                    <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
+                      <div style={{ ...styles.rhPanel, flex: "1 1 210px" }}>
+                        <div style={styles.dataLabel}>Peak Readiness</div>
+                        <div className="pp-rh-value">
+                          {Number(settlingResult.peak_ready_weeks || 0).toFixed(1)}
+                        </div>
+                        <div style={{ ...styles.dataLabel, marginTop: 6 }}>Weeks Remaining</div>
+                      </div>
+                      <div style={{ ...styles.rhPanel, flex: "1 1 210px" }}>
+                        <div style={styles.dataLabel}>Limiting System</div>
+                        <div style={{ fontSize: 23, fontWeight: 600, color: DS.textPrimary, marginTop: 10 }}>
+                          {settlingResult.limiting_system || "—"}
+                        </div>
+                      </div>
+                      <div style={{ ...styles.rhPanel, flex: "1 1 210px" }}>
+                        <div style={styles.dataLabel}>Estimated Ready Date</div>
+                        <div style={{ fontSize: 23, fontWeight: 600, color: DS.gold, marginTop: 10 }}>
+                          {settlingResult.estimated_ready_date || "—"}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: 20 }}>
+                      <DataRow label="Axial Moisture Coherence" value={`${Number(settlingResult.axial_remaining_weeks || 0).toFixed(1)} weeks`} />
+                      <DataRow label="Radial Humidor Equilibrium" value={`${Number(settlingResult.radial_remaining_weeks || 0).toFixed(1)} weeks`} />
+                      <DataRow label="Ammonia Dissipation" value={`${Number(settlingResult.ammonia_remaining_weeks || 0).toFixed(1)} weeks`} />
+                      <DataRow label="Humidor Reconditioning" value={`${Number(settlingResult.maturation_remaining_weeks || 0).toFixed(1)} weeks`} />
+                      <DataRow label="Temperature Shock Recovery" value={`${Number(settlingResult.shock_remaining_weeks || 0).toFixed(1)} weeks`} />
+                      {settlingResult.confidence_low_weeks != null && settlingResult.confidence_high_weeks != null && (
+                        <DataRow
+                          label="Readiness Confidence Window"
+                          value={`${Number(settlingResult.confidence_low_weeks).toFixed(1)}–${Number(settlingResult.confidence_high_weeks).toFixed(1)} weeks`}
+                        />
+                      )}
+                    </div>
+
+                    {settlingResult.method && (
+                      <div style={{ ...styles.noticeInfo, marginTop: 18 }}>
+                        {settlingResult.method}
+                      </div>
+                    )}
+
+                    <div style={styles.metaBar}>
+                      <span style={styles.metaItem}><span style={styles.metaDot} />Settling Model v23</span>
+                      <span style={styles.metaItem}>Five-System Readiness Model</span>
+                      <span style={styles.metaItem}>Blend Source: blends_template.csv</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* â”€â”€ ERROR â”€â”€ */}
@@ -1644,14 +2028,46 @@ export default function PredictorPage() {
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
                 </div>
-                <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
-                  <div style={styles.dataLabel}>CPFS Family</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
-                    {result.family}
-                  </div>
-                  <div style={{ ...styles.dataLabel, marginTop: 4 }}>Classification</div>
-                </div>
               </div>
+              {/* Retrieved Blend Structure */}
+              {structuralSnapshot && (
+                <>
+                  <SectionDivider label="Retrieved Blend Structure" />
+                  <div style={{ padding: "18px 0", borderBottom: `1px solid ${DS.border}`, marginBottom: 24 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
+                      <div>
+                        <span style={{ fontWeight: 600, fontSize: 16, color: DS.textPrimary }}>
+                          {structuralSnapshot.brand || "Unknown Brand"}
+                        </span>
+                        {structuralSnapshot.line && (
+                          <span style={{ fontSize: 16, color: DS.textSecond, marginLeft: 8 }}>&mdash; {structuralSnapshot.line}</span>
+                        )}
+                      </div>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 2 }}>
+                      {structuralSnapshot.origin && <DataRow label="Origin" value={structuralSnapshot.origin} />}
+                      {structuralSnapshot.factory && <DataRow label="Factory" value={structuralSnapshot.factory} />}
+                      {structuralSnapshot.wrapper && <DataRow label="Wrapper" value={structuralSnapshot.wrapper} />}
+                      {structuralSnapshot.wrapper_process && <DataRow label="Wrapper Process" value={structuralSnapshot.wrapper_process} />}
+                      {(structuralSnapshot.binder_1 || structuralSnapshot.binder_2 || structuralSnapshot.binder) && (
+                        <DataRow label="Binder Components" value={[structuralSnapshot.binder_1, structuralSnapshot.binder_2].filter(Boolean).join(", ") || splitPipeValues(structuralSnapshot.binder || "").join(", ")} />
+                      )}
+                      {Array.isArray(structuralSnapshot.filler) && structuralSnapshot.filler.length > 0 && (
+                        <DataRow label="Filler" value={structuralSnapshot.filler.join(", ")} />
+                      )}
+                      {structuralSnapshot.ligero && <DataRow label="Ligero" value={structuralSnapshot.ligero} />}
+                      {Array.isArray(structuralSnapshot.special_tobacco_flags) && structuralSnapshot.special_tobacco_flags.length > 0 && (
+                        <DataRow label="Special Flags" value={structuralSnapshot.special_tobacco_flags.join(", ")} />
+                      )}
+                    </div>
+                    {lookupSource && (
+                      <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
+                        Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
               {/* Tasting Card */}
               {tastingCard && (
                 <>
@@ -1706,7 +2122,6 @@ export default function PredictorPage() {
                 <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
                 <span style={styles.metaItem}>Calibrated · Reference-Standard</span>
                 <span style={styles.metaItem}>Generated {timestamp}</span>
-                <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
               </div>
             </div>
           )}
