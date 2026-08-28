@@ -33,7 +33,7 @@ export default function PortalModule() {
     ? `/api/portal/module?course=${encodeURIComponent(normalizedCourse)}&module=${encodeURIComponent(moduleSlug)}`
     : "";
   const watermark = candidate
-    ? `${candidate.candidateId} • ${candidate.name} • LICENSED ACCESS`
+    ? `${candidate.candidateId} â€¢ ${candidate.name} â€¢ LICENSED ACCESS`
     : "";
 
   useEffect(() => {
@@ -183,19 +183,20 @@ export default function PortalModule() {
   }, [pageCount, pageNumber, zoom, viewportVersion]);
 
   useEffect(() => {
-    const viewer = viewerRef.current;
-    if (!viewer || typeof ResizeObserver === "undefined") return;
     let timer;
-    const observer = new ResizeObserver(() => {
+    const handleResize = () => {
       window.clearTimeout(timer);
-      timer = window.setTimeout(() => setViewportVersion((value) => value + 1), 150);
-    });
-    observer.observe(viewer);
+      timer = window.setTimeout(() => {
+        setViewportVersion((value) => value + 1);
+      }, 200);
+    };
+
+    window.addEventListener("resize", handleResize);
     return () => {
       window.clearTimeout(timer);
-      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
     };
-  }, [candidate]);
+  }, []);
 
   useEffect(() => {
     const blockKeys = (event) => {
@@ -204,7 +205,12 @@ export default function PortalModule() {
         event.preventDefault();
       }
     };
-    const fullscreenChanged = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    const fullscreenChanged = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+      window.setTimeout(() => {
+        setViewportVersion((value) => value + 1);
+      }, 100);
+    };
     document.addEventListener("keydown", blockKeys);
     document.addEventListener("fullscreenchange", fullscreenChanged);
     return () => {
@@ -243,16 +249,16 @@ export default function PortalModule() {
       <div className="section portalPdfSection">
         <div className="portalPdfContainer">
           <div className="portalModuleHeader">
-            <Link className="btn" href="/portal">← Back to portal</Link>
+            <Link className="btn" href="/portal">â† Back to portal</Link>
             {candidate && (
               <div className="small">
-                Candidate: <b>{candidate.candidateId}</b> • Language:{" "}
+                Candidate: <b>{candidate.candidateId}</b> â€¢ Language:{" "}
                 <b>{String(candidate.language || "en").toUpperCase()}</b>
               </div>
             )}
           </div>
 
-          {busy && <p className="small">Loading protected module…</p>}
+          {busy && <p className="small">Loading protected moduleâ€¦</p>}
           {!busy && error && <div className="notice"><b>Error:</b> {error}</div>}
 
           {!sessionLoading && candidate && !error && (
@@ -266,18 +272,18 @@ export default function PortalModule() {
                 <div className="portalPdfToolbarGroup">
                   <button className="portalPdfControl" type="button"
                     onClick={() => changePage(pageNumber - 1)}
-                    disabled={pageNumber <= 1 || pageLoading}>← Previous</button>
+                    disabled={pageNumber <= 1 || pageLoading}>â† Previous</button>
                   <span className="portalPdfPageStatus" aria-live="polite">
-                    Page <b>{pageNumber}</b> of <b>{pageCount || "—"}</b>
+                    Page <b>{pageNumber}</b> of <b>{pageCount || "â€”"}</b>
                   </span>
                   <button className="portalPdfControl" type="button"
                     onClick={() => changePage(pageNumber + 1)}
-                    disabled={pageNumber >= pageCount || pageLoading}>Next →</button>
+                    disabled={pageNumber >= pageCount || pageLoading}>Next â†’</button>
                 </div>
                 <div className="portalPdfToolbarGroup">
                   <button className="portalPdfIconControl" type="button"
                     onClick={() => changeZoom(zoom - ZOOM_STEP)}
-                    disabled={zoom <= MIN_ZOOM || pageLoading} aria-label="Zoom out">−</button>
+                    disabled={zoom <= MIN_ZOOM || pageLoading} aria-label="Zoom out">âˆ’</button>
                   <span className="portalPdfZoomStatus">{Math.round(zoom * 100)}%</span>
                   <button className="portalPdfIconControl" type="button"
                     onClick={() => changeZoom(zoom + ZOOM_STEP)}
@@ -289,7 +295,7 @@ export default function PortalModule() {
               </div>
 
               <div className="portalPdfViewport" ref={viewerRef}>
-                {pageLoading && <div className="portalPdfPageLoading">Rendering page…</div>}
+                {pageLoading && <div className="portalPdfPageLoading">Rendering pageâ€¦</div>}
                 <div className="portalPdfCanvasWrap">
                   <canvas ref={canvasRef} className="portalPdfCanvas"
                     aria-label={`Page ${pageNumber} of ${pageCount}`} />
