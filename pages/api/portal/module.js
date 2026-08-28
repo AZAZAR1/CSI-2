@@ -18,9 +18,17 @@ function safeSegment(value) {
 }
 
 export default async function handler(req, res) {
-  res.setHeader("Cache-Control", "private, no-store, max-age=0");
+  res.setHeader(
+    "Cache-Control",
+    "private, no-store, no-cache, must-revalidate, max-age=0"
+  );
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+  res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
+  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  res.setHeader("Content-Security-Policy", "frame-ancestors 'self'");
 
   if (req.method !== "GET") {
     return res.status(405).json({ ok: false, error: "Method not allowed" });
@@ -68,10 +76,8 @@ export default async function handler(req, res) {
 
   const stat = fs.statSync(filePath);
   res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Length", stat.size);
-  res.setHeader(
-    "Content-Disposition",
-    `inline; filename="ICSI-CCS-${moduleSlug}-${language.toUpperCase()}.pdf"`
-  );
+  res.setHeader("Content-Length", String(stat.size));
+  res.setHeader("Content-Disposition", "inline");
+  res.setHeader("Accept-Ranges", "none");
   return fs.createReadStream(filePath).pipe(res);
 }
