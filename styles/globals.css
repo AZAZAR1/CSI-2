@@ -949,7 +949,7 @@ ul.small li {
 }
 
 ul.small li::before {
-  content: "•";
+  content: "â€¢";
   position: absolute;
   left: 0;
   color: #c8a96a; /* luxury gold tone */
