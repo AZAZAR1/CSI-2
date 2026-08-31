@@ -33,7 +33,7 @@ export default function PortalModule() {
     ? `/api/portal/module?course=${encodeURIComponent(normalizedCourse)}&module=${encodeURIComponent(moduleSlug)}`
     : "";
   const watermark = candidate
-    ? `${candidate.candidateId} â€¢ ${candidate.name} â€¢ LICENSED ACCESS`
+    ? `${candidate.candidateId} | ${candidate.name} | LICENSED ACCESS`
     : "";
 
   useEffect(() => {
@@ -249,16 +249,16 @@ export default function PortalModule() {
       <div className="section portalPdfSection">
         <div className="portalPdfContainer">
           <div className="portalModuleHeader">
-            <Link className="btn" href="/portal">â† Back to portal</Link>
+            <Link className="btn" href="/portal">Back to portal</Link>
             {candidate && (
               <div className="small">
-                Candidate: <b>{candidate.candidateId}</b> â€¢ Language:{" "}
+                Candidate: <b>{candidate.candidateId}</b> | Language:{" "}
                 <b>{String(candidate.language || "en").toUpperCase()}</b>
               </div>
             )}
           </div>
 
-          {busy && <p className="small">Loading protected moduleâ€¦</p>}
+          {busy && <p className="small">Loading protected module...</p>}
           {!busy && error && <div className="notice"><b>Error:</b> {error}</div>}
 
           {!sessionLoading && candidate && !error && (
@@ -272,18 +272,18 @@ export default function PortalModule() {
                 <div className="portalPdfToolbarGroup">
                   <button className="portalPdfControl" type="button"
                     onClick={() => changePage(pageNumber - 1)}
-                    disabled={pageNumber <= 1 || pageLoading}>â† Previous</button>
+                    disabled={pageNumber <= 1 || pageLoading}>Previous</button>
                   <span className="portalPdfPageStatus" aria-live="polite">
-                    Page <b>{pageNumber}</b> of <b>{pageCount || "â€”"}</b>
+                    Page <b>{pageNumber}</b> of <b>{pageCount || "-"}</b>
                   </span>
                   <button className="portalPdfControl" type="button"
                     onClick={() => changePage(pageNumber + 1)}
-                    disabled={pageNumber >= pageCount || pageLoading}>Next â†’</button>
+                    disabled={pageNumber >= pageCount || pageLoading}>Next</button>
                 </div>
                 <div className="portalPdfToolbarGroup">
                   <button className="portalPdfIconControl" type="button"
                     onClick={() => changeZoom(zoom - ZOOM_STEP)}
-                    disabled={zoom <= MIN_ZOOM || pageLoading} aria-label="Zoom out">âˆ’</button>
+                    disabled={zoom <= MIN_ZOOM || pageLoading} aria-label="Zoom out">-</button>
                   <span className="portalPdfZoomStatus">{Math.round(zoom * 100)}%</span>
                   <button className="portalPdfIconControl" type="button"
                     onClick={() => changeZoom(zoom + ZOOM_STEP)}
@@ -295,7 +295,7 @@ export default function PortalModule() {
               </div>
 
               <div className="portalPdfViewport" ref={viewerRef}>
-                {pageLoading && <div className="portalPdfPageLoading">Rendering pageâ€¦</div>}
+                {pageLoading && <div className="portalPdfPageLoading">Rendering page...</div>}
                 <div className="portalPdfCanvasWrap">
                   <canvas ref={canvasRef} className="portalPdfCanvas"
                     aria-label={`Page ${pageNumber} of ${pageCount}`} />
