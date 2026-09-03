@@ -52,7 +52,7 @@ const styles = {
     margin: "0 auto",
     padding: "0 24px 80px",
   },
-  /* â”€â”€ PAGE HEADER â”€â”€ */
+  /* ── PAGE HEADER ── */
   pageHeader: {
     padding: "48px 0 40px",
     borderBottom: `1px solid ${DS.border}`,
@@ -98,7 +98,7 @@ const styles = {
     textTransform: "uppercase",
     margin: 0,
   },
-  /* â”€â”€ CARDS â”€â”€ */
+  /* ── CARDS ── */
   card: {
     background: DS.bgCard,
     border: `1px solid ${DS.border}`,
@@ -136,7 +136,7 @@ const styles = {
     margin: "0 0 10px",
     textTransform: "none",
   },
-  /* â”€â”€ FORM ELEMENTS â”€â”€ */
+  /* ── FORM ELEMENTS ── */
   fieldGroup: {
     display: "flex",
     flexDirection: "column",
@@ -206,7 +206,7 @@ const styles = {
     cursor: "pointer",
     transition: "border-color 0.15s",
   },
-  /* â”€â”€ GRID LAYOUTS â”€â”€ */
+  /* ── GRID LAYOUTS ── */
   grid2: {
     display: "grid",
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
@@ -217,7 +217,7 @@ const styles = {
     gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
     gap: 12,
   },
-  /* â”€â”€ BUTTONS â”€â”€ */
+  /* ── BUTTONS ── */
   btnPrimary: {
     background: DS.accent,
     border: "1px solid transparent",
@@ -250,7 +250,7 @@ const styles = {
     outline: "none",
     whiteSpace: "nowrap",
   },
-  /* â”€â”€ STATUS / NOTICE â”€â”€ */
+  /* ── STATUS / NOTICE ── */
   notice: {
     background: DS.dangerDim,
     border: `1px solid rgba(139,26,26,0.3)`,
@@ -287,7 +287,7 @@ const styles = {
     color: "#c9a96e",
     fontFamily: DS.fontMono,
   },
-  /* â”€â”€ DATA READOUTS (monospaced) â”€â”€ */
+  /* ── DATA READOUTS (monospaced) ── */
   dataRow: {
     display: "flex",
     justifyContent: "space-between",
@@ -315,7 +315,7 @@ const styles = {
     fontWeight: 600,
     letterSpacing: "0.04em",
   },
-  /* â”€â”€ RH DISPLAY â”€â”€ */
+  /* ── RH DISPLAY ── */
   rhPanel: {
     background: DS.bgPanel,
     border: `1px solid ${DS.border}`,
@@ -324,13 +324,13 @@ const styles = {
     textAlign: "center",
     flex: 1,
   },
-  /* â”€â”€ SEPARATOR â”€â”€ */
+  /* ── SEPARATOR ── */
   sep: {
     border: "none",
     borderTop: `1px solid ${DS.border}`,
     margin: "24px 0",
   },
-  /* â”€â”€ AUTOCOMPLETE â”€â”€ */
+  /* ── AUTOCOMPLETE ── */
   autocompleteBox: {
     position: "absolute",
     background: DS.bgPanel,
@@ -352,7 +352,7 @@ const styles = {
     color: DS.textSecond,
     transition: "background 0.1s",
   },
-  /* â”€â”€ METADATA FOOTER â”€â”€ */
+  /* ── METADATA FOOTER ── */
   metaBar: {
     display: "flex",
     gap: 24,
@@ -821,7 +821,7 @@ export default function PredictorPage() {
     String(value || "").normalize("NFKD")
       .replace(/[\u0300-\u036f]/g,"")
       .replace(/['']/g,"'").replace(/[""]/g,'"')
-      .replace(/[â€“â€”]/g,"-").replace(/\s+/g," ").trim();
+      .replace(/[–—]/g,"-").replace(/\s+/g," ").trim();
 
   const getStoredDeviceToken = () => {
     if (typeof window === "undefined") return "";
@@ -862,7 +862,7 @@ export default function PredictorPage() {
   const hasProAccess = isAuthorizedUser && usage?.pro_access === true;
   const hasBlendStructure = Boolean(cleanText(form.wrapper) || cleanText(form.binder_1) || cleanText(form.filler_1));
 
-  /* â”€â”€ Autocomplete â”€â”€ */
+  /* ── Autocomplete ── */
   const uniqueByBrand = (items) => {
     const seen = new Set(), out = [];
     for (const item of items || []) {
@@ -981,7 +981,7 @@ export default function PredictorPage() {
     clearBlendOutputs();
   };
 
-  /* â”€â”€ Helpers â”€â”€ */
+  /* ── Helpers ── */
   const buildCustomValue = (choice, custom) =>
     (choice === "Custom / Other" || choice === "Hybrid / Other")
       ? String(custom || "").trim() : choice;
@@ -1026,8 +1026,13 @@ export default function PredictorPage() {
   };
 
   const displayPairingList = (values) =>
-    (!Array.isArray(values) || values.length === 0) ? "â€”"
-      : values.filter(Boolean).join(", ") || "â€”";
+    (!Array.isArray(values) || values.length === 0) ? "—"
+      : values.filter(Boolean).join(", ") || "—";
+
+  const displayLocalPairingList = (values) =>
+    (!Array.isArray(values) || values.length === 0)
+      ? "No qualifying stocked pairing found."
+      : values.filter(Boolean).join(", ") || "No qualifying stocked pairing found.";
 
   const getFilteredPairingCard = () => {
     if (!pairingCard || pairingSelection === "None") return null;
@@ -1103,7 +1108,7 @@ export default function PredictorPage() {
     bunch_density:"medium",
   });
 
-  /* â”€â”€ API calls â”€â”€ */
+  /* ── API calls ── */
   const loadUsageForEmail = async (emailOverride, options = {}) => {
     const quiet = options?.quiet === true;
     if (!quiet) setErr("");
@@ -1351,7 +1356,7 @@ export default function PredictorPage() {
       <GlobalStyles />
       <div style={styles.page}>
         <div style={styles.container}>
-          {/* â”€â”€ PAGE HEADER â”€â”€ */}
+          {/* ── PAGE HEADER ── */}
           <div style={styles.pageHeader}>
             <div style={styles.engineBadge}>
               <span style={styles.dotActive} />
@@ -1361,7 +1366,7 @@ export default function PredictorPage() {
             <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
           </div>
 
-          {/* â”€â”€ COLLAPSIBLE METHODOLOGY NOTICE â”€â”€ */}
+          {/* ── COLLAPSIBLE METHODOLOGY NOTICE ── */}
           <div style={{ ...styles.card, marginBottom: 24, borderColor: "rgba(37,99,235,0.18)", padding: instructionsOpen ? "20px 28px" : "14px 28px" }}>
             <button
               type="button"
@@ -1399,8 +1404,11 @@ export default function PredictorPage() {
                 flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
                 selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
                 blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and
-                when selected, a dedicated pairing card. Pressing <strong>Find Similar Blends</strong> returns
-                blends structurally and sensorially matched to the query.
+                when selected, a dedicated pairing card. <strong>Exceptional Pairing</strong> identifies the
+                strongest reference-standard matches from the ICSI global beverage catalogue, while
+                <strong>Local Pairing</strong> ranks qualifying beverages currently stocked by your venue using
+                the same CPFS scoring logic. Pressing <strong>Find Similar Blends</strong> returns blends
+                structurally and sensorially matched to the query.
                 <br /><br />
                 <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
                 available Cigar Humidity Meter.
@@ -1408,7 +1416,7 @@ export default function PredictorPage() {
             )}
           </div>
 
-          {/* â”€â”€ USER VALIDATION â”€â”€ */}
+          {/* ── USER VALIDATION ── */}
           <div style={{ ...styles.card, ...styles.cardAccent }}>
             <div style={styles.h2}>User Validation</div>
             <div style={{ maxWidth: 420 }}>
@@ -1463,7 +1471,7 @@ export default function PredictorPage() {
             )}
           </div>
 
-          {/* â”€â”€ CIGAR BLEND LOOKUP â”€â”€ */}
+          {/* ── CIGAR BLEND LOOKUP ── */}
           <div style={styles.card}>
             <div style={styles.h2}>Cigar Blend Lookup</div>
             <div style={styles.grid2}>
@@ -1610,7 +1618,7 @@ export default function PredictorPage() {
             </div>
           </div>
 
-          {/* â”€â”€ BLEND CONSTRUCTION â”€â”€ */}
+          {/* ── BLEND CONSTRUCTION ── */}
           <div style={styles.card}>
             <div style={styles.h2}>Blend Construction: Autofilled &amp; Adjustable</div>
 
@@ -1709,7 +1717,7 @@ export default function PredictorPage() {
             </div>
           </div>
 
-          {/* â”€â”€ ENVIRONMENTAL + RUN CONTROLS â”€â”€ */}
+          {/* ── ENVIRONMENTAL + RUN CONTROLS ── */}
           <div style={styles.card}>
             <div style={styles.h2}>Optional Parameters &amp; Analysis Controls</div>
             <div style={styles.grid2}>
@@ -2106,14 +2114,14 @@ export default function PredictorPage() {
             )}
           </div>
 
-          {/* â”€â”€ ERROR â”€â”€ */}
+          {/* ── ERROR ── */}
           {err && (
             <div style={{ ...styles.notice, marginTop: 16 }}>
               âš   {err}
             </div>
           )}
 
-          {/* â”€â”€ ANALYTICAL OUTPUT â”€â”€ */}
+          {/* ── ANALYTICAL OUTPUT ── */}
           {result && (
             <div className="pp-result" style={styles.card}>
               <div style={styles.h2}>Peak-Flavor Prediction Result</div>
@@ -2176,8 +2184,14 @@ export default function PredictorPage() {
                       wide
                       title={`${pairingSelection} \u2014 Pairing Recommendations`}
                       rows={[
-                        { label: "Exceptional Pairing",   value: displayPairingList(filteredPairing?.primary) },
-                        { label: "Strong Pairing", value: displayPairingList(filteredPairing?.secondary) },
+                        {
+                          label: "Exceptional Pairing",
+                          value: displayPairingList(filteredPairing?.primary),
+                        },
+                        {
+                          label: "Local Pairing",
+                          value: displayLocalPairingList(filteredPairing?.local),
+                        },
                       ]}
                     />
                   </div>
@@ -2198,7 +2212,7 @@ export default function PredictorPage() {
             </div>
           )}
 
-          {/* â”€â”€ SIMILAR BLENDS â”€â”€ */}
+          {/* ── SIMILAR BLENDS ── */}
           {similarBlends && (
             <div className="pp-result" style={styles.card}>
               <div style={styles.sectionLabel}>Structural Match Analysis</div>
