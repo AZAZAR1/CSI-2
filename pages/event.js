@@ -88,11 +88,8 @@ export default function EventRegistrationPage() {
 
       /*
        * STEP 2
-       * Immediately use the EXISTING usage endpoint.
-       *
-       * This is important because your current PredictorPro
-       * already uses /api/predictor/usage to register/validate
-       * a browser device and return its device_token.
+       * Use the existing usage endpoint to register/validate
+       * this browser device and obtain the device token.
        */
       setStatus("Registering this device...");
 
@@ -114,7 +111,7 @@ export default function EventRegistrationPage() {
       }
 
       /*
-       * Store EXACTLY the same keys currently used by PredictorPro.
+       * Store the exact keys used by PredictorPro.
        */
       if (typeof window !== "undefined") {
         window.localStorage.setItem(
@@ -133,16 +130,11 @@ export default function EventRegistrationPage() {
       setStatus("Access activated. Opening PredictorPro...");
 
       /*
-       * PredictorPro's existing useEffect will see:
-       *
-       * icsi_device_email
-       * icsi_device_token
-       *
-       * and automatically call loadUsageForEmail().
-       *
-       * No predictorpro.js modification required.
+       * PredictorPro will detect the stored email/device token
+       * and automatically validate the attendee.
        */
       await router.push("/portal/predictorpro");
+
     } catch (err) {
       setError(
         err?.message ||
@@ -163,7 +155,9 @@ export default function EventRegistrationPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
           box-sizing: border-box;
         }
 
@@ -294,19 +288,45 @@ export default function EventRegistrationPage() {
           color: #716c67;
         }
 
-        .event-consent {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
+        .event-consent-row {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 20px minmax(0, 1fr);
+          align-items: start;
+          column-gap: 12px;
           margin: 18px 0 24px;
-          color: #9e968e;
-          font-size: 15px;
-          line-height: 1.45;
         }
 
-        .event-consent input {
-          margin-top: 4px;
+        .event-consent-checkbox {
+          width: 18px;
+          height: 18px;
+          margin: 3px 0 0 0;
+          padding: 0;
           accent-color: #8b1a1a;
+          cursor: pointer;
+        }
+
+        .event-consent-text {
+          display: block !important;
+          width: auto !important;
+          max-width: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          position: static !important;
+
+          color: #9e968e;
+          font-family:
+            'Cormorant Garamond',
+            Georgia,
+            serif;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 1.45;
+          letter-spacing: 0;
+          text-transform: none;
+          text-align: left;
+
+          cursor: pointer;
         }
 
         .event-button {
@@ -413,12 +433,18 @@ export default function EventRegistrationPage() {
           .event-subtitle {
             font-size: 19px;
           }
+
+          .event-consent-text {
+            font-size: 15px;
+          }
         }
       `}</style>
 
       <main className="event-page">
         <div className="event-container">
+
           <header className="event-header">
+
             <div className="event-kicker">
               International Cigar Sommelier Institute
             </div>
@@ -434,9 +460,11 @@ export default function EventRegistrationPage() {
             </p>
 
             <div className="event-divider" />
+
           </header>
 
           <section className="event-card">
+
             <h2 className="event-card-title">
               Activate Your Event Access
             </h2>
@@ -447,6 +475,7 @@ export default function EventRegistrationPage() {
             </p>
 
             <form onSubmit={registerAndEnter}>
+
               <label
                 className="event-label"
                 htmlFor="event-email"
@@ -469,8 +498,11 @@ export default function EventRegistrationPage() {
                 disabled={loading}
               />
 
-              <label className="event-consent">
+              <div className="event-consent-row">
+
                 <input
+                  id="marketing-consent"
+                  className="event-consent-checkbox"
                   type="checkbox"
                   checked={marketingConsent}
                   onChange={(e) =>
@@ -479,12 +511,16 @@ export default function EventRegistrationPage() {
                   disabled={loading}
                 />
 
-                <span>
+                <label
+                  htmlFor="marketing-consent"
+                  className="event-consent-text"
+                >
                   I would like to receive occasional information
                   from ICSI about PredictorPro, education,
                   technology and professional services.
-                </span>
-              </label>
+                </label>
+
+              </div>
 
               <button
                 className="event-button"
@@ -495,6 +531,7 @@ export default function EventRegistrationPage() {
                   ? "Activating Access..."
                   : "Access PredictorPro"}
               </button>
+
             </form>
 
             {status && !error && (
@@ -510,10 +547,12 @@ export default function EventRegistrationPage() {
             )}
 
             <div className="event-benefits">
+
               <div className="event-benefit">
                 <div className="event-benefit-title">
                   Peak Flavor
                 </div>
+
                 <div className="event-benefit-copy">
                   Determine optimal RH conditions
                 </div>
@@ -523,6 +562,7 @@ export default function EventRegistrationPage() {
                 <div className="event-benefit-title">
                   Pairing
                 </div>
+
                 <div className="event-benefit-copy">
                   Generate beverage recommendations
                 </div>
@@ -532,11 +572,14 @@ export default function EventRegistrationPage() {
                 <div className="event-benefit-title">
                   Similar Blends
                 </div>
+
                 <div className="event-benefit-copy">
                   Discover structural alternatives
                 </div>
               </div>
+
             </div>
+
           </section>
 
           <div className="event-footer">
@@ -544,6 +587,7 @@ export default function EventRegistrationPage() {
             <br />
             International Cigar Sommelier Institute
           </div>
+
         </div>
       </main>
     </Layout>
