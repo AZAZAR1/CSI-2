@@ -156,7 +156,7 @@ export default function LearningPathways() {
                   >
                     <input
                       type="hidden"
-                      name="apiKey"
+                      name="accessKey"
                       value={process.env.NEXT_PUBLIC_STATICFORMS_ACCESS_KEY || ""}
                     />
                     <input type="hidden" name="redirectTo" value={redirectTo} />
