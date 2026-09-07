@@ -145,7 +145,7 @@ export default function CPFSImplementation() {
                     <input
                       type="hidden"
                       name="accessKey"
-                      value={process.env.NEXT_PUBLIC_STATICFORMS_ACCESS_KEY || ""}
+                      value={process.env.NEXT_PUBLIC_STATICFORMS_CPFS_KEY || ""}
                     />
                     <input type="hidden" name="redirectTo" value={redirectTo} />
                     <input
