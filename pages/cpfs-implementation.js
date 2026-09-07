@@ -147,7 +147,11 @@ export default function CPFSImplementation() {
                       name="apiKey"
                       value={process.env.NEXT_PUBLIC_STATICFORMS_CPFS_KEY || ""}
                     />
-                    <input type="hidden" name="redirectTo" value={redirectTo} />
+                    <input
+                      type="hidden"
+                      name="redirectTo"
+                      value={redirectTo}
+                    />
                     <input
                       type="hidden"
                       name="Form"
