@@ -133,7 +133,7 @@ export default function EventRegistrationPage() {
        * PredictorPro will detect the stored email/device token
        * and automatically validate the attendee.
        */
-      await router.push("/portal/predictorpro");
+      await router.push("/portal/PredictorPro");
 
     } catch (err) {
       setError(
