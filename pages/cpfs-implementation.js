@@ -139,14 +139,9 @@ export default function CPFSImplementation() {
 
                   <form
                     className="tradeForm"
-                    action="https://api.staticforms.dev/submit"
+                    action={`https://api.staticforms.dev/submit/${process.env.NEXT_PUBLIC_STATICFORMS_CPFS_KEY}`}
                     method="POST"
                   >
-                    <input
-                      type="hidden"
-                      name="accessKey"
-                      value={process.env.NEXT_PUBLIC_STATICFORMS_CPFS_KEY || ""}
-                    />
                     <input type="hidden" name="redirectTo" value={redirectTo} />
                     <input
                       type="hidden"
