@@ -1,23 +1,5 @@
 // pages/api/predictor/event-trial.js
 
-/*
-ICSI Event Trial Registration
------------------------------
-
-Public-facing registration endpoint used by /event.
-
-Purpose:
-1. Receive attendee email from the public event page
-2. Validate email server-side
-3. Check whether user already exists
-4. Preserve existing subscriber accounts unchanged
-5. Create a new 30-day PredictorPro trial when required
-6. Keep the backend API key completely server-side
-
-IMPORTANT:
-The browser never receives PREDICTOR_API_KEY.
-*/
-
 const PREDICTOR_BACKEND_URL =
   process.env.PREDICTOR_BACKEND_URL || "";
 
@@ -27,29 +9,15 @@ const PREDICTOR_API_KEY =
   process.env.API_KEY ||
   "";
 
-
-/* ============================================================
-   HELPERS
-   ============================================================ */
-
 function cleanEmail(value) {
   return String(value || "")
     .trim()
     .toLowerCase();
 }
 
-
 function validEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
-
-
-function backendBaseUrl() {
-  return String(PREDICTOR_BACKEND_URL || "")
-    .trim()
-    .replace(/\/+$/, "");
-}
-
 
 function addDaysIso(days) {
   const now = new Date();
@@ -67,38 +35,34 @@ function addDaysIso(days) {
   return expiry.toISOString().slice(0, 10);
 }
 
-
-async function parseBackendResponse(response) {
-  const text = await response.text();
-
-  if (!text) {
-    return {
-      data: {},
-      raw: "",
-    };
-  }
-
-  try {
-    return {
-      data: JSON.parse(text),
-      raw: text,
-    };
-  } catch {
-    return {
-      data: {},
-      raw: text,
-    };
-  }
+function getBackendBaseUrl() {
+  return String(PREDICTOR_BACKEND_URL || "")
+    .trim()
+    .replace(/\/+$/, "");
 }
 
+async function readResponse(response) {
+  const raw = await response.text();
 
-/* ============================================================
-   HANDLER
-   ============================================================ */
+  let data = {};
+
+  try {
+    data = raw ? JSON.parse(raw) : {};
+  } catch {
+    data = {};
+  }
+
+  return {
+    raw,
+    data,
+  };
+}
 
 export default async function handler(req, res) {
+  res.setHeader("Cache-Control", "no-store, max-age=0");
+
   if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
+    res.setHeader("Allow", "POST");
 
     return res.status(405).json({
       ok: false,
@@ -106,40 +70,29 @@ export default async function handler(req, res) {
     });
   }
 
+  const backendUrl = getBackendBaseUrl();
 
-  /* ----------------------------------------------------------
-     CONFIG VALIDATION
-     ---------------------------------------------------------- */
-
-  const baseUrl = backendBaseUrl();
-
-  if (!baseUrl) {
+  if (!backendUrl) {
     console.error(
-      "event-trial: PREDICTOR_BACKEND_URL is missing"
+      "EVENT_TRIAL_ERROR: PREDICTOR_BACKEND_URL missing"
     );
 
     return res.status(500).json({
       ok: false,
-      error: "Predictor service is not configured.",
+      error: "Predictor backend is not configured.",
     });
   }
-
 
   if (!PREDICTOR_API_KEY) {
     console.error(
-      "event-trial: Predictor API key is missing"
+      "EVENT_TRIAL_ERROR: PREDICTOR_API_KEY missing"
     );
 
     return res.status(500).json({
       ok: false,
-      error: "Predictor service authentication is not configured.",
+      error: "Predictor authentication is not configured.",
     });
   }
-
-
-  /* ----------------------------------------------------------
-     EMAIL VALIDATION
-     ---------------------------------------------------------- */
 
   const email = cleanEmail(req.body?.email);
 
@@ -150,7 +103,6 @@ export default async function handler(req, res) {
     });
   }
 
-
   if (!validEmail(email)) {
     return res.status(400).json({
       ok: false,
@@ -158,42 +110,47 @@ export default async function handler(req, res) {
     });
   }
 
+  /*
+   * IMPORTANT
+   *
+   * PREDICTOR_BACKEND_URL points to the public EC2/Nginx host.
+   * Public Predictor backend routes sit under:
+   *
+   * /api/predictor/
+   */
+  const publicApiBase =
+    `${backendUrl}/api/predictor`;
 
-  const apiHeaders = {
+  const headers = {
+    Accept: "application/json",
     "Content-Type": "application/json",
     "x-api-key": PREDICTOR_API_KEY,
   };
 
-
   try {
-
-    /* ========================================================
-       1. CHECK WHETHER USER ALREADY EXISTS
-
-       This prevents an existing paid subscriber from being
-       overwritten with trial settings.
-       ======================================================== */
-
+    /*
+     * Check existing users first so we do not downgrade
+     * an existing Standard or Pro account into Trial.
+     */
     const usersResponse = await fetch(
-      `${baseUrl}/admin/users`,
+      `${publicApiBase}/admin/users`,
       {
         method: "GET",
         headers: {
+          Accept: "application/json",
           "x-api-key": PREDICTOR_API_KEY,
         },
       }
     );
 
-
     const {
       data: usersData,
       raw: usersRaw,
-    } = await parseBackendResponse(usersResponse);
-
+    } = await readResponse(usersResponse);
 
     if (!usersResponse.ok) {
       console.error(
-        "event-trial: failed to retrieve authorized users",
+        "EVENT_TRIAL_USER_LIST_ERROR:",
         usersResponse.status,
         usersRaw
       );
@@ -203,56 +160,49 @@ export default async function handler(req, res) {
         error:
           usersData?.detail ||
           usersData?.error ||
-          "Unable to verify PredictorPro access.",
+          `Unable to verify existing access (${usersResponse.status}).`,
       });
     }
-
 
     const users = Array.isArray(usersData?.users)
       ? usersData.users
       : [];
-
 
     const existingUser = users.find(
       (user) =>
         cleanEmail(user?.email) === email
     );
 
-
-    /* ========================================================
-       2. EXISTING ACCOUNT
-
-       Leave everything untouched.
-
-       This is important for:
-       - existing Pro users
-       - existing Standard users
-       - existing Trial users
-       ======================================================== */
-
+    /*
+     * Existing user:
+     * preserve the account exactly as it is.
+     */
     if (existingUser) {
       return res.status(200).json({
         ok: true,
         created: false,
         existing_user: true,
+
         email,
+
         tier: existingUser.tier || "",
+        active: existingUser.active === true,
+
         pro_access:
           existingUser.pro_access === true,
+
         expires_at:
           existingUser.expires_at || "",
       });
     }
 
-
-    /* ========================================================
-       3. CREATE NEW EVENT TRIAL
-       ======================================================== */
-
+    /*
+     * New event attendee:
+     * create 30-day PredictorPro trial.
+     */
     const expiresAt = addDaysIso(30);
 
-
-    const trialPayload = {
+    const payload = {
       email,
 
       tier: "trial",
@@ -260,40 +210,35 @@ export default async function handler(req, res) {
       active: true,
 
       /*
-       Event visitors need access to PredictorPro rather than
-       the standard Predictor interface.
+       * Trial attendee gets PredictorPro interface.
        */
       pro_access: true,
 
       /*
-       Use ICSI's global catalogue rather than venue-specific
-       inventory.
+       * Event access uses master ICSI inventory.
        */
       inventory_folder: "global",
 
       expires_at: expiresAt,
     };
 
-
     const createResponse = await fetch(
-      `${baseUrl}/admin/users/upsert`,
+      `${publicApiBase}/admin/users/upsert`,
       {
         method: "POST",
-        headers: apiHeaders,
-        body: JSON.stringify(trialPayload),
+        headers,
+        body: JSON.stringify(payload),
       }
     );
-
 
     const {
       data: createData,
       raw: createRaw,
-    } = await parseBackendResponse(createResponse);
-
+    } = await readResponse(createResponse);
 
     if (!createResponse.ok) {
       console.error(
-        "event-trial: backend user creation failed",
+        "EVENT_TRIAL_CREATE_ERROR:",
         createResponse.status,
         createRaw
       );
@@ -303,37 +248,38 @@ export default async function handler(req, res) {
         error:
           createData?.detail ||
           createData?.error ||
-          "Unable to activate PredictorPro trial access.",
+          `Unable to activate PredictorPro trial access (${createResponse.status}).`,
       });
     }
 
-
-    /* ========================================================
-       SUCCESS
-       ======================================================== */
-
     return res.status(200).json({
       ok: true,
+
       created: true,
       existing_user: false,
 
       email,
 
       tier: "trial",
+      active: true,
       pro_access: true,
-      expires_at: expiresAt,
+
+      expires_at:
+        createData?.expires_at ||
+        expiresAt,
     });
 
   } catch (error) {
     console.error(
-      "event-trial: unexpected error",
+      "EVENT_TRIAL_UNEXPECTED_ERROR:",
       error
     );
 
     return res.status(500).json({
       ok: false,
       error:
-        "Unable to activate PredictorPro access. Please try again.",
+        error?.message ||
+        "Unable to activate PredictorPro trial access.",
     });
   }
 }
