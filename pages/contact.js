@@ -11,8 +11,14 @@ const copy = {
       "Contact us to apply to our courses, classes or access to our digital applications. All applications are reviewed individually, and admission is selective. If you are applying to our courses, please include your CV or resume along with a short statement of intent.",
     programEyebrow: "Application Context",
     programTitle: "Selected Program",
-    emailEyebrow: "Email",
-    emailTitle: "Email your application",
+    emailEyebrow: "Contact Form",
+    emailTitle: "Send us a message",
+    formIntro: "Complete the form below and our team will contact you directly.",
+    firstName: "First name", familyName: "Family name", organization: "Organization",
+    email: "Email", message: "Message", optional: "optional", submit: "Submit",
+    privacy: "By submitting this form, you agree that ICSI may contact you regarding your enquiry.",
+    successEyebrow: "Thank You", successTitle: "Your message has been received",
+    successText: "Thank you for contacting ICSI. Our team will respond to your enquiry shortly.",
     whatsappEyebrow: "Swiss WhatsApp",
     whatsappTitle: "Contact us directly",
     closingEyebrow: "Confidentiality",
@@ -38,8 +44,14 @@ const copy = {
       "Contactez-nous pour postuler à nos cours, classes ou accéder à nos applications numériques. Toutes les candidatures sont examinées individuellement et l'admission est sélective. Si vous postulez à nos cours, veuillez inclure votre CV ainsi qu'une courte déclaration d'intention.",
     programEyebrow: "Contexte de candidature",
     programTitle: "Programme sélectionné",
-    emailEyebrow: "Email",
-    emailTitle: "Envoyer votre candidature",
+    emailEyebrow: "Formulaire de contact",
+    emailTitle: "Envoyez-nous un message",
+    formIntro: "Complétez le formulaire ci-dessous et notre équipe vous contactera directement.",
+    firstName: "Prénom", familyName: "Nom de famille", organization: "Organisation",
+    email: "Email", message: "Message", optional: "facultatif", submit: "Envoyer",
+    privacy: "En soumettant ce formulaire, vous acceptez qu'ICSI vous contacte au sujet de votre demande.",
+    successEyebrow: "Merci", successTitle: "Votre message a bien été reçu",
+    successText: "Merci d'avoir contacté ICSI. Notre équipe répondra prochainement à votre demande.",
     whatsappEyebrow: "WhatsApp Suisse",
     whatsappTitle: "Nous contacter directement",
     closingEyebrow: "Confidentialité",
@@ -65,8 +77,14 @@ const copy = {
       "Kontaktieren Sie uns, um sich für unsere Kurse, Klassen oder den Zugang zu unseren digitalen Anwendungen zu bewerben. Alle Bewerbungen werden individuell geprüft, und die Zulassung ist selektiv. Wenn Sie sich für unsere Kurse bewerben, fügen Sie bitte Ihren Lebenslauf oder Ihre Bewerbung zusammen mit einer kurzen Absichtserklärung bei.",
     programEyebrow: "Bewerbungskontext",
     programTitle: "Ausgewähltes Programm",
-    emailEyebrow: "E-Mail",
-    emailTitle: "Bewerbung per E-Mail",
+    emailEyebrow: "Kontaktformular",
+    emailTitle: "Senden Sie uns eine Nachricht",
+    formIntro: "Füllen Sie das untenstehende Formular aus. Unser Team wird sich direkt mit Ihnen in Verbindung setzen.",
+    firstName: "Vorname", familyName: "Nachname", organization: "Organisation",
+    email: "E-Mail", message: "Nachricht", optional: "optional", submit: "Absenden",
+    privacy: "Mit dem Absenden dieses Formulars erklären Sie sich damit einverstanden, dass ICSI Sie bezüglich Ihrer Anfrage kontaktiert.",
+    successEyebrow: "Vielen Dank", successTitle: "Ihre Nachricht ist eingegangen",
+    successText: "Vielen Dank für Ihre Kontaktaufnahme mit ICSI. Unser Team wird Ihre Anfrage in Kürze beantworten.",
     whatsappEyebrow: "Schweizer WhatsApp",
     whatsappTitle: "Direkt kontaktieren",
     closingEyebrow: "Vertraulichkeit",
@@ -116,19 +134,13 @@ export default function Contact() {
 
   const c = copy[lang] || copy.en;
 
-  const adminEmail = "Admin@cigarsommelierinstitute.com";
   const waNumber = "41762305791";
   const waLabel = "+41 76 230 57 91";
-
   const programNice = c.programNames?.[program] || "";
-
-  const emailSubject = programNice
-    ? `${c.subjectPrefix} — ${programNice}`
-    : `${c.subjectPrefix} — ICSI`;
-
-  const mailtoHref = `mailto:${adminEmail}?subject=${encodeURIComponent(
-    emailSubject
-  )}`;
+  const submitted = router.query?.submitted === "true";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cigarsommelierinstitute.com";
+  const localePrefix = router.locale && router.locale !== "en" ? `/${router.locale}` : "";
+  const redirectTo = `${siteUrl}${localePrefix}/contact?submitted=true`;
 
   return (
     <Layout>
@@ -162,13 +174,50 @@ export default function Contact() {
 
           <ContactSection
             number={programNice ? "02" : "01"}
-            eyebrow={c.emailEyebrow}
-            title={c.emailTitle}
+            eyebrow={submitted ? c.successEyebrow : c.emailEyebrow}
+            title={submitted ? c.successTitle : c.emailTitle}
           >
-            <a className="contactTextCta" href={mailtoHref}>
-              <span>{adminEmail}</span>
-              <span className="contactArrow">→</span>
-            </a>
+            {submitted ? (
+              <p className="contactSectionText">{c.successText}</p>
+            ) : (
+              <>
+                <p className="contactSectionText contactFormIntro">{c.formIntro}</p>
+                <form className="contactForm" action="https://api.staticforms.dev/submit" method="POST">
+                  <input type="hidden" name="apiKey" value={process.env.NEXT_PUBLIC_STATICFORMS_CONTACT_KEY || ""} />
+                  <input type="hidden" name="redirectTo" value={redirectTo} />
+                  <input type="hidden" name="Form" value="ICSI Website Contact" />
+                  {programNice && <input type="hidden" name="Selected Program" value={programNice} />}
+                  <div className="contactHoneypot" aria-hidden="true">
+                    <label htmlFor="contact-honeypot">Leave this empty</label>
+                    <input id="contact-honeypot" type="text" name="honeypot" tabIndex="-1" autoComplete="off" />
+                  </div>
+                  <div className="contactField">
+                    <label className="contactLabel" htmlFor="firstName">{c.firstName}</label>
+                    <input className="contactInput" id="firstName" name="First Name" type="text" autoComplete="given-name" required />
+                  </div>
+                  <div className="contactField">
+                    <label className="contactLabel" htmlFor="familyName">{c.familyName}</label>
+                    <input className="contactInput" id="familyName" name="Family Name" type="text" autoComplete="family-name" required />
+                  </div>
+                  <div className="contactField contactFieldFull">
+                    <label className="contactLabel" htmlFor="organization">{c.organization} <span className="contactOptional">({c.optional})</span></label>
+                    <input className="contactInput" id="organization" name="Organization" type="text" autoComplete="organization" />
+                  </div>
+                  <div className="contactField contactFieldFull">
+                    <label className="contactLabel" htmlFor="email">{c.email}</label>
+                    <input className="contactInput" id="email" name="email" type="email" autoComplete="email" required />
+                  </div>
+                  <div className="contactField contactFieldFull">
+                    <label className="contactLabel" htmlFor="message">{c.message} <span className="contactOptional">({c.optional})</span></label>
+                    <textarea className="contactTextarea" id="message" name="message" rows="5" />
+                  </div>
+                  <div className="contactSubmitWrap">
+                    <button className="contactSubmit" type="submit"><span>{c.submit}</span><span className="contactArrow">→</span></button>
+                  </div>
+                  <p className="contactPrivacy">{c.privacy}</p>
+                </form>
+              </>
+            )}
           </ContactSection>
 
           <ContactSection
@@ -349,6 +398,21 @@ export default function Contact() {
           opacity: 0.84;
         }
 
+        .contactPage .contactFormIntro { margin-bottom: 38px; }
+        .contactPage .contactForm { position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 30px; max-width: 760px; }
+        .contactPage .contactField { display:flex; flex-direction:column; gap:10px; }
+        .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1/-1; }
+        .contactPage .contactLabel { color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.64rem; line-height:1.35; letter-spacing:.18em; text-transform:uppercase; font-weight:600; opacity:.62; }
+        .contactPage .contactOptional { font-weight:400; opacity:.65; }
+        .contactPage .contactInput, .contactPage .contactTextarea { width:100%; padding:14px 0; border:0; border-bottom:1px solid rgba(0,0,0,.24); border-radius:0; outline:none; background:transparent; color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:1rem; line-height:1.4; font-weight:300; }
+        .contactPage .contactInput { min-height:54px; }
+        .contactPage .contactTextarea { min-height:120px; resize:vertical; }
+        .contactPage .contactInput:focus, .contactPage .contactTextarea:focus { border-bottom-color:#121214; }
+        .contactPage .contactSubmit { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-width:180px; min-height:50px; padding:0 26px; border:1px solid #121214; border-radius:0; background:#121214; color:#fff; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; font-weight:700; cursor:pointer; }
+        .contactPage .contactSubmit:hover { background:transparent; color:#121214; }
+        .contactPage .contactPrivacy { margin:0; max-width:70ch; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.76rem; line-height:1.6; font-weight:300; opacity:.48; }
+        .contactPage .contactHoneypot { position:absolute!important; left:-9999px!important; width:1px!important; height:1px!important; overflow:hidden!important; opacity:0!important; pointer-events:none!important; }
+
         .contactPage .contactTextCta {
           display: inline-flex;
           align-items: center;
@@ -440,6 +504,11 @@ export default function Contact() {
           }
         }
 
+        @media (max-width: 640px) {
+          .contactPage .contactForm { grid-template-columns:1fr; gap:24px; }
+          .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1; }
+        }
+
         @media (max-width: 560px) {
           .contactPage .contactHeroInner {
             padding-top: 40px;
@@ -472,7 +541,22 @@ export default function Contact() {
             line-height: 1.68;
           }
 
-          .contactPage .contactTextCta {
+          .contactPage .contactFormIntro { margin-bottom: 38px; }
+        .contactPage .contactForm { position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 30px; max-width: 760px; }
+        .contactPage .contactField { display:flex; flex-direction:column; gap:10px; }
+        .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1/-1; }
+        .contactPage .contactLabel { color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.64rem; line-height:1.35; letter-spacing:.18em; text-transform:uppercase; font-weight:600; opacity:.62; }
+        .contactPage .contactOptional { font-weight:400; opacity:.65; }
+        .contactPage .contactInput, .contactPage .contactTextarea { width:100%; padding:14px 0; border:0; border-bottom:1px solid rgba(0,0,0,.24); border-radius:0; outline:none; background:transparent; color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:1rem; line-height:1.4; font-weight:300; }
+        .contactPage .contactInput { min-height:54px; }
+        .contactPage .contactTextarea { min-height:120px; resize:vertical; }
+        .contactPage .contactInput:focus, .contactPage .contactTextarea:focus { border-bottom-color:#121214; }
+        .contactPage .contactSubmit { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-width:180px; min-height:50px; padding:0 26px; border:1px solid #121214; border-radius:0; background:#121214; color:#fff; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; font-weight:700; cursor:pointer; }
+        .contactPage .contactSubmit:hover { background:transparent; color:#121214; }
+        .contactPage .contactPrivacy { margin:0; max-width:70ch; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.76rem; line-height:1.6; font-weight:300; opacity:.48; }
+        .contactPage .contactHoneypot { position:absolute!important; left:-9999px!important; width:1px!important; height:1px!important; overflow:hidden!important; opacity:0!important; pointer-events:none!important; }
+
+        .contactPage .contactTextCta {
             font-size: 0.62rem;
             letter-spacing: 0.15em;
             gap: 14px;
@@ -482,4 +566,3 @@ export default function Contact() {
     </Layout>
   );
 }
-
