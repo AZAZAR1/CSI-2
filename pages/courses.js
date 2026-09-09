@@ -11,7 +11,7 @@ const pageCopy = {
     titleLine2: "Earn recognition.",
     titleLine3: "Progress professionally.",
     intro:
-      "A structured four-level pathway designed to move learners from essential cigar knowledge to advanced professional mastery — with science, service and disciplined decision-making at its core.",
+      "A structured four-level pathway designed to move learners from essential cigar knowledge to advanced professional mastery. It has science, service and disciplined decision-making at its core.",
     heroCta: "Explore the four levels",
 
     pathwayEyebrow: "The ICSI pathway",
@@ -22,7 +22,7 @@ const pageCopy = {
     levels: [
       {
         number: "I",
-        label: "FOUNDATION",
+        label: "FOUNDATION & HUMIDOR SUPPORT",
         title: "ICSI Level I",
         audience: "For cigar enthusiasts, aspiring professionals and new entrants",
         body:
@@ -61,13 +61,13 @@ const pageCopy = {
     chooseEyebrow: "Where should I start?",
     chooseTitle: "Choose the level that matches your current experience.",
     chooseBody:
-      "You do not need to guess your way into the pathway. Tell us about your background and intended use — personal development, hospitality, retail or professional specialization — and ICSI will guide you to the appropriate starting level.",
+      "You do not need to guess your way into the pathway. Tell us about your background and intended use: personal development, hospitality, retail or professional specialization. ICSI will guide you to the appropriate starting level.",
     chooseCta: "Find my starting level",
 
     standardEyebrow: "The ICSI standard",
     standardTitle: "Education designed for professional application.",
     standardLead:
-      "ICSI combines structured education with scientific reasoning and hospitality practice so that knowledge can be applied consistently — not simply remembered.",
+      "ICSI combines structured education with scientific reasoning and hospitality practice so that knowledge can be applied consistently.",
     pillars: [
       {
         number: "01",
@@ -115,7 +115,7 @@ const pageCopy = {
     titleLine2: "Faites reconnaître votre niveau.",
     titleLine3: "Progressez professionnellement.",
     intro:
-      "Un parcours structuré en quatre niveaux, conçu pour faire évoluer l’apprenant des connaissances essentielles du cigare vers une maîtrise professionnelle avancée — avec la science, le service et la rigueur de décision au cœur de l’approche.",
+      "Un parcours structuré en quatre niveaux, conçu pour faire évoluer l’apprenant des connaissances essentielles du cigare vers une maîtrise professionnelle avancée, avec la science, le service et la rigueur de décision au cœur de l’approche.",
     heroCta: "Découvrir les quatre niveaux",
 
     pathwayEyebrow: "Le parcours ICSI",
@@ -126,7 +126,7 @@ const pageCopy = {
     levels: [
       {
         number: "I",
-        label: "FONDAMENTAUX",
+        label: "FONDAMENTAUX & SUPPORT POUR CAVE A CIGARES",
         title: "ICSI Niveau I",
         audience: "Pour les aficionados, futurs professionnels et nouveaux entrants",
         body:
@@ -165,13 +165,13 @@ const pageCopy = {
     chooseEyebrow: "Par où commencer ?",
     chooseTitle: "Choisissez le niveau correspondant à votre expérience actuelle.",
     chooseBody:
-      "Vous n’avez pas à déterminer seul votre point d’entrée. Présentez-nous votre parcours et votre objectif — développement personnel, hospitality, retail ou spécialisation professionnelle — et l’ICSI vous orientera vers le niveau de départ approprié.",
+      "Vous n’avez pas à déterminer seul votre point d’entrée. Présentez-nous votre parcours et votre objectif: développement personnel, hospitality, retail ou spécialisation professionnelle. l’ICSI vous orientera vers le niveau de départ approprié.",
     chooseCta: "Trouver mon niveau de départ",
 
     standardEyebrow: "Le standard ICSI",
     standardTitle: "Une formation conçue pour l’application professionnelle.",
     standardLead:
-      "L’ICSI associe formation structurée, raisonnement scientifique et pratique de l’hospitality afin que les connaissances puissent être appliquées avec constance — et pas simplement mémorisées.",
+      "L’ICSI associe formation structurée, raisonnement scientifique et pratique de l’hospitality afin que les connaissances puissent être appliquées en permanence.",
     pillars: [
       {
         number: "01",
@@ -219,7 +219,7 @@ const pageCopy = {
     titleLine2: "Kompetenz sichtbar machen.",
     titleLine3: "Beruflich weiterentwickeln.",
     intro:
-      "Ein strukturierter vierstufiger Bildungsweg, der von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft führt — mit Wissenschaft, Service und disziplinierter Entscheidungsfindung im Mittelpunkt.",
+      "Ein strukturierter vierstufiger Bildungsweg, der von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft führt, mit Wissenschaft, Service und disziplinierter Entscheidungsfindung im Mittelpunkt.",
     heroCta: "Die vier Stufen entdecken",
 
     pathwayEyebrow: "Der ICSI Bildungsweg",
@@ -269,13 +269,13 @@ const pageCopy = {
     chooseEyebrow: "Wo sollte ich beginnen?",
     chooseTitle: "Wählen Sie die Stufe, die zu Ihrer heutigen Erfahrung passt.",
     chooseBody:
-      "Sie müssen Ihren Einstieg nicht allein bestimmen. Teilen Sie uns Ihren Hintergrund und Ihr Ziel mit — persönliche Entwicklung, Hospitality, Retail oder professionelle Spezialisierung — und ICSI empfiehlt Ihnen die passende Einstiegsstufe.",
+      "Sie müssen Ihren Einstieg nicht allein bestimmen. Teilen Sie uns Ihren Hintergrund und Ihr Ziel mit — persönliche Entwicklung, Hospitality, Retail oder professionelle Spezialisierung, und ICSI empfiehlt Ihnen die passende Einstiegsstufe.",
     chooseCta: "Meine Einstiegsstufe finden",
 
     standardEyebrow: "Der ICSI Standard",
     standardTitle: "Ausbildung für die professionelle Anwendung.",
     standardLead:
-      "ICSI verbindet strukturierte Ausbildung mit wissenschaftlichem Denken und Hospitality-Praxis, damit Wissen konsequent angewendet — und nicht nur erinnert — werden kann.",
+      "ICSI verbindet strukturierte Ausbildung mit wissenschaftlichem Denken und Hospitality-Praxis, damit Wissen konsequent angewendet, und nicht nur erinnert, werden kann.",
     pillars: [
       {
         number: "01",
