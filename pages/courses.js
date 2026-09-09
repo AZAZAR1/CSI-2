@@ -2,162 +2,363 @@ import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { COPY } from "../components/copy";
 
 const pageCopy = {
   en: {
-    kicker: "Learning Pathways",
-    title: "Learning Pathways & Professional Solutions",
+    kicker: "ICSI Professional Education",
+    titleLine1: "Build expertise.",
+    titleLine2: "Earn recognition.",
+    titleLine3: "Progress professionally.",
     intro:
-      "ICSI serves three distinct audiences across the modern cigar world: aspiring professionals building a career, retailers and lounges seeking to modernize for growth, and dedicated aficionados pursuing a higher standard of personal mastery. Each pathway is grounded in the scientific Cigar Peak-Flavor System® and designed to bring greater structure, confidence, and performance to an increasingly complex global blend landscape.",
-    distinction:
-      "ICSI is the first globally to offer certification courses that include sensory science, quantification of flavor and aroma, data-driven cigar classification, and digital tools including applications, analytics, and guided tasting systems. ICSI applies the ISO/IEC 17024 Quality Systems framework.",
-    individualsTitle: "For Aspiring Cigar Professionals",
-    individualsEyebrow: "Professional Formation",
-    individualsBody:
-      "Build a career grounded in precision, structure, and credibility. ICSI’s certification programs develop a rigorous understanding of cigar construction, combustion dynamics, humidity behavior, and flavor evolution. Preparing candidates for roles in premium lounges, retail environments, and luxury hospitality.",
-    businessTitle: "For Retailers, Lounges & Hospitality Groups",
-    businessEyebrow: "Business Modernization",
-    businessBody:
-      "Modernize your cigar offering and create consistent, high-quality client experiences. ICSI provides implementation and certification of the Cigar Peak-Flavor System® to help businesses standardize service, optimize performance, strengthen loyalty, and grow cigar sales with greater confidence.",
-    aficionadosTitle: "For Aficionados & Collectors",
-    aficionadosEyebrow: "Private Mastery",
-    aficionadosBody:
-      "Pursue a more exacting level of personal cigar mastery. ICSI’s advanced private pathway supports committed aficionados and collectors seeking a more precise understanding of calibration, aging, performance staging, and peak-flavor delivery across a wider range of blends.",
-    bridge:
-      "Whether developing a professional career, strengthening a cigar business, or deepening personal mastery, ICSI provides the structure required to move from intuition to calibrated performance.",
-    pathwaysTitle: "Certification Pathways",
-    pathwaysEyebrow: "Programs",
-    pathwaysLead:
-      "Four tailored pathways for professional development, industry modernization, and advanced personal optimization.",
-    systemTitle: "Cigar Peak-Flavor System® Implementation & Certification",
-    systemBody:
-      "A comprehensive implementation and certification solution for retailers, lounges, and hospitality environments seeking to modernize operations, standardize cigar performance, and elevate the client experience.",
-    systemCta: "Request Partnership",
-    seoTitle: "Professional Pathways & Industry Solutions | ICSI",
+      "A structured four-level pathway designed to move learners from essential cigar knowledge to advanced professional mastery — with science, service and disciplined decision-making at its core.",
+    heroCta: "Explore the four levels",
+
+    pathwayEyebrow: "The ICSI pathway",
+    pathwayTitle: "One progression. Four levels of mastery.",
+    pathwayLead:
+      "Each level builds on the one before it. Start with the foundations, develop professional service capability, deepen technical expertise, and progress toward advanced mastery.",
+
+    levels: [
+      {
+        number: "I",
+        label: "FOUNDATION",
+        title: "ICSI Level I",
+        audience: "For cigar enthusiasts, aspiring professionals and new entrants",
+        body:
+          "Build a disciplined foundation in cigar knowledge, care and appreciation. Level I introduces the core principles needed to understand cigars with greater confidence and consistency.",
+        outcome: "Establish the language, habits and core knowledge required for further study.",
+      },
+      {
+        number: "II",
+        label: "PROFESSIONAL",
+        title: "ICSI Level II",
+        audience: "For hospitality, lounge and retail professionals",
+        body:
+          "Translate knowledge into professional service. Level II develops the practical and technical understanding required to support confident recommendations, storage decisions and a consistent guest experience.",
+        outcome: "Move from personal knowledge to structured professional practice.",
+      },
+      {
+        number: "III",
+        label: "ADVANCED",
+        title: "ICSI Level III",
+        audience: "For experienced cigar and hospitality professionals",
+        body:
+          "Deepen technical and diagnostic capability across blend structure, performance, storage and service. Level III develops the analytical judgement required for more demanding professional environments.",
+        outcome: "Develop advanced diagnostic reasoning and higher-level service judgement.",
+      },
+      {
+        number: "IV",
+        label: "MASTERY",
+        title: "ICSI Level IV",
+        audience: "For senior professionals seeking advanced mastery",
+        body:
+          "The highest level in the ICSI pathway. Level IV brings together scientific understanding, professional judgement and advanced application into a comprehensive standard of expertise.",
+        outcome: "Demonstrate integrated mastery across knowledge, analysis and professional application.",
+      },
+    ],
+
+    chooseEyebrow: "Where should I start?",
+    chooseTitle: "Choose the level that matches your current experience.",
+    chooseBody:
+      "You do not need to guess your way into the pathway. Tell us about your background and intended use — personal development, hospitality, retail or professional specialization — and ICSI will guide you to the appropriate starting level.",
+    chooseCta: "Find my starting level",
+
+    standardEyebrow: "The ICSI standard",
+    standardTitle: "Education designed for professional application.",
+    standardLead:
+      "ICSI combines structured education with scientific reasoning and hospitality practice so that knowledge can be applied consistently — not simply remembered.",
+    pillars: [
+      {
+        number: "01",
+        title: "Structured progression",
+        body:
+          "A clear four-level architecture gives learners a defined route from foundation to advanced mastery.",
+      },
+      {
+        number: "02",
+        title: "Science-led understanding",
+        body:
+          "The curriculum develops understanding of the physical, sensory and performance factors that influence the cigar experience.",
+      },
+      {
+        number: "03",
+        title: "Hospitality relevance",
+        body:
+          "Professional levels connect technical knowledge to real service decisions, consistency and guest experience.",
+      },
+      {
+        number: "04",
+        title: "Professional recognition",
+        body:
+          "Each stage is designed to make progression visible and to give serious learners a credible framework for development.",
+      },
+    ],
+
+    finalEyebrow: "Begin your pathway",
+    finalTitle: "Start at the right level. Build from there.",
+    finalBody:
+      "Explore the ICSI pathway or speak with us about the level best suited to your experience and professional objectives.",
+    finalPrimary: "Discuss my pathway",
+    finalSecondary: "Contact ICSI",
+
+    levelCta: "Enquire about this level",
+    outcomeLabel: "Progression outcome",
+    seoTitle: "ICSI Professional Education | Level I–IV Certification Pathway",
     seoDescription:
-      "ICSI supports aspiring cigar professionals, retailers, lounges, hospitality groups, and aficionados through structured certification pathways, Cigar Peak-Flavor System implementation, and advanced cigar mastery solutions.",
+      "Explore the ICSI four-level professional education pathway, progressing from foundational cigar knowledge to advanced professional mastery.",
   },
+
   fr: {
-    kicker: "Parcours d’apprentissage",
-    title: "Parcours d'apprentissage & solutions professionnelles",
+    kicker: "Formation professionnelle ICSI",
+    titleLine1: "Développez votre expertise.",
+    titleLine2: "Faites reconnaître votre niveau.",
+    titleLine3: "Progressez professionnellement.",
     intro:
-      "L’ICSI s’adresse à trois publics distincts dans le monde moderne du cigare : les futurs professionnels construisant une carrière, les détaillants et lounges cherchant à se moderniser pour croître, ainsi que les aficionados engagés recherchant un niveau supérieur de maîtrise personnelle. Chaque parcours s’appuie sur le Cigar Peak-Flavor System® scientifique et vise à apporter davantage de structure, de confiance et de performance dans un paysage mondial de mélanges toujours plus complexe.",
-    distinction:
-      "L’ICSI est le premier au monde à proposer des certifications intégrant la science sensorielle, la quantification des arômes et saveurs, la classification des cigares basée sur les données, ainsi que des outils digitaux tels que les applications, analyses et systèmes de dégustation guidée. L’ICSI applique le cadre qualité ISO/IEC 17024.",
-    individualsTitle: "Pour les futurs professionnels du cigare",
-    individualsEyebrow: "Formation professionnelle",
-    individualsBody:
-      "Construisez une carrière fondée sur la précision, la structure et la crédibilité. Les programmes de certification ICSI développent une compréhension rigoureuse de la construction du cigare, de la dynamique de combustion, du comportement hygrométrique et de l’évolution aromatique; préparant les candidats à des fonctions en lounges premium, en distribution spécialisée et dans l’hôtellerie de luxe.",
-    businessTitle: "Pour les détaillants, lounges & groupes hôteliers",
-    businessEyebrow: "Modernisation business",
-    businessBody:
-      "Modernisez votre offre cigare et créez une expérience client constante et qualitative. ICSI propose l’implémentation et la certification du Cigar Peak-Flavor System® afin d’aider les entreprises à standardiser le service, optimiser la performance, renforcer la fidélité et développer les ventes de cigares avec davantage d’assurance.",
-    aficionadosTitle: "Pour les aficionados & collectionneurs",
-    aficionadosEyebrow: "Maîtrise privée",
-    aficionadosBody:
-      "Atteignez un niveau plus exigeant de maîtrise personnelle du cigare. Le parcours privé avancé de l’ICSI accompagne les aficionados et collectionneurs engagés qui souhaitent affiner leur compréhension de la calibration, du vieillissement, de la mise en performance et de la restitution Peak-Flavor sur une plus grande diversité de mélanges.",
-    bridge:
-      "Qu’il s’agisse de développer une carrière professionnelle, de renforcer une activité cigare ou d’approfondir une maîtrise personnelle, l’ICSI apporte la structure nécessaire pour passer de l’intuition à une performance calibrée.",
-    pathwaysTitle: "Parcours de certification",
-    pathwaysEyebrow: "Programmes",
-    pathwaysLead:
-      "Quatre parcours adaptés au développement professionnel, à la modernisation des environnements cigare et à l’optimisation personnelle avancée.",
-    systemTitle: "Implémentation & Certification du Cigar Peak-Flavor System®",
-    systemBody:
-      "Une solution complète d’implémentation et de certification destinée aux détaillants, lounges et environnements hôteliers souhaitant moderniser leurs opérations, standardiser la performance des cigares et élever l’expérience client.",
-    systemCta: "Demander un partenariat",
-    seoTitle: "Parcours Professionnels & Solutions pour l’Industrie | ICSI",
+      "Un parcours structuré en quatre niveaux, conçu pour faire évoluer l’apprenant des connaissances essentielles du cigare vers une maîtrise professionnelle avancée — avec la science, le service et la rigueur de décision au cœur de l’approche.",
+    heroCta: "Découvrir les quatre niveaux",
+
+    pathwayEyebrow: "Le parcours ICSI",
+    pathwayTitle: "Une progression. Quatre niveaux de maîtrise.",
+    pathwayLead:
+      "Chaque niveau s’appuie sur le précédent. Commencez par les fondamentaux, développez vos compétences de service professionnel, approfondissez votre expertise technique et progressez vers une maîtrise avancée.",
+
+    levels: [
+      {
+        number: "I",
+        label: "FONDAMENTAUX",
+        title: "ICSI Niveau I",
+        audience: "Pour les aficionados, futurs professionnels et nouveaux entrants",
+        body:
+          "Construisez une base rigoureuse de connaissances, de conservation et d’appréciation du cigare. Le Niveau I introduit les principes essentiels pour comprendre le cigare avec davantage de confiance et de constance.",
+        outcome: "Acquérir le langage, les habitudes et les connaissances de base nécessaires pour poursuivre le parcours.",
+      },
+      {
+        number: "II",
+        label: "PROFESSIONNEL",
+        title: "ICSI Niveau II",
+        audience: "Pour les professionnels de l’hospitality, des lounges et du retail",
+        body:
+          "Transformez les connaissances en pratique professionnelle. Le Niveau II développe la compréhension pratique et technique nécessaire pour soutenir des recommandations fiables, de bonnes décisions de conservation et une expérience client cohérente.",
+        outcome: "Passer d’une connaissance personnelle à une pratique professionnelle structurée.",
+      },
+      {
+        number: "III",
+        label: "AVANCÉ",
+        title: "ICSI Niveau III",
+        audience: "Pour les professionnels expérimentés du cigare et de l’hospitality",
+        body:
+          "Approfondissez vos capacités techniques et diagnostiques autour de la structure des blends, de la performance, de la conservation et du service. Le Niveau III développe le jugement analytique nécessaire dans les environnements professionnels plus exigeants.",
+        outcome: "Développer un raisonnement diagnostique avancé et un niveau supérieur de jugement de service.",
+      },
+      {
+        number: "IV",
+        label: "MAÎTRISE",
+        title: "ICSI Niveau IV",
+        audience: "Pour les professionnels seniors recherchant une maîtrise avancée",
+        body:
+          "Le niveau le plus élevé du parcours ICSI. Le Niveau IV réunit compréhension scientifique, jugement professionnel et application avancée dans un standard global d’expertise.",
+        outcome: "Démontrer une maîtrise intégrée des connaissances, de l’analyse et de l’application professionnelle.",
+      },
+    ],
+
+    chooseEyebrow: "Par où commencer ?",
+    chooseTitle: "Choisissez le niveau correspondant à votre expérience actuelle.",
+    chooseBody:
+      "Vous n’avez pas à déterminer seul votre point d’entrée. Présentez-nous votre parcours et votre objectif — développement personnel, hospitality, retail ou spécialisation professionnelle — et l’ICSI vous orientera vers le niveau de départ approprié.",
+    chooseCta: "Trouver mon niveau de départ",
+
+    standardEyebrow: "Le standard ICSI",
+    standardTitle: "Une formation conçue pour l’application professionnelle.",
+    standardLead:
+      "L’ICSI associe formation structurée, raisonnement scientifique et pratique de l’hospitality afin que les connaissances puissent être appliquées avec constance — et pas simplement mémorisées.",
+    pillars: [
+      {
+        number: "01",
+        title: "Progression structurée",
+        body:
+          "Une architecture claire en quatre niveaux donne à chaque apprenant un parcours défini, des fondamentaux jusqu’à la maîtrise avancée.",
+      },
+      {
+        number: "02",
+        title: "Compréhension scientifique",
+        body:
+          "Le cursus développe la compréhension des facteurs physiques, sensoriels et de performance qui influencent l’expérience du cigare.",
+      },
+      {
+        number: "03",
+        title: "Pertinence hospitality",
+        body:
+          "Les niveaux professionnels relient les connaissances techniques aux décisions de service, à la constance et à l’expérience client.",
+      },
+      {
+        number: "04",
+        title: "Reconnaissance professionnelle",
+        body:
+          "Chaque étape rend la progression visible et offre aux apprenants engagés un cadre crédible de développement.",
+      },
+    ],
+
+    finalEyebrow: "Commencez votre parcours",
+    finalTitle: "Commencez au bon niveau. Progressez ensuite.",
+    finalBody:
+      "Découvrez le parcours ICSI ou échangez avec nous sur le niveau le mieux adapté à votre expérience et à vos objectifs professionnels.",
+    finalPrimary: "Discuter de mon parcours",
+    finalSecondary: "Contacter l’ICSI",
+
+    levelCta: "Se renseigner sur ce niveau",
+    outcomeLabel: "Objectif de progression",
+    seoTitle: "Formation Professionnelle ICSI | Parcours Niveau I–IV",
     seoDescription:
-      "L’ICSI accompagne les futurs professionnels du cigare, les détaillants, lounges, groupes hôteliers et aficionados grâce à des parcours de certification structurés, à l’implémentation du Cigar Peak-Flavor System et à des solutions avancées de maîtrise du cigare.",
+      "Découvrez le parcours de formation professionnelle ICSI en quatre niveaux, des fondamentaux du cigare jusqu’à la maîtrise professionnelle avancée.",
   },
+
   de: {
-    kicker: "Lernpfade",
-    title: "Lernpfade & professionelle Lösungen",
+    kicker: "ICSI Berufsausbildung",
+    titleLine1: "Expertise aufbauen.",
+    titleLine2: "Kompetenz sichtbar machen.",
+    titleLine3: "Beruflich weiterentwickeln.",
     intro:
-      "ICSI richtet sich an drei unterschiedliche Zielgruppen in der modernen Zigarrenwelt: angehende Fachkräfte, die eine Karriere aufbauen möchten, Fachhändler und Lounges, die sich für Wachstum modernisieren wollen, sowie engagierte Aficionados, die ein höheres Maß an persönlicher Meisterschaft anstreben. Jeder Weg basiert auf dem wissenschaftlichen Cigar Peak-Flavor System® und wurde entwickelt, um in einer zunehmend komplexen globalen Blend-Landschaft mehr Struktur, Sicherheit und Performance zu schaffen.",
-    distinction:
-      "ICSI ist weltweit das erste Institut, das Zertifizierungen anbietet, die Sensory Science, Quantifizierung von Aromen, datenbasierte Zigarrenklassifikation und digitale Tools wie Apps, Analytik und geführte Verkostungssysteme integrieren. ICSI arbeitet nach dem Qualitätsrahmen ISO/IEC 17024.",
-    individualsTitle: "Für angehende Zigarrenprofis",
-    individualsEyebrow: "Professionelle Ausbildung",
-    individualsBody:
-      "Bauen Sie eine Karriere auf, die auf Präzision, Struktur und Glaubwürdigkeit basiert. Die Zertifizierungsprogramme von ICSI vermitteln ein fundiertes Verständnis von Zigarrenkonstruktion, Verbrennungsdynamik, Feuchtigkeitsverhalten und Aromenentwicklung; und bereiten Kandidaten auf Aufgaben in Premium-Lounges, im Fachhandel und in der Luxushotellerie vor.",
-    businessTitle: "Für Fachhändler, Lounges & Hotelgruppen",
-    businessEyebrow: "Business Modernisierung",
-    businessBody:
-      "Modernisieren Sie Ihr Zigarrenangebot und schaffen Sie konsistente, hochwertige Kundenerlebnisse. ICSI bietet die Implementierung und Zertifizierung des Cigar Peak-Flavor System® an, damit Unternehmen ihren Service standardisieren, ihre Performance optimieren, Loyalität stärken und Zigarrenumsätze mit größerer Sicherheit steigern können.",
-    aficionadosTitle: "Für Aficionados & Sammler",
-    aficionadosEyebrow: "Private Meisterschaft",
-    aficionadosBody:
-      "Erreichen Sie ein anspruchsvolleres Niveau persönlicher Zigarrenmeisterschaft. Der fortgeschrittene private Weg von ICSI unterstützt engagierte Aficionados und Sammler, die ein präziseres Verständnis von Kalibrierung, Reifung, Performance-Staging und Peak-Flavor-Entfaltung über ein breiteres Spektrum an Blends hinweg anstreben.",
-    bridge:
-      "Ob beim Aufbau einer professionellen Karriere, bei der Stärkung eines Zigarrengeschäfts oder bei der Vertiefung persönlicher Meisterschaft—ICSI liefert die Struktur, die nötig ist, um von Intuition zu kalibrierter Performance zu gelangen.",
-    pathwaysTitle: "Zertifizierungswege",
-    pathwaysEyebrow: "Programme",
-    pathwaysLead:
-      "Vier zugeschnittene Wege für berufliche Entwicklung, Branchenmodernisierung und fortgeschrittene persönliche Optimierung.",
-    systemTitle: "Cigar Peak-Flavor System® Implementierung & Zertifizierung",
-    systemBody:
-      "Eine umfassende Implementierungs- und Zertifizierungslösung für Fachhändler, Lounges und Hospitality-Umgebungen, die ihre Abläufe modernisieren, die Zigarrenperformance standardisieren und das Kundenerlebnis aufwerten möchten.",
-    systemCta: "Partnerschaft anfragen",
-    seoTitle: "Berufliche Wege & Branchenlösungen | ICSI",
+      "Ein strukturierter vierstufiger Bildungsweg, der von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft führt — mit Wissenschaft, Service und disziplinierter Entscheidungsfindung im Mittelpunkt.",
+    heroCta: "Die vier Stufen entdecken",
+
+    pathwayEyebrow: "Der ICSI Bildungsweg",
+    pathwayTitle: "Ein Weg. Vier Stufen der Meisterschaft.",
+    pathwayLead:
+      "Jede Stufe baut auf der vorherigen auf. Beginnen Sie mit den Grundlagen, entwickeln Sie professionelle Servicekompetenz, vertiefen Sie Ihr technisches Wissen und arbeiten Sie auf fortgeschrittene Meisterschaft hin.",
+
+    levels: [
+      {
+        number: "I",
+        label: "GRUNDLAGEN",
+        title: "ICSI Level I",
+        audience: "Für Aficionados, angehende Fachkräfte und Neueinsteiger",
+        body:
+          "Schaffen Sie eine fundierte Basis für Zigarrenwissen, Pflege und Wertschätzung. Level I vermittelt die zentralen Prinzipien, um Zigarren mit mehr Sicherheit und Konsequenz zu verstehen.",
+        outcome: "Sprache, Gewohnheiten und Grundwissen für die weitere Ausbildung aufbauen.",
+      },
+      {
+        number: "II",
+        label: "PROFESSIONELL",
+        title: "ICSI Level II",
+        audience: "Für Hospitality-, Lounge- und Retail-Profis",
+        body:
+          "Übertragen Sie Wissen in professionelle Praxis. Level II entwickelt das praktische und technische Verständnis für fundierte Empfehlungen, Lagerentscheidungen und ein konsistentes Gästeerlebnis.",
+        outcome: "Vom persönlichen Wissen zu strukturierter professioneller Praxis übergehen.",
+      },
+      {
+        number: "III",
+        label: "FORTGESCHRITTEN",
+        title: "ICSI Level III",
+        audience: "Für erfahrene Zigarren- und Hospitality-Profis",
+        body:
+          "Vertiefen Sie technische und diagnostische Fähigkeiten in den Bereichen Blend-Struktur, Performance, Lagerung und Service. Level III entwickelt das analytische Urteilsvermögen für anspruchsvollere professionelle Umgebungen.",
+        outcome: "Fortgeschrittenes diagnostisches Denken und höheres Serviceurteil entwickeln.",
+      },
+      {
+        number: "IV",
+        label: "MEISTERSCHAFT",
+        title: "ICSI Level IV",
+        audience: "Für erfahrene Fachkräfte mit dem Ziel fortgeschrittener Meisterschaft",
+        body:
+          "Die höchste Stufe des ICSI Bildungswegs. Level IV verbindet wissenschaftliches Verständnis, professionelles Urteilsvermögen und fortgeschrittene Anwendung zu einem umfassenden Standard der Expertise.",
+        outcome: "Integrierte Meisterschaft in Wissen, Analyse und professioneller Anwendung nachweisen.",
+      },
+    ],
+
+    chooseEyebrow: "Wo sollte ich beginnen?",
+    chooseTitle: "Wählen Sie die Stufe, die zu Ihrer heutigen Erfahrung passt.",
+    chooseBody:
+      "Sie müssen Ihren Einstieg nicht allein bestimmen. Teilen Sie uns Ihren Hintergrund und Ihr Ziel mit — persönliche Entwicklung, Hospitality, Retail oder professionelle Spezialisierung — und ICSI empfiehlt Ihnen die passende Einstiegsstufe.",
+    chooseCta: "Meine Einstiegsstufe finden",
+
+    standardEyebrow: "Der ICSI Standard",
+    standardTitle: "Ausbildung für die professionelle Anwendung.",
+    standardLead:
+      "ICSI verbindet strukturierte Ausbildung mit wissenschaftlichem Denken und Hospitality-Praxis, damit Wissen konsequent angewendet — und nicht nur erinnert — werden kann.",
+    pillars: [
+      {
+        number: "01",
+        title: "Strukturierte Entwicklung",
+        body:
+          "Eine klare vierstufige Architektur schafft einen definierten Weg von den Grundlagen bis zur fortgeschrittenen Meisterschaft.",
+      },
+      {
+        number: "02",
+        title: "Wissenschaftliches Verständnis",
+        body:
+          "Das Curriculum entwickelt ein Verständnis der physischen, sensorischen und leistungsbezogenen Faktoren, die das Zigarrenerlebnis beeinflussen.",
+      },
+      {
+        number: "03",
+        title: "Hospitality-Relevanz",
+        body:
+          "Die professionellen Stufen verbinden technisches Wissen mit realen Serviceentscheidungen, Konsistenz und Gästeerlebnis.",
+      },
+      {
+        number: "04",
+        title: "Professionelle Anerkennung",
+        body:
+          "Jede Stufe macht Entwicklung sichtbar und bietet engagierten Lernenden einen glaubwürdigen Rahmen für ihre Weiterentwicklung.",
+      },
+    ],
+
+    finalEyebrow: "Beginnen Sie Ihren Weg",
+    finalTitle: "Auf der richtigen Stufe beginnen. Darauf aufbauen.",
+    finalBody:
+      "Entdecken Sie den ICSI Bildungsweg oder sprechen Sie mit uns über die Stufe, die am besten zu Ihrer Erfahrung und Ihren beruflichen Zielen passt.",
+    finalPrimary: "Meinen Bildungsweg besprechen",
+    finalSecondary: "ICSI kontaktieren",
+
+    levelCta: "Diese Stufe anfragen",
+    outcomeLabel: "Entwicklungsziel",
+    seoTitle: "ICSI Berufsausbildung | Level I–IV Bildungsweg",
     seoDescription:
-      "ICSI unterstützt angehende Zigarrenprofis, Fachhändler, Lounges, Hotelgruppen und Aficionados mit strukturierten Zertifizierungswegen, Cigar Peak-Flavor System Implementierung und fortgeschrittenen Lösungen zur Zigarrenmeisterschaft.",
+      "Entdecken Sie den vierstufigen ICSI Bildungsweg von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft.",
   },
 };
 
-function AudienceSection({ number, eyebrow, title, body }) {
+function LevelCard({ level, c, lang }) {
   return (
-    <section className="coursesEditorialSection">
-      <div className="coursesSectionMeta">
-        <span className="coursesSectionNum">{number}</span>
-        <span className="coursesSectionEyebrow">{eyebrow}</span>
+    <article className={`courseLevelCard level-${level.number.toLowerCase()}`}>
+      <div className="courseLevelTop">
+        <div className="courseLevelNumber">{level.number}</div>
+        <div className="courseLevelMeta">
+          <span className="courseLevelLabel">{level.label}</span>
+          <span className="courseLevelAudience">{level.audience}</span>
+        </div>
       </div>
 
-      <div className="coursesSectionDivider" />
+      <div className="courseLevelBody">
+        <h3>{level.title}</h3>
+        <p>{level.body}</p>
 
-      <div className="coursesSectionBody">
-        <h2 className="coursesSectionTitle">{title}</h2>
-        <p className="coursesSectionText">{body}</p>
-      </div>
-    </section>
-  );
-}
-
-function ProgramItem({ image, alt, title, body, actions }) {
-  return (
-    <div className="coursesProgramItem">
-      <div className="coursesProgramMedia">
-        <Image
-          src={image}
-          alt={alt}
-          fill
-          sizes="(max-width: 900px) 100vw, 240px"
-          style={{ objectFit: "cover" }}
-        />
+        <div className="courseLevelOutcome">
+          <span>{c.outcomeLabel}</span>
+          <p>{level.outcome}</p>
+        </div>
       </div>
 
-      <div className="coursesProgramContent">
-        <h3 className="coursesProgramTitle">{title}</h3>
-        <p className="coursesProgramText">{body}</p>
-
-        <div className="coursesProgramActions">{actions}</div>
-      </div>
-    </div>
+      <Link
+        href={{ pathname: "/contact", query: { program: `level-${level.number.toLowerCase()}` } }}
+        locale={lang}
+        className="courseLevelCta"
+      >
+        <span>{c.levelCta}</span>
+        <span aria-hidden="true">→</span>
+      </Link>
+    </article>
   );
 }
 
 export default function Courses() {
   const { locale } = useRouter();
   const lang = (locale || "en").toLowerCase();
-  const c = COPY[lang] || COPY.en;
-  const p = pageCopy[lang] || pageCopy.en;
+  const c = pageCopy[lang] || pageCopy.en;
 
   return (
     <Layout>
-      <Seo title={p.seoTitle} description={p.seoDescription} path="/courses" />
+      <Seo title={c.seoTitle} description={c.seoDescription} path="/courses" />
 
       <Head>
         <script
@@ -169,11 +370,12 @@ export default function Courses() {
               name: "International Cigar Sommelier Institute",
               url: "https://cigarsommelierinstitute.com",
               description:
-                "Professional cigar sommelier training, Peak-Flavor System implementation, and advanced cigar mastery based on the scientific Cigar Peak-Flavor System.",
+                "A structured four-level professional education pathway from foundational cigar knowledge to advanced professional mastery.",
               hasCourse: [
-                { "@type": "Course", name: "Certified Cigar Sommelier (CCS®)" },
-                { "@type": "Course", name: "Advanced Cigar Sommelier (ACS®)" },
-                { "@type": "Course", name: "Aficionado Master Class (AMC®)" },
+                { "@type": "Course", name: "ICSI Level I" },
+                { "@type": "Course", name: "ICSI Level II" },
+                { "@type": "Course", name: "ICSI Level III" },
+                { "@type": "Course", name: "ICSI Level IV" },
               ],
             }),
           }}
@@ -183,166 +385,137 @@ export default function Courses() {
       <div className={`coursesPage lang-${lang}`}>
         <section className="coursesHero">
           <div className="container coursesHeroInner">
-            <span className="coursesKicker">{p.kicker}</span>
-            <h1 className="coursesHeroTitle">{p.title}</h1>
-            <p className="coursesHeroLead">{p.intro}</p>
+            <div className="coursesHeroGrid">
+              <div className="coursesHeroMeta">
+                <span className="coursesEyebrow">{c.kicker}</span>
+                <span className="coursesHeroRule" aria-hidden="true" />
+              </div>
+
+              <div className="coursesHeroContent">
+                <h1>
+                  <span>{c.titleLine1}</span>
+                  <span>{c.titleLine2}</span>
+                  <em>{c.titleLine3}</em>
+                </h1>
+                <p>{c.intro}</p>
+
+                <a href="#levels" className="coursesPrimaryCta">
+                  <span>{c.heroCta}</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 
-        <main className="container coursesMain">
-          <section className="coursesStatement">
-            <div className="coursesStatementMeta">
-              <span className="coursesSectionEyebrow">ICSI Framework</span>
-            </div>
+        <section className="coursesProgressionBand" aria-label={c.pathwayTitle}>
+          <div className="container coursesProgressionInner">
+            {c.levels.map((level, index) => (
+              <div className="coursesProgressionStep" key={level.number}>
+                <span className="progressionNumber">{level.number}</span>
+                <span className="progressionLabel">{level.label}</span>
+                {index < c.levels.length - 1 && (
+                  <span className="progressionArrow" aria-hidden="true">→</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
 
-            <div className="coursesSectionDivider" />
+        <main>
+          <section className="coursesPathwayIntro">
+            <div className="container coursesEditorialGrid">
+              <div className="coursesSectionMeta">
+                <span className="coursesEyebrow crimson">{c.pathwayEyebrow}</span>
+                <span className="coursesSectionIndex">01</span>
+              </div>
 
-            <div className="coursesStatementBody">
-              <p className="coursesStatementText">{p.distinction}</p>
+              <div className="coursesSectionContent">
+                <h2>{c.pathwayTitle}</h2>
+                <p className="coursesSectionLead">{c.pathwayLead}</p>
+              </div>
             </div>
           </section>
 
-          <AudienceSection
-            number="01"
-            eyebrow={p.individualsEyebrow}
-            title={p.individualsTitle}
-            body={p.individualsBody}
-          />
-
-          <AudienceSection
-            number="02"
-            eyebrow={p.businessEyebrow}
-            title={p.businessTitle}
-            body={p.businessBody}
-          />
-
-          <AudienceSection
-            number="03"
-            eyebrow={p.aficionadosEyebrow}
-            title={p.aficionadosTitle}
-            body={p.aficionadosBody}
-          />
-
-          <section className="coursesBridge">
-            <p>{p.bridge}</p>
+          <section id="levels" className="coursesLevelsSection">
+            <div className="container">
+              <div className="coursesLevelGrid">
+                {c.levels.map((level) => (
+                  <LevelCard key={level.number} level={level} c={c} lang={lang} />
+                ))}
+              </div>
+            </div>
           </section>
 
-          <section className="coursesProgramsBlock">
-            <div className="coursesProgramsMeta">
-              <span className="coursesSectionNum">04</span>
-              <span className="coursesSectionEyebrow">{p.pathwaysEyebrow}</span>
+          <section className="coursesChooser">
+            <div className="container coursesChooserGrid">
+              <div>
+                <span className="coursesEyebrow gold">{c.chooseEyebrow}</span>
+                <h2>{c.chooseTitle}</h2>
+              </div>
+
+              <div className="coursesChooserBody">
+                <p>{c.chooseBody}</p>
+                <Link
+                  href={{ pathname: "/contact", query: { inquiry: "education-pathway" } }}
+                  locale={lang}
+                  className="coursesLightCta"
+                >
+                  <span>{c.chooseCta}</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
+          </section>
 
-            <div className="coursesSectionDivider" />
+          <section className="coursesStandard">
+            <div className="container coursesEditorialGrid">
+              <div className="coursesSectionMeta">
+                <span className="coursesEyebrow crimson">{c.standardEyebrow}</span>
+                <span className="coursesSectionIndex">02</span>
+              </div>
 
-            <div className="coursesProgramsBody">
-              <h2 className="coursesSectionTitle">{p.pathwaysTitle}</h2>
-              <p className="coursesSectionText">{p.pathwaysLead}</p>
+              <div className="coursesSectionContent">
+                <h2>{c.standardTitle}</h2>
+                <p className="coursesSectionLead">{c.standardLead}</p>
 
-              <div className="coursesProgramList">
-                <ProgramItem
-                  image="/img/CCS_logo.png"
-                  alt="Certified Cigar Sommelier logo"
-                  title={c.ccs_title}
-                  body={c.ccs_blurb}
-                  actions={
-                    <>
-                      <Link
-                        href={{ pathname: "/contact", query: { program: "ccs" } }}
-                        locale={lang}
-                        className="coursesTextCta"
-                      >
-                        <span>{c.apply}</span>
-                        <span className="coursesArrow">→</span>
-                      </Link>
+                <div className="coursesPillars">
+                  {c.pillars.map((pillar) => (
+                    <article className="coursesPillar" key={pillar.number}>
+                      <span>{pillar.number}</span>
+                      <h3>{pillar.title}</h3>
+                      <p>{pillar.body}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
 
-                      <a
-                        className="coursesTextCta secondary"
-                        href="/brochures/CCS_Certified_Cigar_Sommelier_Brochure.pdf"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <span>{c.download}</span>
-                        <span className="coursesArrow">→</span>
-                      </a>
-                    </>
-                  }
-                />
+          <section className="coursesFinalCta">
+            <div className="container coursesFinalGrid">
+              <div>
+                <span className="coursesEyebrow light">{c.finalEyebrow}</span>
+                <h2>{c.finalTitle}</h2>
+              </div>
 
-                <ProgramItem
-                  image="/img/ACS_logo.png"
-                  alt="Advanced Cigar Sommelier logo"
-                  title={c.acs_title}
-                  body={c.acs_blurb}
-                  actions={
-                    <>
-                      <Link
-                        href={{ pathname: "/contact", query: { program: "acs" } }}
-                        locale={lang}
-                        className="coursesTextCta"
-                      >
-                        <span>{c.apply}</span>
-                        <span className="coursesArrow">→</span>
-                      </Link>
+              <div className="coursesFinalBody">
+                <p>{c.finalBody}</p>
+                <div className="coursesFinalActions">
+                  <Link
+                    href={{ pathname: "/contact", query: { inquiry: "education-pathway" } }}
+                    locale={lang}
+                    className="coursesFinalPrimary"
+                  >
+                    <span>{c.finalPrimary}</span>
+                    <span aria-hidden="true">→</span>
+                  </Link>
 
-                      <a
-                        className="coursesTextCta secondary"
-                        href="/brochures/ACS_Advanced_Cigar_Sommelier_Brochure.pdf"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <span>{c.download}</span>
-                        <span className="coursesArrow">→</span>
-                      </a>
-                    </>
-                  }
-                />
-
-                <ProgramItem
-                  image="/img/CPFS_logo.png"
-                  alt="Cigar Peak-Flavor System implementation and certification logo"
-                  title={p.systemTitle}
-                  body={p.systemBody}
-                  actions={
-                    <Link
-                      href={{ pathname: "/contact", query: { inquiry: "system-certification" } }}
-                      locale={lang}
-                      className="coursesTextCta"
-                    >
-                      <span>{p.systemCta}</span>
-                      <span className="coursesArrow">→</span>
-                    </Link>
-                  }
-                />
-
-                <ProgramItem
-                  image="/img/AMC_logo.png"
-                  alt="Aficionado Master Class logo"
-                  title={c.amc_title}
-                  body={c.amc_blurb}
-                  actions={
-                    <>
-                      <Link
-                        href={{ pathname: "/contact", query: { program: "amc" } }}
-                        locale={lang}
-                        className="coursesTextCta"
-                      >
-                        <span>{c.request_invite}</span>
-                        <span className="coursesArrow">→</span>
-                      </Link>
-
-                      <a
-                        className="coursesTextCta secondary"
-                        href="/brochures/AMC_Aficionado_Master_Class_Brochure_v2.pdf"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <span>{c.download}</span>
-                        <span className="coursesArrow">→</span>
-                      </a>
-                    </>
-                  }
-                />
+                  <Link href="/contact" locale={lang} className="coursesFinalSecondary">
+                    <span>{c.finalSecondary}</span>
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </section>
@@ -350,415 +523,660 @@ export default function Courses() {
       </div>
 
       <style jsx global>{`
-        /* =========================================================
-           COURSES PAGE ONLY
-           Global scope is intentional to neutralize repo-level .section,
-           .card, .btn, .lead, h1 and h2 styling conflicts.
-        ========================================================= */
-
         .coursesPage {
-          background: #fff;
-          color: #121214;
+          --ivory: #faf4e8;
+          --ink: #16161f;
+          --crimson: #c0242f;
+          --bordeaux: #601818;
+          --gold: #c8a24a;
+          --light-gold: #e4cb8e;
+          background: var(--ivory);
+          color: var(--ink);
         }
 
         .coursesPage .coursesHero {
-          margin: 0;
-          padding: 0;
-          background: #fff;
-          border: 0;
+          background: var(--ivory);
+          border-top: 1px solid rgba(22, 22, 31, 0.1);
         }
 
         .coursesPage .coursesHeroInner {
-          padding-top: 60px;
-          padding-bottom: 82px;
+          padding-top: clamp(56px, 7vw, 105px);
+          padding-bottom: clamp(70px, 9vw, 130px);
         }
 
-        .coursesPage .coursesKicker {
-          display: block;
-          margin: 0 0 22px;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.68rem;
-          line-height: 1;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          font-weight: 500;
-          opacity: 0.42;
-        }
-
-        .coursesPage .coursesHeroTitle {
-          margin: 0 0 42px;
-          max-width: 14ch;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(3rem, 5.2vw, 5.4rem);
-          line-height: 0.98;
-          letter-spacing: -0.055em;
-          font-weight: 400;
-        }
-
-        .coursesPage .coursesHeroLead {
-          margin: 0;
-          max-width: 78ch;
-          padding-left: max(0px, 33%);
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-          line-height: 1.72;
-          font-weight: 300;
-          opacity: 0.72;
-        }
-
-        .coursesPage.lang-fr .coursesHeroTitle,
-        .coursesPage.lang-de .coursesHeroTitle {
-          max-width: 18ch;
-          font-size: clamp(2.55rem, 4.3vw, 4.65rem);
-        }
-
-        .coursesPage.lang-fr .coursesHeroLead,
-        .coursesPage.lang-de .coursesHeroLead {
-          max-width: 88ch;
-          font-size: clamp(0.98rem, 1.18vw, 1.12rem);
-          line-height: 1.66;
-        }
-
-        .coursesPage .coursesMain {
-          padding-bottom: 100px;
-        }
-
-        .coursesPage .coursesStatement,
-        .coursesPage .coursesEditorialSection,
-        .coursesPage .coursesProgramsBlock {
+        .coursesPage .coursesHeroGrid {
           display: grid;
-          grid-template-columns: 220px 1px minmax(0, 1fr);
-          column-gap: 72px;
-          padding: 58px 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          grid-template-columns: minmax(180px, 0.32fr) minmax(0, 1fr);
+          gap: clamp(48px, 7vw, 110px);
+          align-items: start;
         }
 
-        .coursesPage .coursesStatementMeta,
-        .coursesPage .coursesSectionMeta,
-        .coursesPage .coursesProgramsMeta {
-          padding-top: 2px;
+        .coursesPage .coursesHeroMeta {
+          padding-top: 12px;
         }
 
-        .coursesPage .coursesStatementNum,
-        .coursesPage .coursesSectionNum {
+        .coursesPage .coursesEyebrow {
           display: block;
-          margin: 0 0 24px;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(1.85rem, 2.4vw, 2.35rem);
-          line-height: 1;
-          letter-spacing: -0.04em;
-          font-weight: 300;
-          opacity: 0.9;
-        }
-
-        .coursesPage .coursesSectionEyebrow {
-          display: block;
-          max-width: 24ch;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.64rem;
-          line-height: 1.45;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          font-weight: 600;
-          opacity: 0.58;
-        }
-
-        .coursesPage .coursesSectionDivider {
-          width: 1px;
-          min-height: 220px;
-          background: rgba(0, 0, 0, 0.08);
-        }
-
-        .coursesPage .coursesStatementBody,
-        .coursesPage .coursesSectionBody,
-        .coursesPage .coursesProgramsBody {
-          max-width: 820px;
-          padding-top: 1px;
-        }
-
-        .coursesPage .coursesSectionTitle {
-          margin: 0 0 24px;
-          max-width: 18ch;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(1.85rem, 2.35vw, 2.55rem);
-          line-height: 1.08;
-          letter-spacing: -0.052em;
-          font-weight: 400;
-        }
-
-        .coursesPage .coursesSectionText,
-        .coursesPage .coursesStatementText {
-          margin: 0;
-          max-width: 76ch;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.98rem;
-          line-height: 1.78;
-          font-weight: 300;
-          opacity: 0.75;
-        }
-
-        .coursesPage .coursesBridge {
-          padding: 46px 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .coursesPage .coursesBridge p {
-          margin: 0;
-          max-width: 72ch;
-          padding-left: max(0px, 33%);
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: clamp(1.05rem, 1.4vw, 1.22rem);
-          line-height: 1.72;
-          font-weight: 300;
-          opacity: 0.72;
-        }
-
-        .coursesPage .coursesProgramList {
-          margin-top: 40px;
-          display: flex;
-          flex-direction: column;
-          border-top: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        .coursesPage .coursesProgramItem {
-          display: grid;
-          grid-template-columns: 150px minmax(0, 1fr);
-          gap: 34px;
-          padding: 30px 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        .coursesPage .coursesProgramMedia {
-          position: relative;
-          width: 150px;
-          height: 150px;
-          overflow: hidden;
-          background: #f3f1ed;
-        }
-
-        .coursesPage .coursesProgramContent {
-          min-width: 0;
-        }
-
-        .coursesPage .coursesProgramTitle {
-          margin: 0 0 13px;
-          max-width: 28ch;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(1.35rem, 1.8vw, 1.85rem);
-          line-height: 1.12;
-          letter-spacing: -0.04em;
-          font-weight: 400;
-        }
-
-        .coursesPage .coursesProgramText {
-          margin: 0;
-          max-width: 74ch;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.94rem;
-          line-height: 1.7;
-          font-weight: 300;
-          opacity: 0.74;
-        }
-
-        .coursesPage .coursesProgramActions {
-          margin-top: 22px;
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 20px 28px;
-        }
-
-        .coursesPage .coursesTextCta {
-          display: inline-flex;
-          align-items: center;
-          gap: 18px;
-          width: fit-content;
-          min-height: 0;
-          padding: 0 0 7px;
-          border: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.42);
-          border-radius: 0;
-          background: transparent;
-          box-shadow: none;
-          color: #121214;
-          text-decoration: none;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
           font-size: 0.68rem;
-          line-height: 1;
-          letter-spacing: 0.18em;
+          line-height: 1.4;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           font-weight: 700;
-          transition: opacity 0.2s ease;
+          color: var(--ink);
         }
 
-        .coursesPage .coursesTextCta.secondary {
-          opacity: 0.58;
+        .coursesPage .coursesEyebrow.crimson {
+          color: var(--crimson);
         }
 
-        .coursesPage .coursesTextCta:hover {
-          opacity: 0.45;
+        .coursesPage .coursesEyebrow.gold {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .coursesEyebrow.light {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .coursesHeroRule {
+          display: block;
+          width: 56px;
+          height: 1px;
+          margin-top: 26px;
+          background: var(--crimson);
+        }
+
+        .coursesPage .coursesHeroContent h1,
+        .coursesPage .coursesSectionContent h2,
+        .coursesPage .coursesChooser h2,
+        .coursesPage .coursesFinalCta h2,
+        .coursesPage .courseLevelBody h3,
+        .coursesPage .coursesPillar h3 {
+          font-family: "Playfair Display", Georgia, serif;
+          font-weight: 400;
+        }
+
+        .coursesPage .coursesHeroContent h1 {
+          margin: 0;
+          max-width: 12ch;
+          font-size: clamp(3.25rem, 6vw, 6.7rem);
+          line-height: 0.92;
+          letter-spacing: -0.055em;
+          color: var(--ink);
+        }
+
+        .coursesPage .coursesHeroContent h1 span,
+        .coursesPage .coursesHeroContent h1 em {
+          display: block;
+        }
+
+        .coursesPage .coursesHeroContent h1 em {
+          margin-top: 0.08em;
+          color: var(--bordeaux);
+          font-weight: 400;
+        }
+
+        .coursesPage .coursesHeroContent > p {
+          max-width: 760px;
+          margin: 42px 0 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: clamp(1rem, 1.25vw, 1.18rem);
+          line-height: 1.75;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.76);
+        }
+
+        .coursesPage .coursesPrimaryCta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 34px;
+          min-width: 300px;
+          margin-top: 36px;
+          padding: 18px 20px;
+          border: 1px solid var(--ink);
+          color: var(--ink);
           background: transparent;
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.7rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 700;
+          transition: background 0.2s ease, color 0.2s ease;
         }
 
-        .coursesPage .coursesArrow {
-          font-size: 1.28rem;
-          line-height: 0.7;
-          letter-spacing: 0;
+        .coursesPage .coursesPrimaryCta:hover {
+          background: var(--ink);
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesProgressionBand {
+          background: var(--ink);
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesProgressionInner {
+          min-height: 112px;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          align-items: stretch;
+        }
+
+        .coursesPage .coursesProgressionStep {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          padding: 28px 34px;
+          border-left: 1px solid rgba(250, 244, 232, 0.16);
+        }
+
+        .coursesPage .coursesProgressionStep:last-child {
+          border-right: 1px solid rgba(250, 244, 232, 0.16);
+        }
+
+        .coursesPage .progressionNumber {
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 2.2rem;
+          line-height: 1;
+          color: var(--light-gold);
+        }
+
+        .coursesPage .progressionLabel {
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.61rem;
+          line-height: 1.4;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          font-weight: 700;
+          color: rgba(250, 244, 232, 0.72);
+        }
+
+        .coursesPage .progressionArrow {
+          position: absolute;
+          right: -9px;
+          z-index: 2;
+          font-size: 1.25rem;
+          color: var(--gold);
+        }
+
+        .coursesPage .coursesPathwayIntro,
+        .coursesPage .coursesStandard {
+          padding: clamp(76px, 9vw, 130px) 0;
+        }
+
+        .coursesPage .coursesEditorialGrid {
+          display: grid;
+          grid-template-columns: minmax(170px, 0.3fr) minmax(0, 1fr);
+          gap: clamp(48px, 7vw, 110px);
+        }
+
+        .coursesPage .coursesSectionMeta {
+          position: relative;
+          padding-top: 8px;
+        }
+
+        .coursesPage .coursesSectionIndex {
+          display: block;
+          margin-top: 30px;
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 2rem;
+          color: var(--gold);
+        }
+
+        .coursesPage .coursesSectionContent h2,
+        .coursesPage .coursesChooser h2,
+        .coursesPage .coursesFinalCta h2 {
+          margin: 0;
+          max-width: 17ch;
+          font-size: clamp(2.35rem, 4.2vw, 4.8rem);
+          line-height: 0.98;
+          letter-spacing: -0.045em;
+        }
+
+        .coursesPage .coursesSectionLead {
+          max-width: 760px;
+          margin: 32px 0 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: clamp(1rem, 1.2vw, 1.14rem);
+          line-height: 1.75;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.74);
+        }
+
+        .coursesPage .coursesLevelsSection {
+          padding: 0 0 clamp(86px, 10vw, 145px);
+        }
+
+        .coursesPage .coursesLevelGrid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          border-top: 1px solid rgba(22, 22, 31, 0.18);
+          border-left: 1px solid rgba(22, 22, 31, 0.18);
+        }
+
+        .coursesPage .courseLevelCard {
+          min-height: 520px;
+          display: flex;
+          flex-direction: column;
+          padding: clamp(30px, 4vw, 54px);
+          border-right: 1px solid rgba(22, 22, 31, 0.18);
+          border-bottom: 1px solid rgba(22, 22, 31, 0.18);
+          background: rgba(250, 244, 232, 0.7);
+        }
+
+        .coursesPage .courseLevelCard.level-iv {
+          background: var(--bordeaux);
+          color: var(--ivory);
+        }
+
+        .coursesPage .courseLevelTop {
+          display: grid;
+          grid-template-columns: 78px 1fr;
+          gap: 22px;
+          align-items: start;
+        }
+
+        .coursesPage .courseLevelNumber {
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: clamp(3rem, 5vw, 5.2rem);
+          line-height: 0.85;
+          color: var(--gold);
+        }
+
+        .coursesPage .courseLevelLabel {
+          display: block;
+          margin-bottom: 14px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.62rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-weight: 800;
+          color: var(--crimson);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelLabel {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .courseLevelAudience {
+          display: block;
+          max-width: 36ch;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.78rem;
+          line-height: 1.55;
+          font-weight: 500;
+          color: rgba(22, 22, 31, 0.62);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelAudience {
+          color: rgba(250, 244, 232, 0.66);
+        }
+
+        .coursesPage .courseLevelBody {
+          margin-top: 52px;
+        }
+
+        .coursesPage .courseLevelBody h3 {
+          margin: 0;
+          font-size: clamp(2rem, 3vw, 3.35rem);
+          line-height: 1;
+          letter-spacing: -0.04em;
+        }
+
+        .coursesPage .courseLevelBody > p {
+          max-width: 58ch;
+          margin: 26px 0 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.96rem;
+          line-height: 1.72;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.72);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelBody > p {
+          color: rgba(250, 244, 232, 0.76);
+        }
+
+        .coursesPage .courseLevelOutcome {
+          margin-top: 32px;
+          padding-top: 22px;
+          border-top: 1px solid rgba(22, 22, 31, 0.14);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelOutcome {
+          border-color: rgba(250, 244, 232, 0.2);
+        }
+
+        .coursesPage .courseLevelOutcome > span {
+          display: block;
+          margin-bottom: 9px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.58rem;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          font-weight: 800;
+          color: var(--crimson);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelOutcome > span {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .courseLevelOutcome p {
+          margin: 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.86rem;
+          line-height: 1.65;
+          color: rgba(22, 22, 31, 0.68);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelOutcome p {
+          color: rgba(250, 244, 232, 0.72);
+        }
+
+        .coursesPage .courseLevelCta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          margin-top: auto;
+          padding-top: 34px;
+          color: var(--ink);
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 800;
+          border-top: 1px solid rgba(22, 22, 31, 0.2);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelCta {
+          color: var(--ivory);
+          border-color: rgba(250, 244, 232, 0.24);
+        }
+
+        .coursesPage .courseLevelCta:hover {
+          color: var(--crimson);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelCta:hover {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .coursesChooser {
+          padding: clamp(70px, 8vw, 115px) 0;
+          background: var(--ink);
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesChooserGrid,
+        .coursesPage .coursesFinalGrid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(340px, 0.65fr);
+          gap: clamp(60px, 9vw, 140px);
+          align-items: end;
+        }
+
+        .coursesPage .coursesChooser h2 {
+          margin-top: 24px;
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesChooserBody p,
+        .coursesPage .coursesFinalBody p {
+          margin: 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.98rem;
+          line-height: 1.75;
           font-weight: 300;
         }
 
-        @media (max-width: 1100px) {
-          .coursesPage .coursesStatement,
-          .coursesPage .coursesEditorialSection,
-          .coursesPage .coursesProgramsBlock {
-            grid-template-columns: 180px 1px minmax(0, 1fr);
-            column-gap: 48px;
+        .coursesPage .coursesChooserBody p {
+          color: rgba(250, 244, 232, 0.72);
+        }
+
+        .coursesPage .coursesLightCta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 32px;
+          min-width: 280px;
+          margin-top: 30px;
+          padding: 17px 0 10px;
+          border-bottom: 1px solid var(--light-gold);
+          color: var(--ivory);
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.68rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+
+        .coursesPage .coursesLightCta:hover {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .coursesPillars {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          margin-top: 66px;
+          border-top: 1px solid rgba(22, 22, 31, 0.16);
+          border-left: 1px solid rgba(22, 22, 31, 0.16);
+        }
+
+        .coursesPage .coursesPillar {
+          min-height: 260px;
+          padding: 30px;
+          border-right: 1px solid rgba(22, 22, 31, 0.16);
+          border-bottom: 1px solid rgba(22, 22, 31, 0.16);
+        }
+
+        .coursesPage .coursesPillar > span {
+          display: block;
+          margin-bottom: 42px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.16em;
+          font-weight: 800;
+          color: var(--crimson);
+        }
+
+        .coursesPage .coursesPillar h3 {
+          margin: 0;
+          font-size: clamp(1.45rem, 2.1vw, 2.05rem);
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+        }
+
+        .coursesPage .coursesPillar p {
+          margin: 18px 0 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.88rem;
+          line-height: 1.68;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.68);
+        }
+
+        .coursesPage .coursesFinalCta {
+          padding: clamp(72px, 9vw, 125px) 0;
+          background: var(--bordeaux);
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesFinalCta h2 {
+          margin-top: 24px;
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesFinalBody p {
+          color: rgba(250, 244, 232, 0.75);
+        }
+
+        .coursesPage .coursesFinalActions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 14px;
+          margin-top: 30px;
+        }
+
+        .coursesPage .coursesFinalPrimary,
+        .coursesPage .coursesFinalSecondary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 28px;
+          min-width: 220px;
+          padding: 16px 18px;
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.64rem;
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+          font-weight: 800;
+        }
+
+        .coursesPage .coursesFinalPrimary {
+          background: var(--ivory);
+          color: var(--bordeaux);
+          border: 1px solid var(--ivory);
+        }
+
+        .coursesPage .coursesFinalSecondary {
+          color: var(--ivory);
+          border: 1px solid rgba(250, 244, 232, 0.5);
+        }
+
+        .coursesPage .coursesFinalPrimary:hover {
+          background: var(--light-gold);
+          border-color: var(--light-gold);
+        }
+
+        .coursesPage .coursesFinalSecondary:hover {
+          border-color: var(--light-gold);
+          color: var(--light-gold);
+        }
+
+        @media (max-width: 1000px) {
+          .coursesPage .coursesHeroGrid,
+          .coursesPage .coursesEditorialGrid {
+            grid-template-columns: 150px minmax(0, 1fr);
+            gap: 48px;
           }
 
-          .coursesPage .coursesHeroLead,
-          .coursesPage .coursesBridge p {
-            padding-left: 0;
+          .coursesPage .coursesProgressionStep {
+            padding: 24px 20px;
+          }
+
+          .coursesPage .coursesChooserGrid,
+          .coursesPage .coursesFinalGrid {
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
           }
         }
 
-        @media (max-width: 820px) {
-          .coursesPage .coursesHeroInner {
-            padding-top: 46px;
-            padding-bottom: 62px;
-          }
-
-          .coursesPage .coursesHeroTitle,
-          .coursesPage.lang-fr .coursesHeroTitle,
-          .coursesPage.lang-de .coursesHeroTitle {
-            max-width: none;
-            font-size: clamp(2.45rem, 9vw, 3.85rem);
-          }
-
-          .coursesPage .coursesHeroLead,
-          .coursesPage.lang-fr .coursesHeroLead,
-          .coursesPage.lang-de .coursesHeroLead {
-            max-width: none;
-            font-size: 0.98rem;
-            line-height: 1.62;
-          }
-
-          .coursesPage .coursesStatement,
-          .coursesPage .coursesEditorialSection,
-          .coursesPage .coursesProgramsBlock {
+        @media (max-width: 760px) {
+          .coursesPage .coursesHeroGrid,
+          .coursesPage .coursesEditorialGrid,
+          .coursesPage .coursesChooserGrid,
+          .coursesPage .coursesFinalGrid {
             grid-template-columns: 1fr;
-            row-gap: 24px;
-            padding: 44px 0;
+            gap: 34px;
           }
 
-          .coursesPage .coursesSectionDivider {
-            display: none;
-          }
-
-          .coursesPage .coursesStatementNum,
-          .coursesPage .coursesSectionNum {
-            margin-bottom: 12px;
-          }
-
-          .coursesPage .coursesStatementBody,
-          .coursesPage .coursesSectionBody,
-          .coursesPage .coursesProgramsBody {
-            max-width: none;
-          }
-
-          .coursesPage .coursesSectionTitle {
-            max-width: none;
-          }
-
-          .coursesPage .coursesBridge p {
-            max-width: none;
-          }
-
-          .coursesPage .coursesProgramItem {
-            grid-template-columns: 120px minmax(0, 1fr);
-            gap: 24px;
-          }
-
-          .coursesPage .coursesProgramMedia {
-            width: 120px;
-            height: 120px;
-          }
-        }
-
-        @media (max-width: 560px) {
-          .coursesPage .coursesHeroInner {
-            padding-top: 40px;
-            padding-bottom: 52px;
-          }
-
-          .coursesPage .coursesHeroTitle,
-          .coursesPage.lang-fr .coursesHeroTitle,
-          .coursesPage.lang-de .coursesHeroTitle {
-            font-size: clamp(2.05rem, 10vw, 2.85rem);
-          }
-
-          .coursesPage .coursesHeroLead,
-          .coursesPage.lang-fr .coursesHeroLead,
-          .coursesPage.lang-de .coursesHeroLead {
-            font-size: 0.92rem;
-            line-height: 1.58;
-          }
-
-          .coursesPage .coursesStatement,
-          .coursesPage .coursesEditorialSection,
-          .coursesPage .coursesProgramsBlock {
-            padding: 38px 0;
-          }
-
-          .coursesPage .coursesSectionTitle {
-            font-size: clamp(1.65rem, 7vw, 2.15rem);
-          }
-
-          .coursesPage .coursesSectionText,
-          .coursesPage .coursesStatementText,
-          .coursesPage .coursesBridge p {
-            font-size: 0.92rem;
-            line-height: 1.68;
-          }
-
-          .coursesPage .coursesProgramItem {
-            grid-template-columns: 1fr;
+          .coursesPage .coursesHeroMeta {
+            display: flex;
+            align-items: center;
             gap: 20px;
           }
 
-          .coursesPage .coursesProgramMedia {
+          .coursesPage .coursesHeroRule {
+            width: 42px;
+            margin-top: 0;
+          }
+
+          .coursesPage .coursesHeroContent h1 {
+            max-width: 11ch;
+            font-size: clamp(2.8rem, 12vw, 4.6rem);
+          }
+
+          .coursesPage .coursesHeroContent > p {
+            margin-top: 30px;
+          }
+
+          .coursesPage .coursesProgressionInner {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          .coursesPage .coursesProgressionStep:nth-child(3) {
+            border-top: 1px solid rgba(250, 244, 232, 0.16);
+          }
+
+          .coursesPage .coursesProgressionStep:nth-child(4) {
+            border-top: 1px solid rgba(250, 244, 232, 0.16);
+          }
+
+          .coursesPage .progressionArrow {
+            display: none;
+          }
+
+          .coursesPage .coursesLevelGrid,
+          .coursesPage .coursesPillars {
+            grid-template-columns: 1fr;
+          }
+
+          .coursesPage .courseLevelCard {
+            min-height: 0;
+          }
+
+          .coursesPage .coursesChooserGrid,
+          .coursesPage .coursesFinalGrid {
+            align-items: start;
+          }
+        }
+
+        @media (max-width: 520px) {
+          .coursesPage .coursesHeroInner {
+            padding-top: 48px;
+            padding-bottom: 66px;
+          }
+
+          .coursesPage .coursesPrimaryCta,
+          .coursesPage .coursesLightCta {
             width: 100%;
-            height: auto;
-            aspect-ratio: 1 / 1;
-            max-width: 260px;
+            min-width: 0;
           }
 
-          .coursesPage .coursesProgramTitle {
-            font-size: clamp(1.35rem, 6.5vw, 1.9rem);
+          .coursesPage .coursesProgressionInner {
+            grid-template-columns: 1fr;
           }
 
-          .coursesPage .coursesProgramActions {
-            align-items: flex-start;
-            flex-direction: column;
-            gap: 14px;
+          .coursesPage .coursesProgressionStep {
+            border-right: 1px solid rgba(250, 244, 232, 0.16);
+            border-top: 1px solid rgba(250, 244, 232, 0.16);
           }
 
-          .coursesPage .coursesTextCta {
-            font-size: 0.62rem;
-            letter-spacing: 0.15em;
+          .coursesPage .coursesProgressionStep:first-child {
+            border-top: 0;
+          }
+
+          .coursesPage .courseLevelTop {
+            grid-template-columns: 58px 1fr;
+          }
+
+          .coursesPage .courseLevelBody {
+            margin-top: 38px;
+          }
+
+          .coursesPage .coursesFinalPrimary,
+          .coursesPage .coursesFinalSecondary {
+            width: 100%;
           }
         }
       `}</style>
     </Layout>
   );
 }
-
