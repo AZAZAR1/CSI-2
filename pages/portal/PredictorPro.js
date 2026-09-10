@@ -4,7 +4,7 @@ import Seo from "../../components/Seo";
 /* ============================================================
    SWISS INSTITUTIONAL DESIGN SYSTEM -- ICSI PREDICTOR PRO
    Color palette: Carbon / ICSI Crimson / warm gold
-   Typography: Cormorant Garamond (sections) + IBM Plex Mono (data)
+   Typography: Playfair Display (editorial headings) + Inter (interface) + system mono (technical metadata)
    Spacing: 8pt grid throughout
    ============================================================ */
 const DS = {
@@ -34,9 +34,9 @@ const DS = {
   textSecond:   "#b8b0a6",        // raised significantly (was #8a8278)
   textMuted:    "#9e968e",        // raised for on-screen legibility (was #8a8278)
   textMono:     "#f0ece6",        // matches new textPrimary
-  fontSerif:    "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
-  fontSans:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
-  fontMono:     "'Cormorant Garamond', 'Palatino Linotype', Georgia, serif",
+  fontSerif:    "'Playfair Display', Georgia, serif",
+  fontSans:     "Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+  fontMono:     "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace",
 };
 /* ---- Inline style objects ---- */
 const styles = {
@@ -383,8 +383,179 @@ const styles = {
    ============================================================ */
 const GlobalStyles = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap');
     *, *::before, *::after { box-sizing: border-box; }
+    .pp-brand-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      gap: 42px;
+      align-items: center;
+    }
+    .pp-brand-title {
+      margin: 0;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(38px, 5vw, 64px);
+      font-weight: 500;
+      line-height: 0.98;
+      letter-spacing: -0.035em;
+      color: #f0ece6;
+    }
+    .pp-brand-subtitle {
+      margin-top: 10px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 400;
+      line-height: 1.08;
+      color: #d6c28c;
+    }
+    .pp-brand-powered {
+      margin: 14px 0 0;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #b8b0a6;
+    }
+    .pp-brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pp-brand-logo {
+      display: block;
+      width: min(100%, 190px);
+      height: auto;
+      object-fit: contain;
+    }
+    .pp-proof-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-top: 24px;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 12px;
+      line-height: 1.3;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #9e968e;
+    }
+    .pp-proof-strip span {
+      position: relative;
+      padding-right: 18px;
+    }
+    .pp-proof-strip span:not(:last-child)::after {
+      content: "·";
+      position: absolute;
+      right: 0;
+      color: #b8922a;
+    }
+    .pp-proof-strip strong {
+      color: #d6c28c;
+      font-weight: 600;
+    }
+    .pp-workflow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin: 0 0 24px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: #101214;
+    }
+    .pp-workflow-step {
+      min-height: 72px;
+      padding: 14px 16px;
+      border-right: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+    }
+    .pp-workflow-step:last-child { border-right: none; }
+    .pp-workflow-num {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: .12em;
+      color: #b8922a;
+    }
+    .pp-workflow-label {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 600;
+      color: #e9e2d8;
+    }
+    .pp-section-helper {
+      margin: -10px 0 20px;
+      max-width: 72ch;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #9e968e;
+    }
+    .pp-guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .pp-guide-grid > div {
+      border-top: 1px solid rgba(184,146,42,.25);
+      padding-top: 12px;
+    }
+    .pp-guide-grid strong {
+      display: block;
+      margin-bottom: 6px;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+      color: #f0ece6;
+    }
+    .pp-guide-grid span {
+      display: block;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #9e968e;
+    }
+    .pp-guide-note {
+      margin: 16px 0 0;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 11px;
+      line-height: 1.5;
+      color: #807970;
+    }
+    .pp-analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .pp-analysis-card {
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: #0f1113;
+    }
+    .pp-analysis-card > span {
+      display: block;
+      margin-bottom: 18px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 10px;
+      letter-spacing: .13em;
+      color: #b8922a;
+    }
+    .pp-analysis-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #efe8dc;
+    }
+    .pp-analysis-card p {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 11px;
+      line-height: 1.5;
+      color: #928a82;
+    }
+
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50%       { opacity: 0.35; }
@@ -434,7 +605,7 @@ const GlobalStyles = () => (
       min-width: max-content;
     }
     .pp-section-label {
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 17px;
       font-weight: 600;
       letter-spacing: 0.24em;
@@ -482,7 +653,7 @@ const GlobalStyles = () => (
     }
     .pp-output-card-title {
       position: relative;
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 27px;
       font-weight: 600;
       letter-spacing: 0.055em;
@@ -509,7 +680,7 @@ const GlobalStyles = () => (
       padding-bottom: 0;
     }
     .pp-output-row-label {
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 16px;
       font-weight: 500;
       letter-spacing: 0.14em;
@@ -521,7 +692,7 @@ const GlobalStyles = () => (
     .pp-output-row-value {
       border-left: 1px solid rgba(255,255,255,0.12);
       padding-left: 26px;
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 18px;
       font-weight: 500;
       color: #e9e2d8;
@@ -589,7 +760,7 @@ const GlobalStyles = () => (
       }
     }
     .pp-rh-value {
-      font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 42px;
       font-weight: 600;
       color: #f0ece6;
@@ -600,10 +771,49 @@ const GlobalStyles = () => (
     .pp-sweep {
       animation: sweep 0.6s ease both;
     }
+    @media (max-width: 860px) {
+      .pp-brand-header {
+        grid-template-columns: 1fr;
+      }
+      .pp-brand-logo-wrap {
+        justify-content: flex-start;
+      }
+      .pp-brand-logo {
+        width: 150px;
+      }
+      .pp-workflow {
+        grid-template-columns: 1fr 1fr;
+      }
+      .pp-workflow-step {
+        border-bottom: 1px solid rgba(255,255,255,.08);
+      }
+      .pp-guide-grid {
+        grid-template-columns: 1fr;
+      }
+      .pp-analysis-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
     @media (max-width: 760px) {
       .pp-input,
       .pp-select {
         font-size: 18px !important;
+      }
+    }
+    @media (max-width: 520px) {
+      .pp-workflow,
+      .pp-analysis-grid {
+        grid-template-columns: 1fr;
+      }
+      .pp-proof-strip {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .pp-proof-strip span {
+        padding-right: 0;
+      }
+      .pp-proof-strip span::after {
+        display: none;
       }
     }
     /* Scrollbar */
@@ -1300,7 +1510,7 @@ export default function PredictorPage() {
     setErr("");
     if (!isAuthorizedUser) { setErr("Validate your registered email address first."); return; }
     if (!hasProAccess) { setErr("Pro access not enabled for this account."); return; }
-    if (false) { setErr("Select or enter blend-structure parameters before running Predictor Pro."); return; }
+    if (false) { setErr("Select or enter blend-structure parameters before running PredictorPro."); return; }
     setLoadingPredict(true); setResult(null); setTastingCard(null); setPairingCard(null); setSimilarBlends(null); setStructuralSnapshot(buildPayload());
     setPredictStep("Initializing combustion model...");
     const cleanedBrand = cleanText(form.brand), cleanedLine = cleanText(form.line);
@@ -1352,18 +1562,54 @@ export default function PredictorPage() {
 
   return (
     <Layout>
-      <Seo title="Predictor Pro | ICSI" path="/portal/predictorpro" />
+      <Seo title="PredictorPro® | Intelligent Hospitality Application | ICSI" path="/portal/predictorpro" />
       <GlobalStyles />
       <div style={styles.page}>
         <div style={styles.container}>
           {/* ── PAGE HEADER ── */}
-          <div style={styles.pageHeader}>
-            <div style={styles.engineBadge}>
-              <span style={styles.dotActive} />
-              CPFS Engine v4.8 Calibrated
+          <div className="pp-brand-header" style={styles.pageHeader}>
+            <div className="pp-brand-header-copy">
+              <div style={styles.engineBadge}>
+                <span style={styles.dotActive} />
+                Powered by CPFS®
+              </div>
+
+              <h1 className="pp-brand-title">PREDICTORPRO®</h1>
+              <div className="pp-brand-subtitle">Intelligent Hospitality Application</div>
+              <p className="pp-brand-powered">
+                Powered by the Cigar Peak-Flavor System®
+              </p>
+
+              <div className="pp-proof-strip">
+                <span><strong>2,400+</strong> live blend records</span>
+                <span>Updated monthly</span>
+                <span>Venue-aware intelligence</span>
+              </div>
             </div>
-            <h1 style={styles.h1}>PredictorPro Enterprise Application</h1>
-            <p style={styles.subtitle}>Cigar Peak-Flavour System</p>
+
+            <div className="pp-brand-logo-wrap">
+              <img
+                src="/img/CPFS.png"
+                alt="Cigar Peak-Flavor System®"
+                className="pp-brand-logo"
+              />
+            </div>
+          </div>
+
+          {/* ── WORKFLOW ── */}
+          <div className="pp-workflow">
+            {[
+              ["01", "Your Access"],
+              ["02", "Select Your Cigar"],
+              ["03", "Review Blend Profile"],
+              ["04", "Choose Your Analysis"],
+              ["05", "Results"],
+            ].map(([num, label]) => (
+              <div className="pp-workflow-step" key={num}>
+                <span className="pp-workflow-num">{num}</span>
+                <span className="pp-workflow-label">{label}</span>
+              </div>
+            ))}
           </div>
 
           {/* ── COLLAPSIBLE METHODOLOGY NOTICE ── */}
@@ -1387,40 +1633,30 @@ export default function PredictorPage() {
                 textAlign: "left",
               }}
             >
-              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>Instructions</span>
+              <span style={{ ...styles.sectionLabel, marginBottom: 0 }}>How PredictorPro works</span>
               <span style={{ ...styles.dataLabel, marginBottom: 0 }}>
-                {instructionsOpen ? "Collapse" : "View Instructions"} {instructionsOpen ? "-" : "+"}
+                {instructionsOpen ? "Hide" : "View guide"} {instructionsOpen ? "−" : "+"}
               </span>
             </button>
             {instructionsOpen && (
-              <p className="pp-instructions" style={{ marginTop: 14 }}>
-                Predictor Pro is available exclusively to approved subscribers. Validate your registered
-                email address using the Check User control. In the Blend Lookup module, enter the Brand
-                and Line identifiers, then initiate the Lookup Blend procedure and construction and tobacco
-                composition parameters will populate automatically.
-                <br /><br />
-                Autofilled parameters are adjustable prior to analysis: wrapper, wrapper process, wrapper
-                thickness and oiliness, binder components, filler components, ligero level, special tobacco
-                flags, blend age, and smoker style. Optionally select a beverage category from the Pairing
-                selector before running the predictor. Pressing <strong>Run Predictor</strong> generates the
-                blend's optimal leaf-level relative humidity %, a professional analytical tasting card, and
-                when selected, a dedicated pairing card. <strong>Exceptional Pairing</strong> identifies the
-                strongest reference-standard matches from the ICSI global beverage catalogue, while
-                <strong>Local Pairing</strong> ranks qualifying beverages currently stocked by your venue using
-                the same CPFS scoring logic. Pressing <strong>Find Similar Blends</strong> returns blends
-                structurally and sensorially matched to the query.
-                <br /><br />
-                <strong>Note:</strong> Leaf-level relative humidity % is measured using a commercially
-                available Cigar Humidity Meter.
-              </p>
+              <div className="pp-instructions" style={{ marginTop: 14 }}>
+                <div className="pp-guide-grid">
+                  <div><strong>1. Select a cigar</strong><span>Search the ICSI live blend database by brand and line.</span></div>
+                  <div><strong>2. Review its structure</strong><span>PredictorPro retrieves origin, wrapper, binder, filler and specialist tobacco data.</span></div>
+                  <div><strong>3. Choose an analysis</strong><span>Generate Peak-Flavor, settling, pairing or similar-cigar intelligence.</span></div>
+                </div>
+                <p className="pp-guide-note">
+                  Leaf-level RH values are intended to be used with a commercially available cigar humidity meter.
+                </p>
+              </div>
             )}
           </div>
 
           {/* ── USER VALIDATION ── */}
           <div style={{ ...styles.card, ...styles.cardAccent }}>
-            <div style={styles.h2}>User Validation</div>
+            <div style={styles.h2}>Your Access</div>
             <div style={{ maxWidth: 420 }}>
-              <label style={styles.label}>Registered Email Address</label>
+              <label style={styles.label}>Email address</label>
               <input
                 className="pp-input"
                 style={styles.input}
@@ -1436,21 +1672,21 @@ export default function PredictorPage() {
                 onClick={() => loadUsage()}
                 disabled={loadingUsage}
               >
-                {loadingUsage ? "Validating..." : "Check User"}
+                {loadingUsage ? "Checking access..." : "Continue"}
               </button>
               {isAuthorizedUser && hasProAccess && (
                 <span style={{ ...styles.noticeSuccess, padding: "6px 12px" }}>
-                  &#x2713; Access Validated &#x2014; Pro Enabled
+                  &#x2713; PredictorPro access active
                 </span>
               )}
               {isAuthorizedUser && !hasProAccess && (
                 <span style={{ ...styles.noticeWarning, padding: "6px 12px" }}>
-                  &#x26A0; Validated &#x2014; Pro Access Inactive
+                  &#x26A0; Account found — PredictorPro access inactive
                 </span>
               )}
               {!isAuthorizedUser && !loadingUsage && (
                 <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.08em" }}>
-                  Validation required to enable Predictor Pro
+                  Enter the email associated with your PredictorPro account
                 </span>
               )}
               {isAuthorizedUser && (
@@ -1473,7 +1709,7 @@ export default function PredictorPage() {
 
           {/* ── CIGAR BLEND LOOKUP ── */}
           <div style={styles.card}>
-            <div style={styles.h2}>Cigar Blend Lookup</div>
+            <div style={styles.h2}>Select Your Cigar</div>\n            <div className="pp-section-helper">Search 2,400+ live blend records maintained by ICSI.</div>
             <div style={styles.grid2}>
               {/* Brand */}
               <div style={{ position: "relative" }}>
@@ -1482,7 +1718,7 @@ export default function PredictorPage() {
                   className="pp-input"
                   style={{ ...styles.input, paddingRight: cleanText(form.brand) ? 42 : 12 }}
                   value={form.brand}
-                  placeholder="Begin entering brand designation..."
+                  placeholder="Start typing a brand..."
                   autoComplete="off"
                   onFocus={() => loadBrandSuggestions(form.brand)}
                   onChange={(e) => {
@@ -1552,7 +1788,7 @@ export default function PredictorPage() {
                     loadLineSuggestions(form.brand, v);
                   }}
                   onBlur={() => setTimeout(() => setShowLineSuggestions(false), 150)}
-                  placeholder={cleanText(form.brand) ? "Begin entering line designation..." : "Select brand first"}
+                  placeholder={cleanText(form.brand) ? "Start typing a cigar line..." : "Choose a brand first"}
                 />
                 {cleanText(form.line) && (
                   <button
@@ -1586,7 +1822,7 @@ export default function PredictorPage() {
                 onClick={lookupBlend}
                 disabled={loadingLookup || !hasProAccess}
               >
-                {loadingLookup ? "Querying Database..." : "Lookup Blend"}
+                {loadingLookup ? "Searching ICSI database..." : "Look Up Cigar"}
               </button>
               {lookupStatus && (
                 <span style={{ fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
@@ -1596,7 +1832,7 @@ export default function PredictorPage() {
             </div>
             {lookupSource && (
               <div style={{ marginTop: 8, fontFamily: DS.fontMono, fontSize: 15, color: DS.textMuted, letterSpacing: "0.07em" }}>
-                Data Source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
+                Blend source: <span style={{ color: DS.textSecond }}>{lookupSource}</span>
               </div>
             )}
 
@@ -1620,9 +1856,9 @@ export default function PredictorPage() {
 
           {/* ── BLEND CONSTRUCTION ── */}
           <div style={styles.card}>
-            <div style={styles.h2}>Blend Construction: Autofilled &amp; Adjustable</div>
+            <div style={styles.h2}>Review Blend Profile</div>\n            <div className="pp-section-helper">Retrieved automatically from the ICSI blend database. Adjust only if you need to correct or refine the record.</div>
 
-            <SectionDivider label="Wrapper" />
+            <SectionDivider label="Wrapper Profile" />
             <div style={styles.grid2}>
               <div>
                 <label style={styles.label}>Wrapper Leaf</label>
@@ -1659,7 +1895,7 @@ export default function PredictorPage() {
               </div>
             </div>
 
-            <SectionDivider label="Binder Components" />
+            <SectionDivider label="Binder Structure" />
             <div style={styles.grid2}>
               <div>
                 <label style={styles.label}>Binder 1</label>
@@ -1692,7 +1928,7 @@ export default function PredictorPage() {
               </select>
             </div>
 
-            <SectionDivider label="Filler Components" />
+            <SectionDivider label="Filler Structure" />
             <div style={styles.grid3}>
               {["filler_1","filler_2","filler_3"].map((key, i) => (
                 <div key={key}>
@@ -1704,11 +1940,11 @@ export default function PredictorPage() {
               ))}
             </div>
 
-            <SectionDivider label="Special Tobacco Flags" />
+            <SectionDivider label="Special Tobacco Characteristics" />
             <div style={styles.grid3}>
               {["flag_1","flag_2","flag_3"].map((key, i) => (
                 <div key={key}>
-                  <label style={styles.label}>Flag {i+1}</label>
+                  <label style={styles.label}>Characteristic {i+1}</label>
                   <select className="pp-select" style={styles.select} value={form[key]} onChange={(e) => update(key, e.target.value)}>
                     {SPECIAL_TOBACCO_FLAGS_OPTIONS.map((x) => <option key={`${key}-${x||"blank"}`} value={x}>{x||"Select"}</option>)}
                   </select>
@@ -1719,8 +1955,31 @@ export default function PredictorPage() {
 
           {/* ── ENVIRONMENTAL + RUN CONTROLS ── */}
           <div style={styles.card}>
-            <div style={styles.h2}>Optional Parameters &amp; Analysis Controls</div>
-            <div style={styles.grid2}>
+            <div style={styles.h2}>Choose Your Analysis</div>\n            <div className="pp-section-helper">Refine the blend context, then choose the intelligence you want PredictorPro to generate.</div>
+            <div className="pp-analysis-grid">
+              <div className="pp-analysis-card">
+                <span>01</span>
+                <strong>Peak-Flavor</strong>
+                <p>Determine target leaf-level RH, optimal window and CPFS classification.</p>
+              </div>
+              <div className="pp-analysis-card">
+                <span>02</span>
+                <strong>Settling</strong>
+                <p>Estimate service readiness using the five-system settling model.</p>
+              </div>
+              <div className="pp-analysis-card">
+                <span>03</span>
+                <strong>Pairing</strong>
+                <p>Generate reference and venue-available beverage recommendations.</p>
+              </div>
+              <div className="pp-analysis-card">
+                <span>04</span>
+                <strong>Similar Cigars</strong>
+                <p>Find structurally comparable cigars for substitution and cross-sell.</p>
+              </div>
+            </div>
+
+            <div style={{ ...styles.grid2, marginTop: 22 }}>
               <div>
                 <label style={styles.label}>Blend Age (years)</label>
                 <input
@@ -1762,7 +2021,7 @@ export default function PredictorPage() {
                 onClick={runPrediction}
                 disabled={loadingPredict || !hasProAccess}
               >
-                {loadingPredict ? "Computing..." : "Run Predictor"}
+                {loadingPredict ? "Analysing..." : "Generate CPFS Analysis"}
               </button>
               <button
                 className="pp-btn-secondary"
@@ -1770,7 +2029,7 @@ export default function PredictorPage() {
                 onClick={findSimilarBlends}
                 disabled={loadingSimilar || !hasProAccess}
               >
-                {loadingSimilar ? "Searching..." : "Find Similar Blends"}
+                {loadingSimilar ? "Searching..." : "Find Similar Cigars"}
               </button>
               {(loadingPredict && predictStep) && <ProcessingIndicator label={predictStep} />}
               {loadingSimilar && <ProcessingIndicator label="Scanning blend database..." />}
@@ -1799,13 +2058,13 @@ export default function PredictorPage() {
               }}
             >
               <div>
-                <div style={{ ...styles.h2, marginBottom: 4 }}>Settling Time Calculator</div>
+                <div style={{ ...styles.h2, marginBottom: 4 }}>Settling &amp; Service Readiness</div>
                 <div style={{ ...styles.sectionLabel, marginBottom: 0 }}>
                   Axial · Radial · Ammonia · Humidor Reconditioning · Thermal Shock
                 </div>
               </div>
               <span style={{ ...styles.dataLabel, whiteSpace: "nowrap" }}>
-                {settlingOpen ? "Collapse -" : "Calculate Settling +"}
+                {settlingOpen ? "Hide details −" : "Open readiness analysis +"}
               </span>
             </button>
 
@@ -2039,7 +2298,7 @@ export default function PredictorPage() {
                     onClick={runSettlingCalculator}
                     disabled={loadingSettling || !hasProAccess || !hasBlendStructure}
                   >
-                    {loadingSettling ? "Calculating..." : "Calculate Settling Time"}
+                    {loadingSettling ? "Calculating..." : "Calculate Service Readiness"}
                   </button>
                   <button
                     className="pp-btn-secondary"
@@ -2059,24 +2318,24 @@ export default function PredictorPage() {
 
                 {settlingResult && (
                   <div className="pp-result" style={{ marginTop: 24 }}>
-                    <SectionDivider label="Settling Readiness" />
+                    <SectionDivider label="Service Readiness" />
 
                     <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
                       <div style={{ ...styles.rhPanel, flex: "1 1 210px" }}>
-                        <div style={styles.dataLabel}>Peak Readiness</div>
+                        <div style={styles.dataLabel}>Time to Service Ready</div>
                         <div className="pp-rh-value">
                           {Number(settlingResult.peak_ready_weeks || 0).toFixed(1)}
                         </div>
                         <div style={{ ...styles.dataLabel, marginTop: 6 }}>Weeks Remaining</div>
                       </div>
                       <div style={{ ...styles.rhPanel, flex: "1 1 210px" }}>
-                        <div style={styles.dataLabel}>Limiting System</div>
+                        <div style={styles.dataLabel}>Limiting Factor</div>
                         <div style={{ fontSize: 23, fontWeight: 600, color: DS.textPrimary, marginTop: 10 }}>
                           {settlingResult.limiting_system || "—"}
                         </div>
                       </div>
                       <div style={{ ...styles.rhPanel, flex: "1 1 210px" }}>
-                        <div style={styles.dataLabel}>Estimated Ready Date</div>
+                        <div style={styles.dataLabel}>Estimated Service Ready Date</div>
                         <div style={{ fontSize: 23, fontWeight: 600, color: DS.gold, marginTop: 10 }}>
                           {settlingResult.estimated_ready_date || "—"}
                         </div>
@@ -2124,23 +2383,23 @@ export default function PredictorPage() {
           {/* ── ANALYTICAL OUTPUT ── */}
           {result && (
             <div className="pp-result" style={styles.card}>
-              <div style={styles.h2}>Peak-Flavor Prediction Result</div>
+              <div style={styles.h2}>CPFS Analysis</div>
               {/* RH Readout panels */}
               <div style={{ display: "flex", gap: 16, margin: "0 auto 24px", flexWrap: "wrap", justifyContent: "center", maxWidth: 720 }}>
                 <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
-                  <div style={styles.dataLabel}>Target RH%</div>
+                  <div style={styles.dataLabel}>Peak-Flavor Target</div>
                   <div className="pp-rh-value">{result.target_rh}</div>
-                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
+                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Leaf-Level RH</div>
                 </div>
                 <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
-                  <div style={styles.dataLabel}>RH% Window</div>
+                  <div style={styles.dataLabel}>Optimal Window</div>
                   <div style={{ fontFamily: DS.fontMono, fontSize: 32, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
                     {result.window_low}-{result.window_high}
                   </div>
-                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Optimal Leaf-Level</div>
+                  <div style={{ ...styles.dataLabel, marginTop: 6 }}>Leaf-Level RH</div>
                 </div>
                 <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
-                  <div style={styles.dataLabel}>CPFS Family</div>
+                  <div style={styles.dataLabel}>CPFS Classification</div>
                   <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
                     {result.family}
                   </div>
@@ -2150,7 +2409,7 @@ export default function PredictorPage() {
               {/* Tasting Card */}
               {tastingCard && (
                 <>
-                  <SectionDivider label="Taste Profile" />
+                  <SectionDivider label="Sensory Profile" />
                   <div className="pp-output-grid">
                     <AnalyticalCard
                       title="On The Palate"
@@ -2185,11 +2444,11 @@ export default function PredictorPage() {
                       title={`${pairingSelection} \u2014 Pairing Recommendations`}
                       rows={[
                         {
-                          label: "Exceptional Pairing",
+                          label: "Reference Pairings",
                           value: displayPairingList(filteredPairing?.primary),
                         },
                         {
-                          label: "Local Pairing",
+                          label: "Available at Your Venue",
                           value: displayLocalPairingList(filteredPairing?.local),
                         },
                       ]}
@@ -2204,10 +2463,9 @@ export default function PredictorPage() {
               )}
               {/* Metadata footer */}
               <div style={styles.metaBar}>
-                <span style={styles.metaItem}><span style={styles.metaDot} />CPFS Engine v4.8</span>
-                <span style={styles.metaItem}>Calibrated · Reference-Standard</span>
+                <span style={styles.metaItem}><span style={styles.metaDot} />CPFS® Analysis</span>
                 <span style={styles.metaItem}>Generated {timestamp}</span>
-                <span style={styles.metaItem}>Combustion-density regression model v2.3</span>
+                <span style={styles.metaItem}>ICSI methodology</span>
               </div>
             </div>
           )}
@@ -2215,8 +2473,8 @@ export default function PredictorPage() {
           {/* ── SIMILAR BLENDS ── */}
           {similarBlends && (
             <div className="pp-result" style={styles.card}>
-              <div style={styles.sectionLabel}>Structural Match Analysis</div>
-              <div style={styles.h2}>Similar Blend Profiles</div>
+              <div style={styles.sectionLabel}>Similar Cigar Discovery</div>
+              <div style={styles.h2}>Structurally Similar Cigars</div>
               {Array.isArray(similarBlends.results) && similarBlends.results.length > 0 ? (
                 similarBlends.results.map((blend, idx) => (
                   <div key={`${blend.brand||"b"}-${blend.line||"l"}-${idx}`}
@@ -2262,7 +2520,7 @@ export default function PredictorPage() {
                 ))
               ) : (
                 <div style={{ fontFamily: DS.fontMono, fontSize: 16, color: DS.textMuted }}>
-                  No structurally similar blends identified in the current database.
+                  No structurally similar cigars identified in the current database.
                 </div>
               )}
               <div style={styles.metaBar}>
