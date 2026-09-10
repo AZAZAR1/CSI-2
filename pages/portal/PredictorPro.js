@@ -1709,7 +1709,7 @@ export default function PredictorPage() {
 
           {/* ── CIGAR BLEND LOOKUP ── */}
           <div style={styles.card}>
-            <div style={styles.h2}>Select Your Cigar</div>\n            <div className="pp-section-helper">Search 2,400+ live blend records maintained by ICSI.</div>
+            <div style={styles.h2}>Select Your Cigar</div>
             <div style={styles.grid2}>
               {/* Brand */}
               <div style={{ position: "relative" }}>
@@ -1856,7 +1856,7 @@ export default function PredictorPage() {
 
           {/* ── BLEND CONSTRUCTION ── */}
           <div style={styles.card}>
-            <div style={styles.h2}>Review Blend Profile</div>\n            <div className="pp-section-helper">Retrieved automatically from the ICSI blend database. Adjust only if you need to correct or refine the record.</div>
+            <div style={styles.h2}>Review Blend Profile</div>
 
             <SectionDivider label="Wrapper Profile" />
             <div style={styles.grid2}>
@@ -1955,7 +1955,7 @@ export default function PredictorPage() {
 
           {/* ── ENVIRONMENTAL + RUN CONTROLS ── */}
           <div style={styles.card}>
-            <div style={styles.h2}>Choose Your Analysis</div>\n            <div className="pp-section-helper">Refine the blend context, then choose the intelligence you want PredictorPro to generate.</div>
+            <div style={styles.h2}>Choose Your Analysis</div>
             <div className="pp-analysis-grid">
               <div className="pp-analysis-card">
                 <span>01</span>
