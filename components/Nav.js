@@ -83,7 +83,11 @@ export default function Nav() {
             {nav.hospitality}
           </Link>
 
-          <Link href="/portal/PredictorPro" locale={lang}>
+          <Link
+            href="/predictorpro-access"
+            locale={lang}
+            aria-label="Reserved PredictorPro access"
+          >
             {nav.predictor}
           </Link>
 
