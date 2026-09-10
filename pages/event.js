@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 
@@ -153,8 +154,6 @@ export default function EventRegistrationPage() {
       />
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
-
         *,
         *::before,
         *::after {
@@ -162,130 +161,266 @@ export default function EventRegistrationPage() {
         }
 
         .event-page {
+          --ivory: #faf4e8;
+          --ink: #16161f;
+          --crimson: #c0242f;
+          --bordeaux: #601818;
+          --gold: #c8a24a;
+          --lightGold: #e4cb8e;
+
           min-height: 100vh;
-          background:
-            radial-gradient(
-              circle at 50% 0%,
-              rgba(139,26,26,0.10),
-              transparent 38%
-            ),
-            #0d0f11;
-          color: #f0ece6;
-          font-family:
-            'Cormorant Garamond',
-            'Palatino Linotype',
-            Georgia,
-            serif;
+          background: var(--ivory);
+          color: var(--ink);
         }
 
-        .event-container {
-          width: 100%;
-          max-width: 760px;
+        .event-wide-container {
+          width: min(1180px, calc(100% - 48px));
           margin: 0 auto;
-          padding: 72px 24px 100px;
+          padding: 54px 0 96px;
         }
 
-        .event-header {
-          text-align: center;
-          margin-bottom: 40px;
+        .event-show-hero {
+          padding: 36px 0 70px;
+          border-bottom: 1px solid rgba(22,22,31,0.14);
         }
 
-        .event-kicker {
-          display: inline-block;
-          color: #b8922a;
-          font-size: 14px;
-          font-weight: 600;
-          letter-spacing: 0.20em;
+        .event-show-kicker,
+        .event-section-kicker,
+        .event-show-proof-label {
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
           text-transform: uppercase;
-          margin-bottom: 18px;
-        }
-
-        .event-title {
-          margin: 0;
-          font-size: clamp(38px, 8vw, 62px);
           font-weight: 600;
+          letter-spacing: 0.18em;
+        }
+
+        .event-show-kicker {
+          margin-bottom: 24px;
+          color: var(--crimson);
+          font-size: 0.72rem;
+        }
+
+        .event-show-hero-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 280px;
+          gap: 70px;
+          align-items: end;
+        }
+
+        .event-show-title,
+        .event-session-title,
+        .event-access-title,
+        .event-route h2 {
+          font-family: "Playfair Display", Georgia, serif;
+          font-weight: 400;
+          letter-spacing: -0.05em;
+        }
+
+        .event-show-title {
+          margin: 0 0 18px;
+          font-size: clamp(3.5rem, 7vw, 6.6rem);
+          line-height: 0.94;
+        }
+
+        .event-stand-line {
+          margin-bottom: 26px;
+          color: var(--bordeaux);
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 1rem;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+
+        .event-show-copy {
+          margin: 0;
+          max-width: 66ch;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 1.04rem;
+          line-height: 1.7;
+          font-weight: 300;
+          opacity: 0.76;
+        }
+
+        .event-show-proof {
+          padding: 28px 0 4px;
+          border-top: 2px solid var(--gold);
+        }
+
+        .event-show-proof-label {
+          margin-bottom: 10px;
+          color: var(--crimson);
+          font-size: 0.64rem;
+        }
+
+        .event-show-proof-value {
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 1.65rem;
+          line-height: 1.1;
+        }
+
+        .event-session-section {
+          display: grid;
+          grid-template-columns: minmax(300px, 0.65fr) minmax(520px, 1fr);
+          gap: 80px;
+          padding: 86px 0 94px;
+          border-bottom: 1px solid rgba(22,22,31,0.14);
+        }
+
+        .event-session-copy {
+          position: sticky;
+          top: 110px;
+          align-self: start;
+          padding-top: 6px;
+        }
+
+        .event-section-kicker {
+          color: var(--crimson);
+          font-size: 0.66rem;
+          line-height: 1.35;
+        }
+
+        .event-session-title {
+          margin: 30px 0 20px;
+          max-width: 12ch;
+          font-size: clamp(2.7rem, 4.1vw, 4.4rem);
           line-height: 0.98;
-          letter-spacing: -0.025em;
         }
 
-        .event-subtitle {
-          max-width: 570px;
-          margin: 22px auto 0;
-          color: #b8b0a6;
-          font-size: 21px;
+        .event-session-details {
+          padding: 16px 0;
+          margin-bottom: 26px;
+          border-top: 1px solid rgba(22,22,31,0.16);
+          border-bottom: 1px solid rgba(22,22,31,0.16);
+          color: var(--bordeaux);
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.79rem;
           line-height: 1.5;
+          font-weight: 600;
+          letter-spacing: 0.10em;
+          text-transform: uppercase;
         }
 
-        .event-divider {
-          width: 48px;
-          height: 2px;
-          margin: 28px auto 0;
-          background: #8b1a1a;
+        .event-session-text,
+        .event-session-note,
+        .event-access-copy,
+        .event-route p {
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-weight: 300;
+        }
+
+        .event-session-text {
+          margin: 0;
+          max-width: 50ch;
+          font-size: 0.98rem;
+          line-height: 1.72;
+          opacity: 0.76;
+        }
+
+        .event-session-note {
+          margin: 24px 0 0;
+          padding-left: 16px;
+          border-left: 2px solid var(--crimson);
+          font-size: 0.95rem;
+          line-height: 1.6;
+          color: var(--bordeaux);
+        }
+
+        .event-flyer-wrap {
+          display: flex;
+          justify-content: center;
+        }
+
+        .event-flyer {
+          display: block;
+          width: min(100%, 760px);
+          height: auto;
+          box-shadow: 0 24px 70px rgba(22,22,31,0.16);
+        }
+
+        .event-access-section {
+          display: grid;
+          grid-template-columns: minmax(260px, 0.58fr) minmax(480px, 0.9fr);
+          gap: 80px;
+          padding: 86px 0 94px;
+          align-items: start;
+          border-bottom: 1px solid rgba(22,22,31,0.14);
+        }
+
+        .event-access-heading {
+          padding-top: 8px;
+        }
+
+        .event-access-title {
+          margin: 30px 0 20px;
+          max-width: 12ch;
+          font-size: clamp(2.5rem, 3.7vw, 4rem);
+          line-height: 1;
+        }
+
+        .event-access-copy {
+          margin: 0;
+          max-width: 48ch;
+          font-size: 0.98rem;
+          line-height: 1.72;
+          opacity: 0.74;
         }
 
         .event-card {
-          background:
-            radial-gradient(
-              circle at 20% 0%,
-              rgba(184,146,42,0.05),
-              transparent 40%
-            ),
-            #131416;
-          border: 1px solid rgba(255,255,255,0.10);
-          border-top: 2px solid #8b1a1a;
-          border-radius: 8px;
-          padding: 38px;
-          box-shadow: 0 24px 70px rgba(0,0,0,0.28);
+          background: var(--ink);
+          color: #f7f2e8;
+          border-top: 3px solid var(--crimson);
+          padding: 40px;
+          box-shadow: 0 24px 70px rgba(22,22,31,0.18);
         }
 
         .event-card-title {
           margin: 0 0 8px;
           text-align: center;
-          font-size: 28px;
-          font-weight: 600;
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 2rem;
+          font-weight: 400;
         }
 
         .event-card-copy {
           margin: 0 0 30px;
           text-align: center;
-          color: #9e968e;
-          font-size: 18px;
-          line-height: 1.5;
+          color: #c8c0b5;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.95rem;
+          line-height: 1.6;
+          font-weight: 300;
         }
 
         .event-label {
           display: block;
-          color: #b8b0a6;
-          font-size: 14px;
+          margin-bottom: 8px;
+          color: #ddd5ca;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.7rem;
           font-weight: 600;
           letter-spacing: 0.13em;
           text-transform: uppercase;
-          margin-bottom: 8px;
         }
 
         .event-input {
           width: 100%;
           min-height: 54px;
           padding: 13px 16px;
-          border-radius: 4px;
-          border: 1px solid rgba(255,255,255,0.14);
+          border: 1px solid rgba(255,255,255,0.16);
           background: #0f1113;
           color: #f0ece6;
-          font-family:
-            'Cormorant Garamond',
-            Georgia,
-            serif;
-          font-size: 19px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 1rem;
           outline: none;
           transition: border-color 0.15s ease;
         }
 
         .event-input:focus {
-          border-color: rgba(184,146,42,0.7);
+          border-color: rgba(200,162,74,0.75);
         }
 
         .event-input::placeholder {
-          color: #716c67;
+          color: #77716b;
         }
 
         .event-consent-row {
@@ -300,32 +435,19 @@ export default function EventRegistrationPage() {
         .event-consent-checkbox {
           width: 18px;
           height: 18px;
-          margin: 3px 0 0 0;
-          padding: 0;
-          accent-color: #8b1a1a;
+          margin: 3px 0 0;
+          accent-color: var(--crimson);
           cursor: pointer;
         }
 
         .event-consent-text {
-          display: block !important;
-          width: auto !important;
-          max-width: none !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          position: static !important;
-
-          color: #9e968e;
-          font-family:
-            'Cormorant Garamond',
-            Georgia,
-            serif;
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 1.45;
-          letter-spacing: 0;
-          text-transform: none;
+          margin: 0;
+          color: #a9a198;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.84rem;
+          font-weight: 300;
+          line-height: 1.5;
           text-align: left;
-
           cursor: pointer;
         }
 
@@ -333,25 +455,18 @@ export default function EventRegistrationPage() {
           width: 100%;
           min-height: 56px;
           border: none;
-          border-radius: 3px;
-          background: #8b1a1a;
-          color: #f0ece6;
+          background: var(--crimson);
+          color: #fff;
           cursor: pointer;
-          font-family:
-            'Cormorant Garamond',
-            Georgia,
-            serif;
-          font-size: 17px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.76rem;
           font-weight: 600;
-          letter-spacing: 0.15em;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
-          transition:
-            background 0.15s ease,
-            opacity 0.15s ease;
         }
 
         .event-button:hover:not(:disabled) {
-          background: #a52020;
+          background: #a91f2b;
         }
 
         .event-button:disabled {
@@ -359,26 +474,25 @@ export default function EventRegistrationPage() {
           opacity: 0.55;
         }
 
-        .event-status {
+        .event-status,
+        .event-error {
           margin-top: 18px;
-          padding: 11px 14px;
-          border: 1px solid rgba(184,146,42,0.25);
-          border-radius: 3px;
-          background: rgba(184,146,42,0.08);
-          color: #d6c28c;
-          font-size: 15px;
+          padding: 12px 14px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.82rem;
           text-align: center;
         }
 
+        .event-status {
+          border: 1px solid rgba(200,162,74,0.28);
+          background: rgba(200,162,74,0.08);
+          color: var(--lightGold);
+        }
+
         .event-error {
-          margin-top: 18px;
-          padding: 11px 14px;
-          border: 1px solid rgba(139,26,26,0.40);
-          border-radius: 3px;
-          background: rgba(139,26,26,0.12);
-          color: #d79595;
-          font-size: 15px;
-          text-align: center;
+          border: 1px solid rgba(192,36,47,0.42);
+          background: rgba(192,36,47,0.13);
+          color: #e4a7aa;
         }
 
         .event-benefits {
@@ -386,8 +500,8 @@ export default function EventRegistrationPage() {
           grid-template-columns: repeat(3, 1fr);
           gap: 1px;
           margin-top: 32px;
-          border: 1px solid rgba(255,255,255,0.07);
-          background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.08);
         }
 
         .event-benefit {
@@ -397,189 +511,401 @@ export default function EventRegistrationPage() {
         }
 
         .event-benefit-title {
-          color: #d6c28c;
-          font-size: 16px;
-          font-weight: 600;
+          color: var(--lightGold);
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 1rem;
           margin-bottom: 4px;
         }
 
         .event-benefit-copy {
-          color: #8f8881;
-          font-size: 14px;
-          line-height: 1.3;
+          color: #928a82;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.72rem;
+          line-height: 1.35;
+        }
+
+        .event-routes {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          padding-top: 86px;
+        }
+
+        .event-route {
+          min-height: 390px;
+          padding: 56px 52px 50px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          border: 1px solid rgba(22,22,31,0.14);
+        }
+
+        .event-route-light {
+          background: var(--ivory);
+        }
+
+        .event-route-dark {
+          background: var(--bordeaux);
+          color: #fff;
+          border-color: var(--bordeaux);
+        }
+
+        .event-route-dark .event-section-kicker {
+          color: var(--lightGold);
+        }
+
+        .event-route h2 {
+          margin: 28px 0 18px;
+          max-width: 15ch;
+          font-size: clamp(2rem, 3vw, 3.15rem);
+          line-height: 1.02;
+        }
+
+        .event-route p {
+          margin: 0;
+          max-width: 46ch;
+          font-size: 0.95rem;
+          line-height: 1.68;
+          opacity: 0.75;
+        }
+
+        .event-route-link {
+          margin-top: auto;
+          padding-top: 36px;
+          color: inherit;
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.73rem;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          border-bottom: 1px solid currentColor;
+        }
+
+        .event-route-dark .event-route-link {
+          color: var(--lightGold);
         }
 
         .event-footer {
           text-align: center;
-          margin-top: 28px;
-          color: #716c67;
-          font-size: 14px;
-          line-height: 1.5;
+          margin-top: 38px;
+          color: rgba(22,22,31,0.48);
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.72rem;
+          line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+          .event-show-hero-grid,
+          .event-session-section,
+          .event-access-section,
+          .event-routes {
+            grid-template-columns: 1fr;
+          }
+
+          .event-show-proof {
+            max-width: 320px;
+          }
+
+          .event-session-copy {
+            position: static;
+          }
+
+          .event-session-title,
+          .event-access-title {
+            max-width: none;
+          }
         }
 
         @media (max-width: 620px) {
-          .event-container {
-            padding: 42px 18px 70px;
+          .event-wide-container {
+            width: min(100% - 32px, 1180px);
+            padding-top: 32px;
+            padding-bottom: 70px;
+          }
+
+          .event-show-hero {
+            padding: 24px 0 52px;
+          }
+
+          .event-show-title {
+            font-size: clamp(2.9rem, 15vw, 4.4rem);
+          }
+
+          .event-session-section,
+          .event-access-section {
+            gap: 42px;
+            padding: 58px 0 64px;
           }
 
           .event-card {
-            padding: 28px 20px;
+            padding: 30px 22px;
           }
 
           .event-benefits {
             grid-template-columns: 1fr;
           }
 
-          .event-subtitle {
-            font-size: 19px;
+          .event-route {
+            min-height: 330px;
+            padding: 42px 28px 38px;
           }
 
-          .event-consent-text {
-            font-size: 15px;
+          .event-routes {
+            padding-top: 62px;
           }
         }
       `}</style>
 
       <main className="event-page">
-        <div className="event-container">
+        <div className="event-wide-container">
 
-          <header className="event-header">
-
-            <div className="event-kicker">
-              International Cigar Sommelier Institute
+          <header className="event-show-hero">
+            <div className="event-show-kicker">
+              InterTabac 2026 · Dortmund
             </div>
 
-            <h1 className="event-title">
-              Experience PredictorPro
-            </h1>
+            <div className="event-show-hero-grid">
+              <div>
+                <h1 className="event-show-title">
+                  Meet ICSI
+                </h1>
 
-            <p className="event-subtitle">
-              Discover how cigar blend structure can be translated
-              into peak-flavour conditions, pairing intelligence
-              and structurally similar blend recommendations.
-            </p>
+                <div className="event-stand-line">
+                  Hall 4 · Stand 4.D44
+                </div>
 
-            <div className="event-divider" />
+                <p className="event-show-copy">
+                  Meet the International Cigar Sommelier Institute at InterTabac
+                  and discover how ICSI brings together professional education,
+                  applied science and digital intelligence for the modern cigar
+                  hospitality environment.
+                </p>
+              </div>
 
+              <div className="event-show-proof">
+                <div className="event-show-proof-label">
+                  Exhibitor · Speaker
+                </div>
+                <div className="event-show-proof-value">
+                  InterTabac 2026
+                </div>
+              </div>
+            </div>
           </header>
 
-          <section className="event-card">
+          <section className="event-session-section">
+            <div className="event-session-copy">
+              <div className="event-section-kicker">
+                Live Session
+              </div>
 
-            <h2 className="event-card-title">
-              Activate Your Event Access
-            </h2>
+              <h2 className="event-session-title">
+                Decoding Cigars by ICSI
+              </h2>
 
-            <p className="event-card-copy">
-              Enter your email address to receive immediate
-              PredictorPro trial access on this device.
-            </p>
+              <div className="event-session-details">
+                Newsroom 1+2 · 13:30 · 15–17 September
+              </div>
 
-            <form onSubmit={registerAndEnter}>
+              <p className="event-session-text">
+                Join Anthony Azar, Founder of ICSI, for a live session exploring
+                how blend structure, tobacco behaviour and the Cigar Peak-Flavor
+                System® come together to support a more consistent and elevated
+                cigar experience.
+              </p>
 
-              <label
-                className="event-label"
-                htmlFor="event-email"
-              >
-                Email Address
-              </label>
+              <p className="event-session-note">
+                Science. Insights. A better experience.
+              </p>
+            </div>
 
-              <input
-                id="event-email"
-                className="event-input"
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                placeholder="name@company.com"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setError("");
-                }}
-                disabled={loading}
+            <div className="event-flyer-wrap">
+              <img
+                src="/img/Decoding-cigars.jpeg"
+                alt="Decoding Cigars by ICSI at InterTabac 2026"
+                className="event-flyer"
               />
+            </div>
+          </section>
 
-              <div className="event-consent-row">
+          <section className="event-access-section">
+            <div className="event-access-heading">
+              <div className="event-section-kicker">
+                Event Access
+              </div>
+
+              <h2 className="event-access-title">
+                Experience PredictorPro
+              </h2>
+
+              <p className="event-access-copy">
+                Discover how cigar blend structure can be translated into
+                peak-flavour conditions, pairing intelligence and structurally
+                similar blend recommendations.
+              </p>
+            </div>
+
+            <section className="event-card">
+
+              <h3 className="event-card-title">
+                Activate Your Event Access
+              </h3>
+
+              <p className="event-card-copy">
+                Enter your email address to receive immediate
+                PredictorPro trial access on this device.
+              </p>
+
+              <form onSubmit={registerAndEnter}>
+
+                <label
+                  className="event-label"
+                  htmlFor="event-email"
+                >
+                  Email Address
+                </label>
 
                 <input
-                  id="marketing-consent"
-                  className="event-consent-checkbox"
-                  type="checkbox"
-                  checked={marketingConsent}
-                  onChange={(e) =>
-                    setMarketingConsent(e.target.checked)
-                  }
+                  id="event-email"
+                  className="event-input"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  placeholder="name@company.com"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setError("");
+                  }}
                   disabled={loading}
                 />
 
-                <label
-                  htmlFor="marketing-consent"
-                  className="event-consent-text"
+                <div className="event-consent-row">
+
+                  <input
+                    id="marketing-consent"
+                    className="event-consent-checkbox"
+                    type="checkbox"
+                    checked={marketingConsent}
+                    onChange={(e) =>
+                      setMarketingConsent(e.target.checked)
+                    }
+                    disabled={loading}
+                  />
+
+                  <label
+                    htmlFor="marketing-consent"
+                    className="event-consent-text"
+                  >
+                    I would like to receive occasional information
+                    from ICSI about PredictorPro, education,
+                    technology and professional services.
+                  </label>
+
+                </div>
+
+                <button
+                  className="event-button"
+                  type="submit"
+                  disabled={loading}
                 >
-                  I would like to receive occasional information
-                  from ICSI about PredictorPro, education,
-                  technology and professional services.
-                </label>
+                  {loading
+                    ? "Activating Access..."
+                    : "Access PredictorPro"}
+                </button>
+
+              </form>
+
+              {status && !error && (
+                <div className="event-status">
+                  {status}
+                </div>
+              )}
+
+              {error && (
+                <div className="event-error">
+                  {error}
+                </div>
+              )}
+
+              <div className="event-benefits">
+
+                <div className="event-benefit">
+                  <div className="event-benefit-title">
+                    Peak Flavor
+                  </div>
+
+                  <div className="event-benefit-copy">
+                    Determine optimal RH conditions
+                  </div>
+                </div>
+
+                <div className="event-benefit">
+                  <div className="event-benefit-title">
+                    Pairing
+                  </div>
+
+                  <div className="event-benefit-copy">
+                    Generate beverage recommendations
+                  </div>
+                </div>
+
+                <div className="event-benefit">
+                  <div className="event-benefit-title">
+                    Similar Blends
+                  </div>
+
+                  <div className="event-benefit-copy">
+                    Discover structural alternatives
+                  </div>
+                </div>
 
               </div>
 
-              <button
-                className="event-button"
-                type="submit"
-                disabled={loading}
+            </section>
+          </section>
+
+          <section className="event-routes">
+            <article className="event-route event-route-light">
+              <div className="event-section-kicker">
+                Professional Education
+              </div>
+
+              <h2>
+                Interested in professional certification?
+              </h2>
+
+              <p>
+                Explore ICSI's structured four-level education pathway for
+                cigar professionals and serious enthusiasts.
+              </p>
+
+              <Link href="/courses" className="event-route-link">
+                Explore ICSI Education <span>→</span>
+              </Link>
+            </article>
+
+            <article className="event-route event-route-dark">
+              <div className="event-section-kicker">
+                Hospitality Solutions
+              </div>
+
+              <h2>
+                Operate a lounge or hospitality venue?
+              </h2>
+
+              <p>
+                Discover how ICSI implements CPFS through technical assessment,
+                team training, storage and serving standards, and PredictorPro.
+              </p>
+
+              <Link
+                href="/cpfs-implementation"
+                className="event-route-link"
               >
-                {loading
-                  ? "Activating Access..."
-                  : "Access PredictorPro"}
-              </button>
-
-            </form>
-
-            {status && !error && (
-              <div className="event-status">
-                {status}
-              </div>
-            )}
-
-            {error && (
-              <div className="event-error">
-                {error}
-              </div>
-            )}
-
-            <div className="event-benefits">
-
-              <div className="event-benefit">
-                <div className="event-benefit-title">
-                  Peak Flavor
-                </div>
-
-                <div className="event-benefit-copy">
-                  Determine optimal RH conditions
-                </div>
-              </div>
-
-              <div className="event-benefit">
-                <div className="event-benefit-title">
-                  Pairing
-                </div>
-
-                <div className="event-benefit-copy">
-                  Generate beverage recommendations
-                </div>
-              </div>
-
-              <div className="event-benefit">
-                <div className="event-benefit-title">
-                  Similar Blends
-                </div>
-
-                <div className="event-benefit-copy">
-                  Discover structural alternatives
-                </div>
-              </div>
-
-            </div>
-
+                Explore CPFS <span>→</span>
+              </Link>
+            </article>
           </section>
 
           <div className="event-footer">
