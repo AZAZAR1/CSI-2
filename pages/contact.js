@@ -1,7 +1,7 @@
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const copy = {
   en: {
@@ -27,10 +27,17 @@ const copy = {
       "All submissions are treated with discretion and confidentiality.",
     programLabel: "Selected program",
     programNames: {
+      "level-i": "ICSI Level I",
+      "level-ii": "ICSI Level II",
+      "level-iii": "ICSI Level III",
+      "level-iv": "ICSI Level IV",
       ccs: "CCS — Certified Cigar Sommelier",
       acs: "ACS — Advanced Cigar Sommelier",
       amc: "AMC — Aficionado Master Class",
     },
+    pathwayName: "ICSI Education Pathway Guidance",
+    courseFieldLabel: "Course level",
+    courseSelectPlaceholder: "Select a course level",
     subjectPrefix: "Application",
     seoTitle:
       "Application & Contact | International Cigar Sommelier Institute",
@@ -60,10 +67,17 @@ const copy = {
       "Toutes les candidatures sont traitées avec discrétion et confidentialité.",
     programLabel: "Programme sélectionné",
     programNames: {
+      "level-i": "ICSI Level I",
+      "level-ii": "ICSI Level II",
+      "level-iii": "ICSI Level III",
+      "level-iv": "ICSI Level IV",
       ccs: "CCS — Certified Cigar Sommelier",
       acs: "ACS — Advanced Cigar Sommelier",
       amc: "AMC — Aficionado Master Class",
     },
+    pathwayName: "ICSI Education Pathway Guidance",
+    courseFieldLabel: "Course level",
+    courseSelectPlaceholder: "Select a course level",
     subjectPrefix: "Candidature",
     seoTitle:
       "Candidature & Contact | International Cigar Sommelier Institute",
@@ -92,10 +106,17 @@ const copy = {
     closing: "Alle Einsendungen werden vertraulich behandelt.",
     programLabel: "Ausgewähltes Programm",
     programNames: {
+      "level-i": "ICSI Level I",
+      "level-ii": "ICSI Level II",
+      "level-iii": "ICSI Level III",
+      "level-iv": "ICSI Level IV",
       ccs: "CCS — Certified Cigar Sommelier",
       acs: "ACS — Advanced Cigar Sommelier",
       amc: "AMC — Aficionado Master Class",
     },
+    pathwayName: "ICSI Education Pathway Guidance",
+    courseFieldLabel: "Course level",
+    courseSelectPlaceholder: "Select a course level",
     subjectPrefix: "Bewerbung",
     seoTitle:
       "Bewerbung & Kontakt | International Cigar Sommelier Institute",
@@ -103,6 +124,17 @@ const copy = {
       "Bewerben Sie sich für CCS®, ACS®, oder fragen Sie eine AMC™ Einladung an.",
   },
 };
+
+const COURSE_LEVELS = {
+  "level-i": "ICSI Level I",
+  "level-ii": "ICSI Level II",
+  "level-iii": "ICSI Level III",
+  "level-iv": "ICSI Level IV",
+};
+
+function normalizeQueryValue(value) {
+  return typeof value === "string" ? value.trim().toLowerCase() : "";
+}
 
 function ContactSection({ number, eyebrow, title, children }) {
   return (
@@ -126,21 +158,62 @@ export default function Contact() {
   const router = useRouter();
   const lang = (router.locale || "en").toLowerCase();
 
-  const program = useMemo(() => {
-    if (!router.isReady) return "";
-    const p = router.query?.program;
-    return typeof p === "string" ? p.toLowerCase() : "";
+  const selection = useMemo(() => {
+    if (!router.isReady) {
+      return { key: "", inquiry: "", source: "" };
+    }
+
+    const course = normalizeQueryValue(router.query?.course);
+    const legacyProgram = normalizeQueryValue(router.query?.program);
+    const inquiry = normalizeQueryValue(router.query?.inquiry);
+
+    return {
+      key: course || legacyProgram,
+      inquiry,
+      source: course ? "course" : legacyProgram ? "program" : inquiry ? "inquiry" : "",
+    };
   }, [router.isReady, router.query]);
 
   const c = copy[lang] || copy.en;
 
+  const [selectedCourseKey, setSelectedCourseKey] = useState("");
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const incomingCourse = selection.key && COURSE_LEVELS[selection.key]
+      ? selection.key
+      : "";
+
+    setSelectedCourseKey(incomingCourse);
+  }, [router.isReady, selection.key]);
+
   const waNumber = "41762305791";
   const waLabel = "+41 76 230 57 91";
-  const programNice = c.programNames?.[program] || "";
+
+  const selectedCourseCanonical = COURSE_LEVELS[selectedCourseKey] || "";
+  const selectedProgramDisplay = c.programNames?.[selectedCourseKey] || "";
+  const pathwayInquiry = selection.inquiry === "education-pathway";
+  const programNice = selectedProgramDisplay || (pathwayInquiry ? c.pathwayName : "");
+
   const submitted = router.query?.submitted === "true";
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cigarsommelierinstitute.com";
-  const localePrefix = router.locale && router.locale !== "en" ? `/${router.locale}` : "";
-  const redirectTo = `${siteUrl}${localePrefix}/contact?submitted=true`;
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://cigarsommelierinstitute.com";
+  const localePrefix =
+    router.locale && router.locale !== "en" ? `/${router.locale}` : "";
+
+  const returnParams = new URLSearchParams({ submitted: "true" });
+  if (selectedCourseKey) returnParams.set("course", selectedCourseKey);
+  if (selection.inquiry) returnParams.set("inquiry", selection.inquiry);
+
+  const redirectTo = `${siteUrl}${localePrefix}/contact?${returnParams.toString()}`;
+
+  const staticFormSubject = selectedCourseCanonical
+    ? `ICSI Course Enquiry — ${selectedCourseCanonical}`
+    : pathwayInquiry
+      ? "ICSI Education Pathway Enquiry"
+      : "ICSI Website Contact";
 
   return (
     <Layout>
@@ -160,20 +233,44 @@ export default function Contact() {
         </section>
 
         <main className="container contactMain">
-          {programNice && (
+          {(selectedCourseKey || pathwayInquiry) && (
             <ContactSection
               number="01"
               eyebrow={c.programEyebrow}
               title={c.programTitle}
             >
-              <p className="contactSectionText contactProgramValue">
-                {programNice}
-              </p>
+              {selectedCourseKey ? (
+                <div className="contactCourseSelectorWrap">
+                  <label
+                    className="contactLabel contactCourseSelectorLabel"
+                    htmlFor="selectedCourseLevel"
+                  >
+                    {c.courseFieldLabel}
+                  </label>
+
+                  <select
+                    id="selectedCourseLevel"
+                    className="contactCourseSelect"
+                    value={selectedCourseKey}
+                    onChange={(e) => setSelectedCourseKey(e.target.value)}
+                  >
+                    <option value="">{c.courseSelectPlaceholder}</option>
+                    <option value="level-i">{c.programNames["level-i"]}</option>
+                    <option value="level-ii">{c.programNames["level-ii"]}</option>
+                    <option value="level-iii">{c.programNames["level-iii"]}</option>
+                    <option value="level-iv">{c.programNames["level-iv"]}</option>
+                  </select>
+                </div>
+              ) : (
+                <p className="contactSectionText contactProgramValue">
+                  {c.pathwayName}
+                </p>
+              )}
             </ContactSection>
           )}
 
           <ContactSection
-            number={programNice ? "02" : "01"}
+            number={(selectedCourseKey || pathwayInquiry) ? "02" : "01"}
             eyebrow={submitted ? c.successEyebrow : c.emailEyebrow}
             title={submitted ? c.successTitle : c.emailTitle}
           >
@@ -183,14 +280,70 @@ export default function Contact() {
               <>
                 <p className="contactSectionText contactFormIntro">{c.formIntro}</p>
                 <form className="contactForm" action="https://api.staticforms.dev/submit" method="POST">
-                  <input type="hidden" name="apiKey" value={process.env.NEXT_PUBLIC_STATICFORMS_CONTACT_KEY || ""} />
+                  <input
+                    type="hidden"
+                    name="apiKey"
+                    value={process.env.NEXT_PUBLIC_STATICFORMS_CONTACT_KEY || ""}
+                  />
                   <input type="hidden" name="redirectTo" value={redirectTo} />
                   <input type="hidden" name="Form" value="ICSI Website Contact" />
-                  {programNice && <input type="hidden" name="Selected Program" value={programNice} />}
+                  <input type="hidden" name="subject" value={staticFormSubject} />
+
+                  {selectedCourseCanonical && (
+                    <>
+                      <input
+                        type="hidden"
+                        name="Selected Course Level"
+                        value={selectedCourseCanonical}
+                      />
+                      <input
+                        type="hidden"
+                        name="Enquiry Type"
+                        value="Course Application"
+                      />
+                    </>
+                  )}
+
+                  {pathwayInquiry && (
+                    <input
+                      type="hidden"
+                      name="Enquiry Type"
+                      value="Education Pathway Guidance"
+                    />
+                  )}
+
+                  {programNice && (
+                    <input
+                      type="hidden"
+                      name="Selected Program"
+                      value={programNice}
+                    />
+                  )}
                   <div className="contactHoneypot" aria-hidden="true">
                     <label htmlFor="contact-honeypot">Leave this empty</label>
                     <input id="contact-honeypot" type="text" name="honeypot" tabIndex="-1" autoComplete="off" />
                   </div>
+
+                  {!selectedCourseKey && !pathwayInquiry && (
+                    <div className="contactField contactFieldFull">
+                      <label className="contactLabel" htmlFor="courseLevelOptional">
+                        {c.courseFieldLabel} <span className="contactOptional">({c.optional})</span>
+                      </label>
+                      <select
+                        id="courseLevelOptional"
+                        className="contactCourseSelect"
+                        value={selectedCourseKey}
+                        onChange={(e) => setSelectedCourseKey(e.target.value)}
+                      >
+                        <option value="">{c.courseSelectPlaceholder}</option>
+                        <option value="level-i">{c.programNames["level-i"]}</option>
+                        <option value="level-ii">{c.programNames["level-ii"]}</option>
+                        <option value="level-iii">{c.programNames["level-iii"]}</option>
+                        <option value="level-iv">{c.programNames["level-iv"]}</option>
+                      </select>
+                    </div>
+                  )}
+
                   <div className="contactField">
                     <label className="contactLabel" htmlFor="firstName">{c.firstName}</label>
                     <input className="contactInput" id="firstName" name="First Name" type="text" autoComplete="given-name" required />
@@ -221,7 +374,7 @@ export default function Contact() {
           </ContactSection>
 
           <ContactSection
-            number={programNice ? "03" : "02"}
+            number={(selectedCourseKey || pathwayInquiry) ? "03" : "02"}
             eyebrow={c.whatsappEyebrow}
             title={c.whatsappTitle}
           >
@@ -237,7 +390,7 @@ export default function Contact() {
           </ContactSection>
 
           <ContactSection
-            number={programNice ? "04" : "03"}
+            number={(selectedCourseKey || pathwayInquiry) ? "04" : "03"}
             eyebrow={c.closingEyebrow}
             title={c.closingTitle}
           >
@@ -396,6 +549,55 @@ export default function Contact() {
         .contactPage .contactProgramValue {
           font-size: clamp(1.12rem, 1.6vw, 1.4rem);
           opacity: 0.84;
+        }
+
+        .contactPage .contactProgramLabel {
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.68rem;
+          line-height: 1.4;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 700;
+          color: #601818;
+        }
+
+        .contactPage .contactCourseSelectorWrap {
+          max-width: 520px;
+        }
+
+        .contactPage .contactCourseSelectorLabel {
+          display: block;
+          margin-bottom: 10px;
+        }
+
+        .contactPage .contactCourseSelect {
+          width: 100%;
+          min-height: 54px;
+          padding: 12px 38px 12px 0;
+          border: 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.24);
+          border-radius: 0;
+          outline: none;
+          background-color: transparent;
+          color: #121214;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 1rem;
+          font-weight: 400;
+          appearance: none;
+          -webkit-appearance: none;
+          background-image:
+            linear-gradient(45deg, transparent 50%, #601818 50%),
+            linear-gradient(135deg, #601818 50%, transparent 50%);
+          background-position:
+            calc(100% - 16px) 24px,
+            calc(100% - 10px) 24px;
+          background-size: 6px 6px, 6px 6px;
+          background-repeat: no-repeat;
+          cursor: pointer;
+        }
+
+        .contactPage .contactCourseSelect:focus {
+          border-bottom-color: #601818;
         }
 
         .contactPage .contactFormIntro { margin-bottom: 38px; }
