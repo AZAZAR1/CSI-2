@@ -153,8 +153,37 @@ export default function About() {
             <p className="aboutSectionText founderText">{c.founderBody}</p>
           </AboutSection>
 
+          <section className="aboutFlyerSection">
+            <div className="aboutFlyerIntro">
+              <span className="aboutSectionNum">03</span>
+              <span className="aboutSectionEyebrow">
+                {lang === "fr"
+                  ? "Présence dans l’industrie"
+                  : lang === "de"
+                  ? "Branchenpräsenz"
+                  : "Industry Presence"}
+              </span>
+              <h2 className="aboutFlyerTitle">Decoding Cigars by ICSI</h2>
+              <p className="aboutFlyerText">
+                {lang === "fr"
+                  ? "À InterTabac 2026, Anthony Azar présente une session consacrée à la manière dont la structure du blend, le comportement du tabac et le Cigar Peak-Flavor System® se combinent pour favoriser une expérience plus cohérente et plus aboutie."
+                  : lang === "de"
+                  ? "Auf der InterTabac 2026 zeigt Anthony Azar, wie Blend-Struktur, Tabakverhalten und das Cigar Peak-Flavor System® zusammenwirken, um ein konsistenteres und hochwertigeres Zigarrenerlebnis zu unterstützen."
+                  : "At InterTabac 2026, Anthony Azar presents a live session exploring how blend structure, tobacco behaviour and the Cigar Peak-Flavor System® come together to support a more consistent and elevated cigar experience."}
+              </p>
+            </div>
+
+            <div className="aboutFlyerFrame">
+              <img
+                src="/img/Decoding-cigars.jpeg"
+                alt="Decoding Cigars by ICSI at InterTabac 2026"
+                className="aboutFlyerImage"
+              />
+            </div>
+          </section>
+
           <AboutSection
-            number="03"
+            number="04"
             eyebrow={c.companyEyebrow}
             title={c.companyTitle}
           >
@@ -171,14 +200,14 @@ export default function About() {
         ========================================================= */
 
         .aboutPage {
-          background: #fff;
-          color: #121214;
+          background: #faf4e8;
+          color: #16161f;
         }
 
         .aboutPage .aboutHero {
           margin: 0;
           padding: 0;
-          background: #fff;
+          background: #faf4e8;
           border: 0;
         }
 
@@ -190,7 +219,7 @@ export default function About() {
         .aboutPage .aboutKicker {
           display: block;
           margin: 0 0 22px;
-          color: #121214;
+          color: #c0242f;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
           font-size: 0.68rem;
           line-height: 1;
@@ -203,7 +232,7 @@ export default function About() {
         .aboutPage .aboutHeroTitle {
           margin: 0 0 42px;
           max-width: 14ch;
-          color: #121214;
+          color: #16161f;
           font-family: "Playfair Display", Georgia, serif;
           font-size: clamp(3rem, 5.2vw, 5.4rem);
           line-height: 0.98;
@@ -215,7 +244,7 @@ export default function About() {
           margin: 0;
           max-width: 78ch;
           padding-left: max(0px, 33%);
-          color: #121214;
+          color: #16161f;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
           font-size: clamp(1.05rem, 1.4vw, 1.25rem);
           line-height: 1.72;
@@ -245,7 +274,7 @@ export default function About() {
           grid-template-columns: 220px 1px minmax(0, 1fr);
           column-gap: 72px;
           padding: 58px 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          border-top: 1px solid rgba(22, 22, 31, 0.12);
         }
 
         .aboutPage .aboutSectionMeta {
@@ -255,7 +284,7 @@ export default function About() {
         .aboutPage .aboutSectionNum {
           display: block;
           margin: 0 0 24px;
-          color: #121214;
+          color: #c8a24a;
           font-family: "Playfair Display", Georgia, serif;
           font-size: clamp(1.85rem, 2.4vw, 2.35rem);
           line-height: 1;
@@ -267,7 +296,7 @@ export default function About() {
         .aboutPage .aboutSectionEyebrow {
           display: block;
           max-width: 24ch;
-          color: #121214;
+          color: #c0242f;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
           font-size: 0.64rem;
           line-height: 1.45;
@@ -280,7 +309,7 @@ export default function About() {
         .aboutPage .aboutSectionDivider {
           width: 1px;
           min-height: 220px;
-          background: rgba(0, 0, 0, 0.08);
+          background: rgba(22, 22, 31, 0.10);
         }
 
         .aboutPage .aboutSectionBody {
@@ -291,7 +320,7 @@ export default function About() {
         .aboutPage .aboutSectionTitle {
           margin: 0 0 24px;
           max-width: 18ch;
-          color: #121214;
+          color: #16161f;
           font-family: "Playfair Display", Georgia, serif;
           font-size: clamp(1.85rem, 2.35vw, 2.55rem);
           line-height: 1.08;
@@ -308,7 +337,7 @@ export default function About() {
         .aboutPage .aboutSectionText {
           margin: 0;
           max-width: 76ch;
-          color: #121214;
+          color: #16161f;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
           font-size: 0.98rem;
           line-height: 1.78;
@@ -324,6 +353,63 @@ export default function About() {
           max-width: 62ch;
         }
 
+
+        /* =========================================================
+           INDUSTRY AUTHORITY / INTERTABAC FLYER
+           The flyer is intentionally large: it functions as proof of
+           founder visibility and trade-industry engagement.
+        ========================================================= */
+
+        .aboutPage .aboutFlyerSection {
+          display: grid;
+          grid-template-columns: minmax(260px, 0.55fr) minmax(520px, 1fr);
+          gap: 76px;
+          align-items: start;
+          padding: 78px 0 92px;
+          border-top: 1px solid rgba(22, 22, 31, 0.12);
+        }
+
+        .aboutPage .aboutFlyerIntro {
+          position: sticky;
+          top: 110px;
+          padding-top: 2px;
+        }
+
+        .aboutPage .aboutFlyerTitle {
+          margin: 28px 0 22px;
+          max-width: 12ch;
+          color: #16161f;
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: clamp(2.35rem, 3.4vw, 3.8rem);
+          line-height: 1;
+          letter-spacing: -0.05em;
+          font-weight: 400;
+        }
+
+        .aboutPage .aboutFlyerText {
+          margin: 0;
+          max-width: 46ch;
+          color: #16161f;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.98rem;
+          line-height: 1.72;
+          font-weight: 300;
+          opacity: 0.76;
+        }
+
+        .aboutPage .aboutFlyerFrame {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+
+        .aboutPage .aboutFlyerImage {
+          display: block;
+          width: min(100%, 760px);
+          height: auto;
+          box-shadow: 0 24px 64px rgba(22, 22, 31, 0.16);
+        }
+
         @media (max-width: 1100px) {
           .aboutPage .aboutEditorialSection {
             grid-template-columns: 180px 1px minmax(0, 1fr);
@@ -336,6 +422,24 @@ export default function About() {
         }
 
         @media (max-width: 820px) {
+          .aboutPage .aboutFlyerSection {
+            grid-template-columns: 1fr;
+            gap: 38px;
+            padding: 56px 0 66px;
+          }
+
+          .aboutPage .aboutFlyerIntro {
+            position: static;
+          }
+
+          .aboutPage .aboutFlyerTitle {
+            max-width: none;
+          }
+
+          .aboutPage .aboutFlyerImage {
+            width: min(100%, 700px);
+          }
+
           .aboutPage .aboutHeroInner {
             padding-top: 46px;
             padding-bottom: 62px;
@@ -380,6 +484,23 @@ export default function About() {
         }
 
         @media (max-width: 560px) {
+          .aboutPage .aboutFlyerSection {
+            padding: 46px 0 54px;
+          }
+
+          .aboutPage .aboutFlyerTitle {
+            font-size: clamp(2rem, 9vw, 2.75rem);
+          }
+
+          .aboutPage .aboutFlyerText {
+            font-size: 0.92rem;
+            line-height: 1.64;
+          }
+
+          .aboutPage .aboutFlyerImage {
+            width: 100%;
+          }
+
           .aboutPage .aboutHeroInner {
             padding-top: 40px;
             padding-bottom: 52px;
@@ -419,4 +540,3 @@ export default function About() {
     </Layout>
   );
 }
-
