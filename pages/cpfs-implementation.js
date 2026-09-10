@@ -4,81 +4,304 @@ import { useRouter } from "next/router";
 
 const copy = {
   en: {
-    kicker: "For Retailers, Lounges & Hospitality Groups",
-    title: "Bring CPFS intelligence into your venue",
+    kicker: "Hospitality Solutions",
+    title: "A state-of-the-art operating standard for cigar hospitality.",
     intro:
-      "ICSI's Cigar Peak-Flavor System® helps professional venues turn blend intelligence into more precise storage, serving, recommendation and pairing decisions.",
-    formEyebrow: "CPFS Implementation",
-    formTitle: "Explore CPFS for your venue",
+      "Training, technology and technical implementation designed to help venues store, settle, serve and recommend cigars with greater precision and consistency.",
+    heroCta: "Request a CPFS assessment",
+
+    changesEyebrow: "What CPFS Changes",
+    changesTitle: "From storage conditions to service decisions",
+    changesIntro:
+      "CPFS connects the physical environment, cigar condition, staff capability and digital intelligence into one operating system for cigar hospitality.",
+    changes: [
+      {
+        title: "Store",
+        body: "Move beyond one-condition-fits-all storage by aligning inventory with blend-specific humidity requirements and operational storage zones.",
+      },
+      {
+        title: "Settle",
+        body: "Understand when incoming or relocated stock has equalised sufficiently to be released for service.",
+      },
+      {
+        title: "Serve",
+        body: "Establish repeatable preparation and serving conditions that reflect blend characteristics and product condition.",
+      },
+      {
+        title: "Recommend",
+        body: "Give staff structured intelligence behind recommendations, rather than relying only on individual memory or experience.",
+      },
+      {
+        title: "Cross-sell",
+        body: "Identify structurally similar cigars already available in the venue inventory when a guest wants an alternative.",
+      },
+      {
+        title: "Upsell",
+        body: "Support beverage recommendations through structured pairing logic linked to the cigar and the venue's available selection.",
+      },
+    ],
+
+    journeyEyebrow: "Implementation Journey",
+    journeyTitle: "A controlled implementation, not a software installation",
+    journeyIntro:
+      "ICSI implements CPFS as an operating model across the venue. The work starts with the physical environment and inventory, then integrates staff capability, service procedures and PredictorPro.",
+    journey: [
+      {
+        title: "Venue assessment",
+        body: "Assess inventory, humidor architecture, temperature and RH control, airflow, sensors, current service workflow and existing operating practices.",
+      },
+      {
+        title: "Blend mapping",
+        body: "Map the active venue inventory against ICSI blend intelligence, classify references and identify products requiring individual verification.",
+      },
+      {
+        title: "CPFS calibration",
+        body: "Establish storage zones, target conditions, transition rules, settling periods, service-readiness criteria and monitoring thresholds.",
+      },
+      {
+        title: "Team certification",
+        body: "Train relevant staff in humidity and moisture behaviour, diagnostics, settling, storage allocation, service methodology and applied advisory.",
+      },
+      {
+        title: "PredictorPro deployment",
+        body: "Configure the venue account, upload inventory, activate venue-specific availability, recommendations, pairing and similar-blend intelligence.",
+      },
+      {
+        title: "Ongoing optimisation",
+        body: "Maintain standards through monitoring, inventory updates, staff compliance, product reassessment, performance review and periodic recalibration.",
+      },
+    ],
+    journeyCta: "Discuss CPFS implementation",
+
+    proofEyebrow: "One Controlled System",
+    proofTitle: "Physical environment. Inventory. People. Technology. Service.",
+    proofBody:
+      "A CPFS implementation is only complete when the venue's physical environment, inventory classification, product condition, staff capability, digital system and service process are operating together as one controlled system.",
+
+    formEyebrow: "CPFS Assessment",
+    formTitle: "Discuss your venue",
     formIntro:
-      "Leave your details and venue name. Our team will contact you to discuss how CPFS can be implemented within your retail, lounge or hospitality environment.",
+      "Tell us who you are and which venue or group you represent. ICSI will contact you to discuss your current environment and the most relevant CPFS implementation pathway.",
     firstName: "First name",
     familyName: "Family name",
     email: "Email",
     venueName: "Venue / group name",
-    submit: "Submit",
+    submit: "Request assessment",
     privacy:
       "By submitting this form, you agree that ICSI may contact you regarding CPFS implementation and related professional solutions.",
     successEyebrow: "Thank You",
-    successTitle: "Your enquiry has been received",
+    successTitle: "Your assessment request has been received",
     successText:
-      "Thank you for your interest in CPFS. Our team will contact you to discuss your venue and the most relevant implementation pathway.",
+      "Thank you for your interest in CPFS. Our team will contact you to discuss your venue, current operating environment and the most relevant implementation pathway.",
+
     seoTitle:
-      "CPFS for Retailers, Lounges & Hospitality Groups | ICSI",
+      "CPFS Hospitality Solutions for Cigar Lounges & Venues | ICSI",
     seoDescription:
-      "Explore ICSI Cigar Peak-Flavor System implementation for retailers, cigar lounges and hospitality groups.",
+      "Explore CPFS implementation for cigar lounges, retailers and hospitality groups: venue assessment, blend mapping, storage and settling standards, staff training and PredictorPro deployment.",
   },
+
   fr: {
-    kicker: "Pour détaillants, lounges & groupes hôteliers",
-    title: "Intégrez l'intelligence CPFS dans votre établissement",
+    kicker: "Solutions Hospitality",
+    title: "Un standard opérationnel de pointe pour l’hospitalité cigare.",
     intro:
-      "Le Cigar Peak-Flavor System® d'ICSI aide les établissements professionnels à transformer l'intelligence des assemblages en décisions plus précises de conservation, de service, de recommandation et d'accords.",
-    formEyebrow: "Implémentation CPFS",
-    formTitle: "Découvrez CPFS pour votre établissement",
+      "Formation, technologie et implémentation technique conçues pour aider les établissements à conserver, stabiliser, servir et recommander les cigares avec davantage de précision et de constance.",
+    heroCta: "Demander une évaluation CPFS",
+
+    changesEyebrow: "Ce que CPFS transforme",
+    changesTitle: "Des conditions de conservation aux décisions de service",
+    changesIntro:
+      "CPFS relie l’environnement physique, l’état des cigares, les compétences de l’équipe et l’intelligence digitale dans un même système opérationnel pour l’hospitalité cigare.",
+    changes: [
+      {
+        title: "Conserver",
+        body: "Dépasser l’approche d’une condition unique pour tous les cigares en alignant l’inventaire sur les besoins d’humidité des blends et les zones de conservation.",
+      },
+      {
+        title: "Stabiliser",
+        body: "Comprendre quand les stocks entrants ou déplacés sont suffisamment équilibrés pour être remis en service.",
+      },
+      {
+        title: "Servir",
+        body: "Établir des standards reproductibles de préparation et de service tenant compte des caractéristiques du blend et de l’état du produit.",
+      },
+      {
+        title: "Recommander",
+        body: "Donner aux équipes une intelligence structurée derrière chaque recommandation, au-delà de la seule mémoire ou expérience individuelle.",
+      },
+      {
+        title: "Cross-sell",
+        body: "Identifier dans l’inventaire de l’établissement des cigares structurellement similaires lorsqu’un client souhaite une alternative.",
+      },
+      {
+        title: "Upsell",
+        body: "Soutenir les recommandations de boissons grâce à une logique d’accord structurée liée au cigare et à la sélection disponible dans l’établissement.",
+      },
+    ],
+
+    journeyEyebrow: "Parcours d’implémentation",
+    journeyTitle: "Une implémentation contrôlée, pas une simple installation logicielle",
+    journeyIntro:
+      "ICSI déploie CPFS comme un modèle opérationnel à l’échelle de l’établissement. Le travail commence par l’environnement physique et l’inventaire, puis intègre les compétences de l’équipe, les procédures de service et PredictorPro.",
+    journey: [
+      {
+        title: "Évaluation de l’établissement",
+        body: "Évaluer l’inventaire, l’architecture des humidors, le contrôle température/RH, le flux d’air, les capteurs, le parcours de service et les pratiques existantes.",
+      },
+      {
+        title: "Cartographie des blends",
+        body: "Mapper l’inventaire actif avec l’intelligence ICSI, classifier les références et identifier les produits nécessitant une vérification individuelle.",
+      },
+      {
+        title: "Calibration CPFS",
+        body: "Définir les zones de conservation, conditions cibles, règles de transition, périodes de stabilisation, critères de disponibilité au service et seuils de surveillance.",
+      },
+      {
+        title: "Certification des équipes",
+        body: "Former les collaborateurs concernés à l’humidité, au comportement du produit, au diagnostic, à la stabilisation, à l’allocation de stockage, au service et au conseil.",
+      },
+      {
+        title: "Déploiement PredictorPro",
+        body: "Configurer le compte de l’établissement, charger l’inventaire et activer disponibilité locale, recommandations, accords et intelligence de blends similaires.",
+      },
+      {
+        title: "Optimisation continue",
+        body: "Maintenir les standards par le suivi, les mises à jour d’inventaire, le contrôle des pratiques, la réévaluation produit, les revues de performance et le recalibrage.",
+      },
+    ],
+    journeyCta: "Discuter de l’implémentation CPFS",
+
+    proofEyebrow: "Un système contrôlé",
+    proofTitle: "Environnement. Inventaire. Équipe. Technologie. Service.",
+    proofBody:
+      "Une implémentation CPFS n’est complète que lorsque l’environnement physique, la classification de l’inventaire, l’état des produits, les compétences de l’équipe, le système digital et le processus de service fonctionnent ensemble comme un système contrôlé.",
+
+    formEyebrow: "Évaluation CPFS",
+    formTitle: "Parlons de votre établissement",
     formIntro:
-      "Laissez vos coordonnées et le nom de votre établissement. Notre équipe vous contactera pour discuter de la manière dont CPFS peut être intégré dans votre environnement retail, lounge ou hospitality.",
+      "Indiquez-nous qui vous êtes et quel établissement ou groupe vous représentez. ICSI vous contactera afin d’échanger sur votre environnement actuel et le parcours d’implémentation CPFS le plus pertinent.",
     firstName: "Prénom",
     familyName: "Nom de famille",
     email: "Email",
-    venueName: "Nom de l'établissement / groupe",
-    submit: "Envoyer",
+    venueName: "Nom de l’établissement / groupe",
+    submit: "Demander une évaluation",
     privacy:
-      "En soumettant ce formulaire, vous acceptez qu'ICSI vous contacte au sujet de l'implémentation CPFS et des solutions professionnelles associées.",
+      "En soumettant ce formulaire, vous acceptez qu’ICSI vous contacte au sujet de l’implémentation CPFS et des solutions professionnelles associées.",
     successEyebrow: "Merci",
-    successTitle: "Votre demande a bien été reçue",
+    successTitle: "Votre demande d’évaluation a bien été reçue",
     successText:
-      "Merci pour votre intérêt envers CPFS. Notre équipe vous contactera afin d'échanger sur votre établissement et le parcours d'implémentation le plus adapté.",
+      "Merci pour votre intérêt envers CPFS. Notre équipe vous contactera afin d’échanger sur votre établissement, votre environnement actuel et le parcours d’implémentation le plus adapté.",
+
     seoTitle:
-      "CPFS pour détaillants, lounges & groupes hôteliers | ICSI",
+      "Solutions CPFS pour lounges & établissements hospitality | ICSI",
     seoDescription:
-      "Découvrez l'implémentation du Cigar Peak-Flavor System d'ICSI pour détaillants, lounges et groupes hôteliers.",
+      "Découvrez l’implémentation CPFS pour lounges, détaillants et groupes hospitality : diagnostic, cartographie des blends, standards de conservation et de stabilisation, formation et PredictorPro.",
   },
+
   de: {
-    kicker: "Für Händler, Lounges & Hospitality-Gruppen",
-    title: "Bringen Sie CPFS-Intelligenz in Ihren Betrieb",
+    kicker: "Hospitality-Lösungen",
+    title: "Ein hochmoderner Betriebsstandard für Zigarren-Hospitality.",
     intro:
-      "Das Cigar Peak-Flavor System® von ICSI unterstützt professionelle Betriebe dabei, Blend-Intelligence in präzisere Entscheidungen zu Lagerung, Service, Empfehlung und Pairing zu übersetzen.",
-    formEyebrow: "CPFS Implementierung",
-    formTitle: "Entdecken Sie CPFS für Ihren Betrieb",
+      "Training, Technologie und technische Implementierung, damit Betriebe Zigarren präziser und konsistenter lagern, stabilisieren, servieren und empfehlen können.",
+    heroCta: "CPFS-Bewertung anfragen",
+
+    changesEyebrow: "Was CPFS verändert",
+    changesTitle: "Von Lagerbedingungen bis zu Serviceentscheidungen",
+    changesIntro:
+      "CPFS verbindet physische Umgebung, Zigarrenzustand, Mitarbeiterkompetenz und digitale Intelligenz zu einem Betriebssystem für Zigarren-Hospitality.",
+    changes: [
+      {
+        title: "Lagern",
+        body: "Verlassen Sie den Einheitsansatz und richten Sie das Inventar an blendspezifischen Feuchtigkeitsanforderungen und operativen Lagerzonen aus.",
+      },
+      {
+        title: "Stabilisieren",
+        body: "Erkennen Sie, wann neu eingegangene oder verlagerte Bestände ausreichend ausgeglichen und für den Service freigegeben sind.",
+      },
+      {
+        title: "Servieren",
+        body: "Definieren Sie wiederholbare Vorbereitungs- und Servicebedingungen, die Blend-Eigenschaften und Produktzustand berücksichtigen.",
+      },
+      {
+        title: "Empfehlen",
+        body: "Geben Sie Mitarbeitern strukturierte Entscheidungsintelligenz, statt Empfehlungen ausschließlich auf individuelle Erinnerung oder Erfahrung zu stützen.",
+      },
+      {
+        title: "Cross-Sell",
+        body: "Finden Sie strukturell ähnliche Zigarren im vorhandenen Inventar, wenn ein Gast eine Alternative sucht.",
+      },
+      {
+        title: "Upsell",
+        body: "Unterstützen Sie Getränkeempfehlungen mit strukturierter Pairing-Logik auf Basis der Zigarre und der verfügbaren Auswahl des Betriebs.",
+      },
+    ],
+
+    journeyEyebrow: "Implementierungsweg",
+    journeyTitle: "Eine kontrollierte Implementierung, keine Softwareinstallation",
+    journeyIntro:
+      "ICSI implementiert CPFS als Betriebsmodell für den gesamten Betrieb. Die Arbeit beginnt mit physischer Umgebung und Inventar und integriert anschließend Mitarbeiterkompetenz, Serviceprozesse und PredictorPro.",
+    journey: [
+      {
+        title: "Betriebsanalyse",
+        body: "Analyse von Inventar, Humidor-Architektur, Temperatur- und RH-Steuerung, Luftstrom, Sensorik, Serviceablauf und bestehenden Arbeitsweisen.",
+      },
+      {
+        title: "Blend-Mapping",
+        body: "Abgleich des aktiven Inventars mit der ICSI Blend Intelligence, Klassifizierung der Referenzen und Identifikation individuell zu prüfender Produkte.",
+      },
+      {
+        title: "CPFS-Kalibrierung",
+        body: "Festlegung von Lagerzonen, Zielbedingungen, Übergangsregeln, Stabilisierungszeiten, Servicefreigabekriterien und Überwachungsschwellen.",
+      },
+      {
+        title: "Team-Zertifizierung",
+        body: "Schulung relevanter Mitarbeiter zu Feuchtigkeit, Produktverhalten, Diagnostik, Stabilisierung, Lagerzuordnung, Service und professioneller Beratung.",
+      },
+      {
+        title: "PredictorPro-Einführung",
+        body: "Konfiguration des Betriebskontos, Upload des Inventars und Aktivierung von lokaler Verfügbarkeit, Empfehlungen, Pairings und Similar-Blend Intelligence.",
+      },
+      {
+        title: "Laufende Optimierung",
+        body: "Aufrechterhaltung der Standards durch Monitoring, Inventarupdates, Mitarbeiter-Compliance, Produktneubewertung, Performance Reviews und Rekalibrierung.",
+      },
+    ],
+    journeyCta: "CPFS-Implementierung besprechen",
+
+    proofEyebrow: "Ein kontrolliertes System",
+    proofTitle: "Umgebung. Inventar. Menschen. Technologie. Service.",
+    proofBody:
+      "Eine CPFS-Implementierung ist erst dann abgeschlossen, wenn physische Umgebung, Inventarklassifizierung, Produktzustand, Mitarbeiterkompetenz, digitales System und Serviceprozess als ein kontrolliertes Gesamtsystem funktionieren.",
+
+    formEyebrow: "CPFS-Bewertung",
+    formTitle: "Sprechen wir über Ihren Betrieb",
     formIntro:
-      "Hinterlassen Sie Ihre Kontaktdaten und den Namen Ihres Betriebs. Unser Team wird sich mit Ihnen in Verbindung setzen, um die passende CPFS-Implementierung für Retail, Lounge oder Hospitality zu besprechen.",
+      "Teilen Sie uns mit, wer Sie sind und welchen Betrieb oder welche Gruppe Sie vertreten. ICSI wird Sie kontaktieren, um Ihre aktuelle Umgebung und den passenden CPFS-Implementierungsweg zu besprechen.",
     firstName: "Vorname",
     familyName: "Nachname",
     email: "E-Mail",
     venueName: "Name des Betriebs / der Gruppe",
-    submit: "Absenden",
+    submit: "Bewertung anfragen",
     privacy:
       "Mit dem Absenden dieses Formulars erklären Sie sich damit einverstanden, dass ICSI Sie bezüglich der CPFS-Implementierung und entsprechender professioneller Lösungen kontaktiert.",
     successEyebrow: "Vielen Dank",
-    successTitle: "Ihre Anfrage ist eingegangen",
+    successTitle: "Ihre Bewertungsanfrage ist eingegangen",
     successText:
-      "Vielen Dank für Ihr Interesse an CPFS. Unser Team wird sich mit Ihnen in Verbindung setzen, um Ihren Betrieb und den passenden Implementierungsweg zu besprechen.",
+      "Vielen Dank für Ihr Interesse an CPFS. Unser Team wird Sie kontaktieren, um Ihren Betrieb, die aktuelle Umgebung und den passenden Implementierungsweg zu besprechen.",
+
     seoTitle:
-      "CPFS für Händler, Lounges & Hospitality-Gruppen | ICSI",
+      "CPFS Hospitality-Lösungen für Lounges & Betriebe | ICSI",
     seoDescription:
-      "Entdecken Sie die Implementierung des ICSI Cigar Peak-Flavor System für Händler, Zigarrenlounges und Hospitality-Gruppen.",
+      "CPFS-Implementierung für Lounges, Händler und Hospitality-Gruppen: Betriebsanalyse, Blend-Mapping, Lager- und Stabilisierungsstandards, Training und PredictorPro.",
   },
 };
+
+function scrollToAssessment(event) {
+  event.preventDefault();
+  const target = document.getElementById("cpfs-assessment");
+  if (target) {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
 
 export default function CPFSImplementation() {
   const router = useRouter();
@@ -103,42 +326,137 @@ export default function CPFSImplementation() {
         path="/cpfs-implementation"
       />
 
-      <div className={`tradeLandingPage lang-${lang}`}>
-        <section className="tradeHero">
-          <div className="container tradeHeroInner">
-            <span className="tradeKicker">{c.kicker}</span>
-            <h1 className="tradeHeroTitle">{c.title}</h1>
-            <p className="tradeHeroLead">{c.intro}</p>
+      <div className={`cpfsSalesPage lang-${lang}`}>
+        <section className="cpfsHero">
+          <div className="container cpfsHeroInner">
+            <div className="cpfsHeroCopy">
+              <span className="cpfsKicker">Cigar Peak-Flavor System®</span>
+              <h1 className="cpfsHeroTitle">{c.title}</h1>
+              <p className="cpfsHeroLead">{c.intro}</p>
+
+              <a
+                href="#cpfs-assessment"
+                className="cpfsHeroCta"
+                onClick={scrollToAssessment}
+              >
+                <span>{c.heroCta}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+
+            <div className="cpfsHeroLogoWrap">
+              <img
+                src="/img/CPFS.png"
+                alt="Cigar Peak-Flavor System trademarked logo"
+                className="cpfsHeroLogo"
+              />
+            </div>
           </div>
         </section>
 
-        <main className="container tradeMain">
-          <section className="tradeEditorialSection">
-            <div className="tradeSectionMeta">
-              <span className="tradeSectionNum">01</span>
-              <span className="tradeSectionEyebrow">
+        <section className="cpfsChanges">
+          <div className="container">
+            <div className="cpfsSectionHead">
+              <span className="cpfsSectionNum">01</span>
+              <div>
+                <span className="cpfsEyebrow">{c.changesEyebrow}</span>
+                <h2>{c.changesTitle}</h2>
+                <p>{c.changesIntro}</p>
+              </div>
+            </div>
+
+            <div className="cpfsChangeGrid">
+              {c.changes.map((item, index) => (
+                <article className="cpfsChangeCard" key={item.title}>
+                  <span className="cpfsCardNum">0{index + 1}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="cpfsJourney">
+          <div className="container">
+            <div className="cpfsJourneyHead">
+              <span className="cpfsSectionNum cpfsSectionNumLight">02</span>
+              <div>
+                <span className="cpfsEyebrow cpfsEyebrowLight">
+                  {c.journeyEyebrow}
+                </span>
+                <h2>{c.journeyTitle}</h2>
+                <p>{c.journeyIntro}</p>
+              </div>
+            </div>
+
+            <div className="cpfsJourneyList">
+              {c.journey.map((step, index) => (
+                <article className="cpfsJourneyStep" key={step.title}>
+                  <div className="cpfsJourneyNumber">
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
+                  <div className="cpfsJourneyCopy">
+                    <h3>{step.title}</h3>
+                    <p>{step.body}</p>
+                  </div>
+                  {index < c.journey.length - 1 && (
+                    <div className="cpfsJourneyArrow" aria-hidden="true">↓</div>
+                  )}
+                </article>
+              ))}
+            </div>
+
+            <a
+              href="#cpfs-assessment"
+              className="cpfsJourneyCta"
+              onClick={scrollToAssessment}
+            >
+              <span>{c.journeyCta}</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </section>
+
+        <section className="cpfsProof">
+          <div className="container cpfsProofGrid">
+            <div>
+              <span className="cpfsSectionNum">03</span>
+              <span className="cpfsEyebrow">{c.proofEyebrow}</span>
+            </div>
+
+            <div>
+              <h2>{c.proofTitle}</h2>
+              <p>{c.proofBody}</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="cpfsAssessment" id="cpfs-assessment">
+          <div className="container cpfsAssessmentGrid">
+            <div className="cpfsAssessmentIntro">
+              <span className="cpfsSectionNum">04</span>
+              <span className="cpfsEyebrow">
                 {submitted ? c.successEyebrow : c.formEyebrow}
               </span>
             </div>
 
-            <div className="tradeSectionDivider" />
-
-            <div className="tradeSectionBody">
+            <div className="cpfsAssessmentBody">
               {submitted ? (
                 <>
-                  <div className="tradeSuccessMark">✓</div>
-                  <h2 className="tradeSectionTitle">{c.successTitle}</h2>
-                  <p className="tradeSectionText">{c.successText}</p>
+                  <div className="cpfsSuccessMark">✓</div>
+                  <h2>{c.successTitle}</h2>
+                  <p className="cpfsAssessmentText">{c.successText}</p>
                 </>
               ) : (
                 <>
-                  <h2 className="tradeSectionTitle">{c.formTitle}</h2>
-                  <p className="tradeSectionText tradeFormIntro">
+                  <h2>{c.formTitle}</h2>
+                  <p className="cpfsAssessmentText cpfsFormIntro">
                     {c.formIntro}
                   </p>
 
                   <form
-                    className="tradeForm"
+                    className="cpfsForm"
                     action="https://api.staticforms.dev/submit"
                     method="POST"
                   >
@@ -155,10 +473,10 @@ export default function CPFSImplementation() {
                     <input
                       type="hidden"
                       name="Form"
-                      value="CPFS Implementation — Trade Show Lead"
+                      value="CPFS Implementation — Assessment Request"
                     />
 
-                    <div className="tradeHoneypot" aria-hidden="true">
+                    <div className="cpfsHoneypot" aria-hidden="true">
                       <label htmlFor="cpfs-honeypot">Leave this empty</label>
                       <input
                         id="cpfs-honeypot"
@@ -169,12 +487,12 @@ export default function CPFSImplementation() {
                       />
                     </div>
 
-                    <div className="tradeField">
-                      <label className="tradeLabel" htmlFor="firstName">
+                    <div className="cpfsField">
+                      <label className="cpfsLabel" htmlFor="firstName">
                         {c.firstName}
                       </label>
                       <input
-                        className="tradeInput"
+                        className="cpfsInput"
                         id="firstName"
                         name="First Name"
                         type="text"
@@ -183,12 +501,12 @@ export default function CPFSImplementation() {
                       />
                     </div>
 
-                    <div className="tradeField">
-                      <label className="tradeLabel" htmlFor="familyName">
+                    <div className="cpfsField">
+                      <label className="cpfsLabel" htmlFor="familyName">
                         {c.familyName}
                       </label>
                       <input
-                        className="tradeInput"
+                        className="cpfsInput"
                         id="familyName"
                         name="Family Name"
                         type="text"
@@ -197,12 +515,12 @@ export default function CPFSImplementation() {
                       />
                     </div>
 
-                    <div className="tradeField tradeFieldFull">
-                      <label className="tradeLabel" htmlFor="email">
+                    <div className="cpfsField cpfsFieldFull">
+                      <label className="cpfsLabel" htmlFor="email">
                         {c.email}
                       </label>
                       <input
-                        className="tradeInput"
+                        className="cpfsInput"
                         id="email"
                         name="email"
                         type="email"
@@ -211,12 +529,12 @@ export default function CPFSImplementation() {
                       />
                     </div>
 
-                    <div className="tradeField tradeFieldFull">
-                      <label className="tradeLabel" htmlFor="venueName">
+                    <div className="cpfsField cpfsFieldFull">
+                      <label className="cpfsLabel" htmlFor="venueName">
                         {c.venueName}
                       </label>
                       <input
-                        className="tradeInput"
+                        className="cpfsInput"
                         id="venueName"
                         name="Venue / Group Name"
                         type="text"
@@ -225,285 +543,438 @@ export default function CPFSImplementation() {
                       />
                     </div>
 
-                    <div className="tradeSubmitWrap">
-                      <button className="tradeSubmit" type="submit">
+                    <div className="cpfsSubmitWrap">
+                      <button className="cpfsSubmit" type="submit">
                         <span>{c.submit}</span>
-                        <span className="tradeArrow">→</span>
+                        <span className="cpfsSubmitArrow">→</span>
                       </button>
                     </div>
 
-                    <p className="tradePrivacy">{c.privacy}</p>
+                    <p className="cpfsPrivacy">{c.privacy}</p>
                   </form>
                 </>
               )}
             </div>
-          </section>
-        </main>
+          </div>
+        </section>
       </div>
 
       <style jsx global>{`
-        /* =========================================================
-           TRADE SHOW LANDING PAGE
-           Mirrors the editorial language of contact.js while
-           introducing a dedicated lead-capture form.
-        ========================================================= */
-
-        .tradeLandingPage {
-          background: #fff;
-          color: #121214;
+        .cpfsSalesPage {
+          --ivory: #faf4e8;
+          --ink: #16161f;
+          --crimson: #c0242f;
+          --bordeaux: #601818;
+          --gold: #c8a24a;
+          --lightGold: #e4cb8e;
+          background: var(--ivory);
+          color: var(--ink);
         }
 
-        .tradeLandingPage .tradeHero {
-          margin: 0;
-          padding: 0;
-          background: #fff;
-          border: 0;
-        }
-
-        .tradeLandingPage .tradeHeroInner {
-          padding-top: 60px;
-          padding-bottom: 82px;
-        }
-
-        .tradeLandingPage .tradeKicker {
-          display: block;
-          margin: 0 0 22px;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.68rem;
-          line-height: 1;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          font-weight: 500;
-          opacity: 0.42;
-        }
-
-        .tradeLandingPage .tradeHeroTitle {
-          margin: 0 0 42px;
-          max-width: 14ch;
-          color: #121214;
+        .cpfsSalesPage h1,
+        .cpfsSalesPage h2,
+        .cpfsSalesPage h3 {
           font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(3rem, 5.2vw, 5.4rem);
-          line-height: 0.98;
-          letter-spacing: -0.055em;
           font-weight: 400;
         }
 
-        .tradeLandingPage .tradeHeroLead {
+        .cpfsSalesPage p,
+        .cpfsSalesPage a,
+        .cpfsSalesPage span,
+        .cpfsSalesPage label,
+        .cpfsSalesPage input,
+        .cpfsSalesPage button {
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI,
+            Roboto, Helvetica, Arial;
+        }
+
+        .cpfsHero {
+          background: var(--ivory);
+          border-top: 3px solid var(--crimson);
+        }
+
+        .cpfsHeroInner {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(360px, 0.78fr);
+          gap: 72px;
+          align-items: center;
+          padding-top: 68px;
+          padding-bottom: 76px;
+        }
+
+        .cpfsHeroCopy {
+          min-width: 0;
+        }
+
+        .cpfsHeroLogoWrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 420px;
+        }
+
+        .cpfsHeroLogo {
+          display: block;
+          width: min(100%, 520px);
+          height: auto;
+          object-fit: contain;
+        }
+
+        .cpfsKicker,
+        .cpfsEyebrow {
+          display: block;
+          color: var(--crimson);
+          font-size: 0.67rem;
+          line-height: 1.35;
+          letter-spacing: 0.21em;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+
+        .cpfsHeroTitle {
+          margin: 24px 0 32px;
+          max-width: 17ch;
+          font-size: clamp(3.25rem, 5.8vw, 6.15rem);
+          line-height: 0.96;
+          letter-spacing: -0.055em;
+        }
+
+        .cpfsHeroLead {
           margin: 0;
-          max-width: 78ch;
-          padding-left: max(0px, 33%);
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+          max-width: 58ch;
+          padding-left: 0;
+          font-size: clamp(1.05rem, 1.35vw, 1.22rem);
+          line-height: 1.7;
+          font-weight: 300;
+          opacity: 0.76;
+        }
+
+        .cpfsHeroCta,
+        .cpfsJourneyCta {
+          display: inline-flex;
+          align-items: center;
+          gap: 18px;
+          min-height: 52px;
+          padding: 0 24px;
+          text-decoration: none;
+          text-transform: uppercase;
+          letter-spacing: 0.13em;
+          font-size: 0.7rem;
+          font-weight: 650;
+        }
+
+        .cpfsHeroCta {
+          margin-top: 38px;
+          margin-left: 0;
+          background: var(--bordeaux);
+          border: 1px solid var(--bordeaux);
+          color: var(--ivory);
+        }
+
+        .cpfsHeroCta:hover {
+          background: var(--crimson);
+          border-color: var(--crimson);
+        }
+
+        .cpfsChanges {
+          padding: 78px 0 96px;
+          border-top: 1px solid rgba(22, 22, 31, 0.12);
+        }
+
+        .cpfsSectionHead,
+        .cpfsJourneyHead {
+          display: grid;
+          grid-template-columns: 130px minmax(0, 1fr);
+          gap: 56px;
+          align-items: start;
+        }
+
+        .cpfsSectionNum {
+          display: block;
+          color: var(--gold);
+          font-family: "Playfair Display", Georgia, serif !important;
+          font-size: clamp(1.9rem, 2.5vw, 2.45rem);
+          line-height: 1;
+        }
+
+        .cpfsSectionHead h2,
+        .cpfsJourneyHead h2,
+        .cpfsProof h2,
+        .cpfsAssessmentBody h2 {
+          margin: 24px 0 20px;
+          max-width: 20ch;
+          font-size: clamp(2.25rem, 3.3vw, 3.65rem);
+          line-height: 1;
+          letter-spacing: -0.048em;
+        }
+
+        .cpfsSectionHead p,
+        .cpfsJourneyHead p,
+        .cpfsProof p,
+        .cpfsAssessmentText {
+          margin: 0;
+          max-width: 67ch;
+          font-size: 0.98rem;
           line-height: 1.72;
+          font-weight: 300;
+          opacity: 0.74;
+        }
+
+        .cpfsChangeGrid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          margin-top: 58px;
+          border-top: 1px solid rgba(22, 22, 31, 0.15);
+          border-left: 1px solid rgba(22, 22, 31, 0.15);
+        }
+
+        .cpfsChangeCard {
+          min-height: 270px;
+          padding: 30px 30px 32px;
+          border-right: 1px solid rgba(22, 22, 31, 0.15);
+          border-bottom: 1px solid rgba(22, 22, 31, 0.15);
+        }
+
+        .cpfsCardNum {
+          display: block;
+          margin-bottom: 34px;
+          color: var(--crimson);
+          font-size: 0.64rem;
+          letter-spacing: 0.18em;
+          font-weight: 600;
+        }
+
+        .cpfsChangeCard h3 {
+          margin: 0 0 15px;
+          font-size: clamp(1.65rem, 2.15vw, 2.1rem);
+          line-height: 1.05;
+        }
+
+        .cpfsChangeCard p {
+          margin: 0;
+          font-size: 0.9rem;
+          line-height: 1.66;
+          font-weight: 300;
+          opacity: 0.7;
+        }
+
+        .cpfsJourney {
+          padding: 92px 0 100px;
+          background: var(--bordeaux);
+          color: #fff;
+        }
+
+        .cpfsSectionNumLight,
+        .cpfsEyebrowLight {
+          color: var(--lightGold);
+        }
+
+        .cpfsJourneyHead p {
+          color: #fff;
+          opacity: 0.76;
+        }
+
+        .cpfsJourneyList {
+          margin-top: 58px;
+          border-top: 1px solid rgba(255,255,255,0.16);
+        }
+
+        .cpfsJourneyStep {
+          position: relative;
+          display: grid;
+          grid-template-columns: 110px minmax(0, 1fr) 60px;
+          gap: 28px;
+          align-items: start;
+          padding: 30px 0 32px;
+          border-bottom: 1px solid rgba(255,255,255,0.16);
+        }
+
+        .cpfsJourneyNumber {
+          color: var(--lightGold);
+          font-family: "Playfair Display", Georgia, serif !important;
+          font-size: 2rem;
+          line-height: 1;
+        }
+
+        .cpfsJourneyCopy h3 {
+          margin: 0 0 10px;
+          color: #fff;
+          font-size: 1.55rem;
+          line-height: 1.08;
+        }
+
+        .cpfsJourneyCopy p {
+          margin: 0;
+          max-width: 72ch;
+          color: #fff;
+          font-size: 0.9rem;
+          line-height: 1.65;
           font-weight: 300;
           opacity: 0.72;
         }
 
-        .tradeLandingPage.lang-fr .tradeHeroTitle,
-        .tradeLandingPage.lang-de .tradeHeroTitle {
-          max-width: 18ch;
-          font-size: clamp(2.55rem, 4.3vw, 4.65rem);
-        }
-
-        .tradeLandingPage.lang-fr .tradeHeroLead,
-        .tradeLandingPage.lang-de .tradeHeroLead {
-          max-width: 88ch;
-          font-size: clamp(0.98rem, 1.18vw, 1.12rem);
-          line-height: 1.66;
-        }
-
-        .tradeLandingPage .tradeMain {
-          padding-bottom: 100px;
-        }
-
-        .tradeLandingPage .tradeEditorialSection {
-          display: grid;
-          grid-template-columns: 220px 1px minmax(0, 1fr);
-          column-gap: 72px;
-          padding: 58px 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .tradeLandingPage .tradeSectionMeta {
-          padding-top: 2px;
-        }
-
-        .tradeLandingPage .tradeSectionNum {
-          display: block;
-          margin: 0 0 24px;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(1.85rem, 2.4vw, 2.35rem);
-          line-height: 1;
-          letter-spacing: -0.04em;
-          font-weight: 300;
-          opacity: 0.9;
-        }
-
-        .tradeLandingPage .tradeSectionEyebrow {
-          display: block;
-          max-width: 24ch;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.64rem;
-          line-height: 1.45;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          font-weight: 600;
-          opacity: 0.58;
-        }
-
-        .tradeLandingPage .tradeSectionDivider {
-          width: 1px;
-          min-height: 300px;
-          background: rgba(0, 0, 0, 0.08);
-        }
-
-        .tradeLandingPage .tradeSectionBody {
-          max-width: 820px;
-          padding-top: 1px;
-        }
-
-        .tradeLandingPage .tradeSectionTitle {
-          margin: 0 0 20px;
-          max-width: 20ch;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(1.85rem, 2.35vw, 2.55rem);
-          line-height: 1.08;
-          letter-spacing: -0.052em;
-          font-weight: 400;
-        }
-
-        .tradeLandingPage .tradeSectionText {
-          margin: 0;
-          max-width: 76ch;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.98rem;
-          line-height: 1.78;
-          font-weight: 300;
+        .cpfsJourneyArrow {
+          color: var(--lightGold);
+          font-family: "Playfair Display", Georgia, serif !important;
+          font-size: 1.5rem;
+          text-align: right;
           opacity: 0.75;
         }
 
-        .tradeLandingPage .tradeFormIntro {
+        .cpfsJourneyCta {
+          margin-top: 42px;
+          background: var(--lightGold);
+          border: 1px solid var(--lightGold);
+          color: var(--bordeaux);
+        }
+
+        .cpfsJourneyCta:hover {
+          background: transparent;
+          color: var(--lightGold);
+        }
+
+        .cpfsProof {
+          padding: 82px 0 90px;
+          background: var(--ivory);
+        }
+
+        .cpfsProofGrid {
+          display: grid;
+          grid-template-columns: 240px minmax(0, 1fr);
+          gap: 74px;
+          padding-top: 8px;
+          border-top: 1px solid rgba(22,22,31,0.14);
+        }
+
+        .cpfsProofGrid > div {
+          padding-top: 34px;
+        }
+
+        .cpfsProof h2 {
+          max-width: 21ch;
+        }
+
+        .cpfsAssessment {
+          padding: 90px 0 102px;
+          background: var(--ink);
+          color: #fff;
+          scroll-margin-top: 90px;
+        }
+
+        .cpfsAssessmentGrid {
+          display: grid;
+          grid-template-columns: 240px minmax(0, 1fr);
+          gap: 74px;
+        }
+
+        .cpfsAssessment .cpfsEyebrow {
+          color: var(--lightGold);
+        }
+
+        .cpfsAssessmentBody h2 {
+          color: #fff;
+          margin-top: 0;
+        }
+
+        .cpfsAssessmentText {
+          color: #fff;
+          opacity: 0.72;
+        }
+
+        .cpfsFormIntro {
           margin-bottom: 38px;
         }
 
-        .tradeLandingPage .tradeForm {
+        .cpfsForm {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 28px 30px;
           max-width: 760px;
+          margin-top: 38px;
         }
 
-        .tradeLandingPage .tradeField {
+        .cpfsField {
           display: flex;
           flex-direction: column;
           gap: 10px;
         }
 
-        .tradeLandingPage .tradeFieldFull {
+        .cpfsFieldFull {
           grid-column: 1 / -1;
         }
 
-        .tradeLandingPage .tradeLabel {
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+        .cpfsLabel {
+          color: rgba(255,255,255,0.68);
           font-size: 0.64rem;
           line-height: 1.35;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           font-weight: 600;
-          opacity: 0.62;
         }
 
-        .tradeLandingPage .tradeInput,
-        .tradeLandingPage .tradeSelect {
+        .cpfsInput {
           width: 100%;
           min-height: 54px;
           padding: 14px 0;
           border: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.24);
+          border-bottom: 1px solid rgba(255,255,255,0.28);
           border-radius: 0;
           outline: none;
           background: transparent;
-          box-shadow: none;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          color: #fff;
           font-size: 1rem;
           line-height: 1.4;
           font-weight: 300;
           transition: border-color 0.2s ease;
         }
 
-        .tradeLandingPage .tradeSelect {
-          cursor: pointer;
+        .cpfsInput:focus {
+          border-bottom-color: var(--lightGold);
         }
 
-        .tradeLandingPage .tradeInput:focus,
-        .tradeLandingPage .tradeSelect:focus {
-          border-bottom-color: #121214;
-        }
-
-        .tradeLandingPage .tradeInput::placeholder {
-          color: rgba(18, 18, 20, 0.34);
-        }
-
-        .tradeLandingPage .tradeSubmitWrap {
+        .cpfsSubmitWrap {
           grid-column: 1 / -1;
           margin-top: 10px;
         }
 
-        .tradeLandingPage .tradeSubmit {
+        .cpfsSubmit {
           display: inline-flex;
           align-items: center;
           justify-content: center;
           gap: 16px;
-          min-width: 180px;
-          min-height: 50px;
+          min-height: 52px;
           padding: 0 26px;
-          border: 1px solid #121214;
-          border-radius: 0;
-          background: #121214;
+          border: 1px solid var(--crimson);
+          background: var(--crimson);
           color: #fff;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
           font-size: 0.68rem;
           line-height: 1;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           font-weight: 700;
           cursor: pointer;
-          transition: background 0.2s ease, color 0.2s ease;
         }
 
-        .tradeLandingPage .tradeSubmit:hover {
+        .cpfsSubmit:hover {
           background: transparent;
-          color: #121214;
+          color: #fff;
         }
 
-        .tradeLandingPage .tradeArrow {
-          font-size: 1.22rem;
-          line-height: 0.7;
-          letter-spacing: 0;
-          font-weight: 300;
+        .cpfsSubmitArrow {
+          font-size: 1.15rem;
         }
 
-        .tradeLandingPage .tradePrivacy {
+        .cpfsPrivacy {
           grid-column: 1 / -1;
           margin: 0;
           max-width: 70ch;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.76rem;
+          color: rgba(255,255,255,0.45);
+          font-size: 0.74rem;
           line-height: 1.6;
           font-weight: 300;
-          opacity: 0.48;
         }
 
-        .tradeLandingPage .tradeHoneypot {
+        .cpfsHoneypot {
           position: absolute !important;
           left: -9999px !important;
           width: 1px !important;
@@ -513,120 +984,114 @@ export default function CPFSImplementation() {
           pointer-events: none !important;
         }
 
-        .tradeLandingPage .tradeSuccessMark {
-          margin: 0 0 22px;
-          font-family: "Playfair Display", Georgia, serif;
+        .cpfsSuccessMark {
+          margin-bottom: 22px;
+          color: var(--lightGold);
+          font-family: "Playfair Display", Georgia, serif !important;
           font-size: 3rem;
-          font-weight: 300;
           line-height: 1;
         }
 
-        @media (max-width: 1100px) {
-          .tradeLandingPage .tradeEditorialSection {
-            grid-template-columns: 180px 1px minmax(0, 1fr);
-            column-gap: 48px;
-          }
-
-          .tradeLandingPage .tradeHeroLead {
-            padding-left: 0;
-          }
-        }
-
-        @media (max-width: 820px) {
-          .tradeLandingPage .tradeHeroInner {
-            padding-top: 46px;
-            padding-bottom: 62px;
-          }
-
-          .tradeLandingPage .tradeHeroTitle,
-          .tradeLandingPage.lang-fr .tradeHeroTitle,
-          .tradeLandingPage.lang-de .tradeHeroTitle {
-            max-width: none;
-            font-size: clamp(2.45rem, 9vw, 3.85rem);
-          }
-
-          .tradeLandingPage .tradeHeroLead,
-          .tradeLandingPage.lang-fr .tradeHeroLead,
-          .tradeLandingPage.lang-de .tradeHeroLead {
-            max-width: none;
-            font-size: 0.98rem;
-            line-height: 1.62;
-          }
-
-          .tradeLandingPage .tradeEditorialSection {
+        @media (max-width: 900px) {
+          .cpfsHeroInner {
             grid-template-columns: 1fr;
-            row-gap: 24px;
-            padding: 44px 0;
+            gap: 34px;
           }
 
-          .tradeLandingPage .tradeSectionDivider {
-            display: none;
+          .cpfsHeroLogoWrap {
+            min-height: 0;
+            justify-content: flex-start;
           }
 
-          .tradeLandingPage .tradeSectionNum {
-            margin-bottom: 12px;
+          .cpfsHeroLogo {
+            width: min(72vw, 440px);
           }
 
-          .tradeLandingPage .tradeSectionBody {
-            max-width: none;
+          .cpfsHeroLead,
+          .cpfsHeroCta {
+            padding-left: 0;
+            margin-left: 0;
           }
 
-          .tradeLandingPage .tradeSectionTitle {
-            max-width: none;
+          .cpfsSectionHead,
+          .cpfsJourneyHead,
+          .cpfsProofGrid,
+          .cpfsAssessmentGrid {
+            grid-template-columns: 1fr;
+            gap: 26px;
+          }
+
+          .cpfsChangeGrid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .cpfsProofGrid {
+            gap: 6px;
           }
         }
 
         @media (max-width: 640px) {
-          .tradeLandingPage .tradeForm {
-            grid-template-columns: 1fr;
-            gap: 24px;
+          .cpfsHeroInner {
+            padding-top: 46px;
+            padding-bottom: 54px;
+            gap: 28px;
           }
 
-          .tradeLandingPage .tradeFieldFull,
-          .tradeLandingPage .tradeSubmitWrap,
-          .tradeLandingPage .tradePrivacy {
+          .cpfsHeroLogo {
+            width: min(82vw, 360px);
+          }
+
+          .cpfsHeroTitle {
+            max-width: none;
+            font-size: clamp(2.65rem, 12vw, 4rem);
+          }
+
+          .cpfsHeroLead {
+            font-size: 0.96rem;
+            line-height: 1.62;
+          }
+
+          .cpfsChanges,
+          .cpfsJourney,
+          .cpfsProof,
+          .cpfsAssessment {
+            padding-top: 62px;
+            padding-bottom: 68px;
+          }
+
+          .cpfsChangeGrid {
+            grid-template-columns: 1fr;
+            margin-top: 42px;
+          }
+
+          .cpfsChangeCard {
+            min-height: auto;
+          }
+
+          .cpfsJourneyStep {
+            grid-template-columns: 58px minmax(0, 1fr);
+            gap: 18px;
+          }
+
+          .cpfsJourneyArrow {
+            display: none;
+          }
+
+          .cpfsForm {
+            grid-template-columns: 1fr;
+          }
+
+          .cpfsFieldFull,
+          .cpfsSubmitWrap,
+          .cpfsPrivacy {
             grid-column: 1;
           }
-        }
 
-        @media (max-width: 560px) {
-          .tradeLandingPage .tradeHeroInner {
-            padding-top: 40px;
-            padding-bottom: 52px;
-          }
-
-          .tradeLandingPage .tradeHeroTitle,
-          .tradeLandingPage.lang-fr .tradeHeroTitle,
-          .tradeLandingPage.lang-de .tradeHeroTitle {
-            font-size: clamp(2.05rem, 10vw, 2.85rem);
-          }
-
-          .tradeLandingPage .tradeHeroLead,
-          .tradeLandingPage.lang-fr .tradeHeroLead,
-          .tradeLandingPage.lang-de .tradeHeroLead {
-            font-size: 0.92rem;
-            line-height: 1.58;
-          }
-
-          .tradeLandingPage .tradeEditorialSection {
-            padding: 38px 0;
-          }
-
-          .tradeLandingPage .tradeSectionTitle {
-            font-size: clamp(1.65rem, 7vw, 2.15rem);
-          }
-
-          .tradeLandingPage .tradeSectionText {
-            font-size: 0.92rem;
-            line-height: 1.68;
-          }
-
-          .tradeLandingPage .tradeSubmit {
+          .cpfsSubmit {
             width: 100%;
           }
         }
       `}</style>
-
     </Layout>
   );
 }
