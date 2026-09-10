@@ -55,22 +55,25 @@ export default function Footer() {
             <svg
               className="footerLinkedInIcon"
               viewBox="0 0 34 34"
+              role="img"
               aria-hidden="true"
             >
+              {/* Black LinkedIn square */}
               <rect
                 x="1"
                 y="1"
                 width="32"
                 height="32"
-                rx="2"
-                fill="currentColor"
+                rx="2.5"
+                fill="#121214"
               />
 
+              {/* White i */}
               <circle
                 cx="9.2"
                 cy="10"
                 r="2.1"
-                fill="#121214"
+                fill="#FFFFFF"
               />
 
               <rect
@@ -78,14 +81,27 @@ export default function Footer() {
                 y="13.5"
                 width="4"
                 height="13"
-                fill="#121214"
+                fill="#FFFFFF"
               />
 
+              {/* White n */}
               <path
-                d="M15 13.5h3.8v1.8c1.2-1.5 2.9-2.3 5-2.3
-                   4.3 0 5.2 2.8 5.2 6.5v7h-4v-6.3
-                   c0-1.8-.1-4.1-2.6-4.1-2.6 0-3 1.9-3 3.9v6.5H15z"
-                fill="#121214"
+                d="
+                  M15 13.5
+                  h3.8
+                  v1.8
+                  c1.2-1.5 2.9-2.3 5-2.3
+                  4.3 0 5.2 2.8 5.2 6.5
+                  v7
+                  h-4
+                  v-6.3
+                  c0-1.8-.1-4.1-2.6-4.1
+                  -2.6 0-3 1.9-3 3.9
+                  v6.5
+                  H15
+                  z
+                "
+                fill="#FFFFFF"
               />
             </svg>
 
@@ -120,13 +136,22 @@ export default function Footer() {
           opacity: 0.45;
         }
 
-        .footer .footerLinkedIn {
+        /*
+         * LinkedIn
+         * Explicit black values are used rather than inheriting
+         * .footer / .small muted text styling.
+         */
+        .footer .footerLinkedIn,
+        .footer .footerLinkedIn:link,
+        .footer .footerLinkedIn:visited {
           display: inline-flex;
           align-items: center;
-          gap: 12px;
+          gap: 11px;
 
-          color: #f7f4ef;
-          text-decoration: none;
+          color: #121214 !important;
+          text-decoration: none !important;
+
+          opacity: 1;
 
           transition:
             opacity 160ms ease,
@@ -134,36 +159,44 @@ export default function Footer() {
         }
 
         .footer .footerLinkedIn:hover {
+          color: #121214 !important;
           opacity: 0.72;
           transform: translateY(-1px);
+        }
+
+        .footer .footerLinkedIn:focus-visible {
+          outline: 2px solid #b88a2a;
+          outline-offset: 5px;
+          border-radius: 3px;
         }
 
         .footer .footerLinkedInIcon {
           display: block;
 
-          width: 30px;
-          height: 30px;
+          width: 31px;
+          height: 31px;
 
-          flex: 0 0 30px;
-
-          color: #f7f4ef;
+          min-width: 31px;
+          flex: 0 0 31px;
         }
 
         .footer .footerLinkedInText {
+          color: #121214 !important;
+
           font-family:
             Inter,
             ui-sans-serif,
             system-ui,
             -apple-system,
-            Segoe UI,
+            "Segoe UI",
             Roboto,
             Helvetica,
-            Arial;
+            Arial,
+            sans-serif;
 
-          font-size: 0.95rem;
+          font-size: 1rem;
           line-height: 1;
           font-weight: 500;
-
           letter-spacing: 0;
         }
 
@@ -187,13 +220,14 @@ export default function Footer() {
           }
 
           .footer .footerLinkedInIcon {
-            width: 27px;
-            height: 27px;
-            flex-basis: 27px;
+            width: 29px;
+            height: 29px;
+            min-width: 29px;
+            flex-basis: 29px;
           }
 
           .footer .footerLinkedInText {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
           }
         }
       `}</style>
