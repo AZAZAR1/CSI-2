@@ -22,7 +22,7 @@ const pageCopy = {
     levels: [
       {
         number: "I",
-        label: "FOUNDATION",
+        label: "FOUNDATION & HUMIDOR SUPPORT",
         title: "ICSI Level I",
         audience: "For cigar enthusiasts, aspiring professionals and new entrants",
         body:
@@ -126,7 +126,7 @@ const pageCopy = {
     levels: [
       {
         number: "I",
-        label: "FONDAMENTAUX",
+        label: "FONDAMENTAUX & SUPPORT HUMIDOR",
         title: "ICSI Niveau I",
         audience: "Pour les aficionados, futurs professionnels et nouveaux entrants",
         body:
@@ -230,7 +230,7 @@ const pageCopy = {
     levels: [
       {
         number: "I",
-        label: "GRUNDLAGEN",
+        label: "UNTERSTUTZUNG FUR HUMIDORE & DEREN BASIS",
         title: "ICSI Level I",
         audience: "Für Aficionados, angehende Fachkräfte und Neueinsteiger",
         body:
