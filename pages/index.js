@@ -13,6 +13,7 @@ const conversionCopy = {
     certSub: "For cigar professionals & serious enthusiasts",
     venueCta: "Discover CPFS for Venues",
     venueSub: "For lounges, retailers & hospitality groups",
+    eventBanner: "MEET ICSI AT INTERTABAC 2026 · HALL 4 · STAND 4.D44",
     associations: {
       eyebrow: "Industry presence",
       intertabac: "Exhibitor · Speaker",
@@ -46,6 +47,7 @@ const conversionCopy = {
     certSub: "Pour professionnels du cigare & amateurs exigeants",
     venueCta: "Découvrir CPFS pour les établissements",
     venueSub: "Pour lounges, détaillants & groupes hôteliers",
+    eventBanner: "RENCONTREZ ICSI À INTERTABAC 2026 · HALL 4 · STAND 4.D44",
     associations: {
       eyebrow: "Présence dans l’industrie",
       intertabac: "Exposant · Intervenant",
@@ -79,6 +81,7 @@ const conversionCopy = {
     certSub: "Für Zigarrenprofis & anspruchsvolle Enthusiasten",
     venueCta: "CPFS für Betriebe entdecken",
     venueSub: "Für Lounges, Händler & Hospitality-Gruppen",
+    eventBanner: "TREFFEN SIE ICSI AUF DER INTERTABAC 2026 · HALLE 4 · STAND 4.D44",
     associations: {
       eyebrow: "Präsenz in der Branche",
       intertabac: "Aussteller · Referent",
@@ -262,6 +265,27 @@ function EditorialSection({ number, copyKey, lang }) {
   );
 }
 
+
+function InterTabacBanner({ lang }) {
+  const c = conversionCopy[lang] || conversionCopy.en;
+
+  return (
+    <div className="homeEventBanner">
+      <div className="container homeEventBannerInner">
+        <Link
+          href="/event"
+          locale={lang}
+          className="homeEventBannerLink"
+          aria-label={c.eventBanner}
+        >
+          <span>{c.eventBanner}</span>
+          <span className="homeEventBannerArrow" aria-hidden="true">→</span>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 function AssociationStrip({ lang }) {
   const c = conversionCopy[lang] || conversionCopy.en;
 
@@ -358,7 +382,14 @@ export default function Home() {
   const s = seo[lang] || seo.en;
 
   return (
-    <Layout topBanner={<AssociationStrip lang={lang} />}>
+    <Layout
+      topBanner={
+        <>
+          <InterTabacBanner lang={lang} />
+          <AssociationStrip lang={lang} />
+        </>
+      }
+    >
       <Seo title={s.title} description={s.description} path={s.path} />
 
       <div className={`homePage lang-${lang}`}>
@@ -476,6 +507,53 @@ export default function Home() {
         .homePage .homeHeroActionSub { color: rgba(255,255,255,.76); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; font-size: .75rem; line-height: 1.35; font-weight: 300; }
         .homePage .homeCtaArrow { font-size: 1.34rem; line-height: .7; letter-spacing: 0; font-weight: 300; flex: 0 0 auto; }
 
+
+        .homeEventBanner {
+          position: relative;
+          z-index: 45;
+          background: #601818;
+          color: #FAF4E8;
+          border-bottom: 1px solid rgba(228, 203, 142, 0.35);
+        }
+
+        .homeEventBannerInner {
+          min-height: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .homeEventBannerLink {
+          width: 100%;
+          min-height: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          color: #FAF4E8;
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.72rem;
+          line-height: 1.2;
+          font-weight: 600;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          text-align: center;
+          transition: background 160ms ease, color 160ms ease;
+        }
+
+        .homeEventBannerLink:hover {
+          background: rgba(255,255,255,0.05);
+          color: #E4CB8E;
+        }
+
+        .homeEventBannerArrow {
+          color: #E4CB8E;
+          font-size: 1rem;
+          line-height: 1;
+          transform: translateY(-1px);
+        }
+
         .homeAssociationStrip { position: relative; z-index: 40; background: #FAF4E8; border-top: 3px solid #C0242F; border-bottom: 1px solid rgba(96,24,24,.18); color: #16161F; }
         .homeAssociationInner { min-height: 112px; display: grid; grid-template-columns: 180px minmax(0,1fr); align-items: stretch; gap: 30px; }
         .homeAssociationIntro { display: flex; flex-direction: column; justify-content: center; gap: 13px; padding: 18px 0; }
@@ -558,6 +636,17 @@ export default function Home() {
           .homePage .homeSectionBody, .homePage .homeSectionTitle { max-width: none; }
         }
         @media (max-width: 520px) {
+          .homeEventBannerLink {
+            min-height: 40px;
+            padding: 8px 0;
+            font-size: 0.62rem;
+            letter-spacing: 0.10em;
+          }
+
+          .homeEventBannerArrow {
+            font-size: 0.9rem;
+          }
+
           .homeAssociationStrip { border-top-width: 2px; }
           .homeAssociationInner { padding-top: 12px; padding-bottom: 12px; }
           .homeAssociationGrid { grid-template-columns: 1fr; }
@@ -585,4 +674,3 @@ export default function Home() {
     </Layout>
   );
 }
-
