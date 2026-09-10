@@ -9,9 +9,9 @@ const conversionCopy = {
   en: {
     heroLead:
       "ICSI brings science, professional education and digital intelligence together to improve how cigars are understood, stored and served.",
-    certCta: "Explore ICSI Certification",
+    certCta: "Explore Certifications",
     certSub: "For cigar professionals & serious enthusiasts",
-    venueCta: "Discover CPFS for Venues",
+    venueCta: "Discover Venues Solutions",
     venueSub: "For lounges, retailers & hospitality groups",
     eventBanner: "MEET ICSI AT INTERTABAC 2026 · HALL 4 · STAND 4.D44",
     associations: {
@@ -37,15 +37,15 @@ const conversionCopy = {
     hospitalityEyebrow: "Hospitality Solutions",
     hospitalityTitle: "Turn cigar science into a service standard.",
     hospitalityText:
-      "Implement the Cigar Peak-Flavor System® across your venue through technical assessment, team training, storage and serving standards, and PredictorPro.",
+      "Implement the Cigar Peak-Flavor System® (CPFS) across your venue through technical assessment, team training, storage and serving standards, and PredictorPro.",
     hospitalityCta: "Explore CPFS for Venues",
   },
   fr: {
     heroLead:
       "ICSI réunit science, formation professionnelle et intelligence numérique afin d’améliorer la compréhension, la conservation et le service des cigares.",
-    certCta: "Découvrir les certifications ICSI",
+    certCta: "Découvrir les certifications",
     certSub: "Pour professionnels du cigare & amateurs exigeants",
-    venueCta: "Découvrir CPFS pour les établissements",
+    venueCta: "Découvrir les solutions pour les établissements",
     venueSub: "Pour lounges, détaillants & groupes hôteliers",
     eventBanner: "RENCONTREZ ICSI À INTERTABAC 2026 · HALL 4 · STAND 4.D44",
     associations: {
