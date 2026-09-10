@@ -57,8 +57,8 @@ export default function Nav() {
             <Image
               src="/img/csi_logo_color.png"
               alt="International Cigar Sommelier Institute"
-              width={140}
-              height={140}
+              width={92}
+              height={92}
               className="brandLogo"
               priority
             />
@@ -75,38 +75,23 @@ export default function Nav() {
         {/* ===== MENU ===== */}
         <div className="menu">
 
-          <Link
-            href="/courses"
-            locale={lang}
-          >
+          <Link href="/courses" locale={lang}>
             {nav.courses}
           </Link>
 
-          <Link
-            href="/cpfs-implementation"
-            locale={lang}
-          >
+          <Link href="/cpfs-implementation" locale={lang}>
             {nav.hospitality}
           </Link>
 
-          <Link
-            href="/portal/PredictorPro"
-            locale={lang}
-          >
+          <Link href="/portal/PredictorPro" locale={lang}>
             {nav.predictor}
           </Link>
 
-          <Link
-            href="/system"
-            locale={lang}
-          >
+          <Link href="/system" locale={lang}>
             {nav.science}
           </Link>
 
-          <Link
-            href="/about"
-            locale={lang}
-          >
+          <Link href="/about" locale={lang}>
             {nav.about}
           </Link>
 
@@ -153,21 +138,157 @@ export default function Nav() {
       </div>
 
       <style jsx global>{`
-        /*
-         * CONTACT ICSI
-         * Deliberately differentiated from the editorial navigation.
-         */
+        /* =========================================================
+           ICSI NAVIGATION
+           ========================================================= */
+
+        .nav .navInner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 30px;
+          min-height: 128px;
+        }
+
+        /* =========================================================
+           BRAND
+           ========================================================= */
+
+        .nav .brandWrap {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+
+          flex: 0 0 auto;
+          min-width: 355px;
+
+          text-decoration: none;
+          color: #16161f;
+        }
+
+        .nav .brandLogoWrap {
+          flex: 0 0 92px;
+
+          width: 92px;
+          height: 92px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .nav .brandLogo {
+          display: block !important;
+
+          width: 92px !important;
+          height: 92px !important;
+
+          max-width: 92px !important;
+          max-height: 92px !important;
+
+          object-fit: contain !important;
+
+          flex-shrink: 0;
+        }
+
+        .nav .brandText {
+          display: flex;
+          flex-direction: column;
+
+          width: auto;
+          min-width: 220px;
+
+          color: #16161f;
+
+          font-family:
+            "Playfair Display",
+            Georgia,
+            serif;
+
+          font-size: 1rem;
+          line-height: 0.98;
+          letter-spacing: 0.025em;
+          font-weight: 400;
+
+          white-space: nowrap;
+        }
+
+        .nav .brandText div {
+          display: block;
+          width: auto;
+
+          margin: 0;
+          padding: 0;
+
+          white-space: nowrap !important;
+          word-break: normal !important;
+          overflow-wrap: normal !important;
+        }
+
+        /* =========================================================
+           MAIN MENU
+           ========================================================= */
+
+        .nav .menu {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+
+          flex: 1 1 auto;
+
+          gap: 25px;
+
+          min-width: 0;
+
+          white-space: nowrap;
+        }
+
+        .nav .menu > a:not(.navContactButton) {
+          flex-shrink: 0;
+
+          color: #56545c;
+          text-decoration: none;
+
+          font-family:
+            Inter,
+            ui-sans-serif,
+            system-ui,
+            -apple-system,
+            Segoe UI,
+            Roboto,
+            Helvetica,
+            Arial;
+
+          font-size: 0.82rem;
+          line-height: 1;
+          font-weight: 400;
+
+          white-space: nowrap;
+
+          transition: color 160ms ease;
+        }
+
+        .nav .menu > a:not(.navContactButton):hover {
+          color: #601818;
+        }
+
+        /* =========================================================
+           CONTACT ICSI
+           ========================================================= */
 
         .nav .navContactButton {
           display: inline-flex;
           align-items: center;
           justify-content: center;
 
-          min-height: 40px;
-          padding: 0 18px;
+          flex-shrink: 0;
+
+          min-height: 46px;
+          padding: 0 20px;
 
           background: #601818;
           border: 1px solid #601818;
+          border-radius: 10px;
 
           color: #faf4e8 !important;
           text-decoration: none !important;
@@ -189,6 +310,8 @@ export default function Nav() {
           letter-spacing: 0.12em;
           text-transform: uppercase;
 
+          white-space: nowrap;
+
           transition:
             background 160ms ease,
             border-color 160ms ease,
@@ -201,22 +324,152 @@ export default function Nav() {
           color: #ffffff !important;
         }
 
-        /*
-         * Keep longer new navigation labels clean on medium screens.
-         */
-        @media (max-width: 1180px) {
-          .nav .menu {
-            gap: 16px;
+        /* =========================================================
+           LANGUAGE SELECTOR
+           ========================================================= */
+
+        .nav .lang {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+
+          flex-shrink: 0;
+          margin-left: 2px;
+        }
+
+        .nav .lang button {
+          min-width: 39px;
+          height: 39px;
+
+          padding: 0 10px;
+
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+
+          border: 1px solid rgba(22, 22, 31, 0.14);
+          border-radius: 18px;
+
+          background: transparent;
+          color: #67646b;
+
+          font-family:
+            Inter,
+            ui-sans-serif,
+            system-ui,
+            -apple-system,
+            Segoe UI,
+            Roboto,
+            Helvetica,
+            Arial;
+
+          font-size: 0.7rem;
+
+          cursor: pointer;
+        }
+
+        .nav .lang button.active {
+          color: #16161f;
+          border-color: #c8a24a;
+        }
+
+        /* =========================================================
+           MEDIUM DESKTOP
+           Reduce spacing before touching the ICSI identity.
+           ========================================================= */
+
+        @media (max-width: 1380px) {
+          .nav .navInner {
+            gap: 22px;
           }
 
-          .nav .menu > a {
+          .nav .brandWrap {
+            min-width: 330px;
+            gap: 14px;
+          }
+
+          .nav .brandLogoWrap {
+            flex-basis: 82px;
+            width: 82px;
+            height: 82px;
+          }
+
+          .nav .brandLogo {
+            width: 82px !important;
+            height: 82px !important;
+            max-width: 82px !important;
+            max-height: 82px !important;
+          }
+
+          .nav .brandText {
+            min-width: 205px;
+            font-size: 0.9rem;
+          }
+
+          .nav .menu {
+            gap: 18px;
+          }
+
+          .nav .menu > a:not(.navContactButton) {
             font-size: 0.76rem;
           }
 
           .nav .navContactButton {
-            padding-left: 14px;
-            padding-right: 14px;
-            font-size: 0.66rem;
+            min-height: 42px;
+            padding: 0 16px;
+            font-size: 0.65rem;
+          }
+
+          .nav .lang {
+            gap: 4px;
+          }
+
+          .nav .lang button {
+            min-width: 34px;
+            height: 34px;
+            padding: 0 7px;
+          }
+        }
+
+        /* =========================================================
+           TABLET / SMALL LAPTOP
+
+           At this width it is better to retain the ICSI seal and
+           remove the written wordmark than distort or wrap it.
+           ========================================================= */
+
+        @media (max-width: 1180px) {
+          .nav .brandWrap {
+            min-width: auto;
+          }
+
+          .nav .brandText {
+            display: none;
+          }
+
+          .nav .brandLogoWrap {
+            flex-basis: 78px;
+            width: 78px;
+            height: 78px;
+          }
+
+          .nav .brandLogo {
+            width: 78px !important;
+            height: 78px !important;
+            max-width: 78px !important;
+            max-height: 78px !important;
+          }
+
+          .nav .menu {
+            gap: 15px;
+          }
+
+          .nav .menu > a:not(.navContactButton) {
+            font-size: 0.72rem;
+          }
+
+          .nav .navContactButton {
+            padding: 0 13px;
           }
         }
       `}</style>
