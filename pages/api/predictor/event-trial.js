@@ -1,5 +1,7 @@
 // pages/api/predictor/event-trial.js
 
+import crypto from "crypto";
+
 const PREDICTOR_BACKEND_URL =
   process.env.PREDICTOR_BACKEND_URL || "";
 
@@ -9,10 +11,13 @@ const PREDICTOR_API_KEY =
   process.env.API_KEY ||
   "";
 
+const EVENT_TRIAL_SIGNING_SECRET =
+  process.env.EVENT_TRIAL_SIGNING_SECRET || "";
+
+const TRIAL_DAYS = 3;
+
 function cleanEmail(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase();
+  return String(value || "").trim().toLowerCase();
 }
 
 function validEmail(email) {
@@ -21,41 +26,68 @@ function validEmail(email) {
 
 function addDaysIso(days) {
   const now = new Date();
-
   const expiry = new Date(
-    Date.UTC(
-      now.getUTCFullYear(),
-      now.getUTCMonth(),
-      now.getUTCDate()
-    )
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
   );
-
   expiry.setUTCDate(expiry.getUTCDate() + days);
-
   return expiry.toISOString().slice(0, 10);
 }
 
 function getBackendBaseUrl() {
-  return String(PREDICTOR_BACKEND_URL || "")
-    .trim()
-    .replace(/\/+$/, "");
+  return String(PREDICTOR_BACKEND_URL || "").trim().replace(/\/+$/, "");
 }
 
 async function readResponse(response) {
   const raw = await response.text();
-
   let data = {};
-
   try {
     data = raw ? JSON.parse(raw) : {};
   } catch {
     data = {};
   }
+  return { raw, data };
+}
 
-  return {
-    raw,
-    data,
-  };
+function verifyActivationToken(token) {
+  const raw = String(token || "").trim();
+  const parts = raw.split(".");
+  if (parts.length !== 2) throw new Error("Invalid activation link.");
+
+  const [body, suppliedSignature] = parts;
+  const expectedSignature = crypto
+    .createHmac("sha256", EVENT_TRIAL_SIGNING_SECRET)
+    .update(body)
+    .digest("base64url");
+
+  const a = Buffer.from(suppliedSignature);
+  const b = Buffer.from(expectedSignature);
+
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
+    throw new Error("Invalid activation link.");
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(Buffer.from(body, "base64url").toString("utf8"));
+  } catch {
+    throw new Error("Invalid activation link.");
+  }
+
+  if (payload?.purpose !== "predictorpro-event-trial") {
+    throw new Error("Invalid activation link.");
+  }
+
+  const email = cleanEmail(payload?.email);
+  if (!validEmail(email)) throw new Error("Invalid activation link.");
+
+  const now = Math.floor(Date.now() / 1000);
+  if (!Number.isFinite(payload?.exp) || payload.exp < now) {
+    const error = new Error("This activation link has expired.");
+    error.code = "TOKEN_EXPIRED";
+    throw error;
+  }
+
+  return { email };
 }
 
 export default async function handler(req, res) {
@@ -63,20 +95,18 @@ export default async function handler(req, res) {
 
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
+    return res.status(405).json({ ok: false, error: "Method not allowed." });
+  }
 
-    return res.status(405).json({
+  if (!EVENT_TRIAL_SIGNING_SECRET) {
+    return res.status(500).json({
       ok: false,
-      error: "Method not allowed.",
+      error: "Secure trial activation is not configured.",
     });
   }
 
   const backendUrl = getBackendBaseUrl();
-
   if (!backendUrl) {
-    console.error(
-      "EVENT_TRIAL_ERROR: PREDICTOR_BACKEND_URL missing"
-    );
-
     return res.status(500).json({
       ok: false,
       error: "Predictor backend is not configured.",
@@ -84,42 +114,24 @@ export default async function handler(req, res) {
   }
 
   if (!PREDICTOR_API_KEY) {
-    console.error(
-      "EVENT_TRIAL_ERROR: PREDICTOR_API_KEY missing"
-    );
-
     return res.status(500).json({
       ok: false,
       error: "Predictor authentication is not configured.",
     });
   }
 
-  const email = cleanEmail(req.body?.email);
-
-  if (!email) {
-    return res.status(400).json({
+  let verified;
+  try {
+    verified = verifyActivationToken(req.body?.token);
+  } catch (error) {
+    return res.status(error?.code === "TOKEN_EXPIRED" ? 410 : 401).json({
       ok: false,
-      error: "Please enter your email address.",
+      error: error?.message || "Unable to verify this activation link.",
     });
   }
 
-  if (!validEmail(email)) {
-    return res.status(400).json({
-      ok: false,
-      error: "Please enter a valid email address.",
-    });
-  }
-
-  /*
-   * IMPORTANT
-   *
-   * PREDICTOR_BACKEND_URL points to the public EC2/Nginx host.
-   * Public Predictor backend routes sit under:
-   *
-   * /api/predictor/
-   */
-  const publicApiBase =
-    `${backendUrl}/api/predictor`;
+  const email = verified.email;
+  const publicApiBase = `${backendUrl}/api/predictor`;
 
   const headers = {
     Accept: "application/json",
@@ -128,25 +140,15 @@ export default async function handler(req, res) {
   };
 
   try {
-    /*
-     * Check existing users first so we do not downgrade
-     * an existing Standard or Pro account into Trial.
-     */
-    const usersResponse = await fetch(
-      `${publicApiBase}/admin/users`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "x-api-key": PREDICTOR_API_KEY,
-        },
-      }
-    );
+    const usersResponse = await fetch(`${publicApiBase}/admin/users`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "x-api-key": PREDICTOR_API_KEY,
+      },
+    });
 
-    const {
-      data: usersData,
-      raw: usersRaw,
-    } = await readResponse(usersResponse);
+    const { data: usersData, raw: usersRaw } = await readResponse(usersResponse);
 
     if (!usersResponse.ok) {
       console.error(
@@ -154,7 +156,6 @@ export default async function handler(req, res) {
         usersResponse.status,
         usersRaw
       );
-
       return res.status(502).json({
         ok: false,
         error:
@@ -164,77 +165,42 @@ export default async function handler(req, res) {
       });
     }
 
-    const users = Array.isArray(usersData?.users)
-      ? usersData.users
-      : [];
-
+    const users = Array.isArray(usersData?.users) ? usersData.users : [];
     const existingUser = users.find(
-      (user) =>
-        cleanEmail(user?.email) === email
+      (user) => cleanEmail(user?.email) === email
     );
 
-    /*
-     * Existing user:
-     * preserve the account exactly as it is.
-     */
     if (existingUser) {
       return res.status(200).json({
         ok: true,
         created: false,
         existing_user: true,
-
         email,
-
         tier: existingUser.tier || "",
         active: existingUser.active === true,
-
-        pro_access:
-          existingUser.pro_access === true,
-
-        expires_at:
-          existingUser.expires_at || "",
+        pro_access: existingUser.pro_access === true,
+        expires_at: existingUser.expires_at || "",
       });
     }
 
-    /*
-     * New event attendee:
-     * create 30-day PredictorPro trial.
-     */
-    const expiresAt = addDaysIso(30);
+    const expiresAt = addDaysIso(TRIAL_DAYS);
 
     const payload = {
       email,
-
       tier: "trial",
-
       active: true,
-
-      /*
-       * Trial attendee gets PredictorPro interface.
-       */
       pro_access: true,
-
-      /*
-       * Event access uses master ICSI inventory.
-       */
       inventory_folder: "global",
-
       expires_at: expiresAt,
     };
 
-    const createResponse = await fetch(
-      `${publicApiBase}/admin/users/upsert`,
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify(payload),
-      }
-    );
+    const createResponse = await fetch(`${publicApiBase}/admin/users/upsert`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+    });
 
-    const {
-      data: createData,
-      raw: createRaw,
-    } = await readResponse(createResponse);
+    const { data: createData, raw: createRaw } = await readResponse(createResponse);
 
     if (!createResponse.ok) {
       console.error(
@@ -242,7 +208,6 @@ export default async function handler(req, res) {
         createResponse.status,
         createRaw
       );
-
       return res.status(createResponse.status).json({
         ok: false,
         error:
@@ -254,27 +219,17 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       ok: true,
-
       created: true,
       existing_user: false,
-
       email,
-
       tier: "trial",
       active: true,
       pro_access: true,
-
-      expires_at:
-        createData?.expires_at ||
-        expiresAt,
+      expires_at: createData?.expires_at || expiresAt,
     });
 
   } catch (error) {
-    console.error(
-      "EVENT_TRIAL_UNEXPECTED_ERROR:",
-      error
-    );
-
+    console.error("EVENT_TRIAL_UNEXPECTED_ERROR:", error);
     return res.status(500).json({
       ok: false,
       error:
