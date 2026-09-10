@@ -78,7 +78,7 @@ export default function EventActivatePage() {
         setStatus("Access activated. Opening PredictorPro...");
 
         setTimeout(() => {
-          router.replace("/portal/predictorpro");
+          router.replace("/portal/PredictorPro");
         }, 700);
       } catch (err) {
         if (cancelled) return;
