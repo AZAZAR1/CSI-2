@@ -760,11 +760,11 @@ const GlobalStyles = () => (
       }
     }
     .pp-rh-value {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
       font-size: 42px;
       font-weight: 600;
       color: #f0ece6;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.02em;
       line-height: 1;
       animation: countUp 0.5s ease both;
     }
@@ -2393,14 +2393,14 @@ export default function PredictorPage() {
                 </div>
                 <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
                   <div style={styles.dataLabel}>Optimal Window</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 32, fontWeight: 600, color: DS.textMono, letterSpacing: "0.02em" }}>
+                  <div className="pp-rh-value">
                     {result.window_low}-{result.window_high}
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 6 }}>Leaf-Level RH</div>
                 </div>
                 <div style={{ ...styles.rhPanel, flex: "0 1 320px" }}>
                   <div style={styles.dataLabel}>CPFS Classification</div>
-                  <div style={{ fontFamily: DS.fontMono, fontSize: 42, fontWeight: 600, color: DS.textPrimary, marginTop: 6, letterSpacing: "0.03em", lineHeight: 1 }}>
+                  <div className="pp-rh-value" style={{ marginTop: 6 }}>
                     {result.family}
                   </div>
                   <div style={{ ...styles.dataLabel, marginTop: 4 }}>Classification</div>
