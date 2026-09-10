@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
 /* ============================================================
@@ -952,6 +953,8 @@ const SectionDivider = ({ label }) => (
    MAIN COMPONENT
    ============================================================ */
 export default function PredictorPage() {
+  const router = useRouter();
+  const [accessChecking, setAccessChecking] = useState(true);
   const [brandSuggestions, setBrandSuggestions]     = useState([]);
   const [lineSuggestions, setLineSuggestions]       = useState([]);
   const [showBrandSuggestions, setShowBrandSuggestions] = useState(false);
@@ -1365,25 +1368,60 @@ export default function PredictorPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const savedEmail =
-      window.localStorage.getItem("icsi_device_email") ||
-      window.localStorage.getItem("icsi_predictorpro_email") ||
-      window.localStorage.getItem("icsi_predictor_email") ||
-      "";
+    let cancelled = false;
 
-    const savedToken = getStoredDeviceToken();
+    const validateStoredAccess = async () => {
+      const savedEmail =
+        window.localStorage.getItem("icsi_device_email") ||
+        window.localStorage.getItem("icsi_predictorpro_email") ||
+        window.localStorage.getItem("icsi_predictor_email") ||
+        "";
 
-    if (savedEmail && savedToken) {
-      window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanText(savedEmail).toLowerCase());
+      const savedToken = getStoredDeviceToken();
+
+      // Direct access to PredictorPro requires both parts of the
+      // validated browser session created by the reserved-access
+      // page or the secure event activation flow.
+      if (!savedEmail || !savedToken) {
+        if (!cancelled) {
+          await router.replace("/predictorpro-access");
+        }
+        return;
+      }
+
+      const cleanedEmail = cleanText(savedEmail).toLowerCase();
+
+      window.localStorage.setItem(DEVICE_EMAIL_KEY, cleanedEmail);
       window.localStorage.setItem(DEVICE_TOKEN_KEY, savedToken);
       window.localStorage.removeItem("icsi_predictorpro_email");
       window.localStorage.removeItem("icsi_predictor_email");
       window.localStorage.removeItem("icsi_predictorpro_device_token");
       window.localStorage.removeItem("icsi_predictor_device_token");
 
-      setForm((f) => ({ ...f, user_email: cleanText(savedEmail).toLowerCase() }));
-      loadUsageForEmail(savedEmail);
-    }
+      setForm((f) => ({ ...f, user_email: cleanedEmail }));
+
+      const data = await loadUsageForEmail(cleanedEmail, { quiet: true });
+
+      // A stored email/token pair is not enough. Revalidate it
+      // against the backend and require active PredictorPro access.
+      if (!data || data.pro_access !== true) {
+        if (!cancelled) {
+          window.localStorage.removeItem(DEVICE_EMAIL_KEY);
+          await router.replace("/predictorpro-access");
+        }
+        return;
+      }
+
+      if (!cancelled) {
+        setAccessChecking(false);
+      }
+    };
+
+    validateStoredAccess();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const lookupBlend = async () => {
@@ -1560,9 +1598,21 @@ export default function PredictorPage() {
   const timestamp = `${now.getDate().toString().padStart(2,"0")} ${now.toLocaleString("en",{month:"short"}).toUpperCase()} ${now.getFullYear()} \u2014 ${now.getHours().toString().padStart(2,"0")}:${now.getMinutes().toString().padStart(2,"0")} GST`;
   const filteredPairing = getFilteredPairingCard();
 
+  if (accessChecking) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: DS.bg,
+        }}
+        aria-busy="true"
+      />
+    );
+  }
+
   return (
     <Layout>
-      <Seo title="PredictorPro® | Intelligent Hospitality Application | ICSI" path="/portal/predictorpro" />
+      <Seo title="PredictorPro® | Intelligent Hospitality Application | ICSI" path="/portal/PredictorPro" />
       <GlobalStyles />
       <div style={styles.page}>
         <div style={styles.container}>
