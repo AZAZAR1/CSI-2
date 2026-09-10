@@ -131,28 +131,6 @@ export default function About() {
         </section>
 
         <main className="container aboutMain">
-          <AboutSection
-            number="01"
-            eyebrow={c.qualityEyebrow}
-            title={c.qualityTitle}
-          >
-            <div className="aboutTextStack">
-              {c.qualityBody.map((paragraph) => (
-                <p key={paragraph} className="aboutSectionText">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </AboutSection>
-
-          <AboutSection
-            number="02"
-            eyebrow={c.founderEyebrow}
-            title={c.founderTitle}
-          >
-            <p className="aboutSectionText founderText">{c.founderBody}</p>
-          </AboutSection>
-
           <section className="aboutFlyerSection">
             <div className="aboutFlyerIntro">
               <span className="aboutSectionNum">03</span>
@@ -181,6 +159,29 @@ export default function About() {
               />
             </div>
           </section>
+
+
+          <AboutSection
+            number="02"
+            eyebrow={c.qualityEyebrow}
+            title={c.qualityTitle}
+          >
+            <div className="aboutTextStack">
+              {c.qualityBody.map((paragraph) => (
+                <p key={paragraph} className="aboutSectionText">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </AboutSection>
+
+          <AboutSection
+            number="03"
+            eyebrow={c.founderEyebrow}
+            title={c.founderTitle}
+          >
+            <p className="aboutSectionText founderText">{c.founderBody}</p>
+          </AboutSection>
 
           <AboutSection
             number="04"
@@ -212,13 +213,13 @@ export default function About() {
         }
 
         .aboutPage .aboutHeroInner {
-          padding-top: 60px;
-          padding-bottom: 82px;
+          padding-top: 30px;
+          padding-bottom: 40px;
         }
 
         .aboutPage .aboutKicker {
           display: block;
-          margin: 0 0 22px;
+          margin: 0 0 12px;
           color: #c0242f;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
           font-size: 0.68rem;
@@ -230,11 +231,11 @@ export default function About() {
         }
 
         .aboutPage .aboutHeroTitle {
-          margin: 0 0 42px;
+          margin: 0 0 20px;
           max-width: 14ch;
           color: #16161f;
           font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(3rem, 5.2vw, 5.4rem);
+          font-size: clamp(2.4rem, 4.2vw, 4.25rem);
           line-height: 0.98;
           letter-spacing: -0.055em;
           font-weight: 400;
@@ -246,8 +247,8 @@ export default function About() {
           padding-left: max(0px, 33%);
           color: #16161f;
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-          line-height: 1.72;
+          font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+          line-height: 1.6;
           font-weight: 300;
           opacity: 0.72;
         }
@@ -267,6 +268,10 @@ export default function About() {
 
         .aboutPage .aboutMain {
           padding-bottom: 100px;
+        }
+
+        .aboutPage .aboutHero + .aboutMain {
+          padding-top: 0;
         }
 
         .aboutPage .aboutEditorialSection {
@@ -441,8 +446,8 @@ export default function About() {
           }
 
           .aboutPage .aboutHeroInner {
-            padding-top: 46px;
-            padding-bottom: 62px;
+            padding-top: 24px;
+            padding-bottom: 32px;
           }
 
           .aboutPage .aboutHeroTitle,
@@ -502,8 +507,8 @@ export default function About() {
           }
 
           .aboutPage .aboutHeroInner {
-            padding-top: 40px;
-            padding-bottom: 52px;
+            padding-top: 22px;
+            padding-bottom: 28px;
           }
 
           .aboutPage .aboutHeroTitle,
