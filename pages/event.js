@@ -40,7 +40,7 @@ export default function EventRegistrationPage() {
   const isValidEmail = (value) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail(value));
 
-  const registerAndEnter = async (event) => {
+  const requestAccessLink = async (event) => {
     event.preventDefault();
 
     setError("");
@@ -54,93 +54,39 @@ export default function EventRegistrationPage() {
     }
 
     setLoading(true);
+    setStatus("Preparing your secure access link...");
 
     try {
-      /*
-       * STEP 1
-       * Create the event trial account.
-       */
-      setStatus("Activating your PredictorPro access...");
+      const response = await fetch("/api/predictor/event-access-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: normalizedEmail,
+          marketing_consent: marketingConsent,
+          source: "intertabac-2026",
+        }),
+      });
 
-      const registrationResponse = await fetch(
-        "/api/predictor/event-trial",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: normalizedEmail,
-            marketing_consent: marketingConsent,
-            source: "event",
-          }),
-        }
-      );
+      const data = await response.json().catch(() => ({}));
 
-      const registrationData =
-        await registrationResponse.json().catch(() => ({}));
-
-      if (!registrationResponse.ok || !registrationData.ok) {
+      if (!response.ok || !data.ok) {
         throw new Error(
-          registrationData.error ||
-            "Unable to activate your PredictorPro access."
+          data.error ||
+            "Unable to send your PredictorPro access link."
         );
       }
 
-      /*
-       * STEP 2
-       * Use the existing usage endpoint to register/validate
-       * this browser device and obtain the device token.
-       */
-      setStatus("Registering this device...");
-
-      const usageResponse = await fetch(
-        `/api/predictor/usage?email=${encodeURIComponent(
-          normalizedEmail
-        )}`
+      setStatus(
+        `Check your email. We sent a secure PredictorPro activation link to ${normalizedEmail}.`
       );
-
-      const usageData =
-        await usageResponse.json().catch(() => ({}));
-
-      if (!usageResponse.ok) {
-        throw new Error(
-          usageData.error ||
-            usageData.detail ||
-            "Access was created, but this device could not be registered."
-        );
-      }
-
-      /*
-       * Store the exact keys used by PredictorPro.
-       */
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(
-          "icsi_device_email",
-          normalizedEmail
-        );
-
-        if (usageData.device_token) {
-          window.localStorage.setItem(
-            "icsi_device_token",
-            usageData.device_token
-          );
-        }
-      }
-
-      setStatus("Access activated. Opening PredictorPro...");
-
-      /*
-       * PredictorPro will detect the stored email/device token
-       * and automatically validate the attendee.
-       */
-      await router.push("/portal/PredictorPro");
-
     } catch (err) {
       setError(
         err?.message ||
-          "Unable to activate PredictorPro access."
+          "Unable to send your PredictorPro access link."
       );
+      setStatus("");
     } finally {
       setLoading(false);
     }
@@ -752,11 +698,11 @@ export default function EventRegistrationPage() {
               </h3>
 
               <p className="event-card-copy">
-                Enter your email address to receive immediate
-                PredictorPro trial access on this device.
+                Enter your email address and we will send you a secure
+                link to activate your PredictorPro trial.
               </p>
 
-              <form onSubmit={registerAndEnter}>
+              <form onSubmit={requestAccessLink}>
 
                 <label
                   className="event-label"
@@ -810,8 +756,8 @@ export default function EventRegistrationPage() {
                   disabled={loading}
                 >
                   {loading
-                    ? "Activating Access..."
-                    : "Access PredictorPro"}
+                    ? "Sending Access Link..."
+                    : "Send My Access Link"}
                 </button>
 
               </form>
