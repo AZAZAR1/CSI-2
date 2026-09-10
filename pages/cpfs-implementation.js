@@ -295,6 +295,89 @@ const copy = {
   },
 };
 
+
+function CPFSChangeIcon({ index }) {
+  const commonProps = {
+    viewBox: "0 0 64 64",
+    width: "64",
+    height: "64",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    "aria-hidden": "true",
+  };
+
+  const strokeProps = {
+    stroke: "currentColor",
+    strokeWidth: "1.7",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  };
+
+  const icons = [
+    // 01 — STORE / HUMIDOR
+    <svg key="store" {...commonProps}>
+      <path {...strokeProps} d="M14 20h36v28H14z" />
+      <path {...strokeProps} d="M10 16h44v7H10z" />
+      <path {...strokeProps} d="M18 12h28l5 4H13l5-4z" />
+      <path {...strokeProps} d="M22 28h20v12H22z" />
+      <path {...strokeProps} d="M28 31h8" />
+      <circle {...strokeProps} cx="32" cy="25" r="1.8" />
+    </svg>,
+
+    // 02 — SETTLE / LEAF
+    <svg key="settle" {...commonProps}>
+      <path {...strokeProps} d="M49 11C31 14 18 24 13 41c8 2 17-1 24-8 7-7 10-14 12-22z" />
+      <path {...strokeProps} d="M15 45c7-10 16-18 29-26" />
+      <path {...strokeProps} d="M28 31l-4-8" />
+      <path {...strokeProps} d="M34 26l1-9" />
+      <path {...strokeProps} d="M23 36l-8-2" />
+    </svg>,
+
+    // 03 — SERVE / CIGAR
+    <svg key="serve" {...commonProps}>
+      <path {...strokeProps} d="M12 35h34" />
+      <path {...strokeProps} d="M12 35c0-4 2-7 5-7h25c3 0 4 3 4 7s-1 7-4 7H17c-3 0-5-3-5-7z" />
+      <path {...strokeProps} d="M19 28v14" />
+      <path {...strokeProps} d="M46 30c4-1 7-3 7-7 0-2-1-4-3-6" />
+      <path {...strokeProps} d="M50 28c5-1 8-4 8-8 0-3-2-5-4-7" />
+    </svg>,
+
+    // 04 — RECOMMEND / SOMMELIER
+    <svg key="recommend" {...commonProps}>
+      <circle {...strokeProps} cx="32" cy="21" r="8" />
+      <path {...strokeProps} d="M20 48c1-10 6-16 12-16s11 6 12 16" />
+      <path {...strokeProps} d="M15 50h34" />
+      <path {...strokeProps} d="M26 36l6 6 6-6" />
+    </svg>,
+
+    // 05 — CROSS-SELL / CIGAR BUNDLE
+    <svg key="cross-sell" {...commonProps}>
+      <g transform="rotate(-18 32 32)">
+        <rect {...strokeProps} x="13" y="23" width="35" height="7" rx="3.5" />
+        <rect {...strokeProps} x="16" y="31" width="35" height="7" rx="3.5" />
+        <rect {...strokeProps} x="12" y="39" width="35" height="7" rx="3.5" />
+        <path {...strokeProps} d="M20 23v7M23 31v7M19 39v7" />
+      </g>
+    </svg>,
+
+    // 06 — UPSELL / PAIRING GLASS
+    <svg key="upsell" {...commonProps}>
+      <path {...strokeProps} d="M21 14h22l-3 12c-1 6-4 10-8 10s-7-4-8-10l-3-12z" />
+      <path {...strokeProps} d="M24 24h16" />
+      <path {...strokeProps} d="M32 36v14" />
+      <path {...strokeProps} d="M25 50h14" />
+      <path {...strokeProps} d="M39 16l7-7" />
+      <path {...strokeProps} d="M45 8l3 3" />
+    </svg>,
+  ];
+
+  return (
+    <div className="cpfsChangeIcon">
+      {icons[index] || icons[0]}
+    </div>
+  );
+}
+
 function scrollToAssessment(event) {
   event.preventDefault();
   const target = document.getElementById("cpfs-assessment");
@@ -369,6 +452,7 @@ export default function CPFSImplementation() {
               {c.changes.map((item, index) => (
                 <article className="cpfsChangeCard" key={item.title}>
                   <span className="cpfsCardNum">0{index + 1}</span>
+                  <CPFSChangeIcon index={index} />
                   <h3>{item.title}</h3>
                   <p>{item.body}</p>
                 </article>
@@ -737,11 +821,24 @@ export default function CPFSImplementation() {
 
         .cpfsCardNum {
           display: block;
-          margin-bottom: 34px;
+          margin-bottom: 22px;
           color: var(--crimson);
           font-size: 0.64rem;
           letter-spacing: 0.18em;
           font-weight: 600;
+        }
+
+        .cpfsChangeIcon {
+          width: 54px;
+          height: 54px;
+          margin: 0 0 24px;
+          color: var(--gold);
+        }
+
+        .cpfsChangeIcon svg {
+          display: block;
+          width: 100%;
+          height: 100%;
         }
 
         .cpfsChangeCard h3 {
@@ -1066,6 +1163,12 @@ export default function CPFSImplementation() {
 
           .cpfsChangeCard {
             min-height: auto;
+          }
+
+          .cpfsChangeIcon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
           }
 
           .cpfsJourneyStep {
