@@ -72,8 +72,8 @@ export const COPY = {
     nav_contact: "Contact",
 
     // Home
-    kicker: "Institutionnel suisse • Autorité scientifique",
-    h1: "Le monde moderne du cigare a évolué. Vos standards devraient en faire autant.",
+    kicker: "Institution suisse • Autorité scientifique",
+    h1: "L'univers moderne du cigare a évolué. Vos normes devraient en faire autant.",
     lead:
       "Alors que le marché mondial s'étend au-delà des références cubaines classiques, les professionnels et les amateurs sont confrontés à une diversité sans précédent de mélanges, de constructions et de profils de saveurs. ICSI propose un système rigoureux et discret pour décrypter cette complexité, en traduisant la structure des mélanges en conditions de fumage précises et en performances de saveur maximales reproductibles.",
 
