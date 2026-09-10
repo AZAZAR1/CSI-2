@@ -1,770 +1,1183 @@
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
+import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
 
-const copy = {
+const pageCopy = {
   en: {
-    kicker: "Application & Contact",
-    title: "Application & Contact",
+    kicker: "ICSI Professional Education",
+    titleLine1: "Build expertise.",
+    titleLine2: "Earn recognition.",
+    titleLine3: "Progress professionally.",
     intro:
-      "Contact us to apply to our courses, classes or access to our digital applications. All applications are reviewed individually, and admission is selective. If you are applying to our courses, please include your CV or resume along with a short statement of intent.",
-    programEyebrow: "Application Context",
-    programTitle: "Selected Program",
-    emailEyebrow: "Contact Form",
-    emailTitle: "Send us a message",
-    formIntro: "Complete the form below and our team will contact you directly.",
-    firstName: "First name", familyName: "Family name", organization: "Organization",
-    email: "Email", message: "Message", optional: "optional", submit: "Submit",
-    privacy: "By submitting this form, you agree that ICSI may contact you regarding your enquiry.",
-    successEyebrow: "Thank You", successTitle: "Your message has been received",
-    successText: "Thank you for contacting ICSI. Our team will respond to your enquiry shortly.",
-    whatsappEyebrow: "Swiss WhatsApp",
-    whatsappTitle: "Contact us directly",
-    closingEyebrow: "Confidentiality",
-    closingTitle: "Discretion & Confidentiality",
-    closing:
-      "All submissions are treated with discretion and confidentiality.",
-    programLabel: "Selected program",
-    programNames: {
-      "level-i": "ICSI Level I",
-      "level-ii": "ICSI Level II",
-      "level-iii": "ICSI Level III",
-      "level-iv": "ICSI Level IV",
-      ccs: "CCS — Certified Cigar Sommelier",
-      acs: "ACS — Advanced Cigar Sommelier",
-      amc: "AMC — Aficionado Master Class",
-    },
-    pathwayName: "ICSI Education Pathway Guidance",
-    courseFieldLabel: "Course level",
-    courseSelectPlaceholder: "Select a course level",
-    subjectPrefix: "Application",
-    seoTitle:
-      "Application & Contact | International Cigar Sommelier Institute",
+      "A structured four-level pathway designed to move learners from essential cigar knowledge to advanced professional mastery — with science, service and disciplined decision-making at its core.",
+    heroCta: "Explore the four levels",
+
+    pathwayEyebrow: "The ICSI pathway",
+    pathwayTitle: "One progression. Four levels of mastery.",
+    pathwayLead:
+      "Each level builds on the one before it. Start with the foundations, develop professional service capability, deepen technical expertise, and progress toward advanced mastery.",
+
+    levels: [
+      {
+        number: "I",
+        label: "FOUNDATION",
+        title: "ICSI Level I",
+        audience: "For cigar enthusiasts, aspiring professionals and new entrants",
+        body:
+          "Build a disciplined foundation in cigar knowledge, care and appreciation. Level I introduces the core principles needed to understand cigars with greater confidence and consistency.",
+        outcome: "Establish the language, habits and core knowledge required for further study.",
+      },
+      {
+        number: "II",
+        label: "PROFESSIONAL",
+        title: "ICSI Level II",
+        audience: "For hospitality, lounge and retail professionals",
+        body:
+          "Translate knowledge into professional service. Level II develops the practical and technical understanding required to support confident recommendations, storage decisions and a consistent guest experience.",
+        outcome: "Move from personal knowledge to structured professional practice.",
+      },
+      {
+        number: "III",
+        label: "ADVANCED",
+        title: "ICSI Level III",
+        audience: "For experienced cigar and hospitality professionals",
+        body:
+          "Deepen technical and diagnostic capability across blend structure, performance, storage and service. Level III develops the analytical judgement required for more demanding professional environments.",
+        outcome: "Develop advanced diagnostic reasoning and higher-level service judgement.",
+      },
+      {
+        number: "IV",
+        label: "MASTERY",
+        title: "ICSI Level IV",
+        audience: "For senior professionals seeking advanced mastery",
+        body:
+          "The highest level in the ICSI pathway. Level IV brings together scientific understanding, professional judgement and advanced application into a comprehensive standard of expertise.",
+        outcome: "Demonstrate integrated mastery across knowledge, analysis and professional application.",
+      },
+    ],
+
+    chooseEyebrow: "Where should I start?",
+    chooseTitle: "Choose the level that matches your current experience.",
+    chooseBody:
+      "You do not need to guess your way into the pathway. Tell us about your background and intended use — personal development, hospitality, retail or professional specialization — and ICSI will guide you to the appropriate starting level.",
+    chooseCta: "Find my starting level",
+
+    standardEyebrow: "The ICSI standard",
+    standardTitle: "Education designed for professional application.",
+    standardLead:
+      "ICSI combines structured education with scientific reasoning and hospitality practice so that knowledge can be applied consistently — not simply remembered.",
+    pillars: [
+      {
+        number: "01",
+        title: "Structured progression",
+        body:
+          "A clear four-level architecture gives learners a defined route from foundation to advanced mastery.",
+      },
+      {
+        number: "02",
+        title: "Science-led understanding",
+        body:
+          "The curriculum develops understanding of the physical, sensory and performance factors that influence the cigar experience.",
+      },
+      {
+        number: "03",
+        title: "Hospitality relevance",
+        body:
+          "Professional levels connect technical knowledge to real service decisions, consistency and guest experience.",
+      },
+      {
+        number: "04",
+        title: "Professional recognition",
+        body:
+          "Each stage is designed to make progression visible and to give serious learners a credible framework for development.",
+      },
+    ],
+
+    finalEyebrow: "Begin your pathway",
+    finalTitle: "Start at the right level. Build from there.",
+    finalBody:
+      "Explore the ICSI pathway or speak with us about the level best suited to your experience and professional objectives.",
+    finalPrimary: "Discuss my pathway",
+    finalSecondary: "Contact ICSI",
+
+    levelCta: "Enquire about this level",
+    outcomeLabel: "Progression outcome",
+    seoTitle: "ICSI Professional Education | Level I–IV Certification Pathway",
     seoDescription:
-      "Apply to CCS, ACS, request an invite to AMC, or contact ICSI.",
+      "Explore the ICSI four-level professional education pathway, progressing from foundational cigar knowledge to advanced professional mastery.",
   },
+
   fr: {
-    kicker: "Candidature & Contact",
-    title: "Candidature & Contact",
+    kicker: "Formation professionnelle ICSI",
+    titleLine1: "Développez votre expertise.",
+    titleLine2: "Faites reconnaître votre niveau.",
+    titleLine3: "Progressez professionnellement.",
     intro:
-      "Contactez-nous pour postuler à nos cours, classes ou accéder à nos applications numériques. Toutes les candidatures sont examinées individuellement et l'admission est sélective. Si vous postulez à nos cours, veuillez inclure votre CV ainsi qu'une courte déclaration d'intention.",
-    programEyebrow: "Contexte de candidature",
-    programTitle: "Programme sélectionné",
-    emailEyebrow: "Formulaire de contact",
-    emailTitle: "Envoyez-nous un message",
-    formIntro: "Complétez le formulaire ci-dessous et notre équipe vous contactera directement.",
-    firstName: "Prénom", familyName: "Nom de famille", organization: "Organisation",
-    email: "Email", message: "Message", optional: "facultatif", submit: "Envoyer",
-    privacy: "En soumettant ce formulaire, vous acceptez qu'ICSI vous contacte au sujet de votre demande.",
-    successEyebrow: "Merci", successTitle: "Votre message a bien été reçu",
-    successText: "Merci d'avoir contacté ICSI. Notre équipe répondra prochainement à votre demande.",
-    whatsappEyebrow: "WhatsApp Suisse",
-    whatsappTitle: "Nous contacter directement",
-    closingEyebrow: "Confidentialité",
-    closingTitle: "Discrétion & confidentialité",
-    closing:
-      "Toutes les candidatures sont traitées avec discrétion et confidentialité.",
-    programLabel: "Programme sélectionné",
-    programNames: {
-      "level-i": "ICSI Level I",
-      "level-ii": "ICSI Level II",
-      "level-iii": "ICSI Level III",
-      "level-iv": "ICSI Level IV",
-      ccs: "CCS — Certified Cigar Sommelier",
-      acs: "ACS — Advanced Cigar Sommelier",
-      amc: "AMC — Aficionado Master Class",
-    },
-    pathwayName: "ICSI Education Pathway Guidance",
-    courseFieldLabel: "Course level",
-    courseSelectPlaceholder: "Select a course level",
-    subjectPrefix: "Candidature",
-    seoTitle:
-      "Candidature & Contact | International Cigar Sommelier Institute",
+      "Un parcours structuré en quatre niveaux, conçu pour faire évoluer l’apprenant des connaissances essentielles du cigare vers une maîtrise professionnelle avancée — avec la science, le service et la rigueur de décision au cœur de l’approche.",
+    heroCta: "Découvrir les quatre niveaux",
+
+    pathwayEyebrow: "Le parcours ICSI",
+    pathwayTitle: "Une progression. Quatre niveaux de maîtrise.",
+    pathwayLead:
+      "Chaque niveau s’appuie sur le précédent. Commencez par les fondamentaux, développez vos compétences de service professionnel, approfondissez votre expertise technique et progressez vers une maîtrise avancée.",
+
+    levels: [
+      {
+        number: "I",
+        label: "FONDAMENTAUX",
+        title: "ICSI Niveau I",
+        audience: "Pour les aficionados, futurs professionnels et nouveaux entrants",
+        body:
+          "Construisez une base rigoureuse de connaissances, de conservation et d’appréciation du cigare. Le Niveau I introduit les principes essentiels pour comprendre le cigare avec davantage de confiance et de constance.",
+        outcome: "Acquérir le langage, les habitudes et les connaissances de base nécessaires pour poursuivre le parcours.",
+      },
+      {
+        number: "II",
+        label: "PROFESSIONNEL",
+        title: "ICSI Niveau II",
+        audience: "Pour les professionnels de l’hospitality, des lounges et du retail",
+        body:
+          "Transformez les connaissances en pratique professionnelle. Le Niveau II développe la compréhension pratique et technique nécessaire pour soutenir des recommandations fiables, de bonnes décisions de conservation et une expérience client cohérente.",
+        outcome: "Passer d’une connaissance personnelle à une pratique professionnelle structurée.",
+      },
+      {
+        number: "III",
+        label: "AVANCÉ",
+        title: "ICSI Niveau III",
+        audience: "Pour les professionnels expérimentés du cigare et de l’hospitality",
+        body:
+          "Approfondissez vos capacités techniques et diagnostiques autour de la structure des blends, de la performance, de la conservation et du service. Le Niveau III développe le jugement analytique nécessaire dans les environnements professionnels plus exigeants.",
+        outcome: "Développer un raisonnement diagnostique avancé et un niveau supérieur de jugement de service.",
+      },
+      {
+        number: "IV",
+        label: "MAÎTRISE",
+        title: "ICSI Niveau IV",
+        audience: "Pour les professionnels seniors recherchant une maîtrise avancée",
+        body:
+          "Le niveau le plus élevé du parcours ICSI. Le Niveau IV réunit compréhension scientifique, jugement professionnel et application avancée dans un standard global d’expertise.",
+        outcome: "Démontrer une maîtrise intégrée des connaissances, de l’analyse et de l’application professionnelle.",
+      },
+    ],
+
+    chooseEyebrow: "Par où commencer ?",
+    chooseTitle: "Choisissez le niveau correspondant à votre expérience actuelle.",
+    chooseBody:
+      "Vous n’avez pas à déterminer seul votre point d’entrée. Présentez-nous votre parcours et votre objectif — développement personnel, hospitality, retail ou spécialisation professionnelle — et l’ICSI vous orientera vers le niveau de départ approprié.",
+    chooseCta: "Trouver mon niveau de départ",
+
+    standardEyebrow: "Le standard ICSI",
+    standardTitle: "Une formation conçue pour l’application professionnelle.",
+    standardLead:
+      "L’ICSI associe formation structurée, raisonnement scientifique et pratique de l’hospitality afin que les connaissances puissent être appliquées avec constance — et pas simplement mémorisées.",
+    pillars: [
+      {
+        number: "01",
+        title: "Progression structurée",
+        body:
+          "Une architecture claire en quatre niveaux donne à chaque apprenant un parcours défini, des fondamentaux jusqu’à la maîtrise avancée.",
+      },
+      {
+        number: "02",
+        title: "Compréhension scientifique",
+        body:
+          "Le cursus développe la compréhension des facteurs physiques, sensoriels et de performance qui influencent l’expérience du cigare.",
+      },
+      {
+        number: "03",
+        title: "Pertinence hospitality",
+        body:
+          "Les niveaux professionnels relient les connaissances techniques aux décisions de service, à la constance et à l’expérience client.",
+      },
+      {
+        number: "04",
+        title: "Reconnaissance professionnelle",
+        body:
+          "Chaque étape rend la progression visible et offre aux apprenants engagés un cadre crédible de développement.",
+      },
+    ],
+
+    finalEyebrow: "Commencez votre parcours",
+    finalTitle: "Commencez au bon niveau. Progressez ensuite.",
+    finalBody:
+      "Découvrez le parcours ICSI ou échangez avec nous sur le niveau le mieux adapté à votre expérience et à vos objectifs professionnels.",
+    finalPrimary: "Discuter de mon parcours",
+    finalSecondary: "Contacter l’ICSI",
+
+    levelCta: "Se renseigner sur ce niveau",
+    outcomeLabel: "Objectif de progression",
+    seoTitle: "Formation Professionnelle ICSI | Parcours Niveau I–IV",
     seoDescription:
-      "Candidater au CCS®, à l’ACS®, ou demander une invitation à l’AMC™.",
+      "Découvrez le parcours de formation professionnelle ICSI en quatre niveaux, des fondamentaux du cigare jusqu’à la maîtrise professionnelle avancée.",
   },
+
   de: {
-    kicker: "Bewerbung & Kontakt",
-    title: "Bewerbung & Kontakt",
+    kicker: "ICSI Berufsausbildung",
+    titleLine1: "Expertise aufbauen.",
+    titleLine2: "Kompetenz sichtbar machen.",
+    titleLine3: "Beruflich weiterentwickeln.",
     intro:
-      "Kontaktieren Sie uns, um sich für unsere Kurse, Klassen oder den Zugang zu unseren digitalen Anwendungen zu bewerben. Alle Bewerbungen werden individuell geprüft, und die Zulassung ist selektiv. Wenn Sie sich für unsere Kurse bewerben, fügen Sie bitte Ihren Lebenslauf oder Ihre Bewerbung zusammen mit einer kurzen Absichtserklärung bei.",
-    programEyebrow: "Bewerbungskontext",
-    programTitle: "Ausgewähltes Programm",
-    emailEyebrow: "Kontaktformular",
-    emailTitle: "Senden Sie uns eine Nachricht",
-    formIntro: "Füllen Sie das untenstehende Formular aus. Unser Team wird sich direkt mit Ihnen in Verbindung setzen.",
-    firstName: "Vorname", familyName: "Nachname", organization: "Organisation",
-    email: "E-Mail", message: "Nachricht", optional: "optional", submit: "Absenden",
-    privacy: "Mit dem Absenden dieses Formulars erklären Sie sich damit einverstanden, dass ICSI Sie bezüglich Ihrer Anfrage kontaktiert.",
-    successEyebrow: "Vielen Dank", successTitle: "Ihre Nachricht ist eingegangen",
-    successText: "Vielen Dank für Ihre Kontaktaufnahme mit ICSI. Unser Team wird Ihre Anfrage in Kürze beantworten.",
-    whatsappEyebrow: "Schweizer WhatsApp",
-    whatsappTitle: "Direkt kontaktieren",
-    closingEyebrow: "Vertraulichkeit",
-    closingTitle: "Diskretion & Vertraulichkeit",
-    closing: "Alle Einsendungen werden vertraulich behandelt.",
-    programLabel: "Ausgewähltes Programm",
-    programNames: {
-      "level-i": "ICSI Level I",
-      "level-ii": "ICSI Level II",
-      "level-iii": "ICSI Level III",
-      "level-iv": "ICSI Level IV",
-      ccs: "CCS — Certified Cigar Sommelier",
-      acs: "ACS — Advanced Cigar Sommelier",
-      amc: "AMC — Aficionado Master Class",
-    },
-    pathwayName: "ICSI Education Pathway Guidance",
-    courseFieldLabel: "Course level",
-    courseSelectPlaceholder: "Select a course level",
-    subjectPrefix: "Bewerbung",
-    seoTitle:
-      "Bewerbung & Kontakt | International Cigar Sommelier Institute",
+      "Ein strukturierter vierstufiger Bildungsweg, der von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft führt — mit Wissenschaft, Service und disziplinierter Entscheidungsfindung im Mittelpunkt.",
+    heroCta: "Die vier Stufen entdecken",
+
+    pathwayEyebrow: "Der ICSI Bildungsweg",
+    pathwayTitle: "Ein Weg. Vier Stufen der Meisterschaft.",
+    pathwayLead:
+      "Jede Stufe baut auf der vorherigen auf. Beginnen Sie mit den Grundlagen, entwickeln Sie professionelle Servicekompetenz, vertiefen Sie Ihr technisches Wissen und arbeiten Sie auf fortgeschrittene Meisterschaft hin.",
+
+    levels: [
+      {
+        number: "I",
+        label: "GRUNDLAGEN",
+        title: "ICSI Level I",
+        audience: "Für Aficionados, angehende Fachkräfte und Neueinsteiger",
+        body:
+          "Schaffen Sie eine fundierte Basis für Zigarrenwissen, Pflege und Wertschätzung. Level I vermittelt die zentralen Prinzipien, um Zigarren mit mehr Sicherheit und Konsequenz zu verstehen.",
+        outcome: "Sprache, Gewohnheiten und Grundwissen für die weitere Ausbildung aufbauen.",
+      },
+      {
+        number: "II",
+        label: "PROFESSIONELL",
+        title: "ICSI Level II",
+        audience: "Für Hospitality-, Lounge- und Retail-Profis",
+        body:
+          "Übertragen Sie Wissen in professionelle Praxis. Level II entwickelt das praktische und technische Verständnis für fundierte Empfehlungen, Lagerentscheidungen und ein konsistentes Gästeerlebnis.",
+        outcome: "Vom persönlichen Wissen zu strukturierter professioneller Praxis übergehen.",
+      },
+      {
+        number: "III",
+        label: "FORTGESCHRITTEN",
+        title: "ICSI Level III",
+        audience: "Für erfahrene Zigarren- und Hospitality-Profis",
+        body:
+          "Vertiefen Sie technische und diagnostische Fähigkeiten in den Bereichen Blend-Struktur, Performance, Lagerung und Service. Level III entwickelt das analytische Urteilsvermögen für anspruchsvollere professionelle Umgebungen.",
+        outcome: "Fortgeschrittenes diagnostisches Denken und höheres Serviceurteil entwickeln.",
+      },
+      {
+        number: "IV",
+        label: "MEISTERSCHAFT",
+        title: "ICSI Level IV",
+        audience: "Für erfahrene Fachkräfte mit dem Ziel fortgeschrittener Meisterschaft",
+        body:
+          "Die höchste Stufe des ICSI Bildungswegs. Level IV verbindet wissenschaftliches Verständnis, professionelles Urteilsvermögen und fortgeschrittene Anwendung zu einem umfassenden Standard der Expertise.",
+        outcome: "Integrierte Meisterschaft in Wissen, Analyse und professioneller Anwendung nachweisen.",
+      },
+    ],
+
+    chooseEyebrow: "Wo sollte ich beginnen?",
+    chooseTitle: "Wählen Sie die Stufe, die zu Ihrer heutigen Erfahrung passt.",
+    chooseBody:
+      "Sie müssen Ihren Einstieg nicht allein bestimmen. Teilen Sie uns Ihren Hintergrund und Ihr Ziel mit — persönliche Entwicklung, Hospitality, Retail oder professionelle Spezialisierung — und ICSI empfiehlt Ihnen die passende Einstiegsstufe.",
+    chooseCta: "Meine Einstiegsstufe finden",
+
+    standardEyebrow: "Der ICSI Standard",
+    standardTitle: "Ausbildung für die professionelle Anwendung.",
+    standardLead:
+      "ICSI verbindet strukturierte Ausbildung mit wissenschaftlichem Denken und Hospitality-Praxis, damit Wissen konsequent angewendet — und nicht nur erinnert — werden kann.",
+    pillars: [
+      {
+        number: "01",
+        title: "Strukturierte Entwicklung",
+        body:
+          "Eine klare vierstufige Architektur schafft einen definierten Weg von den Grundlagen bis zur fortgeschrittenen Meisterschaft.",
+      },
+      {
+        number: "02",
+        title: "Wissenschaftliches Verständnis",
+        body:
+          "Das Curriculum entwickelt ein Verständnis der physischen, sensorischen und leistungsbezogenen Faktoren, die das Zigarrenerlebnis beeinflussen.",
+      },
+      {
+        number: "03",
+        title: "Hospitality-Relevanz",
+        body:
+          "Die professionellen Stufen verbinden technisches Wissen mit realen Serviceentscheidungen, Konsistenz und Gästeerlebnis.",
+      },
+      {
+        number: "04",
+        title: "Professionelle Anerkennung",
+        body:
+          "Jede Stufe macht Entwicklung sichtbar und bietet engagierten Lernenden einen glaubwürdigen Rahmen für ihre Weiterentwicklung.",
+      },
+    ],
+
+    finalEyebrow: "Beginnen Sie Ihren Weg",
+    finalTitle: "Auf der richtigen Stufe beginnen. Darauf aufbauen.",
+    finalBody:
+      "Entdecken Sie den ICSI Bildungsweg oder sprechen Sie mit uns über die Stufe, die am besten zu Ihrer Erfahrung und Ihren beruflichen Zielen passt.",
+    finalPrimary: "Meinen Bildungsweg besprechen",
+    finalSecondary: "ICSI kontaktieren",
+
+    levelCta: "Diese Stufe anfragen",
+    outcomeLabel: "Entwicklungsziel",
+    seoTitle: "ICSI Berufsausbildung | Level I–IV Bildungsweg",
     seoDescription:
-      "Bewerben Sie sich für CCS®, ACS®, oder fragen Sie eine AMC™ Einladung an.",
+      "Entdecken Sie den vierstufigen ICSI Bildungsweg von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft.",
   },
 };
 
-const COURSE_LEVELS = {
-  "level-i": "ICSI Level I",
-  "level-ii": "ICSI Level II",
-  "level-iii": "ICSI Level III",
-  "level-iv": "ICSI Level IV",
-};
-
-function normalizeQueryValue(value) {
-  return typeof value === "string" ? value.trim().toLowerCase() : "";
-}
-
-function ContactSection({ number, eyebrow, title, children }) {
+function LevelCard({ level, c, lang }) {
   return (
-    <section className="contactEditorialSection">
-      <div className="contactSectionMeta">
-        <span className="contactSectionNum">{number}</span>
-        <span className="contactSectionEyebrow">{eyebrow}</span>
+    <article className={`courseLevelCard level-${level.number.toLowerCase()}`}>
+      <div className="courseLevelTop">
+        <div className="courseLevelNumber">{level.number}</div>
+        <div className="courseLevelMeta">
+          <span className="courseLevelLabel">{level.label}</span>
+          <span className="courseLevelAudience">{level.audience}</span>
+        </div>
       </div>
 
-      <div className="contactSectionDivider" />
+      <div className="courseLevelBody">
+        <h3>{level.title}</h3>
+        <p>{level.body}</p>
 
-      <div className="contactSectionBody">
-        <h2 className="contactSectionTitle">{title}</h2>
-        {children}
+        <div className="courseLevelOutcome">
+          <span>{c.outcomeLabel}</span>
+          <p>{level.outcome}</p>
+        </div>
       </div>
-    </section>
+
+      <Link
+        href={{ pathname: "/contact", query: { program: `level-${level.number.toLowerCase()}` } }}
+        locale={lang}
+        className="courseLevelCta"
+      >
+        <span>{c.levelCta}</span>
+        <span aria-hidden="true">→</span>
+      </Link>
+    </article>
   );
 }
 
-export default function Contact() {
-  const router = useRouter();
-  const lang = (router.locale || "en").toLowerCase();
-
-  const selection = useMemo(() => {
-    if (!router.isReady) {
-      return { key: "", inquiry: "", source: "" };
-    }
-
-    const course = normalizeQueryValue(router.query?.course);
-    const legacyProgram = normalizeQueryValue(router.query?.program);
-    const inquiry = normalizeQueryValue(router.query?.inquiry);
-
-    return {
-      key: course || legacyProgram,
-      inquiry,
-      source: course ? "course" : legacyProgram ? "program" : inquiry ? "inquiry" : "",
-    };
-  }, [router.isReady, router.query]);
-
-  const c = copy[lang] || copy.en;
-
-  const [selectedCourseKey, setSelectedCourseKey] = useState("");
-
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    const incomingCourse = selection.key && COURSE_LEVELS[selection.key]
-      ? selection.key
-      : "";
-
-    setSelectedCourseKey(incomingCourse);
-  }, [router.isReady, selection.key]);
-
-  const waNumber = "41762305791";
-  const waLabel = "+41 76 230 57 91";
-
-  const selectedCourseCanonical = COURSE_LEVELS[selectedCourseKey] || "";
-  const selectedProgramDisplay = c.programNames?.[selectedCourseKey] || "";
-  const pathwayInquiry = selection.inquiry === "education-pathway";
-  const programNice = selectedProgramDisplay || (pathwayInquiry ? c.pathwayName : "");
-
-  const submitted = router.query?.submitted === "true";
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://cigarsommelierinstitute.com";
-  const localePrefix =
-    router.locale && router.locale !== "en" ? `/${router.locale}` : "";
-
-  const returnParams = new URLSearchParams({ submitted: "true" });
-  if (selectedCourseKey) returnParams.set("course", selectedCourseKey);
-  if (selection.inquiry) returnParams.set("inquiry", selection.inquiry);
-
-  const redirectTo = `${siteUrl}${localePrefix}/contact?${returnParams.toString()}`;
-
-  const staticFormSubject = selectedCourseCanonical
-    ? `ICSI Course Enquiry — ${selectedCourseCanonical}`
-    : pathwayInquiry
-      ? "ICSI Education Pathway Enquiry"
-      : "ICSI Website Contact";
+export default function Courses() {
+  const { locale } = useRouter();
+  const lang = (locale || "en").toLowerCase();
+  const c = pageCopy[lang] || pageCopy.en;
 
   return (
     <Layout>
-      <Seo
-        title={c.seoTitle}
-        description={c.seoDescription}
-        path="/contact"
-      />
+      <Seo title={c.seoTitle} description={c.seoDescription} path="/courses" />
 
-      <div className={`contactPage lang-${lang}`}>
-        <section className="contactHero">
-          <div className="container contactHeroInner">
-            <span className="contactKicker">{c.kicker}</span>
-            <h1 className="contactHeroTitle">{c.title}</h1>
-            <p className="contactHeroLead">{c.intro}</p>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              name: "International Cigar Sommelier Institute",
+              url: "https://cigarsommelierinstitute.com",
+              description:
+                "A structured four-level professional education pathway from foundational cigar knowledge to advanced professional mastery.",
+              hasCourse: [
+                { "@type": "Course", name: "ICSI Level I" },
+                { "@type": "Course", name: "ICSI Level II" },
+                { "@type": "Course", name: "ICSI Level III" },
+                { "@type": "Course", name: "ICSI Level IV" },
+              ],
+            }),
+          }}
+        />
+      </Head>
+
+      <div className={`coursesPage lang-${lang}`}>
+        <section className="coursesHero">
+          <div className="container coursesHeroInner">
+            <div className="coursesHeroGrid">
+              <div className="coursesHeroMeta">
+                <span className="coursesEyebrow">{c.kicker}</span>
+                <span className="coursesHeroRule" aria-hidden="true" />
+              </div>
+
+              <div className="coursesHeroContent">
+                <h1>
+                  <span>{c.titleLine1}</span>
+                  <span>{c.titleLine2}</span>
+                  <em>{c.titleLine3}</em>
+                </h1>
+                <p>{c.intro}</p>
+
+                <a href="#levels" className="coursesPrimaryCta">
+                  <span>{c.heroCta}</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 
-        <main className="container contactMain">
-          {(selectedCourseKey || pathwayInquiry) && (
-            <ContactSection
-              number="01"
-              eyebrow={c.programEyebrow}
-              title={c.programTitle}
-            >
-              {selectedCourseKey ? (
-                <div className="contactCourseSelectorWrap">
-                  <label
-                    className="contactLabel contactCourseSelectorLabel"
-                    htmlFor="selectedCourseLevel"
-                  >
-                    {c.courseFieldLabel}
-                  </label>
+        <section className="coursesProgressionBand" aria-label={c.pathwayTitle}>
+          <div className="container coursesProgressionInner">
+            {c.levels.map((level, index) => (
+              <div className="coursesProgressionStep" key={level.number}>
+                <span className="progressionNumber">{level.number}</span>
+                <span className="progressionLabel">{level.label}</span>
+                {index < c.levels.length - 1 && (
+                  <span className="progressionArrow" aria-hidden="true">→</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
 
-                  <select
-                    id="selectedCourseLevel"
-                    className="contactCourseSelect"
-                    value={selectedCourseKey}
-                    onChange={(e) => setSelectedCourseKey(e.target.value)}
-                  >
-                    <option value="">{c.courseSelectPlaceholder}</option>
-                    <option value="level-i">{c.programNames["level-i"]}</option>
-                    <option value="level-ii">{c.programNames["level-ii"]}</option>
-                    <option value="level-iii">{c.programNames["level-iii"]}</option>
-                    <option value="level-iv">{c.programNames["level-iv"]}</option>
-                  </select>
+        <main>
+          <section className="coursesPathwayIntro">
+            <div className="container coursesEditorialGrid">
+              <div className="coursesSectionMeta">
+                <span className="coursesEyebrow crimson">{c.pathwayEyebrow}</span>
+                <span className="coursesSectionIndex">01</span>
+              </div>
+
+              <div className="coursesSectionContent">
+                <h2>{c.pathwayTitle}</h2>
+                <p className="coursesSectionLead">{c.pathwayLead}</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="levels" className="coursesLevelsSection">
+            <div className="container">
+              <div className="coursesLevelGrid">
+                {c.levels.map((level) => (
+                  <LevelCard key={level.number} level={level} c={c} lang={lang} />
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="coursesChooser">
+            <div className="container coursesChooserGrid">
+              <div>
+                <span className="coursesEyebrow gold">{c.chooseEyebrow}</span>
+                <h2>{c.chooseTitle}</h2>
+              </div>
+
+              <div className="coursesChooserBody">
+                <p>{c.chooseBody}</p>
+                <Link
+                  href={{ pathname: "/contact", query: { inquiry: "education-pathway" } }}
+                  locale={lang}
+                  className="coursesLightCta"
+                >
+                  <span>{c.chooseCta}</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          <section className="coursesStandard">
+            <div className="container coursesEditorialGrid">
+              <div className="coursesSectionMeta">
+                <span className="coursesEyebrow crimson">{c.standardEyebrow}</span>
+                <span className="coursesSectionIndex">02</span>
+              </div>
+
+              <div className="coursesSectionContent">
+                <h2>{c.standardTitle}</h2>
+                <p className="coursesSectionLead">{c.standardLead}</p>
+
+                <div className="coursesPillars">
+                  {c.pillars.map((pillar) => (
+                    <article className="coursesPillar" key={pillar.number}>
+                      <span>{pillar.number}</span>
+                      <h3>{pillar.title}</h3>
+                      <p>{pillar.body}</p>
+                    </article>
+                  ))}
                 </div>
-              ) : (
-                <p className="contactSectionText contactProgramValue">
-                  {c.pathwayName}
-                </p>
-              )}
-            </ContactSection>
-          )}
+              </div>
+            </div>
+          </section>
 
-          <ContactSection
-            number={(selectedCourseKey || pathwayInquiry) ? "02" : "01"}
-            eyebrow={submitted ? c.successEyebrow : c.emailEyebrow}
-            title={submitted ? c.successTitle : c.emailTitle}
-          >
-            {submitted ? (
-              <p className="contactSectionText">{c.successText}</p>
-            ) : (
-              <>
-                <p className="contactSectionText contactFormIntro">{c.formIntro}</p>
-                <form className="contactForm" action="https://api.staticforms.dev/submit" method="POST">
-                  <input
-                    type="hidden"
-                    name="apiKey"
-                    value={process.env.NEXT_PUBLIC_STATICFORMS_CONTACT_KEY || ""}
-                  />
-                  <input type="hidden" name="redirectTo" value={redirectTo} />
-                  <input type="hidden" name="Form" value="ICSI Website Contact" />
-                  <input type="hidden" name="subject" value={staticFormSubject} />
+          <section className="coursesFinalCta">
+            <div className="container coursesFinalGrid">
+              <div>
+                <span className="coursesEyebrow light">{c.finalEyebrow}</span>
+                <h2>{c.finalTitle}</h2>
+              </div>
 
-                  {selectedCourseCanonical && (
-                    <>
-                      <input
-                        type="hidden"
-                        name="Selected Course Level"
-                        value={selectedCourseCanonical}
-                      />
-                      <input
-                        type="hidden"
-                        name="Enquiry Type"
-                        value="Course Application"
-                      />
-                    </>
-                  )}
+              <div className="coursesFinalBody">
+                <p>{c.finalBody}</p>
+                <div className="coursesFinalActions">
+                  <Link
+                    href={{ pathname: "/contact", query: { inquiry: "education-pathway" } }}
+                    locale={lang}
+                    className="coursesFinalPrimary"
+                  >
+                    <span>{c.finalPrimary}</span>
+                    <span aria-hidden="true">→</span>
+                  </Link>
 
-                  {pathwayInquiry && (
-                    <input
-                      type="hidden"
-                      name="Enquiry Type"
-                      value="Education Pathway Guidance"
-                    />
-                  )}
-
-                  {programNice && (
-                    <input
-                      type="hidden"
-                      name="Selected Program"
-                      value={programNice}
-                    />
-                  )}
-                  <div className="contactHoneypot" aria-hidden="true">
-                    <label htmlFor="contact-honeypot">Leave this empty</label>
-                    <input id="contact-honeypot" type="text" name="honeypot" tabIndex="-1" autoComplete="off" />
-                  </div>
-
-                  {!selectedCourseKey && !pathwayInquiry && (
-                    <div className="contactField contactFieldFull">
-                      <label className="contactLabel" htmlFor="courseLevelOptional">
-                        {c.courseFieldLabel} <span className="contactOptional">({c.optional})</span>
-                      </label>
-                      <select
-                        id="courseLevelOptional"
-                        className="contactCourseSelect"
-                        value={selectedCourseKey}
-                        onChange={(e) => setSelectedCourseKey(e.target.value)}
-                      >
-                        <option value="">{c.courseSelectPlaceholder}</option>
-                        <option value="level-i">{c.programNames["level-i"]}</option>
-                        <option value="level-ii">{c.programNames["level-ii"]}</option>
-                        <option value="level-iii">{c.programNames["level-iii"]}</option>
-                        <option value="level-iv">{c.programNames["level-iv"]}</option>
-                      </select>
-                    </div>
-                  )}
-
-                  <div className="contactField">
-                    <label className="contactLabel" htmlFor="firstName">{c.firstName}</label>
-                    <input className="contactInput" id="firstName" name="First Name" type="text" autoComplete="given-name" required />
-                  </div>
-                  <div className="contactField">
-                    <label className="contactLabel" htmlFor="familyName">{c.familyName}</label>
-                    <input className="contactInput" id="familyName" name="Family Name" type="text" autoComplete="family-name" required />
-                  </div>
-                  <div className="contactField contactFieldFull">
-                    <label className="contactLabel" htmlFor="organization">{c.organization} <span className="contactOptional">({c.optional})</span></label>
-                    <input className="contactInput" id="organization" name="Organization" type="text" autoComplete="organization" />
-                  </div>
-                  <div className="contactField contactFieldFull">
-                    <label className="contactLabel" htmlFor="email">{c.email}</label>
-                    <input className="contactInput" id="email" name="email" type="email" autoComplete="email" required />
-                  </div>
-                  <div className="contactField contactFieldFull">
-                    <label className="contactLabel" htmlFor="message">{c.message} <span className="contactOptional">({c.optional})</span></label>
-                    <textarea className="contactTextarea" id="message" name="message" rows="5" />
-                  </div>
-                  <div className="contactSubmitWrap">
-                    <button className="contactSubmit" type="submit"><span>{c.submit}</span><span className="contactArrow">→</span></button>
-                  </div>
-                  <p className="contactPrivacy">{c.privacy}</p>
-                </form>
-              </>
-            )}
-          </ContactSection>
-
-          <ContactSection
-            number={(selectedCourseKey || pathwayInquiry) ? "03" : "02"}
-            eyebrow={c.whatsappEyebrow}
-            title={c.whatsappTitle}
-          >
-            <a
-              className="contactTextCta"
-              href={`https://wa.me/${waNumber}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>{waLabel}</span>
-              <span className="contactArrow">→</span>
-            </a>
-          </ContactSection>
-
-          <ContactSection
-            number={(selectedCourseKey || pathwayInquiry) ? "04" : "03"}
-            eyebrow={c.closingEyebrow}
-            title={c.closingTitle}
-          >
-            <p className="contactSectionText">{c.closing}</p>
-          </ContactSection>
+                  <Link href="/contact" locale={lang} className="coursesFinalSecondary">
+                    <span>{c.finalSecondary}</span>
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
         </main>
       </div>
 
       <style jsx global>{`
-        /* =========================================================
-           CONTACT PAGE ONLY
-           Global scope is intentional to neutralize repo-level .section,
-           .card, .btn, .lead, h1 and h2 styling conflicts.
-        ========================================================= */
-
-        .contactPage {
-          background: #fff;
-          color: #121214;
+        .coursesPage {
+          --ivory: #faf4e8;
+          --ink: #16161f;
+          --crimson: #c0242f;
+          --bordeaux: #601818;
+          --gold: #c8a24a;
+          --light-gold: #e4cb8e;
+          background: var(--ivory);
+          color: var(--ink);
         }
 
-        .contactPage .contactHero {
-          margin: 0;
-          padding: 0;
-          background: #fff;
-          border: 0;
+        .coursesPage .coursesHero {
+          background: var(--ivory);
+          border-top: 1px solid rgba(22, 22, 31, 0.1);
         }
 
-        .contactPage .contactHeroInner {
-          padding-top: 60px;
-          padding-bottom: 82px;
+        .coursesPage .coursesHeroInner {
+          padding-top: clamp(56px, 7vw, 105px);
+          padding-bottom: clamp(70px, 9vw, 130px);
         }
 
-        .contactPage .contactKicker {
-          display: block;
-          margin: 0 0 22px;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.68rem;
-          line-height: 1;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          font-weight: 500;
-          opacity: 0.42;
-        }
-
-        .contactPage .contactHeroTitle {
-          margin: 0 0 42px;
-          max-width: 14ch;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(3rem, 5.2vw, 5.4rem);
-          line-height: 0.98;
-          letter-spacing: -0.055em;
-          font-weight: 400;
-        }
-
-        .contactPage .contactHeroLead {
-          margin: 0;
-          max-width: 78ch;
-          padding-left: max(0px, 33%);
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-          line-height: 1.72;
-          font-weight: 300;
-          opacity: 0.72;
-        }
-
-        .contactPage.lang-fr .contactHeroTitle,
-        .contactPage.lang-de .contactHeroTitle {
-          max-width: 18ch;
-          font-size: clamp(2.55rem, 4.3vw, 4.65rem);
-        }
-
-        .contactPage.lang-fr .contactHeroLead,
-        .contactPage.lang-de .contactHeroLead {
-          max-width: 88ch;
-          font-size: clamp(0.98rem, 1.18vw, 1.12rem);
-          line-height: 1.66;
-        }
-
-        .contactPage .contactMain {
-          padding-bottom: 100px;
-        }
-
-        .contactPage .contactEditorialSection {
+        .coursesPage .coursesHeroGrid {
           display: grid;
-          grid-template-columns: 220px 1px minmax(0, 1fr);
-          column-gap: 72px;
-          padding: 58px 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          grid-template-columns: minmax(180px, 0.32fr) minmax(0, 1fr);
+          gap: clamp(48px, 7vw, 110px);
+          align-items: start;
         }
 
-        .contactPage .contactSectionMeta {
-          padding-top: 2px;
+        .coursesPage .coursesHeroMeta {
+          padding-top: 12px;
         }
 
-        .contactPage .contactSectionNum {
+        .coursesPage .coursesEyebrow {
           display: block;
-          margin: 0 0 24px;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(1.85rem, 2.4vw, 2.35rem);
-          line-height: 1;
-          letter-spacing: -0.04em;
-          font-weight: 300;
-          opacity: 0.9;
-        }
-
-        .contactPage .contactSectionEyebrow {
-          display: block;
-          max-width: 24ch;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.64rem;
-          line-height: 1.45;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          font-weight: 600;
-          opacity: 0.58;
-        }
-
-        .contactPage .contactSectionDivider {
-          width: 1px;
-          min-height: 150px;
-          background: rgba(0, 0, 0, 0.08);
-        }
-
-        .contactPage .contactSectionBody {
-          max-width: 820px;
-          padding-top: 1px;
-        }
-
-        .contactPage .contactSectionTitle {
-          margin: 0 0 24px;
-          max-width: 18ch;
-          color: #121214;
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(1.85rem, 2.35vw, 2.55rem);
-          line-height: 1.08;
-          letter-spacing: -0.052em;
-          font-weight: 400;
-        }
-
-        .contactPage .contactSectionText {
-          margin: 0;
-          max-width: 76ch;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.98rem;
-          line-height: 1.78;
-          font-weight: 300;
-          opacity: 0.75;
-        }
-
-        .contactPage .contactProgramValue {
-          font-size: clamp(1.12rem, 1.6vw, 1.4rem);
-          opacity: 0.84;
-        }
-
-        .contactPage .contactProgramLabel {
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
           font-size: 0.68rem;
           line-height: 1.4;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          font-weight: 700;
+          color: var(--ink);
+        }
+
+        .coursesPage .coursesEyebrow.crimson {
+          color: var(--crimson);
+        }
+
+        .coursesPage .coursesEyebrow.gold {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .coursesEyebrow.light {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .coursesHeroRule {
+          display: block;
+          width: 56px;
+          height: 1px;
+          margin-top: 26px;
+          background: var(--crimson);
+        }
+
+        .coursesPage .coursesHeroContent h1,
+        .coursesPage .coursesSectionContent h2,
+        .coursesPage .coursesChooser h2,
+        .coursesPage .coursesFinalCta h2,
+        .coursesPage .courseLevelBody h3,
+        .coursesPage .coursesPillar h3 {
+          font-family: "Playfair Display", Georgia, serif;
+          font-weight: 400;
+        }
+
+        .coursesPage .coursesHeroContent h1 {
+          margin: 0;
+          max-width: 12ch;
+          font-size: clamp(3.25rem, 6vw, 6.7rem);
+          line-height: 0.92;
+          letter-spacing: -0.055em;
+          color: var(--ink);
+        }
+
+        .coursesPage .coursesHeroContent h1 span,
+        .coursesPage .coursesHeroContent h1 em {
+          display: block;
+        }
+
+        .coursesPage .coursesHeroContent h1 em {
+          margin-top: 0.08em;
+          color: var(--bordeaux);
+          font-weight: 400;
+        }
+
+        .coursesPage .coursesHeroContent > p {
+          max-width: 760px;
+          margin: 42px 0 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: clamp(1rem, 1.25vw, 1.18rem);
+          line-height: 1.75;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.76);
+        }
+
+        .coursesPage .coursesPrimaryCta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 34px;
+          min-width: 300px;
+          margin-top: 36px;
+          padding: 18px 20px;
+          border: 1px solid var(--ink);
+          color: var(--ink);
+          background: transparent;
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.7rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           font-weight: 700;
-          color: #601818;
+          transition: background 0.2s ease, color 0.2s ease;
         }
 
-        .contactPage .contactCourseSelectorWrap {
-          max-width: 520px;
+        .coursesPage .coursesPrimaryCta:hover {
+          background: var(--ink);
+          color: var(--ivory);
         }
 
-        .contactPage .contactCourseSelectorLabel {
-          display: block;
-          margin-bottom: 10px;
+        .coursesPage .coursesProgressionBand {
+          background: var(--ink);
+          color: var(--ivory);
         }
 
-        .contactPage .contactCourseSelect {
-          width: 100%;
-          min-height: 54px;
-          padding: 12px 38px 12px 0;
-          border: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.24);
-          border-radius: 0;
-          outline: none;
-          background-color: transparent;
-          color: #121214;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 1rem;
-          font-weight: 400;
-          appearance: none;
-          -webkit-appearance: none;
-          background-image:
-            linear-gradient(45deg, transparent 50%, #601818 50%),
-            linear-gradient(135deg, #601818 50%, transparent 50%);
-          background-position:
-            calc(100% - 16px) 24px,
-            calc(100% - 10px) 24px;
-          background-size: 6px 6px, 6px 6px;
-          background-repeat: no-repeat;
-          cursor: pointer;
+        .coursesPage .coursesProgressionInner {
+          min-height: 112px;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          align-items: stretch;
         }
 
-        .contactPage .contactCourseSelect:focus {
-          border-bottom-color: #601818;
-        }
-
-        .contactPage .contactFormIntro { margin-bottom: 38px; }
-        .contactPage .contactForm { position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 30px; max-width: 760px; }
-        .contactPage .contactField { display:flex; flex-direction:column; gap:10px; }
-        .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1/-1; }
-        .contactPage .contactLabel { color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.64rem; line-height:1.35; letter-spacing:.18em; text-transform:uppercase; font-weight:600; opacity:.62; }
-        .contactPage .contactOptional { font-weight:400; opacity:.65; }
-        .contactPage .contactInput, .contactPage .contactTextarea { width:100%; padding:14px 0; border:0; border-bottom:1px solid rgba(0,0,0,.24); border-radius:0; outline:none; background:transparent; color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:1rem; line-height:1.4; font-weight:300; }
-        .contactPage .contactInput { min-height:54px; }
-        .contactPage .contactTextarea { min-height:120px; resize:vertical; }
-        .contactPage .contactInput:focus, .contactPage .contactTextarea:focus { border-bottom-color:#121214; }
-        .contactPage .contactSubmit { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-width:180px; min-height:50px; padding:0 26px; border:1px solid #121214; border-radius:0; background:#121214; color:#fff; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; font-weight:700; cursor:pointer; }
-        .contactPage .contactSubmit:hover { background:transparent; color:#121214; }
-        .contactPage .contactPrivacy { margin:0; max-width:70ch; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.76rem; line-height:1.6; font-weight:300; opacity:.48; }
-        .contactPage .contactHoneypot { position:absolute!important; left:-9999px!important; width:1px!important; height:1px!important; overflow:hidden!important; opacity:0!important; pointer-events:none!important; }
-
-        .contactPage .contactTextCta {
-          display: inline-flex;
+        .coursesPage .coursesProgressionStep {
+          position: relative;
+          display: flex;
           align-items: center;
           gap: 18px;
-          width: fit-content;
-          min-height: 0;
-          padding: 0 0 7px;
-          border: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.42);
-          border-radius: 0;
-          background: transparent;
-          box-shadow: none;
-          color: #121214;
-          text-decoration: none;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.72rem;
+          padding: 28px 34px;
+          border-left: 1px solid rgba(250, 244, 232, 0.16);
+        }
+
+        .coursesPage .coursesProgressionStep:last-child {
+          border-right: 1px solid rgba(250, 244, 232, 0.16);
+        }
+
+        .coursesPage .progressionNumber {
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 2.2rem;
           line-height: 1;
-          letter-spacing: 0.18em;
+          color: var(--light-gold);
+        }
+
+        .coursesPage .progressionLabel {
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.61rem;
+          line-height: 1.4;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           font-weight: 700;
-          transition: opacity 0.2s ease;
-          overflow-wrap: anywhere;
+          color: rgba(250, 244, 232, 0.72);
         }
 
-        .contactPage .contactTextCta:hover {
-          opacity: 0.45;
-          background: transparent;
+        .coursesPage .progressionArrow {
+          position: absolute;
+          right: -9px;
+          z-index: 2;
+          font-size: 1.25rem;
+          color: var(--gold);
         }
 
-        .contactPage .contactArrow {
-          font-size: 1.28rem;
-          line-height: 0.7;
-          letter-spacing: 0;
+        .coursesPage .coursesPathwayIntro,
+        .coursesPage .coursesStandard {
+          padding: clamp(76px, 9vw, 130px) 0;
+        }
+
+        .coursesPage .coursesEditorialGrid {
+          display: grid;
+          grid-template-columns: minmax(170px, 0.3fr) minmax(0, 1fr);
+          gap: clamp(48px, 7vw, 110px);
+        }
+
+        .coursesPage .coursesSectionMeta {
+          position: relative;
+          padding-top: 8px;
+        }
+
+        .coursesPage .coursesSectionIndex {
+          display: block;
+          margin-top: 30px;
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 2rem;
+          color: var(--gold);
+        }
+
+        .coursesPage .coursesSectionContent h2,
+        .coursesPage .coursesChooser h2,
+        .coursesPage .coursesFinalCta h2 {
+          margin: 0;
+          max-width: 17ch;
+          font-size: clamp(2.35rem, 4.2vw, 4.8rem);
+          line-height: 0.98;
+          letter-spacing: -0.045em;
+        }
+
+        .coursesPage .coursesSectionLead {
+          max-width: 760px;
+          margin: 32px 0 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: clamp(1rem, 1.2vw, 1.14rem);
+          line-height: 1.75;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.74);
+        }
+
+        .coursesPage .coursesLevelsSection {
+          padding: 0 0 clamp(86px, 10vw, 145px);
+        }
+
+        .coursesPage .coursesLevelGrid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          border-top: 1px solid rgba(22, 22, 31, 0.18);
+          border-left: 1px solid rgba(22, 22, 31, 0.18);
+        }
+
+        .coursesPage .courseLevelCard {
+          min-height: 520px;
+          display: flex;
+          flex-direction: column;
+          padding: clamp(30px, 4vw, 54px);
+          border-right: 1px solid rgba(22, 22, 31, 0.18);
+          border-bottom: 1px solid rgba(22, 22, 31, 0.18);
+          background: rgba(250, 244, 232, 0.7);
+        }
+
+        .coursesPage .courseLevelCard.level-iv {
+          background: var(--bordeaux);
+          color: var(--ivory);
+        }
+
+        .coursesPage .courseLevelTop {
+          display: grid;
+          grid-template-columns: 78px 1fr;
+          gap: 22px;
+          align-items: start;
+        }
+
+        .coursesPage .courseLevelNumber {
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: clamp(3rem, 5vw, 5.2rem);
+          line-height: 0.85;
+          color: var(--gold);
+        }
+
+        .coursesPage .courseLevelLabel {
+          display: block;
+          margin-bottom: 14px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.62rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-weight: 800;
+          color: var(--crimson);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelLabel {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .courseLevelAudience {
+          display: block;
+          max-width: 36ch;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.78rem;
+          line-height: 1.55;
+          font-weight: 500;
+          color: rgba(22, 22, 31, 0.62);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelAudience {
+          color: rgba(250, 244, 232, 0.66);
+        }
+
+        .coursesPage .courseLevelBody {
+          margin-top: 52px;
+        }
+
+        .coursesPage .courseLevelBody h3 {
+          margin: 0;
+          font-size: clamp(2rem, 3vw, 3.35rem);
+          line-height: 1;
+          letter-spacing: -0.04em;
+        }
+
+        .coursesPage .courseLevelBody > p {
+          max-width: 58ch;
+          margin: 26px 0 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.96rem;
+          line-height: 1.72;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.72);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelBody > p {
+          color: rgba(250, 244, 232, 0.76);
+        }
+
+        .coursesPage .courseLevelOutcome {
+          margin-top: 32px;
+          padding-top: 22px;
+          border-top: 1px solid rgba(22, 22, 31, 0.14);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelOutcome {
+          border-color: rgba(250, 244, 232, 0.2);
+        }
+
+        .coursesPage .courseLevelOutcome > span {
+          display: block;
+          margin-bottom: 9px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.58rem;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          font-weight: 800;
+          color: var(--crimson);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelOutcome > span {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .courseLevelOutcome p {
+          margin: 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.86rem;
+          line-height: 1.65;
+          color: rgba(22, 22, 31, 0.68);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelOutcome p {
+          color: rgba(250, 244, 232, 0.72);
+        }
+
+        .coursesPage .courseLevelCta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          margin-top: auto;
+          padding-top: 34px;
+          color: var(--ink);
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 800;
+          border-top: 1px solid rgba(22, 22, 31, 0.2);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelCta {
+          color: var(--ivory);
+          border-color: rgba(250, 244, 232, 0.24);
+        }
+
+        .coursesPage .courseLevelCta:hover {
+          color: var(--crimson);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseLevelCta:hover {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .coursesChooser {
+          padding: clamp(70px, 8vw, 115px) 0;
+          background: var(--ink);
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesChooserGrid,
+        .coursesPage .coursesFinalGrid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(340px, 0.65fr);
+          gap: clamp(60px, 9vw, 140px);
+          align-items: end;
+        }
+
+        .coursesPage .coursesChooser h2 {
+          margin-top: 24px;
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesChooserBody p,
+        .coursesPage .coursesFinalBody p {
+          margin: 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.98rem;
+          line-height: 1.75;
           font-weight: 300;
         }
 
-        @media (max-width: 1100px) {
-          .contactPage .contactEditorialSection {
-            grid-template-columns: 180px 1px minmax(0, 1fr);
-            column-gap: 48px;
+        .coursesPage .coursesChooserBody p {
+          color: rgba(250, 244, 232, 0.72);
+        }
+
+        .coursesPage .coursesLightCta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 32px;
+          min-width: 280px;
+          margin-top: 30px;
+          padding: 17px 0 10px;
+          border-bottom: 1px solid var(--light-gold);
+          color: var(--ivory);
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.68rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+
+        .coursesPage .coursesLightCta:hover {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .coursesPillars {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          margin-top: 66px;
+          border-top: 1px solid rgba(22, 22, 31, 0.16);
+          border-left: 1px solid rgba(22, 22, 31, 0.16);
+        }
+
+        .coursesPage .coursesPillar {
+          min-height: 260px;
+          padding: 30px;
+          border-right: 1px solid rgba(22, 22, 31, 0.16);
+          border-bottom: 1px solid rgba(22, 22, 31, 0.16);
+        }
+
+        .coursesPage .coursesPillar > span {
+          display: block;
+          margin-bottom: 42px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.16em;
+          font-weight: 800;
+          color: var(--crimson);
+        }
+
+        .coursesPage .coursesPillar h3 {
+          margin: 0;
+          font-size: clamp(1.45rem, 2.1vw, 2.05rem);
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+        }
+
+        .coursesPage .coursesPillar p {
+          margin: 18px 0 0;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.88rem;
+          line-height: 1.68;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.68);
+        }
+
+        .coursesPage .coursesFinalCta {
+          padding: clamp(72px, 9vw, 125px) 0;
+          background: var(--bordeaux);
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesFinalCta h2 {
+          margin-top: 24px;
+          color: var(--ivory);
+        }
+
+        .coursesPage .coursesFinalBody p {
+          color: rgba(250, 244, 232, 0.75);
+        }
+
+        .coursesPage .coursesFinalActions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 14px;
+          margin-top: 30px;
+        }
+
+        .coursesPage .coursesFinalPrimary,
+        .coursesPage .coursesFinalSecondary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 28px;
+          min-width: 220px;
+          padding: 16px 18px;
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.64rem;
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+          font-weight: 800;
+        }
+
+        .coursesPage .coursesFinalPrimary {
+          background: var(--ivory);
+          color: var(--bordeaux);
+          border: 1px solid var(--ivory);
+        }
+
+        .coursesPage .coursesFinalSecondary {
+          color: var(--ivory);
+          border: 1px solid rgba(250, 244, 232, 0.5);
+        }
+
+        .coursesPage .coursesFinalPrimary:hover {
+          background: var(--light-gold);
+          border-color: var(--light-gold);
+        }
+
+        .coursesPage .coursesFinalSecondary:hover {
+          border-color: var(--light-gold);
+          color: var(--light-gold);
+        }
+
+        @media (max-width: 1000px) {
+          .coursesPage .coursesHeroGrid,
+          .coursesPage .coursesEditorialGrid {
+            grid-template-columns: 150px minmax(0, 1fr);
+            gap: 48px;
           }
 
-          .contactPage .contactHeroLead {
-            padding-left: 0;
+          .coursesPage .coursesProgressionStep {
+            padding: 24px 20px;
+          }
+
+          .coursesPage .coursesChooserGrid,
+          .coursesPage .coursesFinalGrid {
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
           }
         }
 
-        @media (max-width: 820px) {
-          .contactPage .contactHeroInner {
-            padding-top: 46px;
-            padding-bottom: 62px;
-          }
-
-          .contactPage .contactHeroTitle,
-          .contactPage.lang-fr .contactHeroTitle,
-          .contactPage.lang-de .contactHeroTitle {
-            max-width: none;
-            font-size: clamp(2.45rem, 9vw, 3.85rem);
-          }
-
-          .contactPage .contactHeroLead,
-          .contactPage.lang-fr .contactHeroLead,
-          .contactPage.lang-de .contactHeroLead {
-            max-width: none;
-            font-size: 0.98rem;
-            line-height: 1.62;
-          }
-
-          .contactPage .contactEditorialSection {
+        @media (max-width: 760px) {
+          .coursesPage .coursesHeroGrid,
+          .coursesPage .coursesEditorialGrid,
+          .coursesPage .coursesChooserGrid,
+          .coursesPage .coursesFinalGrid {
             grid-template-columns: 1fr;
-            row-gap: 24px;
-            padding: 44px 0;
+            gap: 34px;
           }
 
-          .contactPage .contactSectionDivider {
+          .coursesPage .coursesHeroMeta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+          }
+
+          .coursesPage .coursesHeroRule {
+            width: 42px;
+            margin-top: 0;
+          }
+
+          .coursesPage .coursesHeroContent h1 {
+            max-width: 11ch;
+            font-size: clamp(2.8rem, 12vw, 4.6rem);
+          }
+
+          .coursesPage .coursesHeroContent > p {
+            margin-top: 30px;
+          }
+
+          .coursesPage .coursesProgressionInner {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          .coursesPage .coursesProgressionStep:nth-child(3) {
+            border-top: 1px solid rgba(250, 244, 232, 0.16);
+          }
+
+          .coursesPage .coursesProgressionStep:nth-child(4) {
+            border-top: 1px solid rgba(250, 244, 232, 0.16);
+          }
+
+          .coursesPage .progressionArrow {
             display: none;
           }
 
-          .contactPage .contactSectionNum {
-            margin-bottom: 12px;
+          .coursesPage .coursesLevelGrid,
+          .coursesPage .coursesPillars {
+            grid-template-columns: 1fr;
           }
 
-          .contactPage .contactSectionBody {
-            max-width: none;
+          .coursesPage .courseLevelCard {
+            min-height: 0;
           }
 
-          .contactPage .contactSectionTitle {
-            max-width: none;
+          .coursesPage .coursesChooserGrid,
+          .coursesPage .coursesFinalGrid {
+            align-items: start;
           }
         }
 
-        @media (max-width: 640px) {
-          .contactPage .contactForm { grid-template-columns:1fr; gap:24px; }
-          .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1; }
-        }
-
-        @media (max-width: 560px) {
-          .contactPage .contactHeroInner {
-            padding-top: 40px;
-            padding-bottom: 52px;
+        @media (max-width: 520px) {
+          .coursesPage .coursesHeroInner {
+            padding-top: 48px;
+            padding-bottom: 66px;
           }
 
-          .contactPage .contactHeroTitle,
-          .contactPage.lang-fr .contactHeroTitle,
-          .contactPage.lang-de .contactHeroTitle {
-            font-size: clamp(2.05rem, 10vw, 2.85rem);
+          .coursesPage .coursesPrimaryCta,
+          .coursesPage .coursesLightCta {
+            width: 100%;
+            min-width: 0;
           }
 
-          .contactPage .contactHeroLead,
-          .contactPage.lang-fr .contactHeroLead,
-          .contactPage.lang-de .contactHeroLead {
-            font-size: 0.92rem;
-            line-height: 1.58;
+          .coursesPage .coursesProgressionInner {
+            grid-template-columns: 1fr;
           }
 
-          .contactPage .contactEditorialSection {
-            padding: 38px 0;
+          .coursesPage .coursesProgressionStep {
+            border-right: 1px solid rgba(250, 244, 232, 0.16);
+            border-top: 1px solid rgba(250, 244, 232, 0.16);
           }
 
-          .contactPage .contactSectionTitle {
-            font-size: clamp(1.65rem, 7vw, 2.15rem);
+          .coursesPage .coursesProgressionStep:first-child {
+            border-top: 0;
           }
 
-          .contactPage .contactSectionText {
-            font-size: 0.92rem;
-            line-height: 1.68;
+          .coursesPage .courseLevelTop {
+            grid-template-columns: 58px 1fr;
           }
 
-          .contactPage .contactFormIntro { margin-bottom: 38px; }
-        .contactPage .contactForm { position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 30px; max-width: 760px; }
-        .contactPage .contactField { display:flex; flex-direction:column; gap:10px; }
-        .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1/-1; }
-        .contactPage .contactLabel { color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.64rem; line-height:1.35; letter-spacing:.18em; text-transform:uppercase; font-weight:600; opacity:.62; }
-        .contactPage .contactOptional { font-weight:400; opacity:.65; }
-        .contactPage .contactInput, .contactPage .contactTextarea { width:100%; padding:14px 0; border:0; border-bottom:1px solid rgba(0,0,0,.24); border-radius:0; outline:none; background:transparent; color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:1rem; line-height:1.4; font-weight:300; }
-        .contactPage .contactInput { min-height:54px; }
-        .contactPage .contactTextarea { min-height:120px; resize:vertical; }
-        .contactPage .contactInput:focus, .contactPage .contactTextarea:focus { border-bottom-color:#121214; }
-        .contactPage .contactSubmit { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-width:180px; min-height:50px; padding:0 26px; border:1px solid #121214; border-radius:0; background:#121214; color:#fff; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; font-weight:700; cursor:pointer; }
-        .contactPage .contactSubmit:hover { background:transparent; color:#121214; }
-        .contactPage .contactPrivacy { margin:0; max-width:70ch; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.76rem; line-height:1.6; font-weight:300; opacity:.48; }
-        .contactPage .contactHoneypot { position:absolute!important; left:-9999px!important; width:1px!important; height:1px!important; overflow:hidden!important; opacity:0!important; pointer-events:none!important; }
+          .coursesPage .courseLevelBody {
+            margin-top: 38px;
+          }
 
-        .contactPage .contactTextCta {
-            font-size: 0.62rem;
-            letter-spacing: 0.15em;
-            gap: 14px;
+          .coursesPage .coursesFinalPrimary,
+          .coursesPage .coursesFinalSecondary {
+            width: 100%;
           }
         }
       `}</style>
     </Layout>
   );
 }
+
