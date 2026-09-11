@@ -21,14 +21,6 @@ const NAV_COPY = {
     contact: "Contactez Nous",
   },
 
-  de: {
-    courses: "Kurse",
-    hospitality: "Hospitality-Lösungen",
-    predictor: "PredictorPro",
-    science: "Wissenschaft",
-    about: "Über ICSI",
-    contact: "ICSI kontaktieren",
-  },
 };
 
 export default function Nav() {
@@ -128,14 +120,6 @@ export default function Nav() {
               FR
             </button>
 
-            <button
-              type="button"
-              className={lang === "de" ? "active" : ""}
-              onClick={() => switchLocale("de")}
-              aria-label="Deutsch"
-            >
-              DE
-            </button>
           </div>
 
         </div>
