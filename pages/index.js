@@ -10,9 +10,9 @@ const conversionCopy = {
     heroLead:
       "ICSI brings science, professional education and digital intelligence together to improve how cigars are understood, stored and served.",
     certCta: "Explore Certifications",
-    certSub: "For cigar professionals & serious enthusiasts",
+    certSub: "Cigar professionals & serious enthusiasts",
     venueCta: "Discover Venues Solutions",
-    venueSub: "For lounges, retailers & hospitality groups",
+    venueSub: "Lounges, retailers & hospitality groups",
     eventBanner: "MEET ICSI AT INTERTABAC 2026 · HALL 4 · STAND 4.D44",
     associations: {
       eyebrow: "Industry presence",
@@ -27,7 +27,7 @@ const conversionCopy = {
       "Professional venue implementation",
     ],
     waysEyebrow: "Choose your pathway",
-    waysTitle: "Two ways to work with ICSI",
+    waysTitle: "Two Ways to Partner with ICSI",
     educationEyebrow: "Professional Education",
     educationTitle: "Build recognised cigar expertise.",
     educationText:
@@ -43,10 +43,10 @@ const conversionCopy = {
   fr: {
     heroLead:
       "ICSI réunit science, formation professionnelle et intelligence numérique afin d’améliorer la compréhension, la conservation et le service des cigares.",
-    certCta: "Découvrir les certifications",
-    certSub: "Pour professionnels du cigare & amateurs exigeants",
-    venueCta: "Découvrir les solutions pour les établissements",
-    venueSub: "Pour lounges, détaillants & groupes hôteliers",
+    certCta: "Découvrez les certifications ICSI",
+    certSub: "Professionnels du cigare et passionnés avertis ",
+    venueCta: "Découvrez CPFS pour les établissements ",
+    venueSub: "Lounges, maisons de cigares et groupes hôteliers ",
     eventBanner: "RENCONTREZ ICSI À INTERTABAC 2026 · HALL 4 · STAND 4.D44",
     associations: {
       eyebrow: "Présence dans l’industrie",
@@ -61,18 +61,18 @@ const conversionCopy = {
       "Implémentation professionnelle en établissement",
     ],
     waysEyebrow: "Choisissez votre parcours",
-    waysTitle: "Deux façons de travailler avec ICSI",
+    waysTitle: "Deux voies pour rejoindre l’excellence ICSI",
     educationEyebrow: "Formation professionnelle",
-    educationTitle: "Développez une expertise cigare reconnue.",
+    educationTitle: "Cultivez une expertise d’exception dans l’univers du cigare.",
     educationText:
-      "Un parcours professionnel structuré en quatre niveaux, des fondamentaux jusqu’à la maîtrise avancée.",
+      "Un parcours d’excellence structuré en quatre niveaux, de l’acquisition des fondamentaux à la maîtrise professionnelle la plus avancée.",
     levels: ["Niveau I", "Niveau II", "Niveau III", "Niveau IV"],
     educationCta: "Découvrir les certifications",
-    hospitalityEyebrow: "Solutions Hospitality",
-    hospitalityTitle: "Transformez la science du cigare en standard de service.",
+    hospitalityEyebrow: "Solutions pour les professionnels de l’hospitalité",
+    hospitalityTitle: "Élever l’art du service par la maîtrise scientifique du cigare.",
     hospitalityText:
-      "Implémentez le Cigar Peak-Flavor System® dans votre établissement grâce à une évaluation technique, la formation des équipes, des standards de conservation et de service, et PredictorPro.",
-    hospitalityCta: "Découvrir CPFS pour les établissements",
+      "Intégrez le Cigar Peak-Flavor System (CPFS) à votre établissement à travers une évaluation technique approfondie, la formation de vos collaborateurs, des standards d’excellence en matière de conservation et de service, et l’expertise PredictorPro.",
+    hospitalityCta: "Découvrez CPFS pour les établissements",
   },
   de: {
     heroLead:
@@ -121,11 +121,11 @@ const sectionCopy = {
       href: "/courses",
     },
     fr: {
-      eyebrow: "Formation — Niveau I / II / III / IV",
-      title: "Un parcours clair, de la connaissance à la maîtrise professionnelle",
+      eyebrow: "Formation Professionnelle Niveau I/II/III/IV",
+      title: "Un parcours d’excellence, des fondamentaux à la maîtrise professionnelle.",
       lead:
-        "La formation ICSI est conçue comme un parcours professionnel progressif. Chaque niveau développe la compréhension scientifique, la capacité de diagnostic et le jugement de service requis pour des fonctions cigare de plus en plus avancées.",
-      cta: "Explorer le parcours ICSI",
+        "La formation ICSI repose sur un parcours d’excellence conçu pour accompagner une progression maîtrisée de l’apprentissage vers la plus haute expertise. Chaque niveau approfondit les connaissances scientifiques, perfectionne l’art du diagnostic et développe le discernement indispensable à l’excellence  du service, ouvrant la voie vers une maîtrise accomplie de l’univers du cigare.",
+      cta: "Découvrez le parcours ICSI",
       href: "/courses",
     },
     de: {
@@ -147,11 +147,11 @@ const sectionCopy = {
       href: "/cpfs-implementation",
     },
     fr: {
-      eyebrow: "CPFS pour l’Hospitality",
-      title: "Un standard opérationnel pour la conservation, le service, la recommandation et les accords",
+      eyebrow: "CPFS pour l’Hospitalité",
+      title: "Une référence d’excellence unique, de la conservation à l’art du service, de la recommandations aux accords.",
       lead:
-        "ICSI implémente CPFS dans les lounges, commerces spécialisés et groupes hôteliers grâce à une évaluation technique, au développement des compétences, à des standards de conservation et de service par blend, et au déploiement de PredictorPro.",
-      cta: "Explorer l’implémentation CPFS",
+        "ICSI déploie le Cigar Peak Flavor System (CPFS) dans les lounges, maisons de cigares et les groupes hôteliers, grâce à un diagnostic technique, au développement des compétences, au protocole de conservation et de service adapté à chaque blend, ainsi qu’à PredictorPro.",
+      cta: "Découvrez l’excellence CPFS",
       href: "/cpfs-implementation",
     },
     de: {
