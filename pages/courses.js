@@ -11,7 +11,7 @@ const pageCopy = {
     titleLine2: "Earn recognition.",
     titleLine3: "Progress professionally.",
     intro:
-      "A structured four-level pathway designed to move learners from essential cigar knowledge to advanced professional mastery — with science, service and disciplined decision-making at its core.",
+      "A structured four-level pathway designed to move learners from essential cigar knowledge to advanced professional mastery. With science, service and disciplined decision-making at its core.",
     heroCta: "Explore the four levels",
 
     pathwayEyebrow: "The ICSI pathway",
@@ -61,13 +61,13 @@ const pageCopy = {
     chooseEyebrow: "Where should I start?",
     chooseTitle: "Choose the level that matches your current experience.",
     chooseBody:
-      "You do not need to guess your way into the pathway. Tell us about your background and intended use — personal development, hospitality, retail or professional specialization — and ICSI will guide you to the appropriate starting level.",
+      "You do not need to guess your way into the pathway. Tell us about your background and intended use. Be it personal development, hospitality, retail or professional specialization, and ICSI will guide you to the appropriate starting level.",
     chooseCta: "Find my starting level",
 
     standardEyebrow: "The ICSI standard",
     standardTitle: "Education designed for professional application.",
     standardLead:
-      "ICSI combines structured education with scientific reasoning and hospitality practice so that knowledge can be applied consistently — not simply remembered.",
+      "ICSI combines structured education with scientific reasoning and hospitality practice so that knowledge can be applied consistently.",
     pillars: [
       {
         number: "01",
@@ -115,10 +115,10 @@ const pageCopy = {
     titleLine2: "Faites reconnaître votre niveau.",
     titleLine3: "Progressez professionnellement.",
     intro:
-      "Un parcours structuré en quatre niveaux, conçu pour faire évoluer l’apprenant des connaissances essentielles du cigare vers une maîtrise professionnelle avancée — avec la science, le service et la rigueur de décision au cœur de l’approche.",
+      "Un parcours structuré en quatre niveaux, conçu pour faire évoluer le candidat des connaissances essentielles du cigare vers une maîtrise professionnelle avancée, avec la science, le service et la rigueur de décision au cœur de l’approche.",
     heroCta: "Découvrir les quatre niveaux",
 
-    pathwayEyebrow: "Le parcours ICSI",
+    pathwayEyebrow: "Découvrez les certifications ICSI",
     pathwayTitle: "Une progression. Quatre niveaux de maîtrise.",
     pathwayLead:
       "Chaque niveau s’appuie sur le précédent. Commencez par les fondamentaux, développez vos compétences de service professionnel, approfondissez votre expertise technique et progressez vers une maîtrise avancée.",
@@ -165,13 +165,13 @@ const pageCopy = {
     chooseEyebrow: "Par où commencer ?",
     chooseTitle: "Choisissez le niveau correspondant à votre expérience actuelle.",
     chooseBody:
-      "Vous n’avez pas à déterminer seul votre point d’entrée. Présentez-nous votre parcours et votre objectif — développement personnel, hospitality, retail ou spécialisation professionnelle — et l’ICSI vous orientera vers le niveau de départ approprié.",
+      "Vous n’avez pas à déterminer seul votre point d’entrée. Présentez-nous votre parcours et votre objectif: développement personnel, hospitality, retail ou spécialisation professionnelle. L’ICSI vous orientera vers le niveau de départ approprié.",
     chooseCta: "Trouver mon niveau de départ",
 
     standardEyebrow: "Le standard ICSI",
     standardTitle: "Une formation conçue pour l’application professionnelle.",
     standardLead:
-      "L’ICSI associe formation structurée, raisonnement scientifique et pratique de l’hospitality afin que les connaissances puissent être appliquées avec constance — et pas simplement mémorisées.",
+      "L’ICSI associe formation structurée, raisonnement scientifique et pratique de l’hospitality afin que les connaissances puissent être appliquées avec permanance.",
     pillars: [
       {
         number: "01",
