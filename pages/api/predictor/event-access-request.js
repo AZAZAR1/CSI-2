@@ -134,6 +134,19 @@ async function sendActivationEmail({
   const html = `
     <!doctype html>
     <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+          @media only screen and (max-width: 600px) {
+            .icsi-email-shell { padding:20px 12px !important; }
+            .icsi-email-card { padding:32px 24px !important; }
+            .icsi-email-title {
+              font-size:34px !important;
+              line-height:1.08 !important;
+            }
+          }
+        </style>
+      </head>
       <body
         style="
           margin:0;
@@ -144,6 +157,7 @@ async function sendActivationEmail({
         "
       >
         <div
+          class="icsi-email-shell"
           style="
             width:100%;
             padding:36px 18px;
@@ -151,6 +165,7 @@ async function sendActivationEmail({
           "
         >
           <div
+            class="icsi-email-card"
             style="
               max-width:640px;
               margin:0 auto;
@@ -175,6 +190,7 @@ async function sendActivationEmail({
             </div>
 
             <h1
+              class="icsi-email-title"
               style="
                 margin:0 0 22px;
                 font-family:Georgia,'Times New Roman',serif;
@@ -182,6 +198,8 @@ async function sendActivationEmail({
                 line-height:1.08;
                 font-weight:400;
                 color:#16161f;
+                word-break:normal;
+                overflow-wrap:normal;
               "
             >
               Activate your PredictorPro trial
