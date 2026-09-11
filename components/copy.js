@@ -11,7 +11,7 @@ export const COPY = {
     nav_contact: "Contact",
 
     // Home
-    kicker: "Swiss institutional • Scientific authority",
+    kicker: "Swiss Institutional • Scientific Authority",
     h1: "The modern cigar world has evolved. Your standards should too.",
     lead:
       "As the global market expands beyond classic Cuban references, professionals and aficionados face an unprecedented diversity of blends, constructions, and flavor profiles. ICSI provides a rigorous, discreet system to decode this complexity, translating blend structure into precise smoking conditions and repeatable peak-flavour performance.",
@@ -72,10 +72,10 @@ export const COPY = {
     nav_contact: "Contact",
 
     // Home
-    kicker: "Institution suisse • Autorité scientifique",
-    h1: "L'univers moderne du cigare a évolué. Vos normes devraient en faire autant.",
+    kicker: "Institution Suisse • Autorité Scientifique",
+    h1: "L'univers moderne du cigare a évolué. Vos normes se doivent d’évoluer aussi.",
     lead:
-      "Alors que le marché mondial s'étend au-delà des références cubaines classiques, les professionnels et les amateurs sont confrontés à une diversité sans précédent de mélanges, de constructions et de profils de saveurs. ICSI propose un système rigoureux et discret pour décrypter cette complexité, en traduisant la structure des mélanges en conditions de fumage précises et en performances de saveur maximales reproductibles.",
+      "Alors que le marché mondial s'étend au-delà des références cubaines classiques, les professionnels et les amateurs sont confrontés à une diversité sans précédent de mélanges, de constructions et de profils de saveurs. ICSI associe la rigueur scientifique , l’excellence de la formation professionnelle et l’intelligence numérique pour faire évoluer la compréhension, la conservation et le service du cigar.",
 
     // CTAs
     cta_courses: "Découvrir les cours",
