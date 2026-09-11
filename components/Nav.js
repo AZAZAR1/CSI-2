@@ -9,16 +9,16 @@ const NAV_COPY = {
     predictor: "PredictorPro",
     science: "Science",
     about: "About",
-    contact: "Contact ICSI",
+    contact: "Contact Us",
   },
 
   fr: {
     courses: "Cours",
-    hospitality: "Solutions Hospitality",
+    hospitality: "Solutions d'Hospitalité",
     predictor: "PredictorPro",
     science: "Science",
     about: "À propos",
-    contact: "Contacter ICSI",
+    contact: "Contactez Nous",
   },
 
   de: {
