@@ -9,6 +9,7 @@ const copy = {
     intro:
       "Training, technology and technical implementation designed to help venues store, settle, serve and recommend cigars with greater precision and consistency.",
     heroCta: "Request a CPFS assessment",
+    brochureCta: "Download CPFS brochure",
 
     changesEyebrow: "What CPFS Changes",
     changesTitle: "From storage conditions to service decisions",
@@ -106,6 +107,7 @@ const copy = {
     intro:
       "Formation, technologie et implémentation technique conçues pour aider les établissements à conserver, stabiliser, servir et recommander les cigares avec davantage de précision et de constance.",
     heroCta: "Demander une évaluation CPFS",
+    brochureCta: "Télécharger la brochure CPFS",
 
     changesEyebrow: "Ce que CPFS transforme",
     changesTitle: "Des conditions de conservation aux décisions de service",
@@ -203,6 +205,7 @@ const copy = {
     intro:
       "Training, Technologie und technische Implementierung, damit Betriebe Zigarren präziser und konsistenter lagern, stabilisieren, servieren und empfehlen können.",
     heroCta: "CPFS-Bewertung anfragen",
+    brochureCta: "CPFS-Broschüre herunterladen",
 
     changesEyebrow: "Was CPFS verändert",
     changesTitle: "Von Lagerbedingungen bis zu Serviceentscheidungen",
@@ -417,14 +420,25 @@ export default function CPFSImplementation() {
               <h1 className="cpfsHeroTitle">{c.title}</h1>
               <p className="cpfsHeroLead">{c.intro}</p>
 
-              <a
-                href="#cpfs-assessment"
-                className="cpfsHeroCta"
-                onClick={scrollToAssessment}
-              >
-                <span>{c.heroCta}</span>
-                <span aria-hidden="true">→</span>
-              </a>
+              <div className="cpfsHeroActions">
+                <a
+                  href="#cpfs-assessment"
+                  className="cpfsHeroCta"
+                  onClick={scrollToAssessment}
+                >
+                  <span>{c.heroCta}</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+
+                <a
+                  href="/brochures/CPFS-brochure-scan.pdf"
+                  download
+                  className="cpfsHeroCta cpfsHeroCtaSecondary"
+                >
+                  <span>{c.brochureCta}</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+              </div>
             </div>
 
             <div className="cpfsHeroLogoWrap">
@@ -747,8 +761,15 @@ export default function CPFSImplementation() {
           font-weight: 650;
         }
 
-        .cpfsHeroCta {
+        .cpfsHeroActions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 14px;
           margin-top: 38px;
+        }
+
+        .cpfsHeroCta {
+          margin-top: 0;
           margin-left: 0;
           background: var(--bordeaux);
           border: 1px solid var(--bordeaux);
@@ -758,6 +779,18 @@ export default function CPFSImplementation() {
         .cpfsHeroCta:hover {
           background: var(--crimson);
           border-color: var(--crimson);
+        }
+
+        .cpfsHeroCtaSecondary {
+          background: transparent;
+          border-color: rgba(22, 22, 31, 0.34);
+          color: var(--ink);
+        }
+
+        .cpfsHeroCtaSecondary:hover {
+          background: transparent;
+          border-color: var(--bordeaux);
+          color: var(--bordeaux);
         }
 
         .cpfsChanges {
@@ -1146,6 +1179,16 @@ export default function CPFSImplementation() {
           .cpfsHeroLead {
             font-size: 0.96rem;
             line-height: 1.62;
+          }
+
+          .cpfsHeroActions {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .cpfsHeroCta {
+            width: 100%;
+            justify-content: space-between;
           }
 
           .cpfsChanges,
