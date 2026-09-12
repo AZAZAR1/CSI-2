@@ -3,6 +3,7 @@ import Seo from "../components/Seo";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const pageCopy = {
   en: {
@@ -28,6 +29,14 @@ const pageCopy = {
         body:
           "Build a disciplined foundation in cigar knowledge, care and appreciation. Level I introduces the core principles needed to understand cigars with greater confidence and consistency.",
         outcome: "Establish the language, habits and core knowledge required for further study.",
+        content: [
+          "Diagnose Blends Worldwide",
+          "Grow Tasting Notes",
+          "Reduce Smoking Irritation",
+          "Cigar Staging & Aging tips",
+          "Build Your Cigar Collection",
+          "Fix Your Humidor",
+        ],
       },
       {
         number: "II",
@@ -37,6 +46,14 @@ const pageCopy = {
         body:
           "Translate knowledge into professional service. Level II develops the practical and technical understanding required to support confident recommendations, storage decisions and a consistent guest experience.",
         outcome: "Move from personal knowledge to structured professional practice.",
+        content: [
+          "Combustion Science",
+          "Water Activity & Relative Humidity",
+          "Peak-Flavour Framework",
+          "Cap-Foot Diagnostics",
+          "Storage vs Smoking RH",
+          "Customer Advisory & Professional Service",
+        ],
       },
       {
         number: "III",
@@ -46,6 +63,13 @@ const pageCopy = {
         body:
           "Deepen technical and diagnostic capability across blend structure, performance, storage and service. Level III develops the analytical judgement required for more demanding professional environments.",
         outcome: "Develop advanced diagnostic reasoning and higher-level service judgement.",
+        content: [
+          "Level II content",
+          "RH Families",
+          "Scientific Pairing Framework",
+          "Settling Science",
+          "Thermodynamics & Peak-Flavour Methodology",
+        ],
       },
       {
         number: "IV",
@@ -104,6 +128,7 @@ const pageCopy = {
 
     levelCta: "Enquire about this level",
     outcomeLabel: "Progression outcome",
+    courseContentLabel: "Course content",
     seoTitle: "ICSI Professional Education | Level I–IV Certification Pathway",
     seoDescription:
       "Explore the ICSI four-level professional education pathway, progressing from foundational cigar knowledge to advanced professional mastery.",
@@ -132,6 +157,14 @@ const pageCopy = {
         body:
           "Construisez une base rigoureuse de connaissances, de conservation et d’appréciation du cigare. Le Niveau I introduit les principes essentiels pour comprendre le cigare avec davantage de confiance et de constance.",
         outcome: "Acquérir le langage, les habitudes et les connaissances de base nécessaires pour poursuivre le parcours.",
+        content: [
+          "Diagnostiquer les blends du monde entier",
+          "Développer vos notes de dégustation",
+          "Réduire l'irritation pendant la dégustation",
+          "Conseils de staging et de vieillissement du cigare",
+          "Construire votre collection de cigares",
+          "Optimiser votre humidor",
+        ],
       },
       {
         number: "II",
@@ -141,6 +174,14 @@ const pageCopy = {
         body:
           "Transformez les connaissances en pratique professionnelle. Le Niveau II développe la compréhension pratique et technique nécessaire pour soutenir des recommandations fiables, de bonnes décisions de conservation et une expérience client cohérente.",
         outcome: "Passer d’une connaissance personnelle à une pratique professionnelle structurée.",
+        content: [
+          "Science de la combustion",
+          "Activité de l’eau & humidité relative",
+          "Cadre Peak-Flavour",
+          "Diagnostic tête-pied",
+          "RH de conservation vs RH de dégustation",
+          "Conseil client & service professionnel",
+        ],
       },
       {
         number: "III",
@@ -150,6 +191,13 @@ const pageCopy = {
         body:
           "Approfondissez vos capacités techniques et diagnostiques autour de la structure des blends, de la performance, de la conservation et du service. Le Niveau III développe le jugement analytique nécessaire dans les environnements professionnels plus exigeants.",
         outcome: "Développer un raisonnement diagnostique avancé et un niveau supérieur de jugement de service.",
+        content: [
+          "Contenu du Niveau II",
+          "Familles RH",
+          "Cadre scientifique des accords",
+          "Science de la stabilisation",
+          "Thermodynamique & méthodologie Peak-Flavour",
+        ],
       },
       {
         number: "IV",
@@ -208,6 +256,7 @@ const pageCopy = {
 
     levelCta: "Se renseigner sur ce niveau",
     outcomeLabel: "Objectif de progression",
+    courseContentLabel: "Contenu du cours",
     seoTitle: "Formation Professionnelle ICSI | Parcours Niveau I–IV",
     seoDescription:
       "Découvrez le parcours de formation professionnelle ICSI en quatre niveaux, des fondamentaux du cigare jusqu’à la maîtrise professionnelle avancée.",
@@ -236,6 +285,14 @@ const pageCopy = {
         body:
           "Schaffen Sie eine fundierte Basis für Zigarrenwissen, Pflege und Wertschätzung. Level I vermittelt die zentralen Prinzipien, um Zigarren mit mehr Sicherheit und Konsequenz zu verstehen.",
         outcome: "Sprache, Gewohnheiten und Grundwissen für die weitere Ausbildung aufbauen.",
+        content: [
+          "Blends weltweit diagnostizieren",
+          "Verkostungsnotizen entwickeln",
+          "Rauchreizungen reduzieren",
+          "Tipps zu Staging & Reifung",
+          "Eigene Zigarrensammlung aufbauen",
+          "Humidor optimieren",
+        ],
       },
       {
         number: "II",
@@ -245,6 +302,14 @@ const pageCopy = {
         body:
           "Übertragen Sie Wissen in professionelle Praxis. Level II entwickelt das praktische und technische Verständnis für fundierte Empfehlungen, Lagerentscheidungen und ein konsistentes Gästeerlebnis.",
         outcome: "Vom persönlichen Wissen zu strukturierter professioneller Praxis übergehen.",
+        content: [
+          "Verbrennungswissenschaft",
+          "Wasseraktivität & relative Luftfeuchtigkeit",
+          "Peak-Flavour Framework",
+          "Kopf-Fuß-Diagnostik",
+          "Lagerungs-RH vs Rauch-RH",
+          "Kundenberatung & professioneller Service",
+        ],
       },
       {
         number: "III",
@@ -254,6 +319,13 @@ const pageCopy = {
         body:
           "Vertiefen Sie technische und diagnostische Fähigkeiten in den Bereichen Blend-Struktur, Performance, Lagerung und Service. Level III entwickelt das analytische Urteilsvermögen für anspruchsvollere professionelle Umgebungen.",
         outcome: "Fortgeschrittenes diagnostisches Denken und höheres Serviceurteil entwickeln.",
+        content: [
+          "Inhalte aus Level II",
+          "RH-Familien",
+          "Wissenschaftliches Pairing-Framework",
+          "Settling Science",
+          "Thermodynamik & Peak-Flavour Methodik",
+        ],
       },
       {
         number: "IV",
@@ -312,6 +384,7 @@ const pageCopy = {
 
     levelCta: "Diese Stufe anfragen",
     outcomeLabel: "Entwicklungsziel",
+    courseContentLabel: "Kursinhalte",
     seoTitle: "ICSI Berufsausbildung | Level I–IV Bildungsweg",
     seoDescription:
       "Entdecken Sie den vierstufigen ICSI Bildungsweg von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft.",
@@ -319,6 +392,9 @@ const pageCopy = {
 };
 
 function LevelCard({ level, c, lang }) {
+  const [contentOpen, setContentOpen] = useState(false);
+  const hasContent = Array.isArray(level.content) && level.content.length > 0;
+
   return (
     <article className={`courseLevelCard level-${level.number.toLowerCase()}`}>
       <div className="courseLevelTop">
@@ -337,6 +413,30 @@ function LevelCard({ level, c, lang }) {
           <span>{c.outcomeLabel}</span>
           <p>{level.outcome}</p>
         </div>
+
+        {hasContent && (
+          <div className={`courseContentAccordion ${contentOpen ? "is-open" : ""}`}>
+            <button
+              type="button"
+              className="courseContentToggle"
+              onClick={() => setContentOpen((open) => !open)}
+              aria-expanded={contentOpen}
+            >
+              <span>{c.courseContentLabel}</span>
+              <span className="courseContentToggleIcon" aria-hidden="true">
+                {contentOpen ? "−" : "+"}
+              </span>
+            </button>
+
+            <div className="courseContentPanel" hidden={!contentOpen}>
+              <ul className="courseContentList">
+                {level.content.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
 
       <Link
@@ -874,6 +974,82 @@ export default function Courses() {
 
         .coursesPage .courseLevelCard.level-iv .courseLevelOutcome p {
           color: rgba(250, 244, 232, 0.72);
+        }
+
+        .coursesPage .courseContentAccordion {
+          margin-top: 28px;
+          border-top: 1px solid rgba(22, 22, 31, 0.14);
+          border-bottom: 1px solid rgba(22, 22, 31, 0.14);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseContentAccordion {
+          border-color: rgba(250, 244, 232, 0.2);
+        }
+
+        .coursesPage .courseContentToggle {
+          width: 100%;
+          min-height: 52px;
+          padding: 14px 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 18px;
+          border: 0;
+          background: transparent;
+          color: var(--ink);
+          cursor: pointer;
+          text-align: left;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.62rem;
+          line-height: 1.2;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          font-weight: 800;
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseContentToggle {
+          color: var(--ivory);
+        }
+
+        .coursesPage .courseContentToggle:hover {
+          color: var(--crimson);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseContentToggle:hover {
+          color: var(--light-gold);
+        }
+
+        .coursesPage .courseContentToggleIcon {
+          flex: 0 0 auto;
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: 1.35rem;
+          line-height: 1;
+          font-weight: 400;
+          color: var(--gold);
+        }
+
+        .coursesPage .courseContentPanel {
+          padding: 0 0 18px;
+        }
+
+        .coursesPage .courseContentList {
+          margin: 0;
+          padding: 2px 0 0 18px;
+          display: grid;
+          gap: 8px;
+        }
+
+        .coursesPage .courseContentList li {
+          padding-left: 4px;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 0.82rem;
+          line-height: 1.5;
+          font-weight: 300;
+          color: rgba(22, 22, 31, 0.72);
+        }
+
+        .coursesPage .courseLevelCard.level-iv .courseContentList li {
+          color: rgba(250, 244, 232, 0.76);
         }
 
         .coursesPage .courseLevelCta {
