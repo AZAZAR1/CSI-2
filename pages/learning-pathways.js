@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 const copy = {
@@ -8,6 +9,8 @@ const copy = {
     title: "Find your ICSI learning pathway",
     intro:
       "Structured learning for cigar enthusiasts and hospitality professionals seeking deeper knowledge, stronger service capability and recognised progression.",
+    coursesCta: "Explore Courses",
+    brochureCta: "Download Course Brochure",
     formEyebrow: "Course Interest",
     formTitle: "Discover the pathway that fits you",
     formIntro:
@@ -37,6 +40,8 @@ const copy = {
     title: "Trouvez votre parcours de formation ICSI",
     intro:
       "Des formations structurées pour les amateurs de cigares et les professionnels de l'hospitalité souhaitant approfondir leurs connaissances, renforcer leur expertise de service et progresser professionnellement.",
+    coursesCta: "Découvrir les cours",
+    brochureCta: "Télécharger la brochure des cours",
     formEyebrow: "Cours d'intérêt",
     formTitle: "Découvrez le parcours qui vous correspond",
     formIntro:
@@ -66,6 +71,8 @@ const copy = {
     title: "Finden Sie Ihren ICSI Lernpfad",
     intro:
       "Strukturierte Weiterbildung für Zigarrenliebhaber und Hospitality-Profis, die ihr Wissen vertiefen, ihre Servicekompetenz stärken und sich professionell weiterentwickeln möchten.",
+    coursesCta: "Kurse entdecken",
+    brochureCta: "Kursbroschüre herunterladen",
     formEyebrow: "Kursinteresse",
     formTitle: "Entdecken Sie den passenden Lernpfad",
     formIntro:
@@ -121,6 +128,14 @@ export default function LearningPathways() {
             <span className="tradeKicker">{c.kicker}</span>
             <h1 className="tradeHeroTitle">{c.title}</h1>
             <p className="tradeHeroLead">{c.intro}</p>
+            <div className="tradeHeroActions">
+              <Link href="/courses" locale={lang} className="tradeHeroCta tradeHeroCtaPrimary">
+                <span>{c.coursesCta}</span><span className="tradeHeroCtaArrow">→</span>
+              </Link>
+              <a href="/brochures/Courses-brochure-InterTabac26.pdf" download className="tradeHeroCta tradeHeroCtaSecondary">
+                <span>{c.brochureCta}</span><span className="tradeHeroCtaArrow">↓</span>
+              </a>
+            </div>
           </div>
         </section>
 
@@ -320,6 +335,22 @@ export default function LearningPathways() {
           font-weight: 300;
           opacity: 0.72;
         }
+
+        .tradeLandingPage .tradeHeroActions {
+          display:flex; flex-wrap:wrap; gap:14px; margin-top:32px; padding-left:max(0px, 33%);
+        }
+        .tradeLandingPage .tradeHeroCta {
+          display:inline-flex; align-items:center; justify-content:space-between; gap:24px;
+          min-height:50px; padding:0 22px; border:1px solid #121214; text-decoration:none;
+          font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+          font-size:.66rem; line-height:1; letter-spacing:.16em; text-transform:uppercase; font-weight:700;
+          transition:background .2s ease,color .2s ease,border-color .2s ease;
+        }
+        .tradeLandingPage .tradeHeroCtaPrimary { background:#601818; border-color:#601818; color:#faf4e8; }
+        .tradeLandingPage .tradeHeroCtaPrimary:hover { background:#c0242f; border-color:#c0242f; color:#fff; }
+        .tradeLandingPage .tradeHeroCtaSecondary { background:transparent; border-color:rgba(18,18,20,.34); color:#121214; }
+        .tradeLandingPage .tradeHeroCtaSecondary:hover { border-color:#601818; color:#601818; }
+        .tradeLandingPage .tradeHeroCtaArrow { font-size:1.15rem; line-height:.7; letter-spacing:0; font-weight:300; }
 
         .tradeLandingPage.lang-fr .tradeHeroTitle,
         .tradeLandingPage.lang-de .tradeHeroTitle {
@@ -547,7 +578,8 @@ export default function LearningPathways() {
             column-gap: 48px;
           }
 
-          .tradeLandingPage .tradeHeroLead {
+          .tradeLandingPage .tradeHeroLead,
+          .tradeLandingPage .tradeHeroActions {
             padding-left: 0;
           }
         }
@@ -640,6 +672,9 @@ export default function LearningPathways() {
             font-size: 0.92rem;
             line-height: 1.68;
           }
+
+          .tradeLandingPage .tradeHeroActions { flex-direction:column; align-items:stretch; gap:10px; margin-top:26px; }
+          .tradeLandingPage .tradeHeroCta { width:100%; }
 
           .tradeLandingPage .tradeSubmit {
             width: 100%;
