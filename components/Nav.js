@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const NAV_COPY = {
   en: {
@@ -27,6 +28,13 @@ export default function Nav() {
   const router = useRouter();
   const lang = (router.locale || "en").toLowerCase();
   const nav = NAV_COPY[lang] || NAV_COPY.en;
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => { setMobileOpen(false); }, [router.asPath]);
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
 
   const switchLocale = (locale) => {
     router.push(router.asPath, router.asPath, {
@@ -64,8 +72,14 @@ export default function Nav() {
           </div>
         </Link>
 
+        <button type="button" className={`mobileMenuToggle ${mobileOpen ? "isOpen" : ""}`}
+          onClick={() => setMobileOpen((v) => !v)} aria-expanded={mobileOpen}
+          aria-controls="icsi-mobile-menu" aria-label={mobileOpen ? "Close navigation" : "Open navigation"}>
+          <span /><span /><span />
+        </button>
+
         {/* ===== MENU ===== */}
-        <div className="menu">
+        <div id="icsi-mobile-menu" className={`menu ${mobileOpen ? "mobileOpen" : ""}`}>
 
           <Link href="/courses" locale={lang}>
             {nav.courses}
@@ -361,6 +375,12 @@ export default function Nav() {
           border-color: #c8a24a;
         }
 
+        .nav .mobileMenuToggle { display:none; width:44px; height:44px; padding:10px; border:0; background:transparent; cursor:pointer; }
+        .nav .mobileMenuToggle span { display:block; width:24px; height:1.5px; margin:5px auto; background:#16161f; transition:transform 180ms ease,opacity 180ms ease; }
+        .nav .mobileMenuToggle.isOpen span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+        .nav .mobileMenuToggle.isOpen span:nth-child(2) { opacity:0; }
+        .nav .mobileMenuToggle.isOpen span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+
         /* =========================================================
            MEDIUM DESKTOP
            Reduce spacing before touching the ICSI identity.
@@ -459,6 +479,19 @@ export default function Nav() {
           .nav .navContactButton {
             padding: 0 13px;
           }
+        }
+        @media (max-width: 760px) {
+          .nav { position:relative; z-index:70; background:#fff; border-bottom:1px solid rgba(22,22,31,.1); }
+          .nav .navInner { min-height:82px; gap:12px; }
+          .nav .brandLogoWrap { flex-basis:62px; width:62px; height:62px; }
+          .nav .brandLogo { width:62px !important; height:62px !important; max-width:62px !important; max-height:62px !important; }
+          .nav .mobileMenuToggle { display:block; margin-left:auto; position:relative; z-index:72; }
+          .nav .menu { display:none; position:absolute; top:82px; left:0; right:0; z-index:71; padding:18px 24px 28px; background:#fff; border-top:1px solid rgba(22,22,31,.08); border-bottom:1px solid rgba(22,22,31,.12); box-shadow:0 18px 38px rgba(22,22,31,.1); white-space:normal; }
+          .nav .menu.mobileOpen { display:flex; flex-direction:column; align-items:stretch; gap:0; }
+          .nav .menu > a:not(.navContactButton) { width:100%; padding:15px 0; border-bottom:1px solid rgba(22,22,31,.08); font-size:.88rem; line-height:1.2; }
+          .nav .navContactButton { width:100%; min-height:50px; margin-top:20px; border-radius:0; }
+          .nav .lang { width:100%; margin:18px 0 0; justify-content:flex-start; }
+          .nav .lang button { min-width:44px; height:40px; }
         }
       `}</style>
     </div>
