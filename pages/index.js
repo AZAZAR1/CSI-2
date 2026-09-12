@@ -647,27 +647,33 @@ export default function Home() {
             font-size: 0.9rem;
           }
 
-          .homeAssociationStrip { border-top-width: 2px; }
-          .homeAssociationInner { padding-top: 12px; padding-bottom: 12px; }
-          .homeAssociationGrid { grid-template-columns: 1fr; }
-          .homeAssociationItem { grid-template-columns: 72px minmax(0,1fr); min-height: 82px; padding: 10px 4px; border-left: 0; border-bottom: 1px solid rgba(96,24,24,.12); }
-          .homeAssociationItem:last-child { border-bottom: 0; }
-          .homeAssociationLogoWrap { width: 72px; height: 62px; }
-          .homeAssociationName { font-size: 1rem; }
-          .homeAssociationRole { font-size: .56rem; }
-          .homePage .homeHeroImageWrap, .homePage .homeHeroContent { min-height: 740px; }
-          .homePage .homeHeroContent { justify-content: flex-end; padding-bottom: 38px; }
+          .homeAssociationStrip { border-top-width:2px; }
+          .homeAssociationInner { padding-top:10px; padding-bottom:10px; overflow:hidden; }
+          .homeAssociationIntro { padding-bottom:8px; gap:10px; }
+          .homeAssociationEyebrow { font-size:.56rem; }
+          .homeAssociationRule { width:42px; }
+          .homeAssociationGrid { display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x proximity; border-top:1px solid rgba(96,24,24,.14); padding:10px 0 2px; scrollbar-width:none; }
+          .homeAssociationGrid::-webkit-scrollbar { display:none; }
+          .homeAssociationItem { flex:0 0 210px; grid-template-columns:54px minmax(0,1fr); min-height:64px; gap:10px; padding:6px 10px 6px 0; border-left:0; border-right:1px solid rgba(96,24,24,.12); border-bottom:0; scroll-snap-align:start; }
+          .homeAssociationItem:last-child { border-right:0; }
+          .homeAssociationLogoWrap { width:54px; height:50px; }
+          .homeAssociationName { font-size:.82rem; }
+          .homeAssociationRole { font-size:.48rem; line-height:1.35; letter-spacing:.07em; }
+          .homePage .homeHeroImageWrap, .homePage .homeHeroContent { min-height:620px; }
+          .homePage .homeHeroContent { justify-content:flex-end; padding-top:54px; padding-bottom:30px; }
           .homePage .homeHeroKicker { font-size: .58rem; letter-spacing: .2em; }
           .homePage .homeHeroTitle { font-size: clamp(2.08rem, 10.7vw, 2.8rem); margin-bottom: 18px; }
           .homePage .homeHeroLead { font-size: .88rem; line-height: 1.52; margin-bottom: 24px; }
-          .homePage .homeHeroButton { min-height: 50px; padding: 13px 14px; font-size: .6rem; letter-spacing: .1em; }
+          .homePage .homeHeroActions { gap:14px; width:100%; }
+          .homePage .homeHeroAction { gap:7px; }
+          .homePage .homeHeroButton { width:100%; min-height: 50px; padding: 13px 14px; font-size: .6rem; letter-spacing: .1em; }
           .homePage .homeHeroActionSub { font-size: .69rem; }
-          .homePage .homeWaysSection { padding: 48px 0 42px; }
+          .homePage .homeWaysSection { padding: 38px 0 34px; }
           .homePage .homeWayCard { min-height: 0; padding: 28px 24px; }
           .homePage .homeWaysTitle { font-size: 2.15rem; }
           .homePage .homeWayTitle { font-size: 1.9rem; }
           .homePage .homeLevelTrack, .homePage .homeCpfsSteps { margin-top: 8px; }
-          .homePage.lang-fr .homeHeroImageWrap, .homePage.lang-fr .homeHeroContent, .homePage.lang-de .homeHeroImageWrap, .homePage.lang-de .homeHeroContent { min-height: 810px; }
+          .homePage.lang-fr .homeHeroImageWrap, .homePage.lang-fr .homeHeroContent, .homePage.lang-de .homeHeroImageWrap, .homePage.lang-de .homeHeroContent { min-height: 660px; }
           .homePage.lang-fr .homeHeroTitle, .homePage.lang-de .homeHeroTitle { font-size: clamp(1.75rem, 8.6vw, 2.34rem); max-width: 15ch; }
         }
       `}</style>
