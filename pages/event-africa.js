@@ -287,7 +287,7 @@ export default function EventRegistrationPage() {
         .africa-flyer-section {
           margin-left: calc(50% - 50vw);
           margin-right: calc(50% - 50vw);
-          padding: 88px max(24px, calc((100vw - 1180px) / 2)) 96px;
+          padding: 48px max(24px, calc((100vw - 1180px) / 2)) 64px;
           background: #16161f;
           border-bottom: 1px solid rgba(250,244,232,0.12);
         }
@@ -319,7 +319,7 @@ export default function EventRegistrationPage() {
 
         .africa-flyer-image {
           display: block;
-          width: min(100%, 760px);
+          width: min(100%, 860px);
           height: auto;
           box-shadow: 0 26px 80px rgba(0,0,0,0.34);
         }
@@ -875,8 +875,8 @@ export default function EventRegistrationPage() {
           }
 
           .africa-flyer-section {
-            padding-top: 62px;
-            padding-bottom: 68px;
+            padding-top: 26px;
+            padding-bottom: 34px;
           }
 
           .africa-session-title {
@@ -929,51 +929,16 @@ export default function EventRegistrationPage() {
       <main className="event-page">
         <div className="event-wide-container">
 
-          <header className="africa-hero">
-            <div className="africa-hero-grid">
-              <div className="africa-hero-main">
-                <div className="africa-kicker">
-                  Cigar Culture Summit Africa 2026 · Johannesburg
-                </div>
-
-                <h1 className="africa-title">
-                  Meet ICSI in<br />
-                  Johannesburg
-                </h1>
-
-                <div className="africa-rule" aria-hidden="true" />
-
-                <div className="africa-date">
-                  The Garden Venue · 23–25 October 2026
-                </div>
-
-                <p className="africa-copy">
-                  Meet the International Cigar Sommelier Institute at the first
-                  Cigar Culture Summit Africa and discover how ICSI brings together
-                  professional education, applied science and digital intelligence
-                  for the modern cigar hospitality environment.
-                </p>
-
-                <div className="africa-actions">
-                  <a href="#event-access" className="africa-button africa-button-primary">
-                    Get PredictorPro Event Access
-                  </a>
-
-                  <a href="#icsi-session" className="africa-button africa-button-secondary">
-                    See the ICSI session
-                  </a>
-                </div>
-              </div>
-
-              <aside className="africa-summit-visual" aria-label="Cigar Culture Summit Africa 2026">
-                <img
-                  src="/img/cigar-culture-summit-africa.png"
-                  alt="Cigar Culture Summit Africa 2026 powered by InterTabac"
-                  className="africa-summit-image"
-                />
-              </aside>
+          <section className="africa-flyer-section" aria-label="ICSI at Cigar Culture Summit Africa 2026">
+            <div className="africa-flyer-wrap">
+              <img
+                src="/img/Culture-summit-africa-flyer.png"
+                alt="ICSI Storage, Collection and Investment session at Cigar Culture Summit Africa 2026"
+                className="africa-flyer-image"
+                loading="lazy"
+              />
             </div>
-          </header>
+          </section>
 
           <section className="africa-session" id="icsi-session">
             <div className="africa-session-inner">
@@ -1015,23 +980,7 @@ export default function EventRegistrationPage() {
             </div>
           </section>
 
-          <section className="africa-flyer-section" aria-labelledby="africa-flyer-title">
-            <div className="africa-flyer-heading">
-              <div className="event-section-kicker">ICSI at the Summit</div>
-              <h2 className="africa-flyer-title" id="africa-flyer-title">
-                Storage, Collection &amp; Investment
-              </h2>
-            </div>
 
-            <div className="africa-flyer-wrap">
-              <img
-                src="/img/Culture-summit-africa-flyer.png"
-                alt="ICSI Storage, Collection and Investment session at Cigar Culture Summit Africa 2026"
-                className="africa-flyer-image"
-                loading="lazy"
-              />
-            </div>
-          </section>
 
           <section className="event-access-section" id="event-access">
             <div className="event-access-heading">
