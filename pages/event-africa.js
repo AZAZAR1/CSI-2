@@ -653,49 +653,18 @@ export default function EventRegistrationPage() {
           color: #d6c28c;
         }
 
-        .africa-proof-stack {
-          display: grid;
-          gap: 14px;
+        .africa-summit-visual {
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        .africa-proof-card {
-          padding: 26px 28px;
-          border: 1px solid rgba(250,244,232,0.2);
-          background: rgba(255,255,255,0.01);
-        }
-
-        .africa-proof-card-gold {
-          border-color: rgba(200,162,74,0.55);
-        }
-
-        .africa-proof-label {
-          margin-bottom: 14px;
-          color: #c8a24a;
-          font-size: 0.62rem;
-        }
-
-        .africa-proof-label-muted {
-          color: rgba(240,236,230,0.62);
-        }
-
-        .africa-proof-title {
-          font-family: "Playfair Display", Georgia, serif;
-          font-size: 1.65rem;
-          line-height: 1.08;
-          font-weight: 400;
-        }
-
-        .africa-proof-title-small {
-          font-size: 1.45rem;
-        }
-
-        .africa-proof-copy {
-          margin-top: 8px;
-          color: rgba(240,236,230,0.72);
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-          font-size: 0.85rem;
-          line-height: 1.5;
-          font-weight: 300;
+        .africa-summit-image {
+          display: block;
+          width: 100%;
+          max-width: 430px;
+          height: auto;
+          object-fit: contain;
         }
 
         .africa-session {
@@ -828,8 +797,8 @@ export default function EventRegistrationPage() {
             gap: 52px;
           }
 
-          .africa-proof-stack {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+          .africa-summit-image {
+            max-width: 380px;
           }
 
           .africa-session-inner {
@@ -855,12 +824,8 @@ export default function EventRegistrationPage() {
             width: 100%;
           }
 
-          .africa-proof-stack {
-            grid-template-columns: 1fr;
-          }
-
-          .africa-proof-card {
-            padding: 22px 20px;
+          .africa-summit-image {
+            max-width: 320px;
           }
 
           .africa-session {
@@ -954,23 +919,12 @@ export default function EventRegistrationPage() {
                 </div>
               </div>
 
-              <aside className="africa-proof-stack" aria-label="ICSI Summit participation">
-                <div className="africa-proof-card africa-proof-card-gold">
-                  <div className="africa-proof-label">ICSI at the Summit</div>
-                  <div className="africa-proof-title">Sponsor · Speaker</div>
-                  <div className="africa-proof-copy">
-                    Session Saturday 24 October, 13:45
-                  </div>
-                </div>
-
-                <div className="africa-proof-card">
-                  <div className="africa-proof-label africa-proof-label-muted">
-                    Powered by
-                  </div>
-                  <div className="africa-proof-title africa-proof-title-small">
-                    InterTabac, Messe Dortmund
-                  </div>
-                </div>
+              <aside className="africa-summit-visual" aria-label="Cigar Culture Summit Africa 2026">
+                <img
+                  src="/img/cigar-culture-summit-africa.png"
+                  alt="Cigar Culture Summit Africa 2026 powered by InterTabac"
+                  className="africa-summit-image"
+                />
               </aside>
             </div>
           </header>
