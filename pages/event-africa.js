@@ -283,6 +283,47 @@ export default function EventRegistrationPage() {
           box-shadow: 0 24px 70px rgba(22,22,31,0.16);
         }
 
+
+        .africa-flyer-section {
+          margin-left: calc(50% - 50vw);
+          margin-right: calc(50% - 50vw);
+          padding: 88px max(24px, calc((100vw - 1180px) / 2)) 96px;
+          background: #16161f;
+          border-bottom: 1px solid rgba(250,244,232,0.12);
+        }
+
+        .africa-flyer-heading {
+          max-width: 760px;
+          margin: 0 auto 34px;
+          text-align: center;
+        }
+
+        .africa-flyer-heading .event-section-kicker {
+          color: #c8a24a;
+        }
+
+        .africa-flyer-title {
+          margin: 18px 0 0;
+          color: #faf4e8;
+          font-family: "Playfair Display", Georgia, serif;
+          font-size: clamp(2.2rem, 4vw, 3.6rem);
+          line-height: 1.02;
+          font-weight: 400;
+          letter-spacing: -0.04em;
+        }
+
+        .africa-flyer-wrap {
+          display: flex;
+          justify-content: center;
+        }
+
+        .africa-flyer-image {
+          display: block;
+          width: min(100%, 760px);
+          height: auto;
+          box-shadow: 0 26px 80px rgba(0,0,0,0.34);
+        }
+
         .event-access-section {
           display: grid;
           grid-template-columns: minmax(260px, 0.58fr) minmax(480px, 0.9fr);
@@ -833,6 +874,11 @@ export default function EventRegistrationPage() {
             padding-bottom: 74px;
           }
 
+          .africa-flyer-section {
+            padding-top: 62px;
+            padding-bottom: 68px;
+          }
+
           .africa-session-title {
             font-size: clamp(3rem, 14vw, 4.3rem);
           }
@@ -966,6 +1012,24 @@ export default function EventRegistrationPage() {
               <p className="africa-session-note">
                 Measured storage. Consistent condition.
               </p>
+            </div>
+          </section>
+
+          <section className="africa-flyer-section" aria-labelledby="africa-flyer-title">
+            <div className="africa-flyer-heading">
+              <div className="event-section-kicker">ICSI at the Summit</div>
+              <h2 className="africa-flyer-title" id="africa-flyer-title">
+                Storage, Collection &amp; Investment
+              </h2>
+            </div>
+
+            <div className="africa-flyer-wrap">
+              <img
+                src="/img/Culture-summit-africa-flyer.png"
+                alt="ICSI Storage, Collection and Investment session at Cigar Culture Summit Africa 2026"
+                className="africa-flyer-image"
+                loading="lazy"
+              />
             </div>
           </section>
 
