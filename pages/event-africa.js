@@ -719,7 +719,7 @@ export default function EventRegistrationPage() {
         }
 
         .africa-session-inner {
-          max-width: 820px;
+          max-width: 980px;
           margin: 0 auto;
         }
 
@@ -732,10 +732,15 @@ export default function EventRegistrationPage() {
         .africa-session-title {
           margin: 0;
           font-family: "Playfair Display", Georgia, serif;
-          font-size: clamp(3.9rem, 6.8vw, 6.4rem);
+          font-size: clamp(3.7rem, 5.8vw, 5.7rem);
           line-height: 0.95;
           letter-spacing: -0.055em;
           font-weight: 400;
+        }
+
+        .africa-session-title-line {
+          display: block;
+          white-space: nowrap;
         }
 
         .africa-session-subtitle {
@@ -885,7 +890,11 @@ export default function EventRegistrationPage() {
           }
 
           .africa-session-title {
-            font-size: clamp(3rem, 14vw, 4.3rem);
+            font-size: clamp(2.6rem, 11vw, 3.7rem);
+          }
+
+          .africa-session-title-line {
+            white-space: normal;
           }
 
           .africa-session-subtitle {
@@ -988,8 +997,12 @@ export default function EventRegistrationPage() {
               </div>
 
               <h2 className="africa-session-title">
-                Storage, Collection &amp;<br />
-                Investment
+                <span className="africa-session-title-line">
+                  Storage, Collection &amp;
+                </span>
+                <span className="africa-session-title-line">
+                  Investment
+                </span>
               </h2>
 
               <div className="africa-session-subtitle">
