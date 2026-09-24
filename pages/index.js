@@ -13,7 +13,7 @@ const conversionCopy = {
     certSub: "Cigar professionals & serious enthusiasts",
     venueCta: "Discover Venues Solutions",
     venueSub: "Lounges, retailers & hospitality groups",
-    eventBanner: "MEET ICSI AT INTERTABAC 2026 · HALL 4 · STAND 4.D44",
+    eventBanner: "MEET ICSI AT INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & SPEAKER",
     associations: {
       eyebrow: "Industry presence",
       intertabac: "Exhibitor · Speaker",
@@ -47,7 +47,7 @@ const conversionCopy = {
     certSub: "Professionnels du cigare et passionnés avertis ",
     venueCta: "Découvrez CPFS pour les établissements ",
     venueSub: "Lounges, maisons de cigares et groupes hôteliers ",
-    eventBanner: "RENCONTREZ ICSI À INTERTABAC 2026 · HALL 4 · STAND 4.D44",
+    eventBanner: "RETROUVEZ ICSI À INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & INTERVENANT",
     associations: {
       eyebrow: "Présence dans l’industrie",
       intertabac: "Exposant · Intervenant",
@@ -81,7 +81,7 @@ const conversionCopy = {
     certSub: "Für Zigarrenprofis & anspruchsvolle Enthusiasten",
     venueCta: "CPFS für Betriebe entdecken",
     venueSub: "Für Lounges, Händler & Hospitality-Gruppen",
-    eventBanner: "TREFFEN SIE ICSI AUF DER INTERTABAC 2026 · HALLE 4 · STAND 4.D44",
+    eventBanner: "TREFFEN SIE ICSI BEIM INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & REFERENT",
     associations: {
       eyebrow: "Präsenz in der Branche",
       intertabac: "Aussteller · Referent",
@@ -273,7 +273,7 @@ function InterTabacBanner({ lang }) {
     <div className="homeEventBanner">
       <div className="container homeEventBannerInner">
         <Link
-          href="/event"
+          href="/event-africa"
           locale={lang}
           className="homeEventBannerLink"
           aria-label={c.eventBanner}
