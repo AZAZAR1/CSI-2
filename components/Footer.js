@@ -7,7 +7,7 @@ const ICSI_LINKEDIN_URL =
   "https://www.linkedin.com/company/cigar-sommelier-institute/";
 
 const HOTELLERIESUISSE_URL =
-  "https://www.hotelleriesuisse.ch/";
+  "https://my.hotelleriesuisse.ch/de/partner/trusted-network/trusted-start-up/international-cigar-sommelier-institute";
 
 export default function Footer() {
   const { locale } = useRouter();
@@ -121,11 +121,16 @@ export default function Footer() {
             >
               <Image
                 src="/img/hotelleriesuisse-footer.png"
-                alt="HotellerieSuisse"
+                alt=""
                 width={64}
                 height={64}
                 className="footerHotellerieLogo"
+                aria-hidden="true"
               />
+
+              <span className="footerHotellerieText">
+                HotellerieSuisse
+              </span>
             </a>
           </div>
         </div>
@@ -158,7 +163,7 @@ export default function Footer() {
         .footer .footerAffiliations {
           display: flex;
           align-items: center;
-          gap: 18px;
+          gap: 26px;
         }
 
         /*
@@ -225,9 +230,10 @@ export default function Footer() {
         .footer .footerHotellerie:visited {
           display: inline-flex;
           align-items: center;
-          justify-content: center;
-          width: 34px;
-          height: 34px;
+          justify-content: flex-start;
+          gap: 10px;
+          min-height: 42px;
+          color: #121214 !important;
           text-decoration: none !important;
           opacity: 1;
           transition:
@@ -236,15 +242,36 @@ export default function Footer() {
         }
 
         .footer .footerHotellerie:hover {
+          color: #121214 !important;
           opacity: 0.72;
           transform: translateY(-1px);
         }
 
         .footer .footerHotellerieLogo {
           display: block;
-          width: 34px !important;
-          height: 34px !important;
+          width: 44px !important;
+          height: 44px !important;
+          min-width: 44px;
+          flex: 0 0 44px;
           object-fit: contain;
+        }
+
+        .footer .footerHotellerieText {
+          color: #121214 !important;
+          font-family:
+            Inter,
+            ui-sans-serif,
+            system-ui,
+            -apple-system,
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif;
+          font-size: 0.96rem;
+          line-height: 1;
+          font-weight: 500;
+          white-space: nowrap;
         }
 
         @media (max-width: 760px) {
@@ -281,10 +308,15 @@ export default function Footer() {
             font-size: 0.95rem;
           }
 
-          .footer .footerHotellerie,
           .footer .footerHotellerieLogo {
-            width: 31px !important;
-            height: 31px !important;
+            width: 40px !important;
+            height: 40px !important;
+            min-width: 40px;
+            flex-basis: 40px;
+          }
+
+          .footer .footerHotellerieText {
+            font-size: 0.92rem;
           }
         }
       `}</style>
