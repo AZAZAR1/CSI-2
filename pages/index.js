@@ -15,10 +15,11 @@ const conversionCopy = {
     venueSub: "Lounges, retailers & hospitality groups",
     eventBanner: "MEET ICSI AT INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & SPEAKER",
     associations: {
-      eyebrow: "Industry presence",
+      eyebrow: "Memberships",
       intertabac: "Exhibitor · Speaker",
       summit: "Exhibitor · Sponsor · Speaker",
       pca: "Associate Member",
+      hotelleriesuisse: "Member",
     },
     trust: [
       "Swiss-based institute",
@@ -49,10 +50,11 @@ const conversionCopy = {
     venueSub: "Lounges, maisons de cigares et groupes hôteliers ",
     eventBanner: "RETROUVEZ ICSI À INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & INTERVENANT",
     associations: {
-      eyebrow: "Présence dans l’industrie",
+      eyebrow: "Adhésions",
       intertabac: "Exposant · Intervenant",
       summit: "Exposant · Sponsor · Intervenant",
       pca: "Membre associé",
+      hotelleriesuisse: "Membre",
     },
     trust: [
       "Institut basé en Suisse",
@@ -83,10 +85,11 @@ const conversionCopy = {
     venueSub: "Für Lounges, Händler & Hospitality-Gruppen",
     eventBanner: "TREFFEN SIE ICSI BEIM INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & REFERENT",
     associations: {
-      eyebrow: "Präsenz in der Branche",
+      eyebrow: "Mitgliedschaften",
       intertabac: "Aussteller · Referent",
       summit: "Aussteller · Sponsor · Referent",
       pca: "Assoziiertes Mitglied",
+      hotelleriesuisse: "Mitglied",
     },
     trust: [
       "Institut mit Sitz in der Schweiz",
@@ -316,6 +319,15 @@ function AssociationStrip({ lang }) {
       width: 488,
       height: 290,
       logoClass: "homeAssociationLogoWide",
+    },
+    {
+      key: "hotelleriesuisse",
+      name: "HotellerieSuisse",
+      role: c.associations.hotelleriesuisse,
+      src: "/img/HS-Logo-Trusted-Start-up-RW-RGB.png",
+      width: 1400,
+      height: 504,
+      logoClass: "homeAssociationLogoHotellerie",
     },
   ];
 
@@ -559,11 +571,12 @@ export default function Home() {
         .homeAssociationIntro { display: flex; flex-direction: column; justify-content: center; gap: 13px; padding: 18px 0; }
         .homeAssociationEyebrow { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; font-size: .62rem; line-height: 1.35; letter-spacing: .24em; text-transform: uppercase; font-weight: 700; color: #C0242F; }
         .homeAssociationRule { display: block; width: 52px; height: 1px; background: #C8A24A; }
-        .homeAssociationGrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
-        .homeAssociationItem { min-width: 0; display: grid; grid-template-columns: 92px minmax(0,1fr); align-items: center; gap: 18px; padding: 15px 24px; border-left: 1px solid rgba(96,24,24,.16); }
-        .homeAssociationLogoWrap { display: flex; align-items: center; justify-content: center; width: 92px; height: 76px; overflow: hidden; background: #fff; }
+        .homeAssociationGrid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); }
+        .homeAssociationItem { min-width: 0; display: grid; grid-template-columns: 78px minmax(0,1fr); align-items: center; gap: 14px; padding: 15px 16px; border-left: 1px solid rgba(96,24,24,.16); }
+        .homeAssociationLogoWrap { display: flex; align-items: center; justify-content: center; width: 78px; height: 70px; overflow: hidden; background: #fff; }
         .homeAssociationLogoSquare { padding: 0; }
         .homeAssociationLogoWide { padding: 8px 6px; }
+        .homeAssociationLogoHotellerie { padding: 10px 5px; }
         .homeAssociationLogo { width: 100%; height: 100%; object-fit: contain; display: block; }
         .homeAssociationText { min-width: 0; display: flex; flex-direction: column; gap: 7px; }
         .homeAssociationName { font-family: "Playfair Display", Georgia, serif; font-size: 1.03rem; line-height: 1.08; font-weight: 500; color: #16161F; }
@@ -617,7 +630,7 @@ export default function Home() {
         @media (max-width: 900px) {
           .homeAssociationInner { grid-template-columns: 1fr; gap: 0; padding-top: 14px; padding-bottom: 14px; }
           .homeAssociationIntro { flex-direction: row; align-items: center; justify-content: flex-start; padding: 0 0 10px; }
-          .homeAssociationGrid { border-top: 1px solid rgba(96,24,24,.14); }
+          .homeAssociationGrid { grid-template-columns: repeat(2, minmax(0,1fr)); border-top: 1px solid rgba(96,24,24,.14); }
           .homeAssociationItem { grid-template-columns: 64px minmax(0,1fr); padding: 12px 12px; }
           .homeAssociationLogoWrap { width: 64px; height: 56px; }
           .homeAssociationRole { font-size: .52rem; letter-spacing: .09em; }
