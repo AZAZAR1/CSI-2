@@ -1,9 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { COPY } from "./copy";
 
 const ICSI_LINKEDIN_URL =
   "https://www.linkedin.com/company/cigar-sommelier-institute/";
+
+const HOTELLERIESUISSE_URL =
+  "https://www.hotelleriesuisse.ch/";
 
 export default function Footer() {
   const { locale } = useRouter();
@@ -45,70 +49,85 @@ export default function Footer() {
             </Link>
           </div>
 
-          <a
-            className="footerLinkedIn"
-            href={ICSI_LINKEDIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="International Cigar Sommelier Institute on LinkedIn"
-          >
-            <svg
-              className="footerLinkedInIcon"
-              viewBox="0 0 34 34"
-              role="img"
-              aria-hidden="true"
+          <div className="footerAffiliations">
+            <a
+              className="footerLinkedIn"
+              href={ICSI_LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="International Cigar Sommelier Institute on LinkedIn"
             >
-              {/* Black LinkedIn square */}
-              <rect
-                x="1"
-                y="1"
-                width="32"
-                height="32"
-                rx="2.5"
-                fill="#121214"
-              />
+              <svg
+                className="footerLinkedInIcon"
+                viewBox="0 0 34 34"
+                role="img"
+                aria-hidden="true"
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="32"
+                  height="32"
+                  rx="2.5"
+                  fill="#121214"
+                />
 
-              {/* White i */}
-              <circle
-                cx="9.2"
-                cy="10"
-                r="2.1"
-                fill="#FFFFFF"
-              />
+                <circle
+                  cx="9.2"
+                  cy="10"
+                  r="2.1"
+                  fill="#FFFFFF"
+                />
 
-              <rect
-                x="7.2"
-                y="13.5"
-                width="4"
-                height="13"
-                fill="#FFFFFF"
-              />
+                <rect
+                  x="7.2"
+                  y="13.5"
+                  width="4"
+                  height="13"
+                  fill="#FFFFFF"
+                />
 
-              {/* White n */}
-              <path
-                d="
-                  M15 13.5
-                  h3.8
-                  v1.8
-                  c1.2-1.5 2.9-2.3 5-2.3
-                  4.3 0 5.2 2.8 5.2 6.5
-                  v7
-                  h-4
-                  v-6.3
-                  c0-1.8-.1-4.1-2.6-4.1
-                  -2.6 0-3 1.9-3 3.9
-                  v6.5
-                  H15
-                  z
-                "
-                fill="#FFFFFF"
-              />
-            </svg>
+                <path
+                  d="
+                    M15 13.5
+                    h3.8
+                    v1.8
+                    c1.2-1.5 2.9-2.3 5-2.3
+                    4.3 0 5.2 2.8 5.2 6.5
+                    v7
+                    h-4
+                    v-6.3
+                    c0-1.8-.1-4.1-2.6-4.1
+                    -2.6 0-3 1.9-3 3.9
+                    v6.5
+                    H15
+                    z
+                  "
+                  fill="#FFFFFF"
+                />
+              </svg>
 
-            <span className="footerLinkedInText">
-              LinkedIn
-            </span>
-          </a>
+              <span className="footerLinkedInText">
+                LinkedIn
+              </span>
+            </a>
+
+            <a
+              className="footerHotellerie"
+              href={HOTELLERIESUISSE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="HotellerieSuisse"
+            >
+              <Image
+                src="/img/hotelleriesuisse-footer.png"
+                alt="HotellerieSuisse"
+                width={64}
+                height={64}
+                className="footerHotellerieLogo"
+              />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -136,10 +155,14 @@ export default function Footer() {
           opacity: 0.45;
         }
 
+        .footer .footerAffiliations {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+        }
+
         /*
          * LinkedIn
-         * Explicit black values are used rather than inheriting
-         * .footer / .small muted text styling.
          */
         .footer .footerLinkedIn,
         .footer .footerLinkedIn:link,
@@ -147,12 +170,9 @@ export default function Footer() {
           display: inline-flex;
           align-items: center;
           gap: 11px;
-
           color: #121214 !important;
           text-decoration: none !important;
-
           opacity: 1;
-
           transition:
             opacity 160ms ease,
             transform 160ms ease;
@@ -164,7 +184,8 @@ export default function Footer() {
           transform: translateY(-1px);
         }
 
-        .footer .footerLinkedIn:focus-visible {
+        .footer .footerLinkedIn:focus-visible,
+        .footer .footerHotellerie:focus-visible {
           outline: 2px solid #b88a2a;
           outline-offset: 5px;
           border-radius: 3px;
@@ -172,17 +193,14 @@ export default function Footer() {
 
         .footer .footerLinkedInIcon {
           display: block;
-
           width: 31px;
           height: 31px;
-
           min-width: 31px;
           flex: 0 0 31px;
         }
 
         .footer .footerLinkedInText {
           color: #121214 !important;
-
           font-family:
             Inter,
             ui-sans-serif,
@@ -193,11 +211,40 @@ export default function Footer() {
             Helvetica,
             Arial,
             sans-serif;
-
           font-size: 1rem;
           line-height: 1;
           font-weight: 500;
           letter-spacing: 0;
+        }
+
+        /*
+         * HotellerieSuisse
+         */
+        .footer .footerHotellerie,
+        .footer .footerHotellerie:link,
+        .footer .footerHotellerie:visited {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 34px;
+          height: 34px;
+          text-decoration: none !important;
+          opacity: 1;
+          transition:
+            opacity 160ms ease,
+            transform 160ms ease;
+        }
+
+        .footer .footerHotellerie:hover {
+          opacity: 0.72;
+          transform: translateY(-1px);
+        }
+
+        .footer .footerHotellerieLogo {
+          display: block;
+          width: 34px !important;
+          height: 34px !important;
+          object-fit: contain;
         }
 
         @media (max-width: 760px) {
@@ -219,6 +266,10 @@ export default function Footer() {
             flex-direction: column;
           }
 
+          .footer .footerAffiliations {
+            gap: 16px;
+          }
+
           .footer .footerLinkedInIcon {
             width: 29px;
             height: 29px;
@@ -228,6 +279,12 @@ export default function Footer() {
 
           .footer .footerLinkedInText {
             font-size: 0.95rem;
+          }
+
+          .footer .footerHotellerie,
+          .footer .footerHotellerieLogo {
+            width: 31px !important;
+            height: 31px !important;
           }
         }
       `}</style>
