@@ -294,6 +294,16 @@ function AssociationStrip({ lang }) {
 
   const associations = [
     {
+      key: "hotelleriesuisse",
+      name: "HotellerieSuisse",
+      role: c.associations.hotelleriesuisse,
+      src: "/img/HS-Logo-Trusted-Start-up-RW-RGB.png",
+      width: 1400,
+      height: 504,
+      logoClass: "homeAssociationLogoHotellerie",
+      itemClass: "homeAssociationItemHotellerie",
+    },
+    {
       key: "intertabac",
       name: "InterTabac",
       role: c.associations.intertabac,
@@ -320,15 +330,6 @@ function AssociationStrip({ lang }) {
       height: 290,
       logoClass: "homeAssociationLogoWide",
     },
-    {
-      key: "hotelleriesuisse",
-      name: "HotellerieSuisse",
-      role: c.associations.hotelleriesuisse,
-      src: "/img/HS-Logo-Trusted-Start-up-RW-RGB.png",
-      width: 1400,
-      height: 504,
-      logoClass: "homeAssociationLogoHotellerie",
-    },
   ];
 
   return (
@@ -341,7 +342,7 @@ function AssociationStrip({ lang }) {
 
         <div className="homeAssociationGrid">
           {associations.map((item) => (
-            <div key={item.key} className="homeAssociationItem">
+            <div key={item.key} className={`homeAssociationItem ${item.itemClass || ""}`}>
               <div className={`homeAssociationLogoWrap ${item.logoClass}`}>
                 <Image
                   src={item.src}
@@ -576,7 +577,18 @@ export default function Home() {
         .homeAssociationLogoWrap { display: flex; align-items: center; justify-content: center; width: 78px; height: 70px; overflow: hidden; background: #fff; }
         .homeAssociationLogoSquare { padding: 0; }
         .homeAssociationLogoWide { padding: 8px 6px; }
-        .homeAssociationLogoHotellerie { padding: 10px 5px; }
+        .homeAssociationLogoHotellerie {
+          width: 118px;
+          height: 70px;
+          padding: 6px 8px;
+          background: #16161F;
+        }
+        .homeAssociationLogoHotellerie .homeAssociationLogo {
+          object-fit: contain;
+        }
+        .homeAssociationItemHotellerie {
+          grid-template-columns: 118px minmax(0,1fr);
+        }
         .homeAssociationLogo { width: 100%; height: 100%; object-fit: contain; display: block; }
         .homeAssociationText { min-width: 0; display: flex; flex-direction: column; gap: 7px; }
         .homeAssociationName { font-family: "Playfair Display", Georgia, serif; font-size: 1.03rem; line-height: 1.08; font-weight: 500; color: #16161F; }
@@ -623,6 +635,8 @@ export default function Home() {
           .homeAssociationInner { grid-template-columns: 150px minmax(0,1fr); gap: 18px; }
           .homeAssociationItem { grid-template-columns: 76px minmax(0,1fr); gap: 13px; padding-left: 16px; padding-right: 16px; }
           .homeAssociationLogoWrap { width: 76px; height: 66px; }
+          .homeAssociationLogoHotellerie { width: 106px; height: 66px; }
+          .homeAssociationItemHotellerie { grid-template-columns: 106px minmax(0,1fr); }
           .homeAssociationName { font-size: .93rem; }
           .homePage .homeWaysHeading { grid-template-columns: 180px minmax(0,1fr); gap: 48px; }
           .homePage .homeEditorialSection { grid-template-columns: 180px 1px minmax(0, 1fr); column-gap: 48px; }
@@ -633,6 +647,8 @@ export default function Home() {
           .homeAssociationGrid { grid-template-columns: repeat(2, minmax(0,1fr)); border-top: 1px solid rgba(96,24,24,.14); }
           .homeAssociationItem { grid-template-columns: 64px minmax(0,1fr); padding: 12px 12px; }
           .homeAssociationLogoWrap { width: 64px; height: 56px; }
+          .homeAssociationLogoHotellerie { width: 100px; height: 56px; }
+          .homeAssociationItemHotellerie { grid-template-columns: 100px minmax(0,1fr); }
           .homeAssociationRole { font-size: .52rem; letter-spacing: .09em; }
           .homePage .homeHeroActions { grid-template-columns: 1fr; width: min(540px, 100%); }
           .homePage .homeWaysGrid { grid-template-columns: 1fr; }
@@ -670,6 +686,8 @@ export default function Home() {
           .homeAssociationItem { flex:0 0 210px; grid-template-columns:54px minmax(0,1fr); min-height:64px; gap:10px; padding:6px 10px 6px 0; border-left:0; border-right:1px solid rgba(96,24,24,.12); border-bottom:0; scroll-snap-align:start; }
           .homeAssociationItem:last-child { border-right:0; }
           .homeAssociationLogoWrap { width:54px; height:50px; }
+          .homeAssociationLogoHotellerie { width:94px; height:50px; padding:5px 7px; }
+          .homeAssociationItemHotellerie { flex-basis:250px; grid-template-columns:94px minmax(0,1fr); }
           .homeAssociationName { font-size:.82rem; }
           .homeAssociationRole { font-size:.48rem; line-height:1.35; letter-spacing:.07em; }
           .homePage .homeHeroImageWrap, .homePage .homeHeroContent { min-height:620px; }
