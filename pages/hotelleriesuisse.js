@@ -19,6 +19,12 @@ export default function HotellerieSuisseMemberSpecial() {
           rel="canonical"
           href="https://www.cigarsommelierinstitute.com/hotelleriesuisse"
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet"
+        />
         <meta property="og:title" content="HotellerieSuisse Member Special | ICSI" />
         <meta
           property="og:description"
@@ -61,10 +67,10 @@ export default function HotellerieSuisseMemberSpecial() {
 
             <div className="heroActions">
               <a className="btn btnPrimary" href={mailto}>
-                Profiter de l’offre
+                <span>PROFITER DE L’OFFRE</span><span className="btnArrow">→</span>
               </a>
               <a className="btn btnGhost" href="#details">
-                Voir les avantages
+                <span>VOIR LES AVANTAGES</span><span className="btnArrow">→</span>
               </a>
             </div>
 
@@ -232,7 +238,7 @@ export default function HotellerieSuisseMemberSpecial() {
                 </div>
 
                 <Link href="/cpfs-implementation" className="btn btnDark">
-                  Découvrir CPFS
+                  <span>DÉCOUVRIR CPFS</span><span className="btnArrow">→</span>
                 </Link>
               </aside>
             </div>
@@ -291,7 +297,7 @@ export default function HotellerieSuisseMemberSpecial() {
                 Démonstration + première évaluation des besoins de votre établissement.
               </p>
               <a className="btn btnPrimary full" href={mailto}>
-                Demander une démonstration
+                <span>DEMANDER UNE DÉMONSTRATION</span><span className="btnArrow">→</span>
               </a>
             </div>
           </div>
@@ -318,7 +324,7 @@ export default function HotellerieSuisseMemberSpecial() {
                 <strong>« HotellerieSuisse Member Special »</strong>
               </div>
               <a className="btn btnPrimary" href={mailto}>
-                Contacter ICSI
+                <span>CONTACTER ICSI</span><span className="btnArrow">→</span>
               </a>
             </div>
 
@@ -410,8 +416,15 @@ export default function HotellerieSuisseMemberSpecial() {
 
         h1,
         h2,
-        .card h3 {
-          font-family: Georgia, "Times New Roman", serif;
+        h3,
+        h4,
+        .card h3,
+        .pricingPanel h3,
+        .bigText,
+        .saving strong,
+        .demoCard strong,
+        .step > span {
+          font-family: "Playfair Display", Georgia, "Times New Roman", serif;
         }
 
         h1 {
@@ -454,7 +467,7 @@ export default function HotellerieSuisseMemberSpecial() {
         .offerBadge strong {
           color: #d7b16e;
           font-size: 26px;
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: "Playfair Display", Georgia, "Times New Roman", serif;
         }
 
         .offerBadge span {
@@ -471,35 +484,60 @@ export default function HotellerieSuisseMemberSpecial() {
         .btn {
           display: inline-flex;
           align-items: center;
-          justify-content: center;
-          min-height: 48px;
-          padding: 0 22px;
-          border-radius: 3px;
+          justify-content: space-between;
+          gap: 34px;
+          min-height: 64px;
+          min-width: 285px;
+          padding: 0 28px;
+          border-radius: 0;
+          border: 1px solid transparent;
           text-decoration: none;
+          font-size: 13px;
           font-weight: 700;
-          transition: all .2s ease;
+          letter-spacing: 0.14em;
+          transition: background .2s ease, color .2s ease, border-color .2s ease;
+        }
+
+        .btnArrow {
+          font-size: 28px;
+          line-height: 1;
+          font-weight: 300;
+          letter-spacing: 0;
         }
 
         .btnPrimary {
-          background: #9f1f2b;
-          color: white;
+          background: #8f251f;
+          color: #fff;
+          border-color: #b66f5f;
         }
 
         .btnPrimary:hover {
-          background: #b42b38;
-          transform: translateY(-1px);
+          background: #a12d27;
+          border-color: #cf8a78;
         }
 
         .btnGhost {
-          color: white;
-          border: 1px solid rgba(255,255,255,.38);
+          background: #f1e8d8;
+          color: #17130f;
+          border-color: #f1e8d8;
+        }
+
+        .btnGhost:hover {
+          background: #fff8ec;
+          border-color: #fff8ec;
         }
 
         .btnDark {
-          background: #15110e;
-          color: white;
+          background: #8f251f;
+          color: #fff;
+          border-color: #b66f5f;
           width: 100%;
           margin-top: 12px;
+        }
+
+        .btnDark:hover {
+          background: #a12d27;
+          border-color: #cf8a78;
         }
 
         .exclusive {
@@ -581,7 +619,7 @@ export default function HotellerieSuisseMemberSpecial() {
 
         .card h4 {
           color: #9c7847;
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: "Playfair Display", Georgia, "Times New Roman", serif;
           font-size: 22px;
           margin-bottom: 22px;
         }
@@ -652,7 +690,7 @@ export default function HotellerieSuisseMemberSpecial() {
         }
 
         .bigText {
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: "Playfair Display", Georgia, "Times New Roman", serif;
           font-size: 26px !important;
           color: #9c7847 !important;
         }
@@ -680,7 +718,7 @@ export default function HotellerieSuisseMemberSpecial() {
         }
 
         .pricingPanel h3 {
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: "Playfair Display", Georgia, "Times New Roman", serif;
           font-size: 28px;
           margin-bottom: 22px;
         }
@@ -732,7 +770,7 @@ export default function HotellerieSuisseMemberSpecial() {
         .saving strong {
           margin-top: 4px;
           color: #d7b16e;
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: "Playfair Display", Georgia, "Times New Roman", serif;
           font-size: 28px;
         }
 
@@ -771,7 +809,7 @@ export default function HotellerieSuisseMemberSpecial() {
         }
 
         .step > span {
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: "Playfair Display", Georgia, "Times New Roman", serif;
           color: #d7b16e;
           font-size: 32px;
         }
@@ -803,7 +841,7 @@ export default function HotellerieSuisseMemberSpecial() {
         .demoCard strong {
           display: block;
           font-size: 44px;
-          font-family: Georgia, "Times New Roman", serif;
+          font-family: "Playfair Display", Georgia, "Times New Roman", serif;
           color: #d7b16e;
           margin: 10px 0;
         }
@@ -908,6 +946,14 @@ export default function HotellerieSuisseMemberSpecial() {
           .offerBadge,
           .heroActions .btn {
             width: 100%;
+          }
+
+          .btn {
+            min-width: 0;
+            min-height: 58px;
+            padding: 0 20px;
+            gap: 18px;
+            font-size: 12px;
           }
 
           .intro,
