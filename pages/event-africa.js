@@ -960,7 +960,7 @@ export default function EventRegistrationPage() {
                 <div className="africa-rule" aria-hidden="true" />
 
                 <div className="africa-date">
-                  The Garden Venue · 23–25 October 2026
+                  Emperor Casino · 23–25 October 2026
                 </div>
 
                 <p className="africa-copy">
