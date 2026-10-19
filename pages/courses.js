@@ -260,136 +260,52 @@ const pageCopy = {
     seoTitle: "Formation Professionnelle ICSI | Parcours Niveau I–IV",
     seoDescription:
       "Découvrez le parcours de formation professionnelle ICSI en quatre niveaux, des fondamentaux du cigare jusqu’à la maîtrise professionnelle avancée.",
-  },
-
-  de: {
-    kicker: "ICSI Berufsausbildung",
-    titleLine1: "Expertise aufbauen.",
-    titleLine2: "Kompetenz sichtbar machen.",
-    titleLine3: "Beruflich weiterentwickeln.",
-    intro:
-      "Ein strukturierter vierstufiger Bildungsweg, der von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft führt — mit Wissenschaft, Service und disziplinierter Entscheidungsfindung im Mittelpunkt.",
-    heroCta: "Die vier Stufen entdecken",
-
-    pathwayEyebrow: "Der ICSI Bildungsweg",
-    pathwayTitle: "Ein Weg. Vier Stufen der Meisterschaft.",
-    pathwayLead:
-      "Jede Stufe baut auf der vorherigen auf. Beginnen Sie mit den Grundlagen, entwickeln Sie professionelle Servicekompetenz, vertiefen Sie Ihr technisches Wissen und arbeiten Sie auf fortgeschrittene Meisterschaft hin.",
-
-    levels: [
-      {
-        number: "I",
-        label: "UNTERSTUTZUNG FUR HUMIDORE & DEREN BASIS",
-        title: "ICSI Level I",
-        audience: "Für Aficionados, angehende Fachkräfte und Neueinsteiger",
-        body:
-          "Schaffen Sie eine fundierte Basis für Zigarrenwissen, Pflege und Wertschätzung. Level I vermittelt die zentralen Prinzipien, um Zigarren mit mehr Sicherheit und Konsequenz zu verstehen.",
-        outcome: "Sprache, Gewohnheiten und Grundwissen für die weitere Ausbildung aufbauen.",
-        content: [
-          "Blends weltweit diagnostizieren",
-          "Verkostungsnotizen entwickeln",
-          "Rauchreizungen reduzieren",
-          "Tipps zu Staging & Reifung",
-          "Eigene Zigarrensammlung aufbauen",
-          "Humidor optimieren",
-        ],
-      },
-      {
-        number: "II",
-        label: "PROFESSIONELL",
-        title: "ICSI Level II",
-        audience: "Für Hospitality-, Lounge- und Retail-Profis",
-        body:
-          "Übertragen Sie Wissen in professionelle Praxis. Level II entwickelt das praktische und technische Verständnis für fundierte Empfehlungen, Lagerentscheidungen und ein konsistentes Gästeerlebnis.",
-        outcome: "Vom persönlichen Wissen zu strukturierter professioneller Praxis übergehen.",
-        content: [
-          "Verbrennungswissenschaft",
-          "Wasseraktivität & relative Luftfeuchtigkeit",
-          "Peak-Flavour Framework",
-          "Kopf-Fuß-Diagnostik",
-          "Lagerungs-RH vs Rauch-RH",
-          "Kundenberatung & professioneller Service",
-        ],
-      },
-      {
-        number: "III",
-        label: "FORTGESCHRITTEN",
-        title: "ICSI Level III",
-        audience: "Für erfahrene Zigarren- und Hospitality-Profis",
-        body:
-          "Vertiefen Sie technische und diagnostische Fähigkeiten in den Bereichen Blend-Struktur, Performance, Lagerung und Service. Level III entwickelt das analytische Urteilsvermögen für anspruchsvollere professionelle Umgebungen.",
-        outcome: "Fortgeschrittenes diagnostisches Denken und höheres Serviceurteil entwickeln.",
-        content: [
-          "Inhalte aus Level II",
-          "RH-Familien",
-          "Wissenschaftliches Pairing-Framework",
-          "Settling Science",
-          "Thermodynamik & Peak-Flavour Methodik",
-        ],
-      },
-      {
-        number: "IV",
-        label: "MEISTERSCHAFT",
-        title: "ICSI Level IV",
-        audience: "Für erfahrene Fachkräfte mit dem Ziel fortgeschrittener Meisterschaft",
-        body:
-          "Die höchste Stufe des ICSI Bildungswegs. Level IV verbindet wissenschaftliches Verständnis, professionelles Urteilsvermögen und fortgeschrittene Anwendung zu einem umfassenden Standard der Expertise.",
-        outcome: "Integrierte Meisterschaft in Wissen, Analyse und professioneller Anwendung nachweisen.",
-      },
-    ],
-
-    chooseEyebrow: "Wo sollte ich beginnen?",
-    chooseTitle: "Wählen Sie die Stufe, die zu Ihrer heutigen Erfahrung passt.",
-    chooseBody:
-      "Sie müssen Ihren Einstieg nicht allein bestimmen. Teilen Sie uns Ihren Hintergrund und Ihr Ziel mit — persönliche Entwicklung, Hospitality, Retail oder professionelle Spezialisierung — und ICSI empfiehlt Ihnen die passende Einstiegsstufe.",
-    chooseCta: "Meine Einstiegsstufe finden",
-
-    standardEyebrow: "Der ICSI Standard",
-    standardTitle: "Ausbildung für die professionelle Anwendung.",
-    standardLead:
-      "ICSI verbindet strukturierte Ausbildung mit wissenschaftlichem Denken und Hospitality-Praxis, damit Wissen konsequent angewendet — und nicht nur erinnert — werden kann.",
-    pillars: [
-      {
-        number: "01",
-        title: "Strukturierte Entwicklung",
-        body:
-          "Eine klare vierstufige Architektur schafft einen definierten Weg von den Grundlagen bis zur fortgeschrittenen Meisterschaft.",
-      },
-      {
-        number: "02",
-        title: "Wissenschaftliches Verständnis",
-        body:
-          "Das Curriculum entwickelt ein Verständnis der physischen, sensorischen und leistungsbezogenen Faktoren, die das Zigarrenerlebnis beeinflussen.",
-      },
-      {
-        number: "03",
-        title: "Hospitality-Relevanz",
-        body:
-          "Die professionellen Stufen verbinden technisches Wissen mit realen Serviceentscheidungen, Konsistenz und Gästeerlebnis.",
-      },
-      {
-        number: "04",
-        title: "Professionelle Anerkennung",
-        body:
-          "Jede Stufe macht Entwicklung sichtbar und bietet engagierten Lernenden einen glaubwürdigen Rahmen für ihre Weiterentwicklung.",
-      },
-    ],
-
-    finalEyebrow: "Beginnen Sie Ihren Weg",
-    finalTitle: "Auf der richtigen Stufe beginnen. Darauf aufbauen.",
-    finalBody:
-      "Entdecken Sie den ICSI Bildungsweg oder sprechen Sie mit uns über die Stufe, die am besten zu Ihrer Erfahrung und Ihren beruflichen Zielen passt.",
-    finalPrimary: "Meinen Bildungsweg besprechen",
-    finalSecondary: "ICSI kontaktieren",
-
-    levelCta: "Diese Stufe anfragen",
-    outcomeLabel: "Entwicklungsziel",
-    courseContentLabel: "Kursinhalte",
-    seoTitle: "ICSI Berufsausbildung | Level I–IV Bildungsweg",
-    seoDescription:
-      "Entdecken Sie den vierstufigen ICSI Bildungsweg von grundlegendem Zigarrenwissen bis zu fortgeschrittener professioneller Meisterschaft.",
-  },
+  }
 };
+
+const SITE_URL = "https://www.cigarsommelierinstitute.com";
+
+// Add verified course delivery information when published.
+// Example values for courseMode: "online", "onsite", "blended".
+// Durations must be ISO 8601 durations, e.g. "PT4H" or "P8W".
+const courseDetails = {
+  I: { courseMode: null, duration: null },
+  II: { courseMode: null, duration: null },
+  III: { courseMode: null, duration: null },
+  IV: { courseMode: null, duration: null },
+};
+
+function buildCourseSchema(levels, lang) {
+  const prefix = lang === "fr" ? "/fr" : "";
+  const pageUrl = `${SITE_URL}${prefix}/courses`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${pageUrl}#course-pathway`,
+    name: lang === "fr" ? "Parcours de formation ICSI" : "ICSI Professional Education Pathway",
+    itemListElement: levels.map((level, index) => {
+      const details = courseDetails[level.number];
+      const course = {
+        "@type": "Course",
+        "@id": `${pageUrl}#level-${level.number.toLowerCase()}`,
+        name: level.title,
+        description: level.body,
+        url: `${pageUrl}#levels`,
+        inLanguage: lang,
+        provider: { "@id": `${SITE_URL}/#organization` },
+      };
+      if (details.courseMode || details.duration) {
+        course.hasCourseInstance = [{
+          "@type": "CourseInstance",
+          ...(details.courseMode ? { courseMode: details.courseMode } : {}),
+          ...(details.duration ? { courseWorkload: details.duration } : {}),
+        }];
+      }
+      return { "@type": "ListItem", position: index + 1, item: course };
+    }),
+  };
+}
 
 function LevelCard({ level, c, lang }) {
   const [contentOpen, setContentOpen] = useState(false);
@@ -462,22 +378,10 @@ export default function Courses() {
 
       <Head>
         <script
+          key="icsi-course-pathway-jsonld"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "EducationalOrganization",
-              name: "International Cigar Sommelier Institute",
-              url: "https://cigarsommelierinstitute.com",
-              description:
-                "A structured four-level professional education pathway from foundational cigar knowledge to advanced professional mastery.",
-              hasCourse: [
-                { "@type": "Course", name: "ICSI Level I" },
-                { "@type": "Course", name: "ICSI Level II" },
-                { "@type": "Course", name: "ICSI Level III" },
-                { "@type": "Course", name: "ICSI Level IV" },
-              ],
-            }),
+            __html: JSON.stringify(buildCourseSchema(c.levels, lang)).replace(/</g, "\u003c"),
           }}
         />
       </Head>
