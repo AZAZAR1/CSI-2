@@ -37,9 +37,8 @@ export default function Nav() {
   }, [mobileOpen]);
 
   const switchLocale = (locale) => {
-    router.push(router.asPath, router.asPath, {
-      locale,
-    });
+    if (locale === lang) return;
+    router.push(router.asPath, router.asPath, { locale });
   };
 
   return (
