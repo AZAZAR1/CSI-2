@@ -2,129 +2,101 @@ import "../styles/globals.css";
 import Head from "next/head";
 import Script from "next/script";
 
+const SITE_NAME = "International Cigar Sommelier Institute";
+const SITE_URL = "https://www.cigarsommelierinstitute.com";
+
+const SITE_DESCRIPTION =
+  "Swiss luxury. Scientific authority. Discreet mastery of the cigar experience through the Cigar Peak-Flavor System®.";
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "@id": `${SITE_URL}/#organization`,
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/img/csi_logo_color.png`,
+  description: SITE_DESCRIPTION,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Geneva",
+    addressCountry: "CH",
+  },
+  founder: {
+    "@type": "Person",
+    name: "Anthony Azar",
+    jobTitle: "Founder",
+  },
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  name: SITE_NAME,
+  url: `${SITE_URL}/`,
+  publisher: {
+    "@id": `${SITE_URL}/#organization`,
+  },
+  inLanguage: ["en", "fr"],
+};
+
 export default function App({ Component, pageProps }) {
-  const siteName = "International Cigar Sommelier Institute";
-  const siteUrl = "https://cigarsommelierinstitute.com";
-  const description =
-    "Swiss luxury. Scientific authority. Discreet mastery of the cigar experience through the Cigar Peak-Flavor System®.";
-
-  const orgSchema = {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    name: siteName,
-    url: siteUrl,
-    logo: `${siteUrl}/img/csi_logo_color.png`,
-    description: description,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Geneva",
-      addressCountry: "Switzerland",
-    },
-    founder: {
-      "@type": "Person",
-      name: "Anthony Azar",
-      jobTitle: "Founder",
-    },
-  };
-
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: siteName,
-    url: siteUrl,
-  };
-
-  const courseSchemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Course",
-      name: "Certified Cigar Sommelier (CCS®)",
-      provider: {
-        "@type": "Organization",
-        name: siteName,
-        sameAs: siteUrl,
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Course",
-      name: "Advanced Cigar Sommelier (ACS®)",
-      provider: {
-        "@type": "Organization",
-        name: siteName,
-        sameAs: siteUrl,
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Course",
-      name: "Aficionado Master Class (AMC™)",
-      provider: {
-        "@type": "Organization",
-        name: siteName,
-        sameAs: siteUrl,
-      },
-    },
-  ];
-
   return (
     <>
       <Head>
-        {/* Basic */}
-        <title>{siteName}</title>
-        <meta name="description" content={description} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/img/csi_logo_emboss.png" />
-
-        {/* OpenGraph */}
-        <meta property="og:site_name" content={siteName} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={siteName} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={siteUrl} />
-        <meta property="og:image" content={`${siteUrl}/img/og-preview.png`} />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={siteName} />
-        <meta name="twitter:description" content={description} />
+        {/* Default site metadata */}
+        <title key="title">{SITE_NAME}</title>
         <meta
-          name="twitter:image"
-          content={`${siteUrl}/img/og-preview.png`}
+          key="description"
+          name="description"
+          content={SITE_DESCRIPTION}
+        />
+
+        {/* Responsive viewport */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+
+        {/* Favicon */}
+        <link
+          rel="icon"
+          href="/img/csi_logo_emboss.png"
         />
 
         {/* Theme */}
-        <meta name="theme-color" content="#ffffff" />
+        <meta
+          name="theme-color"
+          content="#ffffff"
+        />
 
-        {/* Structured Data: Organization */}
+        {/* Global Organization structured data */}
         <script
+          key="organization-jsonld"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(orgSchema),
           }}
         />
 
-        {/* Structured Data: Website */}
+        {/* Global Website structured data */}
         <script
+          key="website-jsonld"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteSchema),
           }}
         />
 
-        {/* Structured Data: Courses */}
-        {courseSchemas.map((schema, i) => (
-          <script
-            key={i}
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(schema),
-            }}
-          />
-        ))}
+        {/*
+          Course structured data intentionally removed.
+
+          Levels I, II, III and IV will be defined
+          exclusively on the Courses page.
+        */}
       </Head>
 
-      {/* Google Tag Manager */}
+      {/* Google Tag Manager - preserved */}
       <Script
         id="google-tag-manager"
         strategy="afterInteractive"
@@ -139,6 +111,7 @@ export default function App({ Component, pageProps }) {
         }}
       />
 
+      {/* Render current page */}
       <Component {...pageProps} />
     </>
   );
