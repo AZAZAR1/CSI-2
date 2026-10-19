@@ -127,6 +127,7 @@ const pageCopy = {
     finalSecondary: "Contact ICSI",
 
     levelCta: "Enquire about this level",
+    priceLabel: "Course fee",
     outcomeLabel: "Progression outcome",
     courseContentLabel: "Course content",
     seoTitle: "ICSI Professional Education | Level I–IV Certification Pathway",
@@ -255,6 +256,7 @@ const pageCopy = {
     finalSecondary: "Contacter l’ICSI",
 
     levelCta: "Se renseigner sur ce niveau",
+    priceLabel: "Tarif de la formation",
     outcomeLabel: "Objectif de progression",
     courseContentLabel: "Contenu du cours",
     seoTitle: "Formation Professionnelle ICSI | Parcours Niveau I–IV",
@@ -265,14 +267,35 @@ const pageCopy = {
 
 const SITE_URL = "https://www.cigarsommelierinstitute.com";
 
-// Add verified course delivery information when published.
-// Example values for courseMode: "online", "onsite", "blended".
-// Durations must be ISO 8601 durations, e.g. "PT4H" or "P8W".
+// Verified delivery formats and durations for the four-level pathway.
+// A duration range is represented as a named schema.org Duration rather
+// than an invented single ISO-8601 workload.
 const courseDetails = {
-  I: { courseMode: null, duration: null },
-  II: { courseMode: null, duration: null },
-  III: { courseMode: null, duration: null },
-  IV: { courseMode: null, duration: null },
+  I: {
+    modes: ["Online (live instructor-led)", "Onsite (in-person)"],
+    durationLabel: "3 hours",
+    priceCHF: 199,
+    workload: "PT3H",
+  },
+  II: {
+    modes: ["Online (self-paced)"],
+    durationLabel: "8–12 weeks",
+    priceCHF: 399,
+    workload: { "@type": "Duration", name: "8–12 weeks" },
+  },
+  III: {
+    modes: ["Online (self-paced)"],
+    durationLabel: "4–6 weeks",
+    priceCHF: 299,
+    workload: { "@type": "Duration", name: "4–6 weeks" },
+  },
+  IV: {
+    modes: ["Onsite (in-person)"],
+    durationLabel: "4 weeks",
+    funded: true,
+    workload: "P4W",
+    prerequisites: "At least 2 years of relevant experience",
+  },
 };
 
 function buildCourseSchema(levels, lang) {
@@ -295,12 +318,24 @@ function buildCourseSchema(levels, lang) {
         inLanguage: lang,
         provider: { "@id": `${SITE_URL}/#organization` },
       };
-      if (details.courseMode || details.duration) {
-        course.hasCourseInstance = [{
-          "@type": "CourseInstance",
-          ...(details.courseMode ? { courseMode: details.courseMode } : {}),
-          ...(details.duration ? { courseWorkload: details.duration } : {}),
-        }];
+      course.hasCourseInstance = details.modes.map((mode) => ({
+        "@type": "CourseInstance",
+        courseMode: mode,
+        courseWorkload: details.workload,
+        description: `${mode}; duration: ${details.durationLabel}`,
+      }));
+      if (typeof details.priceCHF === "number") {
+        course.offers = {
+          "@type": "Offer",
+          price: details.priceCHF,
+          priceCurrency: "CHF",
+          url: `${pageUrl}#levels`,
+          availability: "https://schema.org/InStock",
+        };
+      }
+      // Level IV is ICSI-funded, not a publicly priced offer.
+      if (details.prerequisites) {
+        course.coursePrerequisites = details.prerequisites;
       }
       return { "@type": "ListItem", position: index + 1, item: course };
     }),
@@ -324,6 +359,7 @@ function LevelCard({ level, c, lang }) {
       <div className="courseLevelBody">
         <h3>{level.title}</h3>
         <p>{level.body}</p>
+        <p className="courseLevelPrice"><strong>{c.priceLabel}:</strong> {courseDetails[level.number].funded ? (lang === "fr" ? "Financé par ICSI" : "ICSI funded") : `${courseDetails[level.number].priceCHF} CHF`}</p>
 
         <div className="courseLevelOutcome">
           <span>{c.outcomeLabel}</span>
@@ -827,6 +863,11 @@ export default function Courses() {
           font-size: clamp(2rem, 3vw, 3.35rem);
           line-height: 1;
           letter-spacing: -0.04em;
+        }
+
+        .coursesPage .courseLevelBody .courseLevelPrice {
+          margin-top: 16px;
+          font-weight: 500;
         }
 
         .coursesPage .courseLevelBody > p {
