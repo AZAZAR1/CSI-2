@@ -1525,7 +1525,7 @@ export default function PredictorPage() {
           {/* â”€â”€ ERROR â”€â”€ */}
           {err && (
             <div style={{ ...styles.notice, marginTop: 16 }}>
-              âš   {err}
+              {err}
             </div>
           )}
 
