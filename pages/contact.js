@@ -13,14 +13,24 @@ const copy = {
     programTitle: "Selected Program",
     emailEyebrow: "Contact Form",
     emailTitle: "Send us a message",
-    formIntro: "Complete the form below and our team will contact you directly.",
-    firstName: "First name", familyName: "Family name", organization: "Organization",
-    email: "Email", message: "Message", optional: "optional", submit: "Submit",
-    privacy: "By submitting this form, you agree that ICSI may contact you regarding your enquiry.",
-    successEyebrow: "Thank You", successTitle: "Your message has been received",
-    successText: "Thank you for contacting ICSI. Our team will respond to your enquiry shortly.",
+    formIntro:
+      "Complete the form below and our team will contact you directly.",
+    firstName: "First name",
+    familyName: "Family name",
+    organization: "Organization",
+    email: "Email",
+    message: "Message",
+    optional: "optional",
+    submit: "Submit",
+    privacy:
+      "By submitting this form, you agree that ICSI may contact you regarding your enquiry.",
+    successEyebrow: "Thank You",
+    successTitle: "Your message has been received",
+    successText:
+      "Thank you for contacting ICSI. Our team will respond to your enquiry shortly.",
     whatsappEyebrow: "Swiss WhatsApp",
     whatsappTitle: "Contact us directly",
+    whatsappCta: "Chat on WhatsApp",
     closingEyebrow: "Confidentiality",
     closingTitle: "Discretion & Confidentiality",
     closing:
@@ -53,14 +63,24 @@ const copy = {
     programTitle: "Programme sélectionné",
     emailEyebrow: "Formulaire de contact",
     emailTitle: "Envoyez-nous un message",
-    formIntro: "Complétez le formulaire ci-dessous et notre équipe vous contactera directement.",
-    firstName: "Prénom", familyName: "Nom de famille", organization: "Organisation",
-    email: "Email", message: "Message", optional: "facultatif", submit: "Envoyer",
-    privacy: "En soumettant ce formulaire, vous acceptez qu'ICSI vous contacte au sujet de votre demande.",
-    successEyebrow: "Merci", successTitle: "Votre message a bien été reçu",
-    successText: "Merci d'avoir contacté ICSI. Notre équipe répondra prochainement à votre demande.",
+    formIntro:
+      "Complétez le formulaire ci-dessous et notre équipe vous contactera directement.",
+    firstName: "Prénom",
+    familyName: "Nom de famille",
+    organization: "Organisation",
+    email: "Email",
+    message: "Message",
+    optional: "facultatif",
+    submit: "Envoyer",
+    privacy:
+      "En soumettant ce formulaire, vous acceptez qu'ICSI vous contacte au sujet de votre demande.",
+    successEyebrow: "Merci",
+    successTitle: "Votre message a bien été reçu",
+    successText:
+      "Merci d'avoir contacté ICSI. Notre équipe répondra prochainement à votre demande.",
     whatsappEyebrow: "WhatsApp Suisse",
     whatsappTitle: "Nous contacter directement",
+    whatsappCta: "Discuter sur WhatsApp",
     closingEyebrow: "Confidentialité",
     closingTitle: "Discrétion & confidentialité",
     closing:
@@ -93,14 +113,24 @@ const copy = {
     programTitle: "Ausgewähltes Programm",
     emailEyebrow: "Kontaktformular",
     emailTitle: "Senden Sie uns eine Nachricht",
-    formIntro: "Füllen Sie das untenstehende Formular aus. Unser Team wird sich direkt mit Ihnen in Verbindung setzen.",
-    firstName: "Vorname", familyName: "Nachname", organization: "Organisation",
-    email: "E-Mail", message: "Nachricht", optional: "optional", submit: "Absenden",
-    privacy: "Mit dem Absenden dieses Formulars erklären Sie sich damit einverstanden, dass ICSI Sie bezüglich Ihrer Anfrage kontaktiert.",
-    successEyebrow: "Vielen Dank", successTitle: "Ihre Nachricht ist eingegangen",
-    successText: "Vielen Dank für Ihre Kontaktaufnahme mit ICSI. Unser Team wird Ihre Anfrage in Kürze beantworten.",
+    formIntro:
+      "Füllen Sie das untenstehende Formular aus. Unser Team wird sich direkt mit Ihnen in Verbindung setzen.",
+    firstName: "Vorname",
+    familyName: "Nachname",
+    organization: "Organisation",
+    email: "E-Mail",
+    message: "Nachricht",
+    optional: "optional",
+    submit: "Absenden",
+    privacy:
+      "Mit dem Absenden dieses Formulars erklären Sie sich damit einverstanden, dass ICSI Sie bezüglich Ihrer Anfrage kontaktiert.",
+    successEyebrow: "Vielen Dank",
+    successTitle: "Ihre Nachricht ist eingegangen",
+    successText:
+      "Vielen Dank für Ihre Kontaktaufnahme mit ICSI. Unser Team wird Ihre Anfrage in Kürze beantworten.",
     whatsappEyebrow: "Schweizer WhatsApp",
     whatsappTitle: "Direkt kontaktieren",
+    whatsappCta: "Auf WhatsApp chatten",
     closingEyebrow: "Vertraulichkeit",
     closingTitle: "Diskretion & Vertraulichkeit",
     closing: "Alle Einsendungen werden vertraulich behandelt.",
@@ -132,22 +162,61 @@ const COURSE_LEVELS = {
   "level-iv": "ICSI Level IV",
 };
 
+const WHATSAPP_NUMBER = "41762305791";
+const WHATSAPP_LABEL = "+41 76 230 57 91";
+const WHATSAPP_MESSAGE =
+  "Greetings from the ICSI Team, how can we help you?";
+
+const WHATSAPP_URL =
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    WHATSAPP_MESSAGE
+  )}`;
+
 function normalizeQueryValue(value) {
-  return typeof value === "string" ? value.trim().toLowerCase() : "";
+  return typeof value === "string"
+    ? value.trim().toLowerCase()
+    : "";
 }
 
-function ContactSection({ number, eyebrow, title, children }) {
+function WhatsAppIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 32"
+      width="22"
+      height="22"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M16 .8A15.1 15.1 0 0 0 3 23.6L.9 31l7.6-2A15.2 15.2 0 1 0 16 .8zm0 27.5a12.3 12.3 0 0 1-6.3-1.7l-.5-.3-4.5 1.2 1.2-4.4-.3-.5A12.4 12.4 0 1 1 16 28.3zm6.8-9.3c-.4-.2-2.2-1.1-2.6-1.2-.3-.1-.6-.2-.8.2-.3.4-1 1.2-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3.1-1.9-1.1-1-1.9-2.2-2.1-2.6-.2-.4 0-.6.2-.8l.6-.7.4-.6c.1-.2 0-.5 0-.7l-1.2-2.9c-.3-.7-.6-.6-.8-.6h-.7c-.3 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.4 3.5 1.6 3.7c.2.2 2.7 4.2 6.6 5.8.9.4 1.6.6 2.2.7.9.3 1.8.2 2.5.2.8-.1 2.2-.9 2.5-1.8.3-.9.3-1.7.2-1.8-.1-.2-.3-.3-.7-.5z" />
+    </svg>
+  );
+}
+
+function ContactSection({
+  number,
+  eyebrow,
+  title,
+  children,
+}) {
   return (
     <section className="contactEditorialSection">
       <div className="contactSectionMeta">
-        <span className="contactSectionNum">{number}</span>
-        <span className="contactSectionEyebrow">{eyebrow}</span>
+        <span className="contactSectionNum">
+          {number}
+        </span>
+        <span className="contactSectionEyebrow">
+          {eyebrow}
+        </span>
       </div>
 
       <div className="contactSectionDivider" />
 
       <div className="contactSectionBody">
-        <h2 className="contactSectionTitle">{title}</h2>
+        <h2 className="contactSectionTitle">
+          {title}
+        </h2>
         {children}
       </div>
     </section>
@@ -160,60 +229,112 @@ export default function Contact() {
 
   const selection = useMemo(() => {
     if (!router.isReady) {
-      return { key: "", inquiry: "", source: "" };
+      return {
+        key: "",
+        inquiry: "",
+        source: "",
+      };
     }
 
-    const course = normalizeQueryValue(router.query?.course);
-    const legacyProgram = normalizeQueryValue(router.query?.program);
-    const inquiry = normalizeQueryValue(router.query?.inquiry);
+    const course = normalizeQueryValue(
+      router.query?.course
+    );
+
+    const legacyProgram = normalizeQueryValue(
+      router.query?.program
+    );
+
+    const inquiry = normalizeQueryValue(
+      router.query?.inquiry
+    );
 
     return {
       key: course || legacyProgram,
       inquiry,
-      source: course ? "course" : legacyProgram ? "program" : inquiry ? "inquiry" : "",
+      source: course
+        ? "course"
+        : legacyProgram
+        ? "program"
+        : inquiry
+        ? "inquiry"
+        : "",
     };
   }, [router.isReady, router.query]);
 
   const c = copy[lang] || copy.en;
 
-  const [selectedCourseKey, setSelectedCourseKey] = useState("");
+  const [
+    selectedCourseKey,
+    setSelectedCourseKey,
+  ] = useState("");
 
   useEffect(() => {
     if (!router.isReady) return;
 
-    const incomingCourse = selection.key && COURSE_LEVELS[selection.key]
-      ? selection.key
-      : "";
+    const incomingCourse =
+      selection.key &&
+      COURSE_LEVELS[selection.key]
+        ? selection.key
+        : "";
 
     setSelectedCourseKey(incomingCourse);
   }, [router.isReady, selection.key]);
 
-  const waNumber = "41762305791";
-  const waLabel = "+41 76 230 57 91";
+  const selectedCourseCanonical =
+    COURSE_LEVELS[selectedCourseKey] || "";
 
-  const selectedCourseCanonical = COURSE_LEVELS[selectedCourseKey] || "";
-  const selectedProgramDisplay = c.programNames?.[selectedCourseKey] || "";
-  const pathwayInquiry = selection.inquiry === "education-pathway";
-  const programNice = selectedProgramDisplay || (pathwayInquiry ? c.pathwayName : "");
+  const selectedProgramDisplay =
+    c.programNames?.[selectedCourseKey] || "";
 
-  const submitted = router.query?.submitted === "true";
+  const pathwayInquiry =
+    selection.inquiry === "education-pathway";
+
+  const programNice =
+    selectedProgramDisplay ||
+    (pathwayInquiry ? c.pathwayName : "");
+
+  const submitted =
+    router.query?.submitted === "true";
+
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
     "https://cigarsommelierinstitute.com";
+
   const localePrefix =
-    router.locale && router.locale !== "en" ? `/${router.locale}` : "";
+    router.locale && router.locale !== "en"
+      ? `/${router.locale}`
+      : "";
 
-  const returnParams = new URLSearchParams({ submitted: "true" });
-  if (selectedCourseKey) returnParams.set("course", selectedCourseKey);
-  if (selection.inquiry) returnParams.set("inquiry", selection.inquiry);
+  const returnParams = new URLSearchParams({
+    submitted: "true",
+  });
 
-  const redirectTo = `${siteUrl}${localePrefix}/contact?${returnParams.toString()}`;
+  if (selectedCourseKey) {
+    returnParams.set(
+      "course",
+      selectedCourseKey
+    );
+  }
 
-  const staticFormSubject = selectedCourseCanonical
-    ? `ICSI Course Enquiry — ${selectedCourseCanonical}`
-    : pathwayInquiry
+  if (selection.inquiry) {
+    returnParams.set(
+      "inquiry",
+      selection.inquiry
+    );
+  }
+
+  const redirectTo =
+    `${siteUrl}${localePrefix}/contact?${returnParams.toString()}`;
+
+  const staticFormSubject =
+    selectedCourseCanonical
+      ? `ICSI Course Enquiry — ${selectedCourseCanonical}`
+      : pathwayInquiry
       ? "ICSI Education Pathway Enquiry"
       : "ICSI Website Contact";
+
+  const hasProgramContext =
+    Boolean(selectedCourseKey || pathwayInquiry);
 
   return (
     <Layout>
@@ -226,14 +347,22 @@ export default function Contact() {
       <div className={`contactPage lang-${lang}`}>
         <section className="contactHero">
           <div className="container contactHeroInner">
-            <span className="contactKicker">{c.kicker}</span>
-            <h1 className="contactHeroTitle">{c.title}</h1>
-            <p className="contactHeroLead">{c.intro}</p>
+            <span className="contactKicker">
+              {c.kicker}
+            </span>
+
+            <h1 className="contactHeroTitle">
+              {c.title}
+            </h1>
+
+            <p className="contactHeroLead">
+              {c.intro}
+            </p>
           </div>
         </section>
 
         <main className="container contactMain">
-          {(selectedCourseKey || pathwayInquiry) && (
+          {hasProgramContext && (
             <ContactSection
               number="01"
               eyebrow={c.programEyebrow}
@@ -252,13 +381,31 @@ export default function Contact() {
                     id="selectedCourseLevel"
                     className="contactCourseSelect"
                     value={selectedCourseKey}
-                    onChange={(e) => setSelectedCourseKey(e.target.value)}
+                    onChange={(e) =>
+                      setSelectedCourseKey(
+                        e.target.value
+                      )
+                    }
                   >
-                    <option value="">{c.courseSelectPlaceholder}</option>
-                    <option value="level-i">{c.programNames["level-i"]}</option>
-                    <option value="level-ii">{c.programNames["level-ii"]}</option>
-                    <option value="level-iii">{c.programNames["level-iii"]}</option>
-                    <option value="level-iv">{c.programNames["level-iv"]}</option>
+                    <option value="">
+                      {c.courseSelectPlaceholder}
+                    </option>
+
+                    <option value="level-i">
+                      {c.programNames["level-i"]}
+                    </option>
+
+                    <option value="level-ii">
+                      {c.programNames["level-ii"]}
+                    </option>
+
+                    <option value="level-iii">
+                      {c.programNames["level-iii"]}
+                    </option>
+
+                    <option value="level-iv">
+                      {c.programNames["level-iv"]}
+                    </option>
                   </select>
                 </div>
               ) : (
@@ -270,32 +417,71 @@ export default function Contact() {
           )}
 
           <ContactSection
-            number={(selectedCourseKey || pathwayInquiry) ? "02" : "01"}
-            eyebrow={submitted ? c.successEyebrow : c.emailEyebrow}
-            title={submitted ? c.successTitle : c.emailTitle}
+            number={hasProgramContext ? "02" : "01"}
+            eyebrow={
+              submitted
+                ? c.successEyebrow
+                : c.emailEyebrow
+            }
+            title={
+              submitted
+                ? c.successTitle
+                : c.emailTitle
+            }
           >
             {submitted ? (
-              <p className="contactSectionText">{c.successText}</p>
+              <p className="contactSectionText">
+                {c.successText}
+              </p>
             ) : (
               <>
-                <p className="contactSectionText contactFormIntro">{c.formIntro}</p>
-                <form className="contactForm" action="https://api.staticforms.dev/submit" method="POST">
+                <p className="contactSectionText contactFormIntro">
+                  {c.formIntro}
+                </p>
+
+                <form
+                  className="contactForm"
+                  action="https://api.staticforms.dev/submit"
+                  method="POST"
+                >
                   <input
                     type="hidden"
                     name="apiKey"
-                    value={process.env.NEXT_PUBLIC_STATICFORMS_CONTACT_KEY || ""}
+                    value={
+                      process.env
+                        .NEXT_PUBLIC_STATICFORMS_CONTACT_KEY ||
+                      ""
+                    }
                   />
-                  <input type="hidden" name="redirectTo" value={redirectTo} />
-                  <input type="hidden" name="Form" value="ICSI Website Contact" />
-                  <input type="hidden" name="subject" value={staticFormSubject} />
+
+                  <input
+                    type="hidden"
+                    name="redirectTo"
+                    value={redirectTo}
+                  />
+
+                  <input
+                    type="hidden"
+                    name="Form"
+                    value="ICSI Website Contact"
+                  />
+
+                  <input
+                    type="hidden"
+                    name="subject"
+                    value={staticFormSubject}
+                  />
 
                   {selectedCourseCanonical && (
                     <>
                       <input
                         type="hidden"
                         name="Selected Course Level"
-                        value={selectedCourseCanonical}
+                        value={
+                          selectedCourseCanonical
+                        }
                       />
+
                       <input
                         type="hidden"
                         name="Enquiry Type"
@@ -319,82 +505,237 @@ export default function Contact() {
                       value={programNice}
                     />
                   )}
-                  <div className="contactHoneypot" aria-hidden="true">
-                    <label htmlFor="contact-honeypot">Leave this empty</label>
-                    <input id="contact-honeypot" type="text" name="honeypot" tabIndex="-1" autoComplete="off" />
+
+                  <div
+                    className="contactHoneypot"
+                    aria-hidden="true"
+                  >
+                    <label htmlFor="contact-honeypot">
+                      Leave this empty
+                    </label>
+
+                    <input
+                      id="contact-honeypot"
+                      type="text"
+                      name="honeypot"
+                      tabIndex="-1"
+                      autoComplete="off"
+                    />
                   </div>
 
-                  {!selectedCourseKey && !pathwayInquiry && (
-                    <div className="contactField contactFieldFull">
-                      <label className="contactLabel" htmlFor="courseLevelOptional">
-                        {c.courseFieldLabel} <span className="contactOptional">({c.optional})</span>
-                      </label>
-                      <select
-                        id="courseLevelOptional"
-                        className="contactCourseSelect"
-                        value={selectedCourseKey}
-                        onChange={(e) => setSelectedCourseKey(e.target.value)}
-                      >
-                        <option value="">{c.courseSelectPlaceholder}</option>
-                        <option value="level-i">{c.programNames["level-i"]}</option>
-                        <option value="level-ii">{c.programNames["level-ii"]}</option>
-                        <option value="level-iii">{c.programNames["level-iii"]}</option>
-                        <option value="level-iv">{c.programNames["level-iv"]}</option>
-                      </select>
-                    </div>
-                  )}
+                  {!selectedCourseKey &&
+                    !pathwayInquiry && (
+                      <div className="contactField contactFieldFull">
+                        <label
+                          className="contactLabel"
+                          htmlFor="courseLevelOptional"
+                        >
+                          {c.courseFieldLabel}
+                          {" "}
+                          <span className="contactOptional">
+                            ({c.optional})
+                          </span>
+                        </label>
+
+                        <select
+                          id="courseLevelOptional"
+                          className="contactCourseSelect"
+                          value={selectedCourseKey}
+                          onChange={(e) =>
+                            setSelectedCourseKey(
+                              e.target.value
+                            )
+                          }
+                        >
+                          <option value="">
+                            {c.courseSelectPlaceholder}
+                          </option>
+
+                          <option value="level-i">
+                            {c.programNames["level-i"]}
+                          </option>
+
+                          <option value="level-ii">
+                            {c.programNames["level-ii"]}
+                          </option>
+
+                          <option value="level-iii">
+                            {c.programNames["level-iii"]}
+                          </option>
+
+                          <option value="level-iv">
+                            {c.programNames["level-iv"]}
+                          </option>
+                        </select>
+                      </div>
+                    )}
 
                   <div className="contactField">
-                    <label className="contactLabel" htmlFor="firstName">{c.firstName}</label>
-                    <input className="contactInput" id="firstName" name="First Name" type="text" autoComplete="given-name" required />
+                    <label
+                      className="contactLabel"
+                      htmlFor="firstName"
+                    >
+                      {c.firstName}
+                    </label>
+
+                    <input
+                      className="contactInput"
+                      id="firstName"
+                      name="First Name"
+                      type="text"
+                      autoComplete="given-name"
+                      required
+                    />
                   </div>
+
                   <div className="contactField">
-                    <label className="contactLabel" htmlFor="familyName">{c.familyName}</label>
-                    <input className="contactInput" id="familyName" name="Family Name" type="text" autoComplete="family-name" required />
+                    <label
+                      className="contactLabel"
+                      htmlFor="familyName"
+                    >
+                      {c.familyName}
+                    </label>
+
+                    <input
+                      className="contactInput"
+                      id="familyName"
+                      name="Family Name"
+                      type="text"
+                      autoComplete="family-name"
+                      required
+                    />
                   </div>
+
                   <div className="contactField contactFieldFull">
-                    <label className="contactLabel" htmlFor="organization">{c.organization} <span className="contactOptional">({c.optional})</span></label>
-                    <input className="contactInput" id="organization" name="Organization" type="text" autoComplete="organization" />
+                    <label
+                      className="contactLabel"
+                      htmlFor="organization"
+                    >
+                      {c.organization}
+                      {" "}
+                      <span className="contactOptional">
+                        ({c.optional})
+                      </span>
+                    </label>
+
+                    <input
+                      className="contactInput"
+                      id="organization"
+                      name="Organization"
+                      type="text"
+                      autoComplete="organization"
+                    />
                   </div>
+
                   <div className="contactField contactFieldFull">
-                    <label className="contactLabel" htmlFor="email">{c.email}</label>
-                    <input className="contactInput" id="email" name="email" type="email" autoComplete="email" required />
+                    <label
+                      className="contactLabel"
+                      htmlFor="email"
+                    >
+                      {c.email}
+                    </label>
+
+                    <input
+                      className="contactInput"
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                    />
                   </div>
+
                   <div className="contactField contactFieldFull">
-                    <label className="contactLabel" htmlFor="message">{c.message} <span className="contactOptional">({c.optional})</span></label>
-                    <textarea className="contactTextarea" id="message" name="message" rows="5" />
+                    <label
+                      className="contactLabel"
+                      htmlFor="message"
+                    >
+                      {c.message}
+                      {" "}
+                      <span className="contactOptional">
+                        ({c.optional})
+                      </span>
+                    </label>
+
+                    <textarea
+                      className="contactTextarea"
+                      id="message"
+                      name="message"
+                      rows="5"
+                    />
                   </div>
+
                   <div className="contactSubmitWrap">
-                    <button className="contactSubmit" type="submit"><span>{c.submit}</span><span className="contactArrow">→</span></button>
+                    <button
+                      className="contactSubmit"
+                      type="submit"
+                    >
+                      <span>{c.submit}</span>
+                      <span className="contactArrow">
+                        →
+                      </span>
+                    </button>
                   </div>
-                  <p className="contactPrivacy">{c.privacy}</p>
+
+                  <p className="contactPrivacy">
+                    {c.privacy}
+                  </p>
                 </form>
               </>
             )}
           </ContactSection>
 
+          {/* WHATSAPP CONTACT SECTION */}
+
           <ContactSection
-            number={(selectedCourseKey || pathwayInquiry) ? "03" : "02"}
+            number={hasProgramContext ? "03" : "02"}
             eyebrow={c.whatsappEyebrow}
             title={c.whatsappTitle}
           >
-            <a
-              className="contactTextCta"
-              href={`https://wa.me/${waNumber}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>{waLabel}</span>
-              <span className="contactArrow">→</span>
-            </a>
+            <div className="contactWhatsappWrap">
+              <a
+                className="contactTextCta"
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Contact ICSI on WhatsApp at ${WHATSAPP_LABEL}`}
+              >
+                <span>{WHATSAPP_LABEL}</span>
+
+                <span className="contactArrow">
+                  →
+                </span>
+              </a>
+
+              <a
+                className="contactWhatsappButton"
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={c.whatsappCta}
+              >
+                <WhatsAppIcon />
+
+                <span>{c.whatsappCta}</span>
+
+                <span
+                  className="contactArrow"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </a>
+            </div>
           </ContactSection>
 
           <ContactSection
-            number={(selectedCourseKey || pathwayInquiry) ? "04" : "03"}
+            number={hasProgramContext ? "04" : "03"}
             eyebrow={c.closingEyebrow}
             title={c.closingTitle}
           >
-            <p className="contactSectionText">{c.closing}</p>
+            <p className="contactSectionText">
+              {c.closing}
+            </p>
           </ContactSection>
         </main>
       </div>
@@ -402,8 +743,6 @@ export default function Contact() {
       <style jsx global>{`
         /* =========================================================
            CONTACT PAGE ONLY
-           Global scope is intentional to neutralize repo-level .section,
-           .card, .btn, .lead, h1 and h2 styling conflicts.
         ========================================================= */
 
         .contactPage {
@@ -600,20 +939,124 @@ export default function Contact() {
           border-bottom-color: #601818;
         }
 
-        .contactPage .contactFormIntro { margin-bottom: 38px; }
-        .contactPage .contactForm { position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 30px; max-width: 760px; }
-        .contactPage .contactField { display:flex; flex-direction:column; gap:10px; }
-        .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1/-1; }
-        .contactPage .contactLabel { color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.64rem; line-height:1.35; letter-spacing:.18em; text-transform:uppercase; font-weight:600; opacity:.62; }
-        .contactPage .contactOptional { font-weight:400; opacity:.65; }
-        .contactPage .contactInput, .contactPage .contactTextarea { width:100%; padding:14px 0; border:0; border-bottom:1px solid rgba(0,0,0,.24); border-radius:0; outline:none; background:transparent; color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:1rem; line-height:1.4; font-weight:300; }
-        .contactPage .contactInput { min-height:54px; }
-        .contactPage .contactTextarea { min-height:120px; resize:vertical; }
-        .contactPage .contactInput:focus, .contactPage .contactTextarea:focus { border-bottom-color:#121214; }
-        .contactPage .contactSubmit { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-width:180px; min-height:50px; padding:0 26px; border:1px solid #121214; border-radius:0; background:#121214; color:#fff; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; font-weight:700; cursor:pointer; }
-        .contactPage .contactSubmit:hover { background:transparent; color:#121214; }
-        .contactPage .contactPrivacy { margin:0; max-width:70ch; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.76rem; line-height:1.6; font-weight:300; opacity:.48; }
-        .contactPage .contactHoneypot { position:absolute!important; left:-9999px!important; width:1px!important; height:1px!important; overflow:hidden!important; opacity:0!important; pointer-events:none!important; }
+        /* CONTACT FORM */
+
+        .contactPage .contactFormIntro {
+          margin-bottom: 38px;
+        }
+
+        .contactPage .contactForm {
+          position: relative;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 28px 30px;
+          max-width: 760px;
+        }
+
+        .contactPage .contactField {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .contactPage .contactFieldFull,
+        .contactPage .contactSubmitWrap,
+        .contactPage .contactPrivacy {
+          grid-column: 1 / -1;
+        }
+
+        .contactPage .contactLabel {
+          color: #121214;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.64rem;
+          line-height: 1.35;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-weight: 600;
+          opacity: 0.62;
+        }
+
+        .contactPage .contactOptional {
+          font-weight: 400;
+          opacity: 0.65;
+        }
+
+        .contactPage .contactInput,
+        .contactPage .contactTextarea {
+          width: 100%;
+          padding: 14px 0;
+          border: 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.24);
+          border-radius: 0;
+          outline: none;
+          background: transparent;
+          color: #121214;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 1rem;
+          line-height: 1.4;
+          font-weight: 300;
+        }
+
+        .contactPage .contactInput {
+          min-height: 54px;
+        }
+
+        .contactPage .contactTextarea {
+          min-height: 120px;
+          resize: vertical;
+        }
+
+        .contactPage .contactInput:focus,
+        .contactPage .contactTextarea:focus {
+          border-bottom-color: #121214;
+        }
+
+        .contactPage .contactSubmit {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          min-width: 180px;
+          min-height: 50px;
+          padding: 0 26px;
+          border: 1px solid #121214;
+          border-radius: 0;
+          background: #121214;
+          color: #fff;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.68rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        .contactPage .contactSubmit:hover {
+          background: transparent;
+          color: #121214;
+        }
+
+        .contactPage .contactPrivacy {
+          margin: 0;
+          max-width: 70ch;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.76rem;
+          line-height: 1.6;
+          font-weight: 300;
+          opacity: 0.48;
+        }
+
+        .contactPage .contactHoneypot {
+          position: absolute !important;
+          left: -9999px !important;
+          width: 1px !important;
+          height: 1px !important;
+          overflow: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+        }
+
+        /* WHATSAPP NUMBER */
 
         .contactPage .contactTextCta {
           display: inline-flex;
@@ -651,9 +1094,67 @@ export default function Contact() {
           font-weight: 300;
         }
 
+        /* WHATSAPP BUTTON */
+
+        .contactPage .contactWhatsappWrap {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 26px;
+        }
+
+        .contactPage .contactWhatsappButton {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          min-height: 54px;
+          padding: 0 24px;
+          border: 1px solid #121214;
+          border-radius: 0;
+          background: #121214;
+          color: #ffffff;
+          text-decoration: none;
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            border-color 0.2s ease;
+        }
+
+        .contactPage .contactWhatsappButton:hover {
+          background: #ffffff;
+          color: #121214;
+        }
+
+        .contactPage .contactWhatsappButton svg {
+          display: block;
+          width: 22px;
+          height: 22px;
+          flex-shrink: 0;
+        }
+
+        .contactPage .contactWhatsappButton .contactArrow {
+          margin-left: 8px;
+        }
+
+        .contactPage .contactWhatsappButton:focus-visible,
+        .contactPage .contactTextCta:focus-visible {
+          outline: 2px solid #601818;
+          outline-offset: 4px;
+        }
+
+        /* RESPONSIVE */
+
         @media (max-width: 1100px) {
           .contactPage .contactEditorialSection {
-            grid-template-columns: 180px 1px minmax(0, 1fr);
+            grid-template-columns:
+              180px 1px minmax(0, 1fr);
             column-gap: 48px;
           }
 
@@ -707,8 +1208,16 @@ export default function Contact() {
         }
 
         @media (max-width: 640px) {
-          .contactPage .contactForm { grid-template-columns:1fr; gap:24px; }
-          .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1; }
+          .contactPage .contactForm {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+
+          .contactPage .contactFieldFull,
+          .contactPage .contactSubmitWrap,
+          .contactPage .contactPrivacy {
+            grid-column: 1;
+          }
         }
 
         @media (max-width: 560px) {
@@ -743,25 +1252,18 @@ export default function Contact() {
             line-height: 1.68;
           }
 
-          .contactPage .contactFormIntro { margin-bottom: 38px; }
-        .contactPage .contactForm { position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 30px; max-width: 760px; }
-        .contactPage .contactField { display:flex; flex-direction:column; gap:10px; }
-        .contactPage .contactFieldFull, .contactPage .contactSubmitWrap, .contactPage .contactPrivacy { grid-column:1/-1; }
-        .contactPage .contactLabel { color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.64rem; line-height:1.35; letter-spacing:.18em; text-transform:uppercase; font-weight:600; opacity:.62; }
-        .contactPage .contactOptional { font-weight:400; opacity:.65; }
-        .contactPage .contactInput, .contactPage .contactTextarea { width:100%; padding:14px 0; border:0; border-bottom:1px solid rgba(0,0,0,.24); border-radius:0; outline:none; background:transparent; color:#121214; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:1rem; line-height:1.4; font-weight:300; }
-        .contactPage .contactInput { min-height:54px; }
-        .contactPage .contactTextarea { min-height:120px; resize:vertical; }
-        .contactPage .contactInput:focus, .contactPage .contactTextarea:focus { border-bottom-color:#121214; }
-        .contactPage .contactSubmit { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-width:180px; min-height:50px; padding:0 26px; border:1px solid #121214; border-radius:0; background:#121214; color:#fff; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; font-weight:700; cursor:pointer; }
-        .contactPage .contactSubmit:hover { background:transparent; color:#121214; }
-        .contactPage .contactPrivacy { margin:0; max-width:70ch; font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; font-size:.76rem; line-height:1.6; font-weight:300; opacity:.48; }
-        .contactPage .contactHoneypot { position:absolute!important; left:-9999px!important; width:1px!important; height:1px!important; overflow:hidden!important; opacity:0!important; pointer-events:none!important; }
-
-        .contactPage .contactTextCta {
+          .contactPage .contactTextCta {
             font-size: 0.62rem;
             letter-spacing: 0.15em;
             gap: 14px;
+          }
+
+          .contactPage .contactWhatsappButton {
+            width: 100%;
+            max-width: 340px;
+            padding: 0 18px;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
           }
         }
       `}</style>
