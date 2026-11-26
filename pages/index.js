@@ -13,7 +13,7 @@ const conversionCopy = {
     certSub: "Cigar professionals & serious enthusiasts",
     venueCta: "Discover Venues Solutions",
     venueSub: "Lounges, retailers & hospitality groups",
-    eventBanner: "CHRISTMAS SPECIAL OFFER — REQUEST YOUR GIFT CERTIFICATE FOR ICSI LEVEL I",
+    eventBanner: "HOLIDAY SEASON OFFER — REQUEST YOUR GIFT CERTIFICATE FOR ICSI LEVEL I",
     associations: {
       eyebrow: "Memberships",
       intertabac: "Exhibitor · Speaker",
