@@ -37,6 +37,7 @@ const copy = {
       "All submissions are treated with discretion and confidentiality.",
     programLabel: "Selected program",
     programNames: {
+      "christmas-level-i": "Christmas Offer – ICSI Level I (149 CHF)",
       "level-i": "ICSI Level I",
       "level-ii": "ICSI Level II",
       "level-iii": "ICSI Level III",
@@ -87,6 +88,7 @@ const copy = {
       "Toutes les candidatures sont traitées avec discrétion et confidentialité.",
     programLabel: "Programme sélectionné",
     programNames: {
+      "christmas-level-i": "Offre de Noël – ICSI Level I (149 CHF)",
       "level-i": "ICSI Level I",
       "level-ii": "ICSI Level II",
       "level-iii": "ICSI Level III",
@@ -136,6 +138,7 @@ const copy = {
     closing: "Alle Einsendungen werden vertraulich behandelt.",
     programLabel: "Ausgewähltes Programm",
     programNames: {
+      "christmas-level-i": "Weihnachtsangebot – ICSI Level I (149 CHF)",
       "level-i": "ICSI Level I",
       "level-ii": "ICSI Level II",
       "level-iii": "ICSI Level III",
@@ -272,13 +275,17 @@ export default function Contact() {
     if (!router.isReady) return;
 
     const incomingCourse =
-      selection.key &&
-      COURSE_LEVELS[selection.key]
+      selection.inquiry === "christmas-level-i"
+        ? "christmas-level-i"
+        : selection.key && COURSE_LEVELS[selection.key]
         ? selection.key
         : "";
 
     setSelectedCourseKey(incomingCourse);
-  }, [router.isReady, selection.key]);
+  }, [router.isReady, selection.key, selection.inquiry]);
+
+  const isChristmasGift =
+    selectedCourseKey === "christmas-level-i";
 
   const selectedCourseCanonical =
     COURSE_LEVELS[selectedCourseKey] || "";
@@ -309,7 +316,7 @@ export default function Contact() {
     submitted: "true",
   });
 
-  if (selectedCourseKey) {
+  if (COURSE_LEVELS[selectedCourseKey]) {
     returnParams.set(
       "course",
       selectedCourseKey
@@ -327,7 +334,9 @@ export default function Contact() {
     `${siteUrl}${localePrefix}/contact?${returnParams.toString()}`;
 
   const staticFormSubject =
-    selectedCourseCanonical
+    isChristmasGift
+      ? "ICSI Christmas Gift Certificate — Level I — 149 CHF"
+      : selectedCourseCanonical
       ? `ICSI Course Enquiry — ${selectedCourseCanonical}`
       : pathwayInquiry
       ? "ICSI Education Pathway Enquiry"
@@ -389,6 +398,10 @@ export default function Contact() {
                   >
                     <option value="">
                       {c.courseSelectPlaceholder}
+                    </option>
+
+                    <option value="christmas-level-i">
+                      {c.programNames["christmas-level-i"]}
                     </option>
 
                     <option value="level-i">
@@ -490,6 +503,21 @@ export default function Contact() {
                     </>
                   )}
 
+                  {isChristmasGift && (
+                    <>
+                      <input
+                        type="hidden"
+                        name="Enquiry Type"
+                        value="Christmas Gift Certificate"
+                      />
+                      <input
+                        type="hidden"
+                        name="Gift Certificate"
+                        value="ICSI Level I — 149 CHF"
+                      />
+                    </>
+                  )}
+
                   {pathwayInquiry && (
                     <input
                       type="hidden"
@@ -549,6 +577,10 @@ export default function Contact() {
                         >
                           <option value="">
                             {c.courseSelectPlaceholder}
+                          </option>
+
+                          <option value="christmas-level-i">
+                            {c.programNames["christmas-level-i"]}
                           </option>
 
                           <option value="level-i">
