@@ -13,7 +13,7 @@ const conversionCopy = {
     certSub: "Cigar professionals & serious enthusiasts",
     venueCta: "Discover Venues Solutions",
     venueSub: "Lounges, retailers & hospitality groups",
-    eventBanner: "MEET ICSI AT INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & SPEAKER",
+    eventBanner: "CHRISTMAS SPECIAL OFFER — REQUEST YOUR GIFT CERTIFICATE FOR ICSI LEVEL I",
     associations: {
       eyebrow: "Memberships",
       intertabac: "Exhibitor · Speaker",
@@ -48,7 +48,7 @@ const conversionCopy = {
     certSub: "Professionnels du cigare et passionnés avertis ",
     venueCta: "Découvrez CPFS pour les établissements ",
     venueSub: "Lounges, maisons de cigares et groupes hôteliers ",
-    eventBanner: "RETROUVEZ ICSI À INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & INTERVENANT",
+    eventBanner: "OFFRE SPÉCIALE DE NOËL — DEMANDEZ VOTRE CHÈQUE-CADEAU ICSI LEVEL I",
     associations: {
       eyebrow: "Adhésions",
       intertabac: "Exposant · Intervenant",
@@ -83,7 +83,7 @@ const conversionCopy = {
     certSub: "Für Zigarrenprofis & anspruchsvolle Enthusiasten",
     venueCta: "CPFS für Betriebe entdecken",
     venueSub: "Für Lounges, Händler & Hospitality-Gruppen",
-    eventBanner: "TREFFEN SIE ICSI BEIM INTERTABAC CIGAR CULTURE SUMMIT AFRICA 2026 · SPONSOR & REFERENT",
+    eventBanner: "WEIHNACHTSAKTION — FORDERN SIE IHREN ICSI LEVEL I GESCHENKGUTSCHEIN AN",
     associations: {
       eyebrow: "Mitgliedschaften",
       intertabac: "Aussteller · Referent",
@@ -269,14 +269,14 @@ function EditorialSection({ number, copyKey, lang }) {
 }
 
 
-function InterTabacBanner({ lang }) {
+function ChristmasBanner({ lang }) {
   const c = conversionCopy[lang] || conversionCopy.en;
 
   return (
     <div className="homeEventBanner">
       <div className="container homeEventBannerInner">
         <Link
-          href="/event-africa"
+          href="/contact?inquiry=christmas-level-i"
           locale={lang}
           className="homeEventBannerLink"
           aria-label={c.eventBanner}
@@ -398,7 +398,7 @@ export default function Home() {
     <Layout
       topBanner={
         <>
-          <InterTabacBanner lang={lang} />
+          <ChristmasBanner lang={lang} />
           <AssociationStrip lang={lang} />
         </>
       }
