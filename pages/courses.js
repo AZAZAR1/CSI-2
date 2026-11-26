@@ -27,7 +27,7 @@ const pageCopy = {
         title: "ICSI Level I",
         audience: "For cigar enthusiasts, aspiring professionals and new entrants",
         body:
-          "Build a disciplined foundation in cigar knowledge, care and appreciation. Level I introduces the core principles needed to understand cigars with greater confidence and consistency.",
+          "Participate in an instructor-led 3 hours long live session. Level I introduces the core principles needed to understand cigars with greater confidence and consistency.",
         outcome: "Establish the language, habits and core knowledge required for further study.",
         content: [
           "Diagnose Blends Worldwide",
@@ -156,7 +156,7 @@ const pageCopy = {
         title: "ICSI Niveau I",
         audience: "Pour les aficionados, futurs professionnels et nouveaux entrants",
         body:
-          "Construisez une base rigoureuse de connaissances, de conservation et d’appréciation du cigare. Le Niveau I introduit les principes essentiels pour comprendre le cigare avec davantage de confiance et de constance.",
+          "Participez à une session en direct de 3 heures, animée par un formateur. Le Niveau I introduit les principes essentiels pour comprendre le cigare avec davantage de confiance et de constance.",
         outcome: "Acquérir le langage, les habitudes et les connaissances de base nécessaires pour poursuivre le parcours.",
         content: [
           "Diagnostiquer les blends du monde entier",
