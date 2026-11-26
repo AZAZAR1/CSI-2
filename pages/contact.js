@@ -37,7 +37,7 @@ const copy = {
       "All submissions are treated with discretion and confidentiality.",
     programLabel: "Selected program",
     programNames: {
-      "christmas-level-i": "Christmas Offer – ICSI Level I (149 CHF)",
+      "christmas-level-i": "Holiday Season Offer – ICSI Level I (149 CHF)",
       "level-i": "ICSI Level I",
       "level-ii": "ICSI Level II",
       "level-iii": "ICSI Level III",
